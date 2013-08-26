@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="opensource">
+	<title>开源模式</title>
+	<para>
+		我在IT行业干了12年，做过大大小小的公司不少，项目管理上有乱来的，有ISO国际化的，先进的CMMI过程的，还有开源方式的。
+		我比较趋向开源模式，最近几年一直在外企背景的本地公司，开发模式采用开源模式的企业应用模式。
+		近年来开源模式有颠覆传统商业模式趋势，很多公司开始寻求开源盈利模式，IBM，Oracle是非常成功的，Sun反映不及时，受到冲击最大。
+		具有代表行的开源盈利模式是MySQL, Redhat。
+		</para>
+	<para>
+		开源模式，没有那么多条条款款限制，比较灵活，反应速度快速。并且适合任何规模的项目，小到几个人，大到上千人。
+		其特点为拥有3-5名核心维护人员，参与开发的人员10人-40人之间，采用SVN进行代码管理，通过maillist/irc进行开发交流，有明确的开发计划和日程。
+	</para>
+	<para>
+
+	</para>
+	<para>
+		开源没有严格等级的组织架构，团队领导仅仅是组织/协调工作，合并代码。
+		开发人员比较分散，可能两地，三地，甚至更多参与开发。并且同时进行开发，多个模块向前推进。来完成一项伟大的工程。
+		成员有什么好想法，就发布在mailing list上，大家讨论，确认下来，你就可以开始开发。
+		如果与大家不同意你的idea，你可以产生一个项目分支。
+		</para>
+	<para>
+		这种模式对参与人员能力要求比较高，要求能独立完成任务，有创意，自觉性强，团队合作意识强，。
+		</para>
+	<para>
+		开源模式也有它的缺点，不能一概照搬，如果照搬开源模式，显而易见人力成本太高了。
+		因为开源成员都是精英及大师黑客，一个开源项目团队就像海军陆战，单兵作战以一抵十，团队作战所向披靡。
+		而且黑客的个性很强，企业不一般不需要员工有个性和创造力，这不便于管理。只要按需求做，不出错误就是好员工。
+		</para>
+	<para>
+		目前国内企业仍是以高级工程师为核心带领年轻的程序员或应届毕业生方式进行项目开发。
+		</para>
+
+	<para>
+		我不得不说中国人很爱跟风，接受能力最快。什么技术流行我们就用什么，最新的技术应用都在中国，你会发现我们的技术是最先进。更本不等市场验证。
+	</para>
+	<para>在国内企业中你会发现很多眼花缭乱的术语，技术及软件全部用在项目中，向 UML, Visio, Project, Rose,
+		FreeMind, ER-Win, ISO, CMM, GB...</para>
+	<para>你会发现我们太先进了，Project管理项目，Subversion/VSS/ClearCase控制版本，UML建模，我们用ER-Win/Power
+		Design设计数据库，我们文档用CMM格式，MVC开发框架，ORM操作数据库，我们用Load Runner测试，我们用QQ/MSN沟通。
+		我们在按着别人的思想，别人定义的标准，帮别人验证他们想法是正确的。如果失败了，就推到重来。
+		</para>
+	<para>我们的外国客户，还在用ssh登录vim/emacs开发，还再用CVS还是命令行的，Trac/Wiki管理开发资源，开发文档就是一个简单功能说明，在邮件列表上沟通
+	</para>
+	<para>...</para>
+</section>
+
+<section id="language">
+	<title>开发语言及平台</title>
+	<para>语言只是一个工具，一种实现我们需要的工具，每种每言都有它的优点和缺点和，在不同领域发挥各自的长处，并且都有它存在的意义。
+	</para>
+	<para>语言不段地发展，市场决定它们是生存还是没落走向死亡。只有最活越，生命力强的语言才能生存下来。.net与java后面是强大的财团做后盾，大量被捆绑的客户支持他，并有完备的客服，从商业角度选择它是没有错误的。
+	</para>
+	<para>但不要拘泥与语言，使用你最熟悉的语言,选择你最擅长的数据库和操作系统。</para>
+	<para>目前大型网站都不会单一选择一种语言和数据库，一种操作系统。例如:</para>
+	<itemizedlist>
+		<listitem>淘宝，前端展示页面采用php,后台管理采用java...</listitem>
+		<listitem>Yahoo，主要使用php开发，但搜索引擎采用java...</listitem>
+		<listitem>Ticketmaster，前端展示采用perl开发，后台管理java,
+			前台展示数据库采用mysql,会员数据库采用oracle</listitem>
+	</itemizedlist>
+	<para>像php/perl/python这种动态语言，开发速度快，周期端，对服务器性能要求低，出错率低，他们的设计这希望它能尽量使代码运行下去，
+		而不是抛出异常，终止执行或崩溃。而行对于开发者要求门槛比较低。
+		php 无论怎么开发都不会使web server 崩溃。而 Java
+		则不同，很容易崩溃。
+	</para>
+	<para>Java
+		我认为java是个非常不错的语言，错在JVM上。这是一个垃圾的解释器，效率极差。不加优化的，把所有东东全部load进内存。采用java技术，开发成本相当高，对开发人员要求很高，而且需要一个稳定的团队。国内资深java开发人员大多转向管理层。
+		只有细心的人才能驾驭Java，否则不能保证软件质量，我在工作中发现php团队开发的代码质量明显比java高，bug 数量上比Java代码的
+		bug少很多。
+		我个人认为少于5年工作经验程序员很难写出一流的Java程序。 Java 架构最不能容忍的是有时不得不restart才能生效。而写的很烂程序你不得不采用restart来保证系统正常。
+	</para>
+	<para>.net 不是很熟悉，.net
+		开发环境最好，速度比java快，只要有钱，全用正版，选择微软的产品很不错。很多linux爱好者鄙视M$,
+		对windows系统很有很大偏见，偏激。
+		window系统很稳定，并非像网上传的那样不堪一击，很多引起windows崩溃的原因是硬件问题。我在工作中发现国产服务器在板卡接口上做工不过关。
+		没有镀金或防氧化处理，导致内存丢失，cpu丢失，RAID丢失...
+		等等引起系统崩溃。但linux系统确能运行下去，不过一旦重启，将不能恢复。
+	</para>
+
+	<section id="middleware">
+		<title>分层架构</title>
+		<section>
+			<title>中间件 Middleware</title>
+			<para><ulink url="http://en.wikipedia.org/wiki/Middleware">http://en.wikipedia.org/wiki/Middleware</ulink></para>
+			<para><graphic  format="png" fileref="../images/development/middleware.png" srccredit="neo" width=""/></para>
+			<para>很多人谈到java就会涉及到三层架构即：web 容器 -> application server 应用服务器，中间件 ->数据库</para>
+			<para>三层架构其实不是什么新鲜东西，J2EE仅仅是对象请求代理体系结构的一种，任何语言都能实现三层架构。中间件不是Java专利</para>
+			<itemizedlist>
+				<listitem>
+					<para>编译执行的语言基本都支持Corba</para>
+				</listitem>
+				<listitem>
+					<para>python 则有Zope，Zope是一个很成功App Server。足以比肩J2EE. python
+						也支持corba库，我尝试过python -> corba -> PostgreSQL.但性能不佳。</para>
+				</listitem>
+			</itemizedlist>
+			<para>php/perl 一样可做到,采用SOAP，XML-RPC等技术,可以实现部分功能。但我们可以在架构上做些改变。</para>
+			<para>总之，不要拘泥于三层架构，仅仅是实现方式的一种。没有最合理，也没有最好的，根据你的需求作出调整，最终是看结果，而不是实现过程。
+			</para>
+		</section>
+		<section>
+			<title>分层</title>
+			<para>中间件的概念</para>
+			<screen>
+			<![CDATA[
+         /--> app server ---\
+web ---> ---> app server ----> Database
+         \--> app server ---/
+			]]>
+			</screen>
+			<para>php 分层</para>
+			<screen>
+			<![CDATA[
+                 /--> web server ---\
+load balance ---> --> web server ----> -> Database
+                 \--> web server ---/
+
+                 /--> web server ---\                   /--> app server ---\
+load balance ---> --> web server ----> -- SOAP/XMLRPC--> --> app server ----> Database
+                 \--> web server ---/				    \--> app server ---/
+			]]>
+			</screen>
+			<para>你可以采用复核型架构，我曾经就做过这样的项目php -> soap -> .net framework</para>
+			<screen>
+			<![CDATA[
+                 /--> module ---\
+apache ---> php ----> module ----> MySQL Database
+                 \--> module ---> soap ---> IIS ---> DCOM ---> C# script  ---> SQL Server
+                  \-> module ---> tomcat ---> jasper report ---> Oracle
+			]]>
+			</screen>
+			<para>我们系统有一个需求是，在php中创建word,excel文档，编辑文档，比较文档..., 我们需要调用office.dll实现
+			</para>
+			<para>同时我们有一个报表系统，是通过jasper report 实现的</para>
+			<para>另外fastcgi</para>
+			<screen>
+			<![CDATA[
+			    .--> fastcgi process ---.
+			   /                         \
+web server ---> ---> fastcgi process -----> Database
+			   \                         /
+			    `--> fastcgi process----'
+			]]>
+			</screen>
+		</section>
+
+	</section>
+	<section id="web2.0">
+		<title>Web 2.0</title>
+		<para>商业炒作产物，对于纯高技术的人来说，虚头 </para>
+		<!--
+		<para>中国的网站是很不喜欢共享资料，所以也要象征行的开放一些API提供一些没有价值的数据。但似乎中国的网站很喜欢Push API,对 Pull API
+			则回避。RSS就是一个例子，出现这样的问题可能是：一是国家对版权保护不善，二是当前国情是不认为转载是违法行为，像RSS订阅这种技术，很多网站都不支持。身边的朋友也没有订阅RSS的习惯。
+		</para>
+		 -->
+	</section>
+	<section id="cloud">
+		<title>云计算</title>
+		<para>云计算还是个概念，但在云计算大潮中，不支持云计算，显得没有技术含量。</para>
+		<para>
+			被网络炒得“神乎其神”。起初我误以为是分布式计算的下一代，后来发现和分布式计算根本两个不同的东西。与网格计算/分布式计算扯不上边。
+		</para>
+		<para>"云计算"这个词已经被泛滥使用，</para>
+		<para>比较靠谱是亚马逊EC2 其实就是一堆Xen虚拟机, Dell说他的刀片服务器是云计算，Vmware 也说是云计算，Oracle 说他的VirtualBox是云计算，说ZFS是云存储。我也说不清楚，自己斟酌。</para>
+		<section>
+			<title>云计算的三种服务模式</title>
+			<para>IaaS,PaaS,SaaS</para>
+		</section>
+	</section>
+	<section id="cross.platform">
+		<title>跨平台</title>
+		<para>没有真正的跨平台语言，所谓跨平台都是忽悠人。</para>
+		<para>只要提供不同平台的编译器加条件编译，即可实现跨平台。或提供不同平台的解释器，也可一实现跨平台。</para>
+		<para>例如大家都很看中Java的跨平台，但想一下，这个“跨平台”是要打引号的，实际上这个跨平台准确的说是跨Sun提供的标准JVM平台，而非OS平台。只要某个JVM支持某个OS，你的程序才可以跨过去。如果JVM不支持这个OS平台，Sorry，你的程序不可能跨过去。
+			不信你去java.sun.com下载jre你会发现仅仅提供四个平台版本Linux,Mac OS X,Solaris,Windows
+		</para>
+		<para>很多OS都不支持Java。如FreeBSD 就不支持Java,必须使用Linux glib
+			运行Java，效率很低,IBM用的是IBM 自己开发 JVM 至于他和Sun
+			Java有什么关系，可能是授权。</para>
+		<para>只要能让你的程序翻译成JVM字节码，你的程序就可运行在JVM上。如：</para>
+		<para>php通过Quercus(http://quercus.caucho.com/)把PHP文件编译成.java文件,让后javac编译成class文件后在一些JavaEE应用容器中运行PHP程序
+		</para>
+		<para>Jython可以将Python编译成java文件</para>
+		<para>JRuby可以将Ruby编译成java文件</para>
+		<para>虚拟机并非只有JVM，还有Parrot, Perl6 就是在Parrot虚拟机上实现的。</para>
+		<para>另外开发一种新语言也并非难事，只要你有时间精力投入我想不出3年，就可以打造一门新语言。</para>
+		<para>开发新语言也并非难事，只要你有时间精力投入我想不出3年，就可以打造一门新语言。</para>
+	</section>
+	<section id="script">
+		<title>编译语言比脚本语言安全</title>
+		<para>错！</para>
+		<para>编译不能保证代码安全，仅仅能保证你的代码不被人使用。</para>
+		<para>但目前中国人力成本相当的便宜，重新实现你的功能逻辑并非难事。所以只要你的网站上线，在很短的时间内就可以出现很多山寨版。
+		</para>
+		<para>编译流行的原因是为了解决微机的速度以及存储问题，随着微机处理器技术突破，你根本不用担心速度问题。中型机与大型机领域脚本语言站多数。
+		</para>
+	</section>
+	<section id="encapsulation">
+		<title>封装重用</title>
+		<para>重用可以减轻劳动，但过分重用，会牵一发动全身。</para>
+		<para>尤其对于二次开发者不熟悉你的系统，导致修改一个bug，又产生新的bug。</para>
+		<para>另外模板也不宜拆分的过于零碎。模本的组装，需要很多时间并很消耗你的资源。</para>
+	</section>
+	<section id="utility">
+		<title>相关的工具</title>
+		<section>
+			<title>开发工具</title>
+			<itemizedlist>
+				<title>Mozilla Firefox 及扩展</title>
+				<listitem>
+					<para>Web Developer</para>
+				</listitem>
+				<listitem>
+					<para>Firebug 调试必备工具</para>
+				</listitem>
+				<listitem>
+					<para>YSlow 性能分析工具</para>
+				</listitem>
+				<listitem>
+					<para>Live HTTP Headers 相当于HTTP
+						Sniffer嗅探器，可以跟踪HTTP协议头，调试cache时比较有用。</para>
+				</listitem>
+				<listitem>
+					<para>IE Tab 用于IE/Firefox之间切换</para>
+				</listitem>
+				<listitem>
+					<para>FoxClocks 如果开发工作跨时区，这个很有用</para>
+				</listitem>
+				<listitem>
+					<para>Foxmarks Bookmark Synchronizer/Weave 将开发资源放入书签，同时在开发团队中保持同步
+					</para>
+				</listitem>
+				<listitem>
+					<para>Fasterfox 可以一显示页面载入时间，方便页面优化. 如果安装了YSlow可以不装这个插件。</para>
+				</listitem>
+				<listitem>
+					<para>FireFTP</para>
+				</listitem>
+				<listitem>
+					<para>Adblock Plus</para>
+				</listitem>
+				<listitem>
+					<para>flash block</para>
+				</listitem>
+				<listitem>
+					<para>Chat Zilla</para>
+				</listitem>
+				<listitem>
+					<para>Super DragAndGo</para>
+				</listitem>
+			</itemizedlist>
+
+			<itemizedlist>
+				<title>开发工具</title>
+				<listitem>
+					<para>visual studio 不必多说</para>
+				</listitem>
+				<listitem>
+					<para>eclipse
+						出身于Java但他不单单是Java开发工具，目前他已经是一个通用的语言IDE，我一直用eclipse写PHP,Python,Perl还有Docbook
+						XML</para>
+				</listitem>
+				<listitem>
+					<para>TortoiseSVN 版本控制工具.</para>
+				</listitem>
+				<listitem>
+					<para>WinMerge 文件差异比较与合并 , Beyond Compare 我用过最好的比较合并工具。</para>
+				</listitem>
+			</itemizedlist>
+		</section>
+
+	</section>
+</section>

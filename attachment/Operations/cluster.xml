@@ -1,0 +1,167 @@
+cip->vip->dip->rip
+
+<cluster>
+	<decscription>
+		<author>Neo</author>
+		<nickname>netkiller</nickname>
+		<email>openunix@163.com</email>
+	</decscription>
+	
+	<network>
+		<hostname>master</hostname>
+		<wan>
+			<interface>eth0</interface>
+			<mark>32</mark>
+			<address>202.96.10.133</address>
+			<address>172.16.0.1/16</address>
+			<address>172.16.0.1/16</address>
+			<address>172.16.0.1/16</address>
+			<address>172.16.0.1/16</address>
+		</wan>
+		<lan>
+			<interface>eth1</interface>
+			<address>172.16.0.1</address>
+			<mark>16</mark>
+		</lan>	
+		<gateway>
+			<address>172.16.0.1</address>
+		</gateway>
+		<dns>
+			<domain>example.org</domain>
+			<preferred>202.96.128.68</preferred>
+			<alternate>202.96.134.133</alternate>
+		</dns>
+		
+	<network>
+	
+	<firewall>
+		<allow>
+			<port>
+				<source></source>
+				<tcp>21</tcp>
+				<udp></udp>
+			</port>
+			<io>
+				<target>
+				</target>
+			</io>
+		</allow>
+		<deny>
+			
+		</deny>
+	<firewall>
+	
+	<group>
+	</group>
+	
+	<instance service="other" port="8000">		
+		<node>
+			<port>3306</port>
+			<server></server>			
+			<real_server>
+				<address>172.16.0.1</address>
+				<port></port>
+				<weight></weight>
+			</real_server>
+		</node>
+					
+	</instance>
+
+	
+	
+	<ftp_cluster>
+		<wan>
+			<interface>eth0</interface>
+			<ip_address>202.96.xxx.xxx</ip_address>
+			<subnet_mark>16</subnet_mark>
+			<port>21/ftp</port>
+		</wan>
+		<node>
+			<real_server weight="1">
+				<address>172.16.0.1</address>
+				<port>21/ftp</port>
+				<weight>1</weight>
+			</real_server>
+			<real_server>
+				<address>172.16.0.1</address>
+				<port>21/ftp</port>
+				<weight>2</weight>
+			</real_server>
+			<real_server>
+				<address>172.16.0.1</address>
+				<port>21/ftp</port>
+				<weight>3</weight>
+			</real_server>
+		</node>		
+	</ftp_cluster>
+	
+	<mail_cluster>
+		<wan>
+			<interface>eth0</interface>
+			<ip_address>202.96.xxx.xxx</ip_address>
+			<subnet_mark>16</subnet_mark>
+			<smtp_port>smtp</smtp_port>
+			<pop_port>smtp</pop_port>
+			<imap_port>smtp</imap_port>
+			<webmail_port>smtp</webmail_port>
+		</wan>
+		<node service="smtp">
+			<real_server weight="1">
+				<address>172.16.0.1</address>
+				<port>21/ftp</port>
+				<weight>1</weight>
+			</real_server>
+			<real_server>
+				<address>172.16.0.1</address>
+				<port>21/ftp</port>
+				<weight>2</weight>
+			</real_server>
+			<real_server>
+				<address>172.16.0.1</address>
+				<port>21/ftp</port>
+				<weight>3</weight>
+			</real_server>
+		</node>
+		<node service="pop">
+			<real_server weight="1">
+				<address>172.16.0.1</address>
+				<port>21/ftp</port>
+				<weight>1</weight>
+			</real_server>
+			<real_server>
+				<address>172.16.0.1</address>
+				<port>21/ftp</port>
+				<weight>2</weight>
+			</real_server>
+			<real_server>
+				<address>172.16.0.1</address>
+				<port>21/ftp</port>
+				<weight>3</weight>
+			</real_server>
+		</node>
+		<node service="imap">
+			<real_server weight="1">
+				<address>172.16.0.1</address>
+				<port>21/ftp</port>
+				<weight>1</weight>
+			</real_server>
+			<real_server>
+				<address>172.16.0.1</address>
+				<port>21/ftp</port>
+				<weight>2</weight>
+			</real_server>
+			<real_server>
+				<address>172.16.0.1</address>
+				<port>21/ftp</port>
+				<weight>3</weight>
+			</real_server>
+		</node>		
+		<node service="webmail">
+			<real_server address="172.16.0.1" weight="1">
+				<address></address>
+				<port>webmail</port>
+				<weight>1</weight>
+			</real_server>
+		</node>			
+	</mail_cluster>	
+</cluster>

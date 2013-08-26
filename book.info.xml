@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: book.info.xml 518 2013-02-04 01:33:18Z netkiller $ -->
+	<authorgroup>
+    &book.info.author.xml;
+<!--
+	    <collab>
+			<collabname>
+				<personname>
+					<honorific>Mr</honorific>
+					<firstname>李振韬</firstname>
+					<surname>freebird</surname>
+		    	</personname>
+			</collabname>
+        	<affiliation>
+        		<address>
+				    <country>中国</country><state>广东</state><city>深圳</city><street>深圳市福田区赛格科技园</street><postcode>518000</postcode>
+					<email>eyouy@126.com</email>
+				</address>
+			</affiliation>
+     	</collab>
+ -->
+	</authorgroup>
+
+    <copyright>
+      <year>2008</year>
+      <year>2009</year>
+      <year>2010</year>
+      <year>2011</year>
+      <year>2012</year>
+      <year>2013</year>
+      <holder>Copyright Editor Groups, All Rights Reserved</holder>
+    </copyright>
+    <edition>Netkiller Architect 手札</edition>
+	<pubdate>$Date: 2013-02-04 09:33:18 +0800 (Mon, 04 Feb 2013) $</pubdate>
+	<releaseinfo>文档尚未完成，请勿转载！</releaseinfo>
+
+    &book.info.legalnotice.xml;
+	&book.info.abstract.xml;

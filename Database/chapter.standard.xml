@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+	<title>规范</title>
+	<para>这块本来不想写，考虑到国内每个公司都有自己的规范，非常混乱</para>
+	
+	
+</chapter>
+<!-- 
+
+虽然oracle主要的工作是dba所做的事情，不过作为一个普通的开发人员也时时刻刻和数据库打交道，普通开发人员也得有一些基本数据库技能。下面是我在开发中的一些oracle数据库开发的一些经验。欢迎大家提意见。
+ 
+ 
+表命名规则
+表命名是以英文名称为原则，表示该表的具体意义，例如商品表可以叫item，商品图片表可以叫item_image。
+如果公司业务复杂，数据库过多，schema也比较多，则要根据schema的来命名，例如：在crm下面可以用crm开头命名CRM_USER.
+临时表应该以tmp开头TMP_USER,这样的表一段时间后将会清除。
+备份数据使用的表应该使用bak开头，这样的表在被确认不需要后将被清除。
+注:表的命名不能超过30个字符 
+ 
+ 
+字段命名
+表达该字段的含义
+不能用oracle中的保留字
+注释一定要详细加上，如status 状态，0 有效，1删除
+注：字段长度也尽量简化（如crm_test_times_currently，太长）
+ 
+ 
+索引的命名规则
+主键(primary key)索引
+    PK_表名_列名
+唯一键(unique key)索引
+    UK_表名_列名
+普通索引
+     IND_表名_列名
+注:索引的命名不能超过30个字符(在索引中的列名可以简写,一般情况下不简写索引中的表名)
+ 
+ 
+过程与函数
+过程的命名规则
+    以SP_开头,过程中要注解此过程的作者,编写时间,此过程的功能
+函数的命名规则
+    以FUN_开头,函数中要注解此函数的作者,编写时间,此函数的功能
+变量的命名规则
+    本地变量以l_开头;
+    传递参数：p_变量名_in  （传入）
+              p_变量名_out（传出） 
+    游标类型cur_开头;
+ 
+ 
+序列的命名规则
+           序列的命名
+    SEQ_表名_列名
+    如何在程序中使用序列所产生的值
+         INSERT INTO test(id,nick)
+                        VALUES(seq_test_id.nextval,'test');
+    如何查询序列的当前值：
+         select seq_test_id.currval from dual;
+ 
+ 
+SQL编写规范
+SQL语句所有表名,字段名全部小写,SQL保留字大写；
+ 
+select  *查询语句不允许出现,要明确写查询哪些列；
+ 
+连接符or、in、and、以及＝、<=、>=等前后加上一个空格 
+ 
+SQL语句注意缩进
+where子句书写时，每个条件占一行，语句另起一行时，以保留字或者连接符开始，连接符右对齐
+ 
+多表连接时，使用表的别名来引用列
+sql示例：
+SELECT aa.title,aw.bid,aw.closingdate,u.nick
+                            FROM t_users u,
+                                        t_test tt
+                                        t_item aa
+                             WHERE u.id = tt.seller
+                                   AND aw.auction = aa.id
+                                   AND u.nick =‘test’;
+ 
+where条件中尽量减少使用常量比较，改用绑定变量 
+ 
+尽量减少order by和group by排序操作 ,有些排序操作可以由应用程序完成
+如必须使用排序操作，请遵循如下规则 :
+                             1.排序列上有索引
+                             2.如结果集不需唯一，使用union all代替                  
+                                 union 
+ 
+尽量避免对索引列进行计算，或者对列进行函数操作然后查询 
+    例如:
+         SELECT t.id FROM test t 
+                           WHERE upper(t.nick) = :1
+         正确的是:
+         SELECT t.id FROM test t 
+                            WHERE t.nick = upper(:1)
+注意绑定变量与索引列数据类型的一致性
+       表test字段id的类型为number
+错误的是：
+    SELECT  t.subject from test 
+                                    WHERE t.id=‘5’; 
+    此写法将不会走id字段上的索引,执行计划为全表扫描
+正确的是：
+    SELECT  t.subject FROM test 
+                                    WHERE t.id=5; 
+ 
+分页sql写法
+select * from (select t.*,rownum as rn from (select id,name,sex from test order by id desc) t where rownum < 21) where rn >19;
+ 
+适当使用提示优化
+select /* + index(a idx_test)*/ count(*) from test a;
+提示符很多，有时间整理下和大家讨论讨论
+
+ -->

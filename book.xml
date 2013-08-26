@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V5.0//EN" "http://www.oasis-open.org/docbook/xml/5.0b5/dtd/docbook.dtd" -->
+<!DOCTYPE book SYSTEM "/usr/share/xml/docbook/schema/dtd/5.0/docbook.dtd"
+	[
+	<!ENTITY homepage "http://netkiller.sf.net/">
+	<!ENTITY mirror "http://netkiller.github.com/">
+<!--
+	<!ENTITY Neo "<![CDATA[ <ulink url='&homepage;'>Neo</ulink> ]]>">
+	<!ENTITY BG7NYT "&Neo;">
+	<!ENTITY nickname "<ulink url='&homepage;'><emphasis>netkiller</emphasis></ulink>">
+-->
+	<!ENTITY nickname "netkiller">
+	<!ENTITY book.info.author.xml			SYSTEM "../common/book.info.author.xml">
+	<!ENTITY book.info.legalnotice.xml		SYSTEM "../common/book.info.legalnotice.xml">
+	<!ENTITY book.info.abstract.xml			SYSTEM "../common/book.info.abstract.xml">
+    <!ENTITY book.preface.xml          		SYSTEM "../common/book.preface.xml">
+	<!ENTITY preface.about.me.xml      		SYSTEM "../common/about.me.xml">
+	<!ENTITY book.dedication.xml       		SYSTEM "../common/book.dedication.xml">
+	<!ENTITY book.appendix.xml	 			SYSTEM "book.appendix.xml">
+
+	<!ENTITY book.info 						SYSTEM "book.info.xml">
+	<!ENTITY book.dedication 				SYSTEM "book.dedication.xml">
+	<!ENTITY book.preface 					SYSTEM "book.preface.xml">
+	<!ENTITY book.appendix 					SYSTEM "book.appendix.xml">
+	<!ENTITY book.glossary 					SYSTEM "book.glossary.xml">
+	<!ENTITY book.history 					SYSTEM "book.history.xml">
+
+	<!ENTITY part.architecture.xml 				SYSTEM "part.architecture.xml">
+	<!ENTITY chapter.architecture.xml 			SYSTEM "chapter.architecture.xml">
+
+	<!ENTITY chapter.system.xml 				SYSTEM "chapter.system.xml">
+	<!ENTITY chapter.architecture.enterprise.xml	SYSTEM "chapter.architecture.enterprise.xml">
+
+	<!ENTITY part.software.xml 					SYSTEM "part.software.xml">
+	<!ENTITY chapter.development.xml 			SYSTEM "Software/chapter.development.xml">
+	<!ENTITY chapter.framework.xml 				SYSTEM "Software/chapter.framework.xml">
+	<!ENTITY chapter.dev.security.xml 			SYSTEM "Software/chapter.dev.security.xml">
+	<!ENTITY chapter.development.flow.xml 		SYSTEM "Software/chapter.development.flow.xml">
+	<!ENTITY chapter.development.method.xml 	SYSTEM "Software/chapter.development.method.xml">
+	<!ENTITY chapter.dev.search.xml				SYSTEM "Software/chapter.dev.search.xml">
+	<!ENTITY chapter.plugin.xml 				SYSTEM "Software/chapter.dev.plugin.xml">
+	<!ENTITY chapter.log.xml 					SYSTEM "Software/chapter.log.xml">
+	<!ENTITY chapter.dispatcher.xml				SYSTEM "Software/chapter.dispatcher.xml">
+	<!ENTITY chapter.interface.xml				SYSTEM "Software/chapter.interface.xml">
+	<!ENTITY chapter.application.xml			SYSTEM "Software/chapter.application.xml">
+	<!ENTITY chapter.designpattern.xml			SYSTEM "Software/chapter.designpattern.xml">
+	<!ENTITY chapter.rpc.xml 					SYSTEM "Software/chapter.rpc.xml">
+
+	<!ENTITY part.database.xml 					SYSTEM "part.database.xml">
+	<!ENTITY chapter.rdbms.xml 					SYSTEM "Database/chapter.rdbms.xml">
+	<!ENTITY chapter.hdbms.xml					SYSTEM "Database/chapter.hdbms.xml">
+	<!ENTITY chapter.ordbms.xml					SYSTEM "Database/chapter.ordbms.xml">
+	<!ENTITY chapter.sharding.xml				SYSTEM "Database/chapter.sharding.xml">
+	<!ENTITY chapter.data.xml 					SYSTEM "Database/chapter.data.xml">
+
+	<!ENTITY % solution.doctype.entity.xml 		SYSTEM "Solution/doctype.entity.xml">
+	%solution.doctype.entity.xml;
+	<!ENTITY part.solution.xml 					SYSTEM "part.solution.xml">
+
+	<!ENTITY % hardware.doctype.entity.xml 		SYSTEM "Hardware/doctype.entity.xml">
+	%hardware.doctype.entity.xml;
+	<!ENTITY part.hardware.xml 					SYSTEM "part.hardware.xml">
+
+	<!ENTITY chapter.idc.network.xml 			SYSTEM "Network/chapter.idc.network.xml">
+	<!ENTITY chapter.idc.security.xml 			SYSTEM "Network/chapter.idc.security.xml">
+	<!ENTITY chapter.idc.application.xml 		SYSTEM "Network/chapter.idc.application.xml">
+
+	<!ENTITY % testing.doctype.entity.xml 		SYSTEM "Testing/doctype.entity.xml">
+	%testing.doctype.entity.xml;
+	<!ENTITY part.testing.xml 					SYSTEM "part.testing.xml">
+
+	<!ENTITY part.devops.xml					SYSTEM "part.devops.xml">
+	<!ENTITY chapter.devops.xml					SYSTEM "DevOps/chapter.devops.xml">
+	<!ENTITY devops.environment.xml				SYSTEM "DevOps/chapter.environment.xml">
+	<!ENTITY devops.development.xml				SYSTEM "DevOps/chapter.development.xml">
+	<!ENTITY devops.automation.xml				SYSTEM "DevOps/chapter.automation.xml">
+	<!ENTITY devops.automation.deployment.xml 	SYSTEM "DevOps/chapter.automation.deployment.xml">
+	<!ENTITY chapter.automation.utility.xml		SYSTEM "DevOps/chapter.automation.utility.xml">
+
+] >
+<book xml:base="http://netkiller.github.com/architect/"
+	xmlns="http://docbook.org/ns/docbook" xml:lang="zh-cn">
+	<info>
+		<title>Netkiller Architect 手札</title>
+		<subtitle>Multi-dimension Architecture Design &amp; Implementation</subtitle>
+		<titleabbrev>Enterprise Architecture (Guide the implementation of Enterprise site)</titleabbrev>
+
+		&book.info;
+
+	</info>
+
+	&book.dedication.xml;
+	&book.preface.xml;
+
+	&part.architecture.xml;
+	&chapter.system.xml;
+	&part.hardware.xml;
+	&part.database.xml;
+	&part.software.xml;
+	&part.testing.xml;
+
+	&part.devops.xml;
+	&part.solution.xml;
+
+	&book.appendix;
+	&book.glossary;
+	&book.history;
+	<!--
+		<xi:include href="chapter.case.xml" xmlns:xi="http://www.w3.org/2003/XInclude" />
+	-->
+
+</book>

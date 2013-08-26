@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section>
+	<title>Sharding</title>
+	<para>Sharding是近几年提出的概念，可以做分表，分库切割，通过hash值定位。但都存在一个问题，数据连续性，索引无法跨表。</para>
+	<para>Oracle 在8.x中就支持分区功能，MySQL在5.1.x中也是闲类似功能，PostgreSQL 因存储结构设计的较好，基本不需要做分区。</para>
+	<section>
+		<title>horizontal</title>
+		<screen>
+ALTER TABLE `goods`  DROP INDEX `goods_sn_2`;
+ALTER TABLE goods PARTITION BY RANGE (goods_id) (
+    PARTITION p0 VALUES LESS THAN (10000),
+    PARTITION p1 VALUES LESS THAN (20000),
+    PARTITION p2 VALUES LESS THAN (30000),
+    PARTITION p3 VALUES LESS THAN (40000),
+    PARTITION p4 VALUES LESS THAN MAXVALUE
+);
+
+ALTER TABLE goods PARTITION BY HASH(goods_id) PARTITIONS 10;
+
+ALTER TABLE goods  PARTITION BY KEY (is_on_sale) PARTITIONS 2;
+
+ALTER TABLE goods PARTITION BY HASH(YEAR(FROM_UNIXTIME(add_time))) PARTITIONS 4;
+		</screen>
+	</section>
+	<section>
+		<title>vertical</title>
+	</section>
+</section>

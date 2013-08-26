@@ -1,0 +1,50 @@
+<revhistory>
+	<revision>
+		<revnumber>0.1.1</revnumber>
+		<date>Sep 12, 2011</date>
+		<authorinitials>Neo</authorinitials>
+		<revremark>章节做了大调整，将文档分为五块，多维度架构，开发，运维，SQA，还有DevOps。</revremark>
+	</revision>
+	<revision>
+		<revnumber>0.1.0</revnumber>
+		<date>May 15, 2010</date>
+		<authorinitials>Neo</authorinitials>
+		<revremark>增加解决方案一节，并填充了大量章节。同时对完成这篇文档信心大增</revremark>
+	</revision>
+
+	<revision>
+		<revnumber>0.0.4</revnumber>
+		<date>2010</date>
+		<authorinitials>Neo</authorinitials>
+		<revremark>这篇文档几乎没有时间和精力编辑，内容增加不多。</revremark>
+	</revision>
+
+	<revision>
+		<revnumber>0.0.4</revnumber>
+		<date>April 15, 2009</date>
+		<authorinitials>Neo</authorinitials>
+		<revremark>这篇文档几乎搁浅，没有时间和精力，没有编辑加入。今天做了一下布局调整，增加一些内容。</revremark>
+	</revision>
+
+	<revision>
+		<revnumber>0.0.3</revnumber>
+		<date>Sep. 17, 2008</date>
+		<authorinitials>Neo</authorinitials>
+		<revremark>加入关于存储的内容</revremark>
+	</revision>
+
+	<revision>
+		<revnumber>0.0.1</revnumber>
+		<date>May 24, 2008</date>
+		<authorinitials>Neo</authorinitials>
+		<revremark>李振韬加入编译团队</revremark>
+	</revision>
+
+	<revision>
+		<revnumber>0.0.0</revnumber>
+		<date>May 22, 2008</date>
+		<authorinitials>Neo</authorinitials>
+		<revremark>这是一个值得纪念的日子</revremark>
+	</revision>
+
+</revhistory>

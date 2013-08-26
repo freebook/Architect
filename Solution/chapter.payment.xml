@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="payment">
+	<title>支付平台方案</title>
+	<section>
+		<title>方案</title>
+		<section>
+			<title>商户方案 </title>
+			<para>商户方案 .</para>
+			<graphic  format="png" fileref="../images/solution/payment/payment.merchant.png" srccredit="neo" width=""/>
+		</section>
+		<section>
+			<title>银行方案</title>
+			<para>银行接口方案.</para>
+			<graphic  format="png" fileref="../images/solution/payment/payment.bank.png" srccredit="neo" width=""/>
+		</section>
+	</section>
+	<section id="payment.interface">
+		<title>支付接口</title>
+		<graphic  format="png" fileref="../images/solution/payment/payment.workflow.png" srccredit="neo" width=""/>
+		<para>支付接口需要考虑</para>
+		<orderedlist>
+			<title>接口安全</title>
+			<listitem><para>软件防火墙，包括IP限制，单位时间内IP访问次数限制</para></listitem>
+			<listitem><para>key 证书，采用非对称加密</para></listitem>
+			<listitem><para>md5 校验，防止伪造内容提交</para></listitem>
+		</orderedlist>
+		<orderedlist>
+			<title>WEB服务器安全</title>
+			<listitem><para>SSL 证书</para></listitem>
+			<listitem><para>IP 限制</para></listitem>
+			<listitem><para>目录访问权限</para></listitem>
+		</orderedlist>
+		<para>操作系统安全</para>
+		<para></para>
+		<para></para>
+		<para></para>
+	</section>
+	<section id="payment.backend">
+		<title>支付派台后台</title>
+		<para></para>
+		<para></para>
+		<para></para>
+		<para></para>
+		<para></para>
+	</section>
+</chapter>

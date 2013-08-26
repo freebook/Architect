@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: chapter.interface.xml 423 2012-06-04 10:51:00Z netkiller $ -->
+<section id="interface">
+    <title>Interface</title>
+	<subtitle>Application Interface</subtitle>
+	<section id="if.sec">
+		<title>接口安全问题</title>
+		<para>来源IP控制，即黑白名单，获取IP地址需要考虑X Forward for</para>
+		<para>IP计数器，单位时间内IP访问次数达到阀值，就提示稍后连接</para>
+		<para>用户名密码认证</para>
+		<para>动态验证码 </para>
+		<para>证书加密</para>
+		<para>md5/sha1 数字摘要 校验</para>
+		<para>SSL / TSL 证书加密</para>
+	</section>
+	<section>
+		<title>访问接口协议</title>
+		<screen>
+机遇http的实现方式有下面几种。
+http协议传统post/get 方式
+soap 简单对象访问协议
+xmlrpc 机遇xml的协议
+json 近年来兴起的一种数据序列化传输方法
+http无状态协议，不能保证连接100%有效性。http方式受限制与浏览器，对于并发控制，超时时间，通信数据长度都有严格的限制。
+例如：一般浏览器运行超时时间都是30秒或60秒，当你通过http方式访问接口时，你的程序因运行超过30秒被浏览器强行中断；另外当你提交的数据超过浏览器限制长度时也会返回错误。
+结局上述问题方法是将借口独立出一台服务器，单独设置超时时间等配制
+http 方式有诸多缺陷，当仍被广泛使用，他的特点是容易开发，开发人员不需要额外学习，如post/get方式
+http 方式的优势是它可以携带Cookie/Session
+TCP/UDP Socket 方式
+TCP 这是唯能保证不间断时时传输手段，开发难度很高，目前web开发人员中能写出高效的多线程socket程序的人很少。
+其中涉及很多知识，例如：进程，线程，锁，列队，进程间通信，共享内存，以及信号处理等等；没有10年功力很难写出安全，稳定，高效，可扩展的程序
+UDP 能够发送大数据包
+		</screen>
+	</section>
+	<section>
+		<title>接口性能问题</title>
+		<screen>
+必须考虑接口最大会话数
+处理请求后到返回数据所花费的时间
+接口应该支持负载均衡，通过增加节点数量，快速扩展；同时添加与撤除节点不会影响接口的通信（包括节点硬件故障）；同时接口应该具备健康状态检查功能。
+		</screen>
+	</section>
+</section>

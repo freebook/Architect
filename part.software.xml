@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<part id="index"><?dbhtml dir="software" ?>
+	<title>Software architecture (软件架构)</title>
+	<title>Software Development &amp; Architecture</title>
+	&chapter.development.xml;
+	&chapter.designpattern.xml;
+	&chapter.framework.xml;
+	&chapter.application.xml;
+	&chapter.rpc.xml;
+
+</part>

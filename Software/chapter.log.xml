@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="log">
+	<title>Logging 日志</title>
+	<section>
+		<title>日志的格式</title>
+
+	</section>
+	<section>
+		<title>日志存贮</title>
+		<section>
+			<title>本地存储</title>
+		</section>
+		<section>
+			<title>远程存储</title>
+		</section>
+	</section>
+	<section id="log4">
+		<title>Log4cpp/Log4j/Log2PHP</title>
+	</section>
+	<section>
+		<title>Remote Syslog</title>
+		<para>syslog</para>
+		<screen>
+syslogd
+----------------------
+main {
+	fork(){
+		socket()
+
+		threading{
+			while buffer() {
+				queue.add()
+			}
+		}
+
+		socket.close()
+	}
+}
+
+storage_engine
+----------------------
+main(){
+		queue()
+		format()
+		save()
+}
+
+save(){
+	open()
+	write()
+	close()
+}
+
+		</screen>
+	</section>
+	<!-- scribe+hadoop+hdfs -->
+</section>

@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<section id="ecshop">
+	<title>技术架构</title>
+	<para>CMS + ECSHOP(ECSHIT)</para>
+	<graphic format="png" fileref="../images/solution/php.png"
+		srccredit="neo" />
+</section>
+
+<section>
+	<title>小型个人网站</title>
+	<para>Varnish -> lighttpd -> fastcgi -> CodeIgniter -> APC Cache -> PostgreSQL</para>
+</section>
+
+<section id="solution.pylons">
+	<title>Python pylons</title>
+	<screenshot>
+		<screeninfo>pylons</screeninfo>
+		<graphic format="png" fileref="../images/solution/pylons.png"
+			srccredit="neo" />
+	</screenshot>
+	<orderedlist>
+		<title>架构说明</title>
+		<listitem>
+			<para>前端使用varnish 做反向代理缓存</para>
+		</listitem>
+		<listitem>
+			<para>Web采用lighttpd,nginx</para>
+		</listitem>
+		<listitem>
+			<para>采用fastcgi/swgi访问python应用程序.</para>
+		</listitem>
+		<listitem>
+			<para>应用程序基于pylons框架.</para>
+		</listitem>
+		<listitem>
+			<para>用户认证OpenLDAP.</para>
+		</listitem>
+		<listitem>
+			<para>数据存储Cassandra.</para>
+		</listitem>
+		<listitem>
+			<para>需要确保数据一致性与事务处理存入PostgreSQL.</para>
+		</listitem>
+		<listitem>
+			<para>数据库与应用程序见使用Memcache隔离.</para>
+		</listitem>
+	</orderedlist>
+</section>
+
+<!--
+<chapter>
+	<title>基于BBS，CMS，Wiki，BLOG的中小型网站</title>
+	<section>
+		<title></title>
+	</section>
+</chapter>
+<chapter>
+	<title>新闻出版类网站</title>
+</chapter>
+
+<chapter>
+	<title>在线视频服务网站</title>
+	<orderedlist>
+		<title>YouTube 架构</title>
+		<listitem>
+			<para>YouTube 大部分代码都是 Python开发的,Web 服务器有部分是 Apache+ FastCGI
+				模式。对于视频内容,视频的缩略图(Thumbnails)则用 Lighttpd 。</para>
+		</listitem>
+		<listitem>
+			<para>数据存储：最初的 DB 只有 10 块硬盘，RAID 10 ，后来追加了一组 RAID 1</para>
+		</listitem>
+		<listitem>
+			<para>YouTube 也用 Memcached.</para>
+		</listitem>
+	</orderedlist>
+	<para></para>
+	<para></para>
+	<para></para>
+	<screen>
+		<![CDATA[
+		]]>
+	</screen>
+</chapter>
+ -->
+<section id="solution.catalyst">
+	<title>Perl 解决方案</title>
+	<screen>
+	<![CDATA[
+                             2.does it
+       _____    1.    _____     exist?   _____   3. no   _____
+      (     ) -----> |     |----------->|     |-------->|     |
+      ( www )        | pxy |   3. yes   | cch |         | app | 4. get request
+      (_____) <----- |_____|<-----------|_____|         |_____|  from app and
+                             6. return   __|__  5. mirror   |    store any
+                               cached   |     |   across    |    cached object
+                               data     | cch |   entire    |    on the cache
+                                        |_____|   cache     |    cluster
+                                         __|__    cluster   |
+                                        |     |             |
+                                        | cch |<------------
+                                        |_____|
+
+
+
+www: apache
+pxy: apache -> rewrite + mod_proxy_cascade
+	]]>
+	</screen>
+	<para>下面是一个通用方案的模板</para>
+	<screenshot>
+		<screeninfo>perl</screeninfo>
+		<graphic format="png" fileref="../images/solution/perl_solution.png"
+			srccredit="neo" />
+	</screenshot>
+	<orderedlist>
+		<listitem>
+			<para>Smart DNS 解决南北互通问题</para>
+		</listitem>
+		<listitem>
+			<para>LVS + HA 负载均衡</para>
+		</listitem>
+		<listitem>
+			<para>Squid 静态缓存</para>
+		</listitem>
+		<listitem>
+			<para>Apache + mod_perl / Lighttpd + fastcgi 任选</para>
+		</listitem>
+		<listitem>
+			<para>Catalyst Framework
+				开发框架,动态perl程序采用http协议头输出在squid节点上缓存，动态数据由memecached提供缓存</para>
+		</listitem>
+		<listitem>
+			<para>Memcached 缓存工作在框架与数据库之间</para>
+		</listitem>
+		<listitem>
+			<para>MySQL Cluster 集群</para>
+		</listitem>
+		<listitem>
+			<para>
+				静态文件生成后通过csync与其他节点实时同步，静态化HTML有lighttpd提供并在squid节点上缓存,当用户访问文件时由负载均衡器分配到指定lighttpd节点上。
+			</para>
+		</listitem>
+		<listitem>
+			<para>图片等多媒体资料存储在分布式文件系统中。</para>
+		</listitem>
+	</orderedlist>
+	<para>将上图中的Catalyst拿掉换成Django就是Python解决方案</para>
+	<graphic format="png" fileref="../images/solution/python_solution.png"
+		srccredit="neo" />
+</section>
+<section id="solution.email">
+	<title>集群邮件系统</title>
+	<para>基于开源的邮件集群系统解决方案:</para>
+	<para></para>
+	<para></para>
+	<para></para>
+	<para>先写到这,有时间再说...886...</para>
+	<orderedlist>
+		<title>目的:</title>
+		<listitem>
+			<para>可伸缩,动态增加,减少节点.方便扩容.</para>
+		</listitem>
+		<listitem>
+			<para>可维护,当节点出现故障时,立即撤出故障节点并更换新节点只需要1分钟完成.</para>
+		</listitem>
+		<listitem>
+			<para></para>
+		</listitem>
+	</orderedlist>
+	<orderedlist>
+		<title>需求:</title>
+		<listitem>
+			<para>反病毒</para>
+		</listitem>
+		<listitem>
+			<para>反拉圾邮件</para>
+		</listitem>
+		<listitem>
+			<para>Webmail</para>
+		</listitem>
+		<listitem>
+			<para>自动备份</para>
+		</listitem>
+		<listitem>
+			<para>POP/SMTP收发邮件与SMTP认证</para>
+		</listitem>
+		<listitem>
+			<para>邮件列表</para>
+		</listitem>
+	</orderedlist>
+	<screenshot>
+		<graphic fileref="../images/solution/postfix_cluster.png" />
+	</screenshot>
+</section>

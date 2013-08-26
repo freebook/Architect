@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="security">
+	<title>服务器安全</title>
+
+	<section id="iptables">
+		<title>防火墙</title>
+		<screen>
+netstat -an|grep tcp|grep 8080|grep -v "xx.xx.xx.xx"|grep ESTABLISHED|awk '{print $5}'|sed 's/\:\:ffff\://g'|awk -F ":" '{print $1}'|sort -r|uniq -c|sort -nk 1|awk '{if ($1>20)print "iptables -I INPUT -s "$2" -m state --state NEW,RELATED,ESTABLISHED -j DROP"}'
+		</screen>
+	</section>
+	<section id="security.web">
+		<title>Web Server</title>
+		<para>web 服务器其下脚本程序的权限：400</para>
+		<para>images 等需要用户上传文件的目录权限：500</para>
+		<section>
+			<title>目录访问控制</title>
+			<screen>
+			<![CDATA[
+
+<Location ~ "/((static/)|(css/)|(images/)).*\.php">
+	Order Deny,Allow
+	Deny from all
+</Location>
+
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>fastcgi 安全</title>
+			<para>nginx 用户 www:www</para>
+			<para>php-fpm 用户 nobody:nogroup</para>
+		</section>
+		<section>
+			<title>php 函数安全</title>
+			<screen>
+exec, system, ini_alter, readlink, symlink, leak, proc_open, popepassthru, chroot, scandir, chgrp, chown, escapeshellcmd, escapeshellarg, shell_exec, proc_get_status, max_execution_time, opendir,readdir, chdir ,dir, unlink,delete,copy,rename
+			</screen>
+		</section>
+		<section>
+			<title>服务器版本信息</title>
+			<screen>
+Apache:
+ServerTokens ProductOnly
+ServerSignature Off
+
+Nginx:
+server_tokens off;
+
+PHP:
+expose_php Off
+
+Tomcat:
+server="Your App Server"
+			</screen>
+			<para>细节参考《Netkiller Linux 手札》</para>
+		</section>
+	</section>
+</chapter>

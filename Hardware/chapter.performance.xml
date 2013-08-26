@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="performance">
+	<title>性能优化</title>
+	<screen>
+[root@www www.mydomain.com]# stat index.html
+  File: `index.html'
+  Size: 90        	Blocks: 8          IO Block: 4096   regular file
+Device: 805h/2053d	Inode: 262561      Links: 1
+Access: (0700/-rwx------)  Uid: (  501/     www)   Gid: (  501/     www)
+Access: 2012-11-30 15:08:21.532743838 +0800
+Modify: 2012-10-17 13:45:35.000000000 +0800
+Change: 2012-11-30 15:38:45.011746038 +0800
+
+[root@www www.mydomain.com]# stat index.html
+  File: `index.html'
+  Size: 90        	Blocks: 8          IO Block: 4096   regular file
+Device: 805h/2053d	Inode: 262561      Links: 1
+Access: (0700/-rwx------)  Uid: (  501/     www)   Gid: (  501/     www)
+Access: 2012-11-30 16:51:19.060878917 +0800
+Modify: 2012-10-17 13:45:35.000000000 +0800
+Change: 2012-11-30 15:38:45.011746038 +0800
+	</screen>
+</chapter>

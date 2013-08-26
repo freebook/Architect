@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="overview">
+	<title>Architecture Overview</title>
+<!--
+企业架构师EA(Enterprise Architect)
+基础结构架构师IA(Infrastructure Architect)
+特定技术架构TSA(Technology-Specific Architect)
+解决方案架构师SA (Solution Architect)
+ -->
+	<para>Overall structure</para>
+	<graphic format="png" fileref="../images/solution/perfect.png" srccredit="neo" />
+
+	<section id="cdn">
+		<title>CDN (Content Delivery Network)</title>
+		<para>I analyzed CDN realization principle, look at the picture below.</para>
+		<graphic format="png" fileref="../images/network/cdn.png" srccredit="neo" />
+		<!-- "data:image/png;base64, " -->
+	</section>
+
+</chapter>

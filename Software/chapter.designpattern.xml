@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="pattern">
+	<title>Design pattern (设计模式)</title>
+	<para>常用设计模式包括</para>
+	<screen>
+Singleton 单件模式
+Abstract Factory 抽象工厂模式
+Builder 生成器模式
+Factory Method 工厂方法模式
+Prototype 原型模式
+Adapter 适配器模式
+Bridge 桥接模式
+Composite 组合模式
+Decorator 装饰模式
+Facade 外观模式
+Flyweight 享元模式
+Proxy 代理模式
+Template Method模板方法
+Command 命令模式
+Interpreter 解释器模式
+Mediator 中介者模式
+Iterator 迭代器模式
+Observer 观察者模式
+Chain Of Responsibility 职责链模式
+Memento 备忘录模式
+State 状态模式
+Strategy 策略模式
+Visitor 访问者模式
+	</screen>
+	<section id="singleton">
+		<title>Singleton 单件模式</title>
+		<screen>
+		<![CDATA[
+<?php
+class Cache {
+
+	private $cache = array();
+	public function __construct(){}
+	public function set($key,$value){
+		if(!empty($key)){
+			$this->cache[$key] = $value;
+		}
+	}
+	public function get($key){
+		if(array_key_exists($key, $this->cache)){
+			print($this->cache[$key]);
+		}
+	}
+
+}
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+<?php
+class Cache {
+
+	private static $instance;
+	private $cache = array();
+	private function __construct(){}
+	public static function getInstance() {
+		if(empty( self::$instance )){
+			self::$instance = new Cache();
+		}
+		return self::$instance;
+	}
+	public function set($key,$value){
+		if(!empty($key)){
+			$this->cache[$key] = $value;
+		}
+	}
+	public function get($key){
+		if(array_key_exists($key, $this->cache)){
+			print($this->cache[$key]);
+		}
+	}
+
+}
+
+$db = Cache::getInstance();
+$db->set('name','netkiller');
+$db->get('name');
+print("\r\n");
+
+$db1 = Cache::getInstance();
+$db1->get('name');
+$db1->set('age','30');
+print("\r\n");
+
+$db2 = Cache::getInstance();
+$db2->get('name');
+$db2->get('age');
+print("\r\n");
+
+unset($db1);
+
+$db->set('name','neo');
+$db->get('age');
+$db2->get('name');
+print("\r\n");
+
+print("---------------------------\r\n");
+// private function __construct(){}
+//$db3 = new Cache();
+//$db3->set('name','netkiller');
+
+//$db1 = new Cache()
+//$db1->get('name');
+		]]>
+		</screen>
+	</section>
+
+</chapter>
+<chapter id="aop">
+	<title>AOP（Aspect Oriented Programming)</title>
+	<screen>
+	<![CDATA[
+<?php
+
+interface Account{
+	public function hello($str);
+}
+
+class Demo implements Account{
+	public function __construct(){}
+	public function hello($str = ""){
+		echo 'Hello: '.$str;
+	}
+	public function __destruct(){}
+}
+
+class Aop
+{
+    private $instance;
+
+    public function __construct($instance){
+        $this->instance = $instance;
+    }
+    public function __call($method, $argument){
+        if(! method_exists($this->instance, $method)){
+            throw new Exception('Undefine function: ' . $method);
+        }
+
+        /* 此处加入before代码 */
+
+        $callBack = array($this->instance, $method);
+        $return = call_user_func_array($callBack, $argument);
+
+        /* 此处加入after代码 */
+
+        return $return;
+	}
+}
+
+class Factory
+{
+	public function __construct(){}
+    public function getInstance(){
+        return new Aop(new Demo());
+    }
+}
+
+try
+{
+    $factory = Factory::getInstance();
+	$factory->hello('world');
+}
+catch(Exception $e)
+{
+    echo 'Caught exception: ',  $e->getMessage();
+}
+
+	]]>
+	</screen>
+</chapter>

@@ -1,0 +1,12 @@
+<chapter id="devops">
+	<title>What is DevOps</title>
+	<para>What is <ulink url="http://en.wikipedia.org/wiki/DevOps">DevOps</ulink>?</para>
+	<para><graphic  format="png" fileref="../images/devops/Devops.png" srccredit="neo" width=""/></para>
+</chapter>
+
+	&devops.environment.xml;
+	&devops.development.xml;
+	&devops.automation.xml;
+
+
+

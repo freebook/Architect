@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="shop">
+	<title>电子商务网站</title>
+	<section id="shop.product">
+		<title>Product</title>
+		<screen>
+		<![CDATA[
+class Product():
+    attribute = []
+    def __init__(self, name = None):
+        if name :
+            self.name = name
+        else:
+            self.name = "Unknown"
+        self.description = "None"
+        self.price = 0
+    def getName(self):
+        return self.name
+    def getDescription(self):
+        return self.description
+
+class Attribute():
+    def __init__(self,product, attr):
+        self.product = product
+        self.product.attribute.append(attr)
+
+class Color():
+    def __init__(self):
+        pass
+    def Red(self):
+        return {'color': 'red'}
+    def Blue(self):
+        return {'color': 'blue'}
+
+class Size():
+    def __init__(self):
+        pass
+    def Small(self):
+        return {'size': 'small'}
+    def Big(self):
+        return {'site': 'big'}
+		]]>
+		</screen>
+	</section>
+	<section id="shop.cart">
+		<title>Cart &amp; Checkout</title>
+		<screen>
+		<![CDATA[
+class Cart:
+    def __init__(self):
+        self.products = []
+    def add(self, obj):
+        self.products.append(obj)
+    def notify(self):
+        for obj in self.products:
+            obj.notify(len(self.products))
+    def price(self):
+        for obj in self.products:
+            print(obj.price)
+
+class Checkout():
+    def __init__(self,cart):
+        self.cart = cart
+        self.products = self.cart.products
+        self.totals = 0
+        self.accounting()
+    def total(self):
+        print(self.totals)
+        return (self.totals)
+    def accounting(self):
+        for obj in self.products:
+            self.totals = self.totals + obj.price
+    def bill(self):
+        pass
+
+class Shipping():
+    def __init__(self,checkout,ship):
+        self.ship = ship
+        checkout.totals = checkout.totals + ship.getCost()
+    def cost(self):
+        print(self.ship.getCost())
+
+class UPS():
+    def __init__(self):
+        self.cost = 15.2
+    def getCost(self):
+        return self.cost
+
+class FedEx(Shipping):
+    def __init__(self):
+        self.cost = 10
+    def getCost(self):
+        return self.cost
+
+class Payment():
+    def __init__(self, checkout):
+        pass
+    def payable(self):
+        pass
+    def tax(self):
+        pass
+		]]>
+		</screen>
+		<section>
+			<title>物流配送插件设计</title>
+			<screen>
+			<![CDATA[
+                         +-------------+     +-----------------------+
+User -> Goods -> Cart -> | Delivery    |  -> | Promotions components | -> Checkout
+                         +-------------+     +-----------------------+
+                         | rule A      |     | Promotion rule 1      |
+                         | rule B      |     | Promotion rule 2      |
+                         | rule C      |     | Promotion rule 3      |
+                         | rule D      |     | Promotion rule 4      |
+                         | rule E      |     | Promotion rule 5      |
+                         +-------------+     +-----------------------+
+			]]>
+			</screen>
+			<para>数据库设计</para>
+
+			<screen>
+			<![CDATA[
+ +--------------+
+ | shipping     |
+ +--------------+
+ | id           |o---+
+ | name         |    |
+ | ...          |    |
+ +--------------+    |    +----------------------+
+                     |    | shipping_rule        |
+ +--------------+    |    +----------------------+
+ | zone         |    |    | id                   |
+ +--------------+    +--->| shipping_id          |
+ | id           |o------->| zone_id              |
+ | name         |         | plugin               |
+ |              |         | ...                  |
+ +--------------+         +----------------------+
+
+ +--------------+
+ | delivery     |
+ +--------------+
+ | id           |
+ | user_id      |o------>
+ | address_id   |o------>
+ +--------------+
+
+			]]>
+			</screen>
+
+		</section>
+	</section>
+	<section id="shop.promotion">
+		<title>促销优惠组件设计</title>
+		<para>设计思想是，在购物车结算前匹配促销规则计算出最终优惠金额</para>
+		<!--
+ITEYE看到有人问：
+现在各大电商都有自己的促销优惠方式，满减，立减，折扣，现金券，返现，积分抵现，赠送积分，使用范围也可能是单种商品，大类商品，单笔订单等，优惠环节涉及购买时，订单时和支付时，可谓非常纷繁复杂。
+现在我正在开发的电子商务平台有商品Goods和货品Product，有订单Order和订单项OrderItem，我希望能尽量减少与现有功能的耦合，而设计一个尽可能全面覆盖上述优惠促销的组件，并可在以后进行扩展，现在初步有一个设计雏形，但是实际过程中发现还是太复杂，并且不得不开始耦合了，所以决定停工重新整理思路。
+希望有能人给点思路和建议
+
+一般市场上的促销分为以下九种：
+一、无偿促销（如附赠、试用）
+二、惠赠促销（如买赠、换赠）
+三、折扣促销（优惠券、优惠卡、打折等）
+四、竞赛促销（智力性竞赛、有奖问答、广告语征集等）
+五、活动促销（如新闻发布会、商品展示会、抽奖与摸奖、娱乐与游戏等）
+六、双赢促销（二个或几个企业合作的促销）
+七、直效促销（挂海报、发传单、商品堆头陈列等）
+八、服务促销（如售后服务、订购订做、送货上门等）
+九、组合促销（就是将以上八种中的二种或以上组合在一起进行促销）
+
+1、产品折价让利
+2、赠品销售
+3、现金返还
+4、凭证优惠
+5、集点购买
+6、联合促销
+7、免费试用
+8、抽奖销售
+9、有奖参与
+10、游戏参与
+11、竞技活动
+12、公关赞助
+13、现场展示
+14、顾客会员俱乐部
+15、人员推介
+16、经销商政策激励
+17、捆绑销售
+18、限量特供
+19、服务举措
+20、老顾客回访
+21、社会热点炒作
+22、产品概念炒作
+23、独特卖点炒作
+24、顾客消费引导
+25、免费咨询指导
+26、其它创新促销策略
+		 -->
+		<screen>
+		<![CDATA[
+                                     +-----------------------+
+User -> Goods -> Cart -> Delivery -> | Promotions components | -> Checkout
+                                     +-----------------------+
+                                     | Promotion rule 1      |
+                                     | Promotion rule 2      |
+                                     | Promotion rule 3      |
+                                     | Promotion rule 4      |
+                                     | Promotion rule 5      |
+                                     +-----------------------+
+		]]>
+		</screen>
+		<para>数据库设计</para>
+		<screen>
+		<![CDATA[
+ +--------------+
+ | goods        |
+ +--------------+
+ | id           |o---+
+ | ...          |    |
+ | ...          |    |
+ +--------------+    |    +----------------------+
+                     |    | goods_promotion_rule |
+ +--------------+    |    +----------------------+
+ | promotion    |    |    | id                   |
+ +--------------+    +--->| goods_id             |
+ | id           |o------->| promotion_id         |
+ | name         |         | ...                  |
+ | plugin       |         | ...                  |
+ +--------------+         +----------------------+
+		]]>
+		</screen>
+		<para>goods_promotion_rule 负责将商品与促销规则关系建立起来</para>
+		<para>promotion 是促销脚本，我方案是使用 lua 编写促销脚本，plugin用于存储lua文件地址</para>
+		<para>这样做的好处是不用因为促销规则改变而重新修改程序，单独制作 lua脚本即可，</para>
+		<para>以上仅仅提供一个思路，你还可以建立一个goods_promotion_group将促销商品分组，然后再与goods_promotion_rule建立关系。 </para>
+		<para>另外在购物车中会同时出现多种促销规则，也是要考虑的。</para>
+	</section>
+<!--
+	<section>
+		<title>流程</title>
+		<section>
+			<title>会员流程</title>
+			<section>
+				<title>注册流程</title>
+			</section>
+			<section>
+				<title>登录流程</title>
+			</section>
+			<section>
+				<title>个人信息管理</title>
+			</section>
+			<section>
+				<title>订单管理流程</title>
+			</section>
+		</section>
+		<section>
+			<title>购物流程</title>
+		</section>
+	</section>
+	<section>
+		<title>会员管理</title>
+		<section>
+			<title>用户管理</title>
+		</section>
+		<section>
+			<title>权限管理</title>
+		</section>
+		<section>
+			<title>角色管理</title>
+		</section>
+		<section>
+			<title>日志管理</title>
+		</section>
+		<section>
+			<title>积分管理</title>
+		</section>
+		<section>
+			<title>回访管理</title>
+		</section>
+		<section>
+			<title>站内消息</title>
+		</section>
+	</section>
+	<section>
+		<title>分类管理</title>
+	</section>
+	<section>
+		<title>商品管理</title>
+		<section>
+			<title>属性管理</title>
+			<section>
+				<title>材质管理</title>
+			</section>
+			<section>
+				<title>尺码管理</title>
+				<para>该属性常用于服装类商品</para>
+				<para></para>
+			</section>
+			<section>
+				<title>颜色管理</title>
+			</section>
+			<section>
+				<title>洗涤方式管理</title>
+			</section>
+		</section>
+
+	</section>
+	<section>
+		<title>品牌管理</title>
+	</section>
+	<section>
+		<title>标签管理</title>
+	</section>
+	<section>
+		<title>销售管理</title>
+		<section>
+			<title>限时销售</title>
+			<para>限时促销</para>
+			<para>限时抢购</para>
+		</section>
+		<section>
+			<title>折扣管理</title>
+		</section>
+		<section>
+			<title>特卖管理</title>
+		</section>
+		<section>
+			<title>推荐管理</title>
+			<para>新品</para>
+			<para>热销</para>
+		</section>
+		<section>
+			<title>赠品管理</title>
+		</section>
+		<section>
+			<title>积分管理</title>
+		</section>
+	</section>
+
+	<section>
+		<title>订单管理</title>
+		<section>
+			<title>订单查询</title>
+		</section>
+		<section>
+			<title>订单处理</title>
+		</section>
+	</section>
+
+	<section>
+		<title>报表管理</title>
+	</section>
+	<section>
+		<title>广告管理</title>
+		<section>
+			<title>广告位管理</title>
+		</section>
+		<section>
+			<title>时间段管理</title>
+		</section>
+	</section>
+	<section>
+		<title>新闻资讯</title>
+		<section>
+			<title>文章分类</title>
+		</section>
+		<section>
+			<title>发布</title>
+		</section>
+	</section>
+
+	<section>
+		<title>系统设置</title>
+		<section>
+			<title>配送方式</title>
+		</section>
+		<section>
+			<title>支付方式</title>
+		</section>
+		<section>
+			<title>汇率管理</title>
+		</section>
+
+		<section>
+			<title></title>
+		</section>
+	</section>
+	<section>
+		<title>消息管理</title>
+		<section>
+			<title>站内消息</title>
+		</section>
+	</section>
+	<section>
+		<title>供应链</title>
+		<section>
+			<title>供应商管理</title>
+		</section>
+		<section>
+			<title>商品采购</title>
+		</section>
+		<section>
+			<title>订货管理</title>
+		</section>
+	</section>
+	<section>
+		<title>物流配送</title>
+		<section>
+			<title>仓位管理</title>
+		</section>
+		<section>
+			<title>库存管理</title>
+		</section>
+		<section>
+			<title>配货管理</title>
+		</section>
+		<section>
+			<title>发货管理</title>
+		</section>
+	</section>
+	<section>
+		<title>推广管理</title>
+		<section>
+			<title>邮件推广</title>
+		</section>
+		<section>
+			<title>站内信息</title>
+		</section>
+		<section>SMS 手机短信</section>
+	</section>
+ -->
+</chapter>

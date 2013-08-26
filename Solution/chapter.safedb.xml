@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter>
+	<title>数据库数据安全与加密</title>
+	<screen>
+SELECT dbo.ing_e_chr_nm420
+('yourCharValue', /* inputData */
+'yourDatabase', /* DBName */
+'dbo', /* DBOwnerName */
+'yourTable', /* tableName */
+'yourColumn', /* columnName */
+0x24A40F6DFB05F379630AC0533E7F6357) /* iv*/
+AS ENCRYPTED_VALUE
+---------------------------------
+ENCRYPTED_VALUE
+0x9F71F06D9F1E123B68D910F0EC34E8C5
+
+
+SELECT dbo.ing_d_chr_nm420
+(0x9F71F06D9F1E123B68D910F0EC34E8C5, /* inputData*/
+'yourDatabase', /* DBName */
+'dbo', /* DBOwnerName */
+'yourTable', /* tableName*/
+'yourColumn', /* columnName*/
+0x24A40F6DFB05F379630AC0533E7F6357) /* iv*/
+AS DECRYPTED_VALUE
+----------------
+DECRYPTED_VALUE
+yourCharValue
+
+
+
+Direct Call to ing_e_chr_cl420
+SELECT dbo.ing_e_chr_cl420
+('yourCharValue', /* inputData*/
+'yourKey', /* keyName */
+'CBC', /* Mode used*/
+'PKCS11Padding', /* Padding used*/
+0x4A40F6DFB05F379630AC0533E7F6357) /* iv*/
+AS ENCRYPTED_VALUE
+----------------
+ENCRYPTED_VALUE
+0x9F71F06D9F1E123B68D910F0EC34E8C5
+
+Direct Call to ing_d_chr_cl420
+SELECT dbo.ing_d_chr_cl420
+(0x9F71F06D9F1E123B68D910F0EC34E8C5,/* inputData*/
+'yourKey', /* keyName */
+'CBC', /* Mode used*/
+'PKCS11Padding', /* Padding used*/
+0x24A40F6DFB05F379630AC0533E7F6357) /* iv*/
+AS DECRYPTED_VALUE
+----------------
+DECRYPTED_VALUE
+yourCharValue
+
+	</screen>
+</chapter>

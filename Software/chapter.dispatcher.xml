@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- $Id: chapter.dispatcher.xml 423 2012-06-04 10:51:00Z netkiller $ -->
+<section id="dispatcher">
+	<title>Dispatcher MVC核心分发器</title>
+
+	<section id="framework.url">
+    	<title>URL设计</title>
+    	<para>一个大型网站，对于URL规划我认为非常重要，这也是为什么我把它单列出来的原因。</para>
+    	<para>当前网站上使用的URL虚虚实实已经不单单是划分目录空间功能，它与程序配合使用，实现复杂的逻辑功能。在应用程序开发框架组成中占有重要的地位。</para>
+		<note><para>无论什么文件系统，每个目录下容纳的子目录和文件是有限制的，并且内容过多会影响文件索引速度，所以合理地划分目录空间很重要</para></note>
+		<para>下面是URL实例仅供参考，稍后我会详细解释他们这样设计的目的是什么和实现方法。</para>
+		<itemizedlist>
+			<listitem><para><![CDATA[http://sina.allyes.com/main/adfclick?db=sina&bid=120294,154641,159584&cid=0,0,0&sid=146767&advid=2618&camid=19961&show=ignore&url=http://web.topxue.com/gj/bdxm/]]></para></listitem>
+			<listitem><para>http://news.sina.com.cn/c/2008-05-22/172315597145.shtml</para></listitem>
+			<listitem><para>http://example.org/bbs/thread-1003872-1-1.html</para></listitem>
+			<listitem><para>http://example.org/news/2008/05/22/1004862.shtml</para></listitem>
+			<listitem><para>http://example.org/uk/en/action,ProductDetailShow_productId,51</para></listitem>
+			<listitem><para>http://example.com/forums/viewforum/59/</para></listitem>
+			<listitem><para>http://example.com/forums/viewthread/80165/</para></listitem>
+			<listitem><para>http://trac.example.com/cgi-bin/trac.cgi/ticket/1286</para></listitem>
+		</itemizedlist>
+		<para>目录设计，以下为真实目录，你在URL看到其它路径都是不存在的。它们是用于rewrite或pathinfo的。</para>
+		<itemizedlist>
+			<listitem><para>images</para></listitem>
+			<listitem><para>framework</para></listitem>
+			<listitem><para>model</para></listitem>
+			<listitem><para>view</para></listitem>
+			<listitem><para>controller</para></listitem>
+			<listitem><para>language</para></listitem>
+			<listitem><para>config</para></listitem>
+			<listitem><para>logs</para></listitem>
+		</itemizedlist>
+		<section>
+			<title>URL 作为MVC 的Controller</title>
+			<para>例子1</para>
+			<para>http://example.com/guestbook/view/59/</para>
+			<para>相当于</para>
+			<para>http://example.com/&lt;controller&gt;/&lt;action&gt;/&lt;id&gt;/</para>
+			<screen>
+class Guestbook extend Controller{
+	public function index(){
+	}
+	public function view($id =1){
+	}
+	public function add(){}
+	public function remove($id){
+	}
+}
+			</screen>
+			<para>一般采用pathinfo技术实现上述功能</para>
+		</section>
+		<section>
+			<title>URL 伪静态化，用于SEO优化</title>
+			<para>http://example.com/guestbook/view/59.html</para>
+			<para>相当于</para>
+			<para>http://example.com/guestbook.php?action=view&amp;id=59</para>
+			<para>一般使用Rewrite技术实现</para>
+		</section>
+	</section>
+	<section id="action">
+		<title>Dispatcher 的实现方式</title>
+		<screen>
+		<![CDATA[
+$action  = $_REQUEST['action'];
+$libname = $_REQUEST['lib'];
+$special = new Advertize ($libname,$action);
+if(method_exists($special, $action)) {
+    $special->$action();
+}else{
+    $special->index();
+}
+		]]>
+		</screen>
+	</section>
+</section>

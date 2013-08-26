@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="hdbms">
+	<title>Hierarchical Database Management System</title>
+	<literallayout>
+	<![CDATA[
+  <Keyspaces>
+    <Keyspace Name="Example">
+
+      <KeysCachedFraction>0.01</KeysCachedFraction>
+
+      <ColumnFamily CompareWith="BytesType" Name="User"/>
+      <ColumnFamily CompareWith="UTF8Type" Name="UserProfile"/>
+      <ColumnFamily CompareWith="UTF8Type" Name="Category"/>
+      <ColumnFamily CompareWith="UTF8Type" Name="Article"/>
+      <ColumnFamily CompareWith="UTF8Type" Name="ArticleComment" />
+      <ColumnFamily CompareWith="UTF8Type" Name="Product"/>
+      <ColumnFamily CompareWith="UTF8Type" Name="ProductComment" />
+      <ColumnFamily CompareWith="UTF8Type" Name="ProductAttribute" CompareSubcolumnsWith="UTF8Type" ColumnType="Super" />
+      <ColumnFamily ColumnType="Super"
+                    CompareWith="UTF8Type"
+                    CompareSubcolumnsWith="UTF8Type"
+                    Name="Address"
+                    Comment="A column family with supercolumns, whose column and subcolumn names are UTF8 strings"/>
+    </Keyspace>
+  </Keyspaces>
+  	]]>
+	</literallayout>	
+	<section>
+		<title>User And Profile</title>
+		<literallayout>
+
+		</literallayout>
+		<screen>
+set Example.User['neo']['uuid']='b5ac78c3-fd5c-40ca-acc2-04d483052fc4'
+set Example.User['neo']['name']='neo'
+set Example.User['neo']['passwd']='mNBhMPAH'
+set Example.User['neo']['email']='openunix@163.com'
+set Example.User['neo']['status']='Y'
+
+get Example.User['neo']
+
+set Example.User['jam']['uuid']='8e07adbd-2dea-40d0-a822-5909f14f9ba2'
+set Example.User['jam']['name']='jam'
+set Example.User['jam']['passwd']='mNBhMPAH'
+set Example.User['jam']['email']='t1@163.com'
+set Example.User['jam']['status']='Y'
+
+get Example.User['jam']
+		</screen>
+		
+		<screen>
+set Example.UserProfile['b5ac78c3-fd5c-40ca-acc2-04d483052fc4']['name']='neo chen'
+set Example.UserProfile['b5ac78c3-fd5c-40ca-acc2-04d483052fc4']['age']='30'
+set Example.UserProfile['b5ac78c3-fd5c-40ca-acc2-04d483052fc4']['gender']='male'
+set Example.UserProfile['b5ac78c3-fd5c-40ca-acc2-04d483052fc4']['Tel']='13113668890'
+set Example.UserProfile['b5ac78c3-fd5c-40ca-acc2-04d483052fc4']['Cellphone']='13113668890'
+
+get Example.UserProfile['b5ac78c3-fd5c-40ca-acc2-04d483052fc4']
+		</screen>
+	</section>
+	<section>
+		<title>Category</title>
+		<screen>
+set Example.Category['85c1acb3-dc81-4626-aea9-c153dc80e74f']['uuid'] = '85c1acb3-dc81-4626-aea9-c153dc80e74f'
+set Example.Category['85c1acb3-dc81-4626-aea9-c153dc80e74f']['name'] = '中国'
+set Example.Category['85c1acb3-dc81-4626-aea9-c153dc80e74f']['description'] = '中华人民共和国'
+
+set Example.Category['002f7fd4-455a-4f16-9cc8-38a43f9d285c']['uuid'] = '002f7fd4-455a-4f16-9cc8-38a43f9d285c'
+set Example.Category['002f7fd4-455a-4f16-9cc8-38a43f9d285c']['name'] = '广东'
+set Example.Category['002f7fd4-455a-4f16-9cc8-38a43f9d285c']['description'] = '广东省'
+set Example.Category['002f7fd4-455a-4f16-9cc8-38a43f9d285c']['parent_uuid'] = '85c1acb3-dc81-4626-aea9-c153dc80e74f'
+
+get Example.Category['002f7fd4-455a-4f16-9cc8-38a43f9d285c']
+		</screen>
+
+	</section>
+	<section>
+		<title>Article</title>
+		<screen>
+set Example.Article['862f0f17-a697-49b3-9bca-68b0cfc873ec']['uuid'] = '862f0f17-a697-49b3-9bca-68b0cfc873ec'
+set Example.Article['862f0f17-a697-49b3-9bca-68b0cfc873ec']['title'] = '文章标题'
+set Example.Article['862f0f17-a697-49b3-9bca-68b0cfc873ec']['content'] = '文章内容'
+set Example.Article['862f0f17-a697-49b3-9bca-68b0cfc873ec']['author'] = 'Neo'
+set Example.Article['862f0f17-a697-49b3-9bca-68b0cfc873ec']['datetime'] = '2010-5-10 12:00:00'
+
+get Example.Article['862f0f17-a697-49b3-9bca-68b0cfc873ec']
+		</screen>	
+	</section>
+	<section>
+		<title>Product and ProductAttribute</title>
+		<para>Product data</para>
+		<screen>
+set Example.Product['b12e97e1-63b4-4042-a3f2-da60005ec081']['uuid'] = 'b12e97e1-63b4-4042-a3f2-da60005ec081'
+set Example.Product['b12e97e1-63b4-4042-a3f2-da60005ec081']['name'] = 'Dell Optiplex 780'
+set Example.Product['b12e97e1-63b4-4042-a3f2-da60005ec081']['description'] = 'Dell Computer'
+set Example.Product['b12e97e1-63b4-4042-a3f2-da60005ec081']['price'] = '5000'
+set Example.Product['b12e97e1-63b4-4042-a3f2-da60005ec081']['image'] = '/www/images/dell780.jpg'
+set Example.Product['b12e97e1-63b4-4042-a3f2-da60005ec081']['category_uuid'] = 'b12e97e1-63b4-4042-a3f2-da60005ec081'
+
+get Example.Product['b12e97e1-63b4-4042-a3f2-da60005ec081']
+		</screen>
+		<para>product attribute</para>
+		<screen>
+set Example.ProductAttribute['b12e97e1-63b4-4042-a3f2-da60005ec081']['color']['box'] = 'silver'
+set Example.ProductAttribute['b12e97e1-63b4-4042-a3f2-da60005ec081']['color']['display'] = 'black'
+set Example.ProductAttribute['b12e97e1-63b4-4042-a3f2-da60005ec081']['monitor']['size'] = '1440*900'
+set Example.ProductAttribute['b12e97e1-63b4-4042-a3f2-da60005ec081']['monitor']['power'] = '12v'
+set Example.ProductAttribute['b12e97e1-63b4-4042-a3f2-da60005ec081']['parameter']['process'] = 'Intel(R) Core(TM)2 Duo CPU E7500 @ 2.93Ghz'
+set Example.ProductAttribute['b12e97e1-63b4-4042-a3f2-da60005ec081']['parameter']['memory'] = '2GB'
+set Example.ProductAttribute['b12e97e1-63b4-4042-a3f2-da60005ec081']['parameter']['harddisk'] = '360GB'
+set Example.ProductAttribute['b12e97e1-63b4-4042-a3f2-da60005ec081']['parameter']['disc'] = 'DVD RW'
+set Example.ProductAttribute['b12e97e1-63b4-4042-a3f2-da60005ec081']['software']['os'] = 'Windows 7'
+set Example.ProductAttribute['b12e97e1-63b4-4042-a3f2-da60005ec081']['software']['compress'] = '7zip'
+set Example.ProductAttribute['b12e97e1-63b4-4042-a3f2-da60005ec081']['software']['media'] = 'Kmplay'
+set Example.ProductAttribute['b12e97e1-63b4-4042-a3f2-da60005ec081']['software']['game'] = 'mine'
+
+get Example.ProductAttribute['b12e97e1-63b4-4042-a3f2-da60005ec081']
+		</screen>
+	</section>
+	<section>
+		<title>Address</title>
+		<screen>
+set Example.Address['b5ac78c3-fd5c-40ca-acc2-04d483052fc4']['home']['street']='Longhua'
+set Example.Address['b5ac78c3-fd5c-40ca-acc2-04d483052fc4']['home']['city']='Shenzhen'
+set Example.Address['b5ac78c3-fd5c-40ca-acc2-04d483052fc4']['home']['zip']='518000'
+
+set Example.Address['b5ac78c3-fd5c-40ca-acc2-04d483052fc4']['work']['street']='CheGongMiao'
+set Example.Address['b5ac78c3-fd5c-40ca-acc2-04d483052fc4']['work']['city']='Shenzhen'
+set Example.Address['b5ac78c3-fd5c-40ca-acc2-04d483052fc4']['work']['zip']='51800'
+
+get Example.Address['b5ac78c3-fd5c-40ca-acc2-04d483052fc4']
+		</screen>
+	</section>
+	<section>
+		<title>练习</title>
+		<screen>
+division
+ id
+ name
+ country_id
+
+department
+ id
+ name
+ up_id
+ path
+
+division_has_department
+
+employee
+ id
+ ename
+ name
+ sex
+ age
+ department_id
+
+devices
+ name
+ sn
+ 
+devices_attribute
+ 
+
+employee_has_devices
+ employee_id
+ devices_id
+		</screen>
+	</section>
+</chapter>

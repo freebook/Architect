@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="firewall">
+	<title>DIY Firewall &amp; VPN</title>
+	<para>If you do not have enough money to buy a firewall, I'll tell you how to do a one.</para>
+	<para>Iptables + TC + Openvpn / PPTP | L2TP</para>
+	<section id="firewall">
+		<title>Firewall</title>
+		<para><graphic  format="png" fileref="../images/network/firewall-mind.png" srccredit="neo" width=""/></para>
+		<para><graphic  format="png" fileref="../images/network/firewall.png" srccredit="neo" width=""/></para>
+	</section>
+	<section id="3lvpn">
+		<title>3 Layer VPN</title>
+		<para><graphic  format="png" fileref="../images/architecture/l2tp-vpn.png" srccredit="neo" width="1000"/></para>
+	</section>
+	<section id="7lvpn">
+		<title>7 Layer VPN</title>
+		<para><graphic  format="png" fileref="../images/architecture/openvpn-workflow.png" srccredit="neo" width="1000"/></para>
+	</section>
+</chapter>
