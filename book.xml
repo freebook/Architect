@@ -46,12 +46,9 @@
 	<!ENTITY chapter.designpattern.xml			SYSTEM "Software/chapter.designpattern.xml">
 	<!ENTITY chapter.rpc.xml 					SYSTEM "Software/chapter.rpc.xml">
 
+	<!ENTITY % database.doctype.entity.xml 		SYSTEM "Database/doctype.entity.xml">
+	%database.doctype.entity.xml;
 	<!ENTITY part.database.xml 					SYSTEM "part.database.xml">
-	<!ENTITY chapter.rdbms.xml 					SYSTEM "Database/chapter.rdbms.xml">
-	<!ENTITY chapter.hdbms.xml					SYSTEM "Database/chapter.hdbms.xml">
-	<!ENTITY chapter.ordbms.xml					SYSTEM "Database/chapter.ordbms.xml">
-	<!ENTITY chapter.sharding.xml				SYSTEM "Database/chapter.sharding.xml">
-	<!ENTITY chapter.data.xml 					SYSTEM "Database/chapter.data.xml">
 
 	<!ENTITY % solution.doctype.entity.xml 		SYSTEM "Solution/doctype.entity.xml">
 	%solution.doctype.entity.xml;

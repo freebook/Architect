@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ENTITY chapter.database.xml				SYSTEM "chapter.database.xml">
+<!ENTITY chapter.mysql.xml 					SYSTEM "chapter.mysql.xml">
+<!ENTITY chapter.pgsql.xml					SYSTEM "chapter.pgsql.xml">
+<!ENTITY chapter.nosql.xml					SYSTEM "chapter.nosql.xml">
+<!ENTITY chapter.sharding.xml				SYSTEM "chapter.sharding.xml">
+<!ENTITY chapter.data.xml 					SYSTEM "chapter.data.xml">

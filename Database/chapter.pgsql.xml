@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="ordbms">
-	<title>ORDBMS / OODBMS</title>
+	<title>PostgreSQL 数据库设计</title>
+	<subtitle>PostgreSQL 数据库 ORDBMS / OODBMS 等特有属性</subtitle>
 	<para>对象相关数据库管理系统(ORDBMS Object – Oriented Relative DBMS)</para>
 	<para></para>
 	<section id="city">

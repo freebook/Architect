@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id: chapter.data.xml 422 2012-06-01 12:39:37Z netkiller $ -->
-<section>
-	<title>常用状态</title>
-	<screen>
+<chapter id="data">
+	<title>数据属性</title>
+	<para>常用属性参考</para>
+		
+	<section id="attr.status">
+		<title>常用状态</title>
+		<screen>
 Canceled
 Canceled Reversal
 Chargeback
@@ -17,11 +21,15 @@ Refunded
 Reversed
 Shipped
 Voided	
-	</screen>
-</section>
-<section id="data">
-    <title>常用属性参考</title>
-	<screen>
+		</screen>
+	</section>
+
+<section id="attr.shoe">
+    <title>商品属性</title>
+    <para>这些属性很常见，你可以将它插入到你的数据库中，方便日后使用</para>
+    <section>
+    	<title>鞋</title>
+    	<screen>
 鞋
 	20
 	20.5
@@ -92,9 +100,12 @@ Voided
 	49.5
 	50
 	51
-	52
-
-裤子
+	52    	
+    	</screen>
+    </section>
+    <section>
+    	<title>裤子</title>
+    	<screen>
 	26
 	26.5
 	27
@@ -111,16 +122,38 @@ Voided
 	34.5
 	35
 	35.5
-	36
-
-服装
+	36    	
+    	</screen>
+    </section>
+    <section>
+    	<title>服装</title>
+    	<screen>
 	42
 	44
 	46
 	48
-	50
-
-内衣
+	50    	
+    	</screen>
+    	<screen>
+其他服装
+	F
+	XF
+	XXS
+	XS
+	S
+	M
+	L
+	XL
+	XXL
+	XXXL
+	XXXXL
+	XXXXXL
+    	
+    	</screen>
+    </section>
+    <section>
+    	<title>内衣</title>
+    	<screen>
 	 70A
 	 70B
 	 70C
@@ -166,30 +199,19 @@ Voided
 	 92S
 	 94S
 	 96S
-	 98S
-
-文胸
+	 98S    	
+    	</screen>
+    	<para>文胸</para>
+    	<screen>
 	A罩
 	B罩
 	C罩
 	D罩
-
-其他服装
-	F
-	XF
-	XXS
-	XS
-	S
-	M
-	L
-	XL
-	XXL
-	XXXL
-	XXXXL
-	XXXXXL
-
-
-隐形眼镜
+    	</screen>
+    </section>
+    <section>
+    	<title>隐形眼镜</title>
+    	<screen>
 	100
 	125
 	150
@@ -216,9 +238,12 @@ Voided
 	850
 	900
 	950
-	1000
-
-戒指
+	1000    	
+    	</screen>
+    </section>
+    <section>
+    	<title>戒指</title>
+		<screen>
 	11
 	12
 	13
@@ -228,9 +253,12 @@ Voided
 	17
 	18
 	19
-	</screen>
-	<screen>
-手机号码分配：
+		</screen>
+	</section>
+</section>	
+	<section id="attr.mobile">
+		<title>手机号码分配</title>
+		<screen>
 
 移动：134，135，136，137，138，139，150，151，152，157，158，159，187，188，147，182
 
@@ -247,8 +275,10 @@ Voided
 中国联通拥有号码段为：130、131、132、156（3G）、186（3G）、185（3G）；6个号段
 
 中国电信拥有号码段为：133、153、189（3G）、180（3G）；4个号码段
-	</screen>
-	<section>
+
+		</screen>
+	</section>
+	<section id="attr.id">
 		<title>身份证</title>
 		<para>http://www.stats.gov.cn/tjbz/xzqhdm/t20120105_402777427.htm</para>		
 		<screen>
@@ -3765,4 +3795,4 @@ Voided
 659004      五家渠市		
 		</screen>
 	</section>
-</section>
+</chapter>

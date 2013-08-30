@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="hdbms">
-	<title>Hierarchical Database Management System</title>
+<chapter id="nosql">
+	<title>NoSQL 数据库设计</title>
+<section id="cassandra">
+	<title>Cassandra</title>
 	<literallayout>
 	<![CDATA[
   <Keyspaces>
@@ -167,4 +169,5 @@ employee_has_devices
  devices_id
 		</screen>
 	</section>
+</section>	
 </chapter>

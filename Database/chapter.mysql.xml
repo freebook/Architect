@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id: chapter.rdbms.xml 654 2013-07-30 07:30:20Z netkiller $ -->
 <chapter id="rdbms">
-	<title>RDBMS 数据库设计</title>
-	<para>仅供参考</para>
+	<title>MySQL 数据库设计</title>
+	<subtitle>MySQL 数据库设计案例</subtitle>
 	<section id="data.dictionary">
 		<title>数据字典</title>
 		<para>我比建议使用传统的《数据字典》，我的做法是E-R图加数据库注释</para>
 		<para>注释伴随表，视图，触发器，过程等等，便于维护</para>
-	</section>
+	</section>	
 	<section id="erd.user">
 		<title>用户帐号表</title>
 		<para>用户帐号或通行证系统设计，下面以我的数库为例讲解。</para>
@@ -657,7 +657,7 @@ select `key`,`value` from config where `key` like 'payment.status.%';
 select `key`,`value` from config where `key` like 'database.?.status';
 		</screen>
 	</section>
-	<section>
+	<section id="captcha">
 		<title>验证码</title>
 		<para>用户注册，登陆等等需要验证码，下面的方案是，请求验证码生成一个随机验证码，存在code中，identity可以存储来源IP/手机号码/Cookie等等用户校验， 5分钟内如果没有被使用就会删除，如果5分钟内被使用也会删除。type 可以存放www,user,bbs,admin.....等等，将所有验证码放在captcha表中统一管理。</para>
 		<para>这个方案主要是考虑没有memcache/redis/apc/xcache等等缓存环境下的解决方案，你也可以将下表改造一下，增加ttl字段用于存放生存时间，而不是采用5分钟一刀切的方案。</para>
@@ -687,6 +687,52 @@ CREATE EVENT `captcha` ON SCHEDULE
 	delete from captcha where type='myid' and ctime < DATE_ADD(now(), INTERVAL -5 MINUTE);
 END
 		]]>
+		</programlisting>
+	</section>
+	<section id="mobile">
+		<title>手机归属地数据库表</title>
+		<para>members_location 表与 members 表是一对一关系，该表只负责存储归属地信息</para>
+		<programlisting language="sql">
+DROP TABLE IF EXISTS `members_location`;
+CREATE TABLE IF NOT EXISTS `members_location` (
+  `id` int(10) unsigned NOT NULL,
+  `province` varchar(50) NOT NULL,
+  `city` varchar(50) NOT NULL,
+  `ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `province` (`province`),
+  KEY `city` (`city`),
+  CONSTRAINT `FK_members_location_members` FOREIGN KEY (`id`) REFERENCES `members` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;		
+		</programlisting>
+		<para>当某些用户符合条件需要查询归属地是，只要将其插入到 members_mobile 表即可。该表使用黑洞引擎并不会存储手机号码，所以明文手机号码安全得到了保障。</para>
+		<programlisting language="sql">
+DROP TABLE IF EXISTS `members_mobile`;
+CREATE TABLE IF NOT EXISTS `members_mobile` (
+  `id` int(10) NOT NULL,
+  `number` varchar(11) NOT NULL
+) ENGINE=BLACKHOLE DEFAULT CHARSET=utf8;		
+		</programlisting>
+		<para>当有数据进入到 members_mobile 时出发器 members_mobile_insert 会工作，去 mobile_location 表中查询归属地后保存在 members_location 表中 </para>
+		<programlisting language="sql">
+DROP TRIGGER IF EXISTS `members_mobile_insert`;
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='';
+DELIMITER //
+CREATE TRIGGER `members_mobile_insert` BEFORE INSERT ON `members_mobile` FOR EACH ROW BEGIN
+	insert into members_location(id,province,city) select NEW.id,mobile_location.province,mobile_location.city from  mobile_location where mobile_location.id = md5(LEFT(NEW.number, 7));
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;		
+		</programlisting>
+		<para>mobile_location 是存储手机号段与归属地信息的数据库</para>
+		<programlisting language="sql">
+DROP TABLE IF EXISTS `mobile_location`;
+CREATE TABLE IF NOT EXISTS `mobile_location` (
+  `id` varchar(50) NOT NULL,
+  `province` varchar(50) DEFAULT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;		
 		</programlisting>
 	</section>
 	&chapter.sharding.xml;
