@@ -54,10 +54,6 @@
 	%solution.doctype.entity.xml;
 	<!ENTITY part.solution.xml 					SYSTEM "part.solution.xml">
 
-	<!ENTITY % hardware.doctype.entity.xml 		SYSTEM "Hardware/doctype.entity.xml">
-	%hardware.doctype.entity.xml;
-	<!ENTITY part.hardware.xml 					SYSTEM "part.hardware.xml">
-
 	<!ENTITY chapter.idc.network.xml 			SYSTEM "Network/chapter.idc.network.xml">
 	<!ENTITY chapter.idc.security.xml 			SYSTEM "Network/chapter.idc.security.xml">
 	<!ENTITY chapter.idc.application.xml 		SYSTEM "Network/chapter.idc.application.xml">
@@ -91,7 +87,7 @@
 
 	&part.architecture.xml;
 	&chapter.system.xml;
-	&part.hardware.xml;
+
 	&part.database.xml;
 	&part.software.xml;
 	&part.testing.xml;
