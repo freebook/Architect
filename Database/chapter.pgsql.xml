@@ -191,4 +191,62 @@ WITH RECURSIVE cte (id, message, author, path, parent_id, depth)  AS (
 		    </screen>
 	    </example>
 	</section>
+	<section id="account">
+		<title>账户表/余额表/消费储蓄表</title>
+		<para>此表适用于购物车等金钱来往账面等等。</para>
+		<programlisting>
+		<![CDATA[
+-- Table: account
+
+-- DROP TABLE account;
+
+CREATE TABLE account
+(
+  id integer NOT NULL DEFAULT nextval('trade_id_seq'::regclass),
+  no character varying(10) NOT NULL, -- 账号
+  balance money NOT NULL DEFAULT 0.00, -- 余额
+  datetime timestamp without time zone NOT NULL DEFAULT (now())::timestamp(0) without time zone,
+  CONSTRAINT account_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE account
+  OWNER TO dba;
+COMMENT ON COLUMN account.no IS '账号';
+COMMENT ON COLUMN account.balance IS '余额';
+
+
+-- Index: account_no_idx
+
+-- DROP INDEX account_no_idx;
+
+CREATE INDEX account_no_idx
+  ON account
+  USING btree
+  (no COLLATE pg_catalog."default");
+		
+		]]>
+		</programlisting>
+		<para>账户结余计算</para>
+		<screen>
+		<![CDATA[
+select acc.*, (select sum(balance)+acc.balance from account as ac where ac.id < acc.id) as profit from account as acc;
+
+test=# select acc.*, (select sum(balance)+acc.balance from account as ac where ac.id < acc.id) as profit from account as acc;
+ id |  no  | balance  |      datetime       | profit
+----+------+----------+---------------------+---------
+  1 | 1000 |    $0.00 | 2013-10-09 10:51:10 |
+  2 | 1000 |   $12.60 | 2013-10-09 10:51:22 |  $12.60
+  4 | 1000 |   $16.80 | 2013-10-09 10:51:42 |  $29.40
+  5 | 1000 |  $100.00 | 2013-10-09 10:51:49 | $129.40
+  6 | 1000 |  $200.00 | 2013-10-09 10:56:35 | $329.40
+  7 | 1000 |   $50.45 | 2013-10-09 10:57:23 | $379.85
+  8 | 1000 |   $75.50 | 2013-10-09 10:57:31 | $455.35
+  9 | 1000 |  -$55.30 | 2013-10-09 10:59:28 | $400.05
+ 10 | 1000 | -$200.00 | 2013-10-09 10:59:44 | $200.05
+(9 rows)
+		]]>		
+		</screen>
+	</section>
 </chapter>
