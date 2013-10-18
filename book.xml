@@ -62,14 +62,6 @@
 	%testing.doctype.entity.xml;
 	<!ENTITY part.testing.xml 					SYSTEM "part.testing.xml">
 
-	<!ENTITY part.devops.xml					SYSTEM "part.devops.xml">
-	<!ENTITY chapter.devops.xml					SYSTEM "DevOps/chapter.devops.xml">
-	<!ENTITY devops.environment.xml				SYSTEM "DevOps/chapter.environment.xml">
-	<!ENTITY devops.development.xml				SYSTEM "DevOps/chapter.development.xml">
-	<!ENTITY devops.automation.xml				SYSTEM "DevOps/chapter.automation.xml">
-	<!ENTITY devops.automation.deployment.xml 	SYSTEM "DevOps/chapter.automation.deployment.xml">
-	<!ENTITY chapter.automation.utility.xml		SYSTEM "DevOps/chapter.automation.utility.xml">
-
 ] >
 <book xml:base="http://netkiller.github.com/architect/"
 	xmlns="http://docbook.org/ns/docbook" xml:lang="zh-cn">
@@ -92,7 +84,6 @@
 	&part.software.xml;
 	&part.testing.xml;
 
-	&part.devops.xml;
 	&part.solution.xml;
 
 	&book.appendix;

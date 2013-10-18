@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<part id="index"><?dbhtml dir="devops"?>
-	<title>DevOps</title>
-	&chapter.devops.xml;
-</part>
