@@ -815,5 +815,4 @@ CREATE TABLE IF NOT EXISTS `mobile_location` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;		
 		</programlisting>
 	</section>
-	&chapter.sharding.xml;
 </chapter>

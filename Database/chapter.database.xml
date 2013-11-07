@@ -10,5 +10,6 @@ Lotus Notes (the most popular HDBMS in use today)
 
 	&chapter.mysql.xml;
 	&chapter.pgsql.xml;
+	&chapter.sharding.xml;
 	&chapter.nosql.xml;
 	&chapter.data.xml;
