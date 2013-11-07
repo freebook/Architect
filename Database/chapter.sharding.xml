@@ -24,5 +24,106 @@ ALTER TABLE goods PARTITION BY HASH(YEAR(FROM_UNIXTIME(add_time))) PARTITIONS 4;
 	</section>
 	<section id="sharding.vertical">
 		<title>vertical</title>
+
+	</section>
+	<section>
+		<title>新闻数据库分表案例</title>
+		<para>这里我通过一个新闻网站为例，解决分表的问题</para>
+		<para>避免开发中经常拼接表，我采用一个一劳永逸的方法，建立一个 news 表使用黑洞引擎，然后通过出发器将数据分流到匹配的表中。同时采用uuid替代数字序列，可以保证未来数年不会出现ID用尽。</para>
+		<programlisting>
+		<![CDATA[
+CREATE TABLE IF NOT EXISTS `news` (
+  `uuid` varchar(36) NOT NULL COMMENT '唯一ID',
+  `title` varchar(50) NOT NULL COMMENT '新闻标题',
+  `body` text NOT NULL COMMENT '新闻正文',
+  `ctime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `mtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `atime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '访问时间',
+  PRIMARY KEY (`uuid`)
+) ENGINE=BLACKHOLE DEFAULT CHARSET=utf8;
+		]]>
+		</programlisting>
+		<para>该表仅仅用于举例，结构比较简单。接下来创建年份分表，你也可以每个月一个表，根据你的许下灵活调整。表结构与上面的news表相同，注意 ENGINE=InnoDB。</para>
+		<programlisting>
+		<![CDATA[
+CREATE TABLE IF NOT EXISTS `news_2012` (
+  `uuid` varchar(36) NOT NULL COMMENT '唯一ID',
+  `title` varchar(50) NOT NULL COMMENT '新闻标题',
+  `body` text NOT NULL COMMENT '新闻正文',
+  `ctime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `mtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `atime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '访问时间',
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='news 表';
+
+CREATE TABLE IF NOT EXISTS `news_2013` (
+  `uuid` varchar(36) NOT NULL COMMENT '唯一ID',
+  `title` varchar(50) NOT NULL COMMENT '新闻标题',
+  `body` text NOT NULL COMMENT '新闻正文',
+  `ctime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `mtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `atime` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '访问时间',
+  PRIMARY KEY (`uuid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='news 表';
+		]]>
+		</programlisting>
+		<para>uuid 索引表，主要的功能是通过uuid查询出该记录在那张表中。更好的方案是将数据放入solr中处理，包括标题与内容搜索等等。</para>
+		<programlisting>
+		<![CDATA[
+CREATE TABLE `news_index` (
+	`uuid` VARCHAR(36) NOT NULL,
+	`tbl_name` VARCHAR(10) NOT NULL,
+	PRIMARY KEY (`uuid`)
+)
+COMMENT='news uuid 索引表'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+
+		]]>
+		</programlisting>
+		<para>news_insert 过程，用于向目标表中插入数据，可以单独call 但不建议。因为insert 远比 call 更通用，要考虑移植性与通用性</para>
+		<programlisting>
+		<![CDATA[
+DELIMITER //
+CREATE DEFINER=`neo`@`%` PROCEDURE `news_insert`(IN `uuid` vARCHAR(36), IN `title` VARCHAR(50), IN `body` TEXT, IN `ctime` TIMESTAMP)
+BEGIN
+	if year(ctime) = '2012' then
+		insert into news_2012(uuid,title,body,ctime) values(uuid,title, body, ctime);
+	end if;
+	if year(ctime) = '2013' then
+		insert into news_2013(uuid,title,body,ctime) values(uuid,title, body, ctime);
+	end if;
+	insert into news_index values(uuid, year(ctime));
+END//
+DELIMITER ;
+		]]>
+		</programlisting>
+		<para>插入触发器，负责获取 uuid 然后调用存储过程</para>
+		<programlisting>
+		<![CDATA[
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='';
+DELIMITER //
+CREATE TRIGGER `news_before_insert` BEFORE INSERT ON `news` FOR EACH ROW BEGIN
+	IF new.uuid is null or new.uuid = '' or length(new.uuid) != 36 THEN
+		set new.uuid=uuid();
+	END IF;
+	call news_insert(new.uuid,new.title,new.body,new.ctime);
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+		]]>
+		</programlisting>
+		<para>这个触发器用户保护表中的 uuid 值不被修改。</para>
+		<programlisting>
+		<![CDATA[
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='';
+DELIMITER //
+CREATE TRIGGER `news_before_update` BEFORE UPDATE ON `news_2013` FOR EACH ROW BEGIN
+	set new.uuid = old.uuid;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+		]]>
+		</programlisting>
 	</section>
 </section>

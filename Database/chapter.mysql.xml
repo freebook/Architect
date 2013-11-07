@@ -646,15 +646,17 @@ SUBPARTITION BY KEY (facility)
 		<title>uuid 替代传统序列 id</title>
 		<screen>
 		<![CDATA[
-
 DROP TABLE IF EXISTS `uuid_test`;
 CREATE TABLE IF NOT EXISTS `uuid_test` (
   `uuid` varchar(36) NOT NULL,
   `name` varchar(20) NOT NULL,
   PRIMARY KEY (`uuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='uuid 测试';
-
-
+		]]>
+		</screen>
+		<para>插入触发器</para>
+		<screen>
+		<![CDATA[
 DROP TRIGGER IF EXISTS `uuid_test_insert`;
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='';
 DELIMITER //
@@ -665,7 +667,11 @@ CREATE TRIGGER `uuid_test_insert` BEFORE INSERT ON `uuid_test` FOR EACH ROW BEGI
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;
-
+		]]>
+		</screen>
+		<para>ID放撰改触发器</para>
+		<screen>
+		<![CDATA[
 DROP TRIGGER IF EXISTS `uuid_test_update`;
 SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='';
 DELIMITER //
