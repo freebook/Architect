@@ -3,17 +3,7 @@
 <section id="interface">
     <title>Interface</title>
 	<subtitle>Application Interface</subtitle>
-	<section id="if.sec">
-		<title>接口安全问题</title>
-		<para>来源IP控制，即黑白名单，获取IP地址需要考虑X Forward for</para>
-		<para>IP计数器，单位时间内IP访问次数达到阀值，就提示稍后连接</para>
-		<para>用户名密码认证</para>
-		<para>动态验证码 </para>
-		<para>证书加密</para>
-		<para>md5/sha1 数字摘要 校验</para>
-		<para>SSL / TSL 证书加密</para>
-	</section>
-	<section>
+	<section id="interface.protocol">
 		<title>访问接口协议</title>
 		<screen>
 机遇http的实现方式有下面几种。
@@ -32,7 +22,7 @@ TCP 这是唯能保证不间断时时传输手段，开发难度很高，目前w
 UDP 能够发送大数据包
 		</screen>
 	</section>
-	<section>
+	<section id="interface.session">
 		<title>接口性能问题</title>
 		<screen>
 必须考虑接口最大会话数
@@ -40,4 +30,19 @@ UDP 能够发送大数据包
 接口应该支持负载均衡，通过增加节点数量，快速扩展；同时添加与撤除节点不会影响接口的通信（包括节点硬件故障）；同时接口应该具备健康状态检查功能。
 		</screen>
 	</section>
+	<section id="interface.security">
+		<title>接口安全问题</title>
+		<para>来源IP控制，即黑白名单，获取IP地址需要考虑X Forward for</para>
+		<para>IP计数器，单位时间内IP访问次数达到阀值，就提示稍后连接</para>
+		<para>用户名密码认证与访问权限</para>
+		<para>动态验证码 </para>
+		<para>证书加密</para>
+		<para>md5/sha1 数字摘要 校验</para>
+		<para>SSL / TSL 证书加密</para>
+		<section>
+			<title>访问权限</title>
+			<para>接口访问权限应该具备功能</para>
+			<para>颗粒度精确到每个操作方法</para>
+		</section>
+	</section>	
 </section>
