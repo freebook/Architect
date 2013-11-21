@@ -7,7 +7,7 @@
 		<title>数据字典</title>
 		<para>我比建议使用传统的《数据字典》，我的做法是E-R图加数据库注释</para>
 		<para>注释伴随表，视图，触发器，过程等等，便于维护</para>
-	</section>	
+	</section>
 	<section id="erd.user">
 		<title>用户帐号表</title>
 		<para>用户帐号或通行证系统设计，下面以我的数库为例讲解。</para>
@@ -451,6 +451,37 @@ ENGINE=InnoDB;
 		    </screen>
 		</section>
 	</section>
+	<section id="product.store">
+		<title>商品库存表</title>
+		<screen>
+		<![CDATA[
++------------+              +----------------+               +------------------+
+| product    |              | product_store  |               | user_order       |
++------------+              +----------------+               +------------------+
+|id          | <--+         |id              | <---+         |id                |
+|price       |    +--1:1--o |product_id      |     |         |user_id           |
+|quantity    |              |sn              |     +--1:n--o |product_store_id  |
+|...         |              |status          |               |                  |
+|category_id |              +----------------+               +------------------+
++------------+
+		]]>
+		</screen>
+		<para>product 是产品表总表，product_store每个产品一条记录，同时将sn编号对应到物理产品，这时记录库存需要</para>
+		<programlisting>
+select count(id) from product_store where product_id='xxxxx' and status = 'sell'
+		</programlisting>
+		<para>商品销售</para>
+		<programlisting>
+begin;
+select id from product_store where status = 'sale' and product_id='xxxxx' for update;
+insert into user_order(user_id,product_store_id) values('xxxxxx','xxxxx');
+update product_store set status = 'sold' where status = 'sale' and product_id='xxxxx';
+commit;
+		</programlisting>
+		<para>售出的商品与用户的订单项一一对应的。</para>
+		<para>注意上面，这里使用了排它锁与事务处理，防止一个商品卖给两个人。</para>
+		<para>根据上面的思路我们可以将商品属性与product_store表进行一对一匹配，这样每个商品都有它自己的商品属性，甚至价格也可以移到product_store表中，例如不同颜色售价不同。</para>
+	</section>
 	<section id="erd.i18n">
 		<title>国际化语言表</title>
 		<para></para>
@@ -584,7 +615,7 @@ CREATE TABLE `logging` (
 SUBPARTITION BY HASH (MONTH(asctime))
 (PARTITION p0 VALUES LESS THAN (1990) ENGINE = InnoDB,
  PARTITION p1 VALUES LESS THAN (2000) ENGINE = InnoDB,
- PARTITION p2 VALUES LESS THAN MAXVALUE ENGINE = InnoDB) */$$		
+ PARTITION p2 VALUES LESS THAN MAXVALUE ENGINE = InnoDB) */$$
 		]]>
 		</programlisting>
 		<para>分表+分区，每年分表一次，每个分区中保存一个月的数据</para>
@@ -612,7 +643,7 @@ SUBPARTITION BY KEY (facility)
  PARTITION part8 VALUES IN (9) ENGINE = InnoDB,
  PARTITION part9 VALUES IN (10) ENGINE = InnoDB,
  PARTITION part10 VALUES IN (11) ENGINE = InnoDB,
- PARTITION part11 VALUES IN (12) ENGINE = InnoDB) */$$		
+ PARTITION part11 VALUES IN (12) ENGINE = InnoDB) */$$
 		</programlisting>
 		<para>命名分区</para>
 		<programlisting>
@@ -639,7 +670,7 @@ SUBPARTITION BY KEY (facility)
  PARTITION September VALUES IN (9) ENGINE = InnoDB,
  PARTITION October VALUES IN (10) ENGINE = InnoDB,
  PARTITION November VALUES IN (11) ENGINE = InnoDB,
- PARTITION December VALUES IN (12) ENGINE = InnoDB) */$$		
+ PARTITION December VALUES IN (12) ENGINE = InnoDB) */$$
 		</programlisting>
 	</section>
 	<section id="uuid">
@@ -783,7 +814,7 @@ CREATE TABLE IF NOT EXISTS `members_location` (
   KEY `province` (`province`),
   KEY `city` (`city`),
   CONSTRAINT `FK_members_location_members` FOREIGN KEY (`id`) REFERENCES `members` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;		
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		</programlisting>
 		<para>当某些用户符合条件需要查询归属地是，只要将其插入到 members_mobile 表即可。该表使用黑洞引擎并不会存储手机号码，所以明文手机号码安全得到了保障。</para>
 		<programlisting language="sql">
@@ -791,7 +822,7 @@ DROP TABLE IF EXISTS `members_mobile`;
 CREATE TABLE IF NOT EXISTS `members_mobile` (
   `id` int(10) NOT NULL,
   `number` varchar(11) NOT NULL
-) ENGINE=BLACKHOLE DEFAULT CHARSET=utf8;		
+) ENGINE=BLACKHOLE DEFAULT CHARSET=utf8;
 		</programlisting>
 		<para>当有数据进入到 members_mobile 时出发器 members_mobile_insert 会工作，去 mobile_location 表中查询归属地后保存在 members_location 表中 </para>
 		<programlisting language="sql">
@@ -802,7 +833,7 @@ CREATE TRIGGER `members_mobile_insert` BEFORE INSERT ON `members_mobile` FOR EAC
 	insert into members_location(id,province,city) select NEW.id,mobile_location.province,mobile_location.city from  mobile_location where mobile_location.id = md5(LEFT(NEW.number, 7));
 END//
 DELIMITER ;
-SET SQL_MODE=@OLDTMP_SQL_MODE;		
+SET SQL_MODE=@OLDTMP_SQL_MODE;
 		</programlisting>
 		<para>mobile_location 是存储手机号段与归属地信息的数据库</para>
 		<programlisting language="sql">
@@ -812,7 +843,7 @@ CREATE TABLE IF NOT EXISTS `mobile_location` (
   `province` varchar(50) DEFAULT NULL,
   `city` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;		
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		</programlisting>
 	</section>
 </chapter>
