@@ -2,6 +2,27 @@
 <chapter id="system">
 	<title>Systems architecture(系统架构)</title>
 	<subtitle>Systems architecture</subtitle>
+	<screen>
+	<![CDATA[
+                                       .---> media [mp3, wma, wmv, rmvb, asf, divx]-\
+                                      /                                       +------------+
+                                     .-----> photo [gif, jpg, png, swf] ----> | Raid Array | <--.
+    /------------------- <---------\/                                         +------------+     \
+user -> dns -> load balancing -> squid -> [cache] <----[html]----\                  /            |
+                 \ \ \______<______/\                      +-------------+         /             |
+                  \ \                \-----> web app ----> | html        |--------^              |
+                   \ \____________________________/\       | php,jsp,cgi |                       |
+                    \                               \      +-------------+                       |
+                     \                               `-----> memcached [node1, node2, node(n)]   |
+                      \__________________________________________/\                              |
+                                                                   `------> Database cluster     |
+    +--------------------------------------+                                      \              |
+    | Author: neo chen <openunix#163.com>  |                                       `-------------+
+    | Nickname: netkiller                  |
+    | Homepage: http://netkiller.github.io |
+    +--------------------------------------+
+	]]>
+	</screen>	
 	<section id="cluster">
 		<title>集群(Cluster)</title>
 		<!-- standalone system -->
