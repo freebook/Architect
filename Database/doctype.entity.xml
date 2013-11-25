@@ -5,3 +5,4 @@
 <!ENTITY chapter.nosql.xml					SYSTEM "chapter.nosql.xml">
 <!ENTITY chapter.sharding.xml				SYSTEM "chapter.sharding.xml">
 <!ENTITY chapter.data.xml 					SYSTEM "chapter.data.xml">
+<!ENTITY chapter.parallel.xml				SYSTEM "chapter.parallel.xml">

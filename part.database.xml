@@ -4,4 +4,5 @@
 	<subtitle>RDBMS / ORDBMS / OODBMS / HDMS 数据库设计</subtitle>
 	<para>下面数据库设计实例中，大部分使用MySQL,PostgreSQL为例</para>
 	&chapter.database.xml;
+	&chapter.parallel.xml;
 </part>
