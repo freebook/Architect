@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="security">
+	<title>数据库安全</title>
+	<section id="column">
+		<title>保护表字段</title>
+		<para>通过触发器，使之无法修改某些字段的数据，同时不影响修改其他字段。</para>
+		<programlisting>
+DROP TRIGGER IF EXISTS `members`;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='';
+DELIMITER //
+CREATE TRIGGER `members` BEFORE UPDATE ON `members` FOR EACH ROW BEGIN
+	set new.name 		= old.name;
+	set new.cellphone 	= old.cellphone;
+	set new.email 		= old.email;
+    set new.password 	= old.password;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLD_SQL_MODE;
+		</programlisting>
+		<para>再举一个例子</para>
+		<programlisting>
+CREATE TABLE `account` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`user` VARCHAR(50) NOT NULL DEFAULT '0',
+	`cash` FLOAT NOT NULL DEFAULT '0',
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+		</programlisting>
+		<para>每一次数据变化新增一条数据</para>
+		<programlisting>
+INSERT INTO `test`.`account` (`user`, `cash`) VALUES ('neo', -10);
+INSERT INTO `test`.`account` (`user`, `cash`) VALUES ('neo', -5);
+INSERT INTO `test`.`account` (`user`, `cash`) VALUES ('neo', 30);
+INSERT INTO `test`.`account` (`user`, `cash`) VALUES ('neo', -20);
+		</programlisting>		
+		<para>保护用户的余额不被修改</para>
+		<programlisting>
+DROP TRIGGER IF EXISTS `account`;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='';
+DELIMITER //
+CREATE TRIGGER `account` BEFORE UPDATE ON `account` FOR EACH ROW BEGIN
+	set new.cash 		= old.cash;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLD_SQL_MODE;		
+		</programlisting>
+	</section>
+</chapter>
