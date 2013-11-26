@@ -8,7 +8,7 @@
 		<para>我比建议使用传统的《数据字典》，我的做法是E-R图加数据库注释</para>
 		<para>注释伴随表，视图，触发器，过程等等，便于维护</para>
 	</section>
-	<section id="erd.user">
+	<section id="user">
 		<title>用户帐号表</title>
 		<para>用户帐号或通行证系统设计，下面以我的数库为例讲解。</para>
 		<para>我一般使用两个表 passport，profile 完成网站会员系统。</para>
@@ -40,7 +40,7 @@
 		]]>
 		</programlisting>
 	</section>
-	<section id="erd.category">
+	<section id="category">
 		<title>分类表设计</title>
 		<section>
 			<title>树形分类表</title>
@@ -237,7 +237,7 @@ ENGINE=InnoDB;
 			</example>
 		</section>
 	</section>
-	<section id="erd.article">
+	<section id="article">
 		<title>文章表设计</title>
 		<para>看具体情况，拆分表，可按“日”，“月”，“年”等等</para>
 		<programlisting role="sql">
@@ -325,7 +325,7 @@ ENGINE=InnoDB;
 			<para>显示title前20个汉字并在后尾添加省略号。</para>
 		</section>
 	</section>
-	<section id="erd.feedback">
+	<section id="feedback">
 		<title>评论表</title>
 		<programlisting role="sql">
 		<![CDATA[
@@ -353,7 +353,7 @@ ENGINE=InnoDB;
 		]]>
 		</programlisting>
 	</section>
-	<section id="erd.count">
+	<section id="count">
 		<title>记录点击率，阅读次数，及评分表</title>
 		<programlisting>
 		<![CDATA[
@@ -371,7 +371,7 @@ ENGINE=InnoDB;
 		]]>
 		</programlisting>
 	</section>
-	<section id="erd.product">
+	<section id="product">
 		<title>产品属性表</title>
 		<section>
 			<title>简单实现</title>
@@ -482,7 +482,7 @@ commit;
 		<para>注意上面，这里使用了排它锁与事务处理，防止一个商品卖给两个人。</para>
 		<para>根据上面的思路我们可以将商品属性与product_store表进行一对一匹配，这样每个商品都有它自己的商品属性，甚至价格也可以移到product_store表中，例如不同颜色售价不同。</para>
 	</section>
-	<section id="erd.i18n">
+	<section id="i18n">
 		<title>国际化语言表</title>
 		<para></para>
 		<programlisting>
@@ -509,7 +509,7 @@ commit;
 		]]>
 		</programlisting>
 	</section>
-	<section id="erd.workflow">
+	<section id="workflow">
 		<title>Workflow</title>
 		<programlisting>
 		<![CDATA[
@@ -534,7 +534,7 @@ commit;
 		]]>
 		</programlisting>
 	</section>
-	<section id="erd.version">
+	<section id="version">
 		<title>内容版本控制</title>
 		<para>主表</para>
 		<programlisting role="sql">

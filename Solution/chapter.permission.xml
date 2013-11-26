@@ -133,7 +133,7 @@ $news->get();
 	
 	]]>
 	</programlisting>
-	<section>
+	<section id="service.permission">
 		<title>权限控制与实现</title>
 		<para>权限来自下面数组数据，这里仅仅提供一个例子，管理权限你可以单独实现一个class，实现供权限管理功能，最终后转化为下面的数据结构即可。例如你可以将权限写入数据库，最终拼装如下数字让Permission顺利load即可。</para>
 		<screen>
@@ -168,13 +168,13 @@ array(
 		</screen>
 		<para>public function is_allowed($class, $fun) 用户判断权限是否合法。</para>
 	</section>
-	<section>
+	<section id="service.demo">
 		<title>演示</title>
 		<para>这里提供了一个 News 类，用于演示怎样控制每个function的权限。</para>
 		<para>同时还提供了一个简单的 Logging 类用于记录程序运行日志。</para>
 		<para>有了上面的例子就可以将News应用于SOAP一类Web Service上，用来控制每个方法的权限</para>
 	</section>
-	<section>
+	<section id="service.firewall">
 		<title>增加7 Layer防火墙</title>
 		<para>上面仅仅对于方法控制权限，接下来我们为程序增加7层防火墙功能</para>
 		<programlisting>

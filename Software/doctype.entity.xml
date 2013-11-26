@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!ENTITY chapter.development.xml 			SYSTEM "chapter.development.xml">
+	<!ENTITY chapter.framework.xml 				SYSTEM "chapter.framework.xml">
+	<!ENTITY chapter.defect.xml 				SYSTEM "chapter.defect.xml">
+	<!ENTITY chapter.development.flow.xml 		SYSTEM "chapter.development.flow.xml">
+	<!ENTITY chapter.development.method.xml 	SYSTEM "chapter.development.method.xml">
+	<!ENTITY chapter.search.xml					SYSTEM "chapter.search.xml">
+	<!ENTITY chapter.plugin.xml 				SYSTEM "chapter.plugin.xml">
+	<!ENTITY chapter.log.xml 					SYSTEM "chapter.log.xml">
+	<!ENTITY chapter.dispatcher.xml				SYSTEM "chapter.dispatcher.xml">
+	<!ENTITY chapter.interface.xml				SYSTEM "chapter.interface.xml">
+	<!ENTITY chapter.application.xml			SYSTEM "chapter.application.xml">
+	<!ENTITY chapter.designpattern.xml			SYSTEM "chapter.designpattern.xml">
+	<!ENTITY chapter.rpc.xml 					SYSTEM "chapter.rpc.xml">

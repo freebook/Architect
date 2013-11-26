@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <chapter id="test">
 	<title>Automatic Testing</title>
 	<section id="test.cluster">
 		<title>Cluster Testing</title>
 		<para><graphic  format="png" fileref="../images/test/testing.png" srccredit="neo" width=""/></para>
 	</section>
-	<section>
+	<section id="test.static">
 		<title>静态内容并发测试</title>
 		<para>apache 自带 ab 测试命令</para>
 	</section>
-	<section>
+	<section id="test.dynamic">
 		<title>动态内容测试</title>
 		<para>简单动态内容展示，可以 apache 自带 ab 测试命令</para>
 	</section>
-	<section>
+	<section id="test.Logical">
 		<title>业务逻辑并发能力</title>
 		<para>如测试一定时间内，系统能承受多少笔交易</para>
 		<para>对于简单的业务逻辑测试可以使用curl模拟，在使用多线程进行压力</para>

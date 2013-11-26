@@ -1,27 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section>
-	<title>性能优化</title>
-	<section>
-		<title>尽量使用单引号</title>
-		<para>尽量使用单引号，迫不得已才使用双引号，因为双引号会处理转义字符。</para>
-	</section>
-
-</section>
-<section id="security">
+<chapter id="defect">
 	<title>信息安全</title>
 	<para>SQL注入，OS命令注入，缓冲溢出、跨站脚本、缺少验证、缺少认证、使用硬编码证书、敏感数据忘记加密、不受限制上传文件类型、依赖不可信的输入、用不必要的高级权限执行任务、跨站请求伪造....</para>
-	<section>
+	<section id="defect.csrf">
 		<title>CSRF（Cross-site request forgery）跨站请求伪造</title>
 		<subtitle>CSRF（Cross-site request forgery），中文名称：跨站请求伪造，也被称为：one click attack/session riding，缩写为：CSRF/XSRF</subtitle>
 
 	</section>
-	<section id="security.login">
+	<section id="defect.session">
+		<title>Session 撰改演示</title>
+		<para>这是一个计数器的例子</para>
+		<screen>
+		<![CDATA[
+<?php
+session_start();
+
+if(isset($_SESSION['count'])){
+	$_SESSION['count']++;
+}else{
+	$_SESSION['count'] = 1;
+}
+print($_SESSION['count']);
+		]]>
+		</screen>
+		<para>首先在IE浏览器上访问该文件，查看目前计数器数值。</para>
+		<para>现在开始演示如果更改用户的Session数据</para>
+		<para>通过Firebug等工具，查看PHPSESSID的值，例如我的是 75ff0dd6a0824a2b607777b58c27f78a</para>
+		<screen>
+cat /tmp/sess_75ff0dd6a0824a2b607777b58c27f78a
+count|i:100;
+		</screen>
+		<para>将 count|i:100; 改为  count|i:1000; 再次去浏览器刷新看看现在计数器的数值是多少。</para>
+		<para>通过这种方法可以实现，提升权限，绕过登录等等。</para>
+		<para>由于session 存储在 tmp 目录下，一旦网站被注入就来带安全隐患</para>
+	</section>	
+	<section id="defect.login">
 		<title>用户注册与登录安全</title>
 		<para>用户注册与登录除了使用图片验证外，还应该记录来源IP，同时限制用户使用自动注册工具</para>
 	</section>
-	<section id="security.dir">
+	<section id="defect.dir">
 		<title>目录文件与权限</title>
-		<section id="security.owner">
+		<section id="defect.owner">
 			<title>读写权限</title>
 			<para>Apache进程所有者: nobody</para>
 			<para>程序所有者: www</para>
@@ -113,13 +132,13 @@ chmod 744 -R /www/www.example.com/tmp
 			</example>
 		</section>
 	</section>
-	<section id="security.password">
+	<section id="defect.password">
 		<title>密码安全</title>
 		<para>虽然md5摘要算法作为密码仍不能保证安全。我一般采用加入干扰词的方法避免被猜中</para>
 		<para>password = md5/sha1(password + salt)</para>
 	</section>
 
-	<section>
+	<section id="defect.sql">
 		<title>注入检查</title>
 		<para>我们需要在框架的URL(PATHINFO)对象中加入检查功能</para>
 		<screen>
@@ -130,7 +149,7 @@ chmod 744 -R /www/www.example.com/tmp
 		<para>post 数据还有上传文件也做同样检查</para>
 		<para>这里仅仅给你一个思路，实现起来也并不难</para>
 	</section>
-	<section>
+	<section id="defect.loop">
 		<title>防止恶意刷新与重复提交</title>
 		<para>在开发中会经常会遇到这样的需求，例如投票模块，要防止恶意刷票，下面来介绍几种解决方按：</para>
 		<screen>
@@ -162,7 +181,7 @@ chmod 744 -R /www/www.example.com/tmp
 
 		</screen>
 	</section>
-	<section>
+	<section id="defect.error">
 		<title>屏蔽出错信息</title>
 		<section>
 			<title>屏蔽php出错信息</title>
@@ -218,7 +237,7 @@ warn_plus_overloading = Off ; 当将‘+’用于字符串时警告
 			</screen>
 		</section>
 	</section>
-
+<!-- 
 	<section>
 		<title>环境安全</title>
 		<section>
@@ -234,4 +253,5 @@ warn_plus_overloading = Off ; 当将‘+’用于字符串时警告
 			<title>数据库</title>
 		</section>
 	</section>
-</section>
+ -->	
+</chapter>

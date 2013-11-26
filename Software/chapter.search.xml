@@ -2,7 +2,7 @@
 <!-- $Id: chapter.dev.search.xml 391 2012-04-20 10:59:22Z netkiller $ -->
 <section id="search">
 	<title>Search</title>
-	<section>
+	<section id="search.url">
 		<title>搜索结果静态化</title>
 		<para>每个搜索关键字都应该有一个惟一的URL，例如</para>
 		<screen>
@@ -14,7 +14,7 @@ https://www.google.com.hk/search?sourceid=chrome&ie=UTF-8&q=bg7nyt
 		</screen>
 		<para>每搜索一次新的关键字就会产生一条唯一的URL，这样就可以实现反向代理缓存，甚者通过HTTP头，实现浏览器段的缓存。</para>
 	</section>
-	<section>
+	<section id="search.seo">
 		<title>SEO Module</title>
 		<section>
 			<title>robots.txt</title>

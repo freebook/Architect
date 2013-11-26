@@ -30,21 +30,10 @@
 
 	<!ENTITY chapter.system.xml 				SYSTEM "chapter.system.xml">
 	<!ENTITY chapter.architecture.enterprise.xml	SYSTEM "chapter.architecture.enterprise.xml">
-
+	
+	<!ENTITY % software.doctype.entity.xml 		SYSTEM "Software/doctype.entity.xml">
+	%software.doctype.entity.xml;
 	<!ENTITY part.software.xml 					SYSTEM "part.software.xml">
-	<!ENTITY chapter.development.xml 			SYSTEM "Software/chapter.development.xml">
-	<!ENTITY chapter.framework.xml 				SYSTEM "Software/chapter.framework.xml">
-	<!ENTITY chapter.dev.security.xml 			SYSTEM "Software/chapter.dev.security.xml">
-	<!ENTITY chapter.development.flow.xml 		SYSTEM "Software/chapter.development.flow.xml">
-	<!ENTITY chapter.development.method.xml 	SYSTEM "Software/chapter.development.method.xml">
-	<!ENTITY chapter.dev.search.xml				SYSTEM "Software/chapter.dev.search.xml">
-	<!ENTITY chapter.plugin.xml 				SYSTEM "Software/chapter.dev.plugin.xml">
-	<!ENTITY chapter.log.xml 					SYSTEM "Software/chapter.log.xml">
-	<!ENTITY chapter.dispatcher.xml				SYSTEM "Software/chapter.dispatcher.xml">
-	<!ENTITY chapter.interface.xml				SYSTEM "Software/chapter.interface.xml">
-	<!ENTITY chapter.application.xml			SYSTEM "Software/chapter.application.xml">
-	<!ENTITY chapter.designpattern.xml			SYSTEM "Software/chapter.designpattern.xml">
-	<!ENTITY chapter.rpc.xml 					SYSTEM "Software/chapter.rpc.xml">
 
 	<!ENTITY % database.doctype.entity.xml 		SYSTEM "Database/doctype.entity.xml">
 	%database.doctype.entity.xml;

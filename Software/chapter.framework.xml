@@ -59,11 +59,11 @@
 	    	</itemizedlist>
 	    </section>
     </section>
-	<section>
+	<section id="mvc">
 		<title>MVC Framework Design (设计MVC框架)</title>
 		<para><graphic  format="png" fileref="../images/development/framework.png" srccredit="neo" /></para>
 	</section>
-	<section>
+	<section id="hmvc">
 		<title>HMVC Framework</title>
 		<para>等我有时间在补充</para>
 	</section>
@@ -229,34 +229,6 @@ setcookie("test", $_GET['id'], time()+3600, "/", ".a.com");
 				</screen>
 			</section>
 		</section>
-
-		<section>
-			<title>Session 撰改演示</title>
-			<para>这是一个计数器的例子</para>
-			<screen>
-			<![CDATA[
-<?php
-session_start();
-
-if(isset($_SESSION['count'])){
-	$_SESSION['count']++;
-}else{
-	$_SESSION['count'] = 1;
-}
-print($_SESSION['count']);
-			]]>
-			</screen>
-			<para>首先在IE浏览器上访问该文件，查看目前计数器数值。</para>
-			<para>现在开始演示如果更改用户的Session数据</para>
-			<para>通过Firebug等工具，查看PHPSESSID的值，例如我的是 75ff0dd6a0824a2b607777b58c27f78a</para>
-			<screen>
-cat /tmp/sess_75ff0dd6a0824a2b607777b58c27f78a
-count|i:100;
-			</screen>
-			<para>将 count|i:100; 改为  count|i:1000; 再次去浏览器刷新看看现在计数器的数值是多少。</para>
-			<para>通过这种方法可以实现，提升权限，绕过登录等等。</para>
-			<para>由于session 存储在 tmp 目录下，一旦网站被注入就来带安全隐患</para>
-		</section>
 	</section>
 
 	<section id="framework.i18n">
@@ -360,7 +332,7 @@ e.g.2 user (big5.example.org) -> Squid (gb2312->big5) -> web server
 	<section id="framework.search">
 		<title>搜索引擎</title>
 	</section>
-	<section>
+	<section id="sync">
 		<title>Synchronous/Asynchronous</title>
 		<para>举几个例子</para>
 		<orderedlist>
@@ -378,7 +350,7 @@ e.g.2 user (big5.example.org) -> Squid (gb2312->big5) -> web server
 		</orderedlist>
 		<para>用户注册，发帖与评论。采用同步或异步均可，还要看你的具体情况而且。</para>
 	</section>
-	<section>
+	<section id="mq">
 		<title>Message Queuing</title>
 		<para>Message Queuing 有 synchronous (同步)/asynchronous(异步) 之分，不同场景适合不同的处理方式。</para>
 		<para><ulink url="http://www.rabbitmq.com/">RabbitMQ</ulink></para>
@@ -608,7 +580,7 @@ http://images.example.com/your/dir/test.jpg => http://images.example.com/index.p
 		</section>
 	</section>
 
-	<section>
+	<section id="i18n">
 		<title>i18n 国际化</title>
 		<section>
 			<title>数组方式</title>
@@ -677,8 +649,7 @@ top10=前十位
 		</section>
 	</section>
 	&chapter.log.xml;
-    &chapter.dev.search.xml;
-	&chapter.dev.security.xml;
+    &chapter.search.xml;
 	<section id="debug">
 		<title>debug</title>
 		<para>生产环境不允许有任何调试输出，包括程序错误，这些信息应该写入error.log， 我们可以在网站放置一个调试入口，</para>
@@ -690,4 +661,11 @@ if(isset ($_GET['debug'])){
 }
 		</screen>
 	</section>
+	<section id="optimization">
+		<title>性能优化</title>
+		<section>
+			<title>尽量使用单引号</title>
+			<para>尽量使用单引号，迫不得已才使用双引号，因为双引号会处理转义字符。</para>
+		</section>
+	</section>		
 </chapter>

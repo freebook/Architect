@@ -5,7 +5,9 @@
 	&chapter.development.xml;
 	&chapter.designpattern.xml;
 	&chapter.framework.xml;
+	&chapter.defect.xml;
+	<!--
 	&chapter.application.xml;
 	&chapter.rpc.xml;
-
+	-->
 </part>

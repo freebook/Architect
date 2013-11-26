@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="system">
+<chapter id="index"><?dbhtml dir="system" ?>
 	<title>Systems architecture(系统架构)</title>
 	<subtitle>Systems architecture</subtitle>
 	<screen>
