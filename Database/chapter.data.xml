@@ -4,7 +4,7 @@
 	<title>数据属性</title>
 	<para>常用属性参考</para>
 		
-	<section id="attr.status">
+	<section id="data.status">
 		<title>常用状态</title>
 		<screen>
 Canceled
@@ -24,7 +24,7 @@ Voided
 		</screen>
 	</section>
 
-<section id="attr.shoe">
+<section id="data.shoe">
     <title>商品属性</title>
     <para>这些属性很常见，你可以将它插入到你的数据库中，方便日后使用</para>
     <section>
@@ -256,7 +256,7 @@ Voided
 		</screen>
 	</section>
 </section>	
-	<section id="attr.mobile">
+	<section id="data.mobile">
 		<title>手机号码分配</title>
 		<screen>
 
@@ -278,9 +278,10 @@ Voided
 
 		</screen>
 	</section>
-	<section id="attr.id">
+	<section id="data.id">
 		<title>身份证</title>
-		<para>http://www.stats.gov.cn/tjbz/xzqhdm/t20120105_402777427.htm</para>		
+		<para></para>
+		<!-- http://www.stats.gov.cn/tjbz/xzqhdm/t20120105_402777427.htm -->		
 		<screen>
 110000  北京市
 110100    市辖区
