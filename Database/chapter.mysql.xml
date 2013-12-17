@@ -201,6 +201,29 @@ mysql> select * from category where path like '1/4%';
 			</screen>
 		</section>
 		<section>
+			<title>计算节点数量</title>
+			<screen>
+			<![CDATA[
+DROP TABLE IF EXISTS `test`;
+CREATE TABLE IF NOT EXISTS `test` (
+  `id` int(11) DEFAULT NULL,
+  `pid` int(11) DEFAULT NULL,
+  `name` char(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `test` (`id`, `pid`, `name`) VALUES
+	(1, 0, 'A'),
+	(2, 1, 'B'),
+	(3, 1, 'C'),
+	(4, 0, 'D'),
+	(5, 0, 'E'),
+	(6, 5, 'F');
+
+select (select t2.name from test t2 where t2.id=t1.pid) as name, count(pid) as sum from test t1 where t1.pid <> 0 group by t1.pid;
+			]]>			
+			</screen>
+		</section>
+		<section>
 			<title>Example</title>
 			<example>
 				<title>identity_card 身份证归属地表</title>
