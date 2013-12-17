@@ -222,6 +222,10 @@ INSERT INTO `test` (`id`, `pid`, `name`) VALUES
 select (select t2.name from test t2 where t2.id=t1.pid) as name, count(pid) as sum from test t1 where t1.pid <> 0 group by t1.pid;
 			]]>			
 			</screen>
+			<para>统计所有节点包括数量为零的</para>
+			<screen>
+select t1.name, (select count(t2.name) from test t2 where t2.pid=t1.id) as sum from test t1 			
+			</screen>
 		</section>
 		<section>
 			<title>Example</title>
