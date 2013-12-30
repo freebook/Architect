@@ -7,8 +7,9 @@
 		<para>选择一个好的开发框架，很重要。不过大部分框架都针对于软件开发，而我们要的是轻量级，适合高负载，灵活的框架。</para>
 	    <para>框架的分类</para>
 	    <itemizedlist>
-	    	<listitem>HMVC</listitem>
-	    	<listitem>REST</listitem>
+	    	<listitem>本地框架HMVC，MTV</listitem>
+	    	<listitem>远程框架SOA/REST</listitem>
+	    	<listitem>混合框架</listitem>
 	    </itemizedlist>
 		<para>上面框架可以满足我们绝大多数需求，如URL定义，Session/Cookie管理，多语言国际化，数据库访问等等。</para>
 		<para>Java和.Net我没有太多的经验，php我有10+年经验，我在各种框架之间做比较发现CodeIgniter框架比较适合我们的需求。</para>
@@ -62,12 +63,11 @@
 	<section id="mvc">
 		<title>MVC Framework Design (设计MVC框架)</title>
 		<para><graphic  format="png" fileref="../images/development/framework.png" srccredit="neo" /></para>
+		<section id="hmvc">
+			<title>HMVC Framework</title>
+			<para>等我有时间在补充</para>
+		</section>
 	</section>
-	<section id="hmvc">
-		<title>HMVC Framework</title>
-		<para>等我有时间在补充</para>
-	</section>
-
 	<section id="framework.rest">
 		<title>REST</title>
 		<para><graphic  format="png" fileref="../images/development/framework-rest.png" srccredit="neo" width=""/></para>
@@ -75,12 +75,168 @@
 			<title>RESTful JSON API</title>
 		</section>
 	</section>
-<!--
-	<section>
+
+	<section id="framework.soa">
 		<title>Service-oriented architecture (SOA)</title>
-		<para><graphic  format="png" fileref="" srccredit="neo" /></para>
+<!-- 		<graphic  format="png" fileref="" srccredit="neo" /> -->
+
+		<para>SOA 与 REST很多相同之处，目前SOA主要是基于SOAP实现，也有基于MQ的实现。而REST只限于HTTP POST/GET/PUT/DELETE等等。</para>
+		<para>我个人比较喜欢机遇TCP的SOA实现，不喜欢SOAP大量XML传输。</para>
+		<section>
+			<title>SOAP实现</title>
+
+			<para>这里提供一个简单的机遇SOAP实现的SOA框架</para>
+			<para>index.php入口文件</para>
+			<programlisting>
+			<![CDATA[
+<?php
+define ('CONFIG_DIR', '../config/');
+define ('LIBRARY_DIR', '../library/');
+define ('DEBUG', false);
+//define ('DEBUG', ture);
+
+require_once(CONFIG_DIR. 'default.php');
+$remote_addr = $_SERVER['REMOTE_ADDR'];
+if(!in_array($remote_addr, $firewall)) {
+	printf("Permission denied: %s", $remote_addr);
+	exit(0);
+}
+
+$request_uri = $_SERVER['REQUEST_URI'];
+$classspath = LIBRARY_DIR.strtolower($request_uri)  . '.class.php';
+if( is_file($classspath) ){
+	require_once($classspath);
+}else{
+	die("Cannot loading interface!");
+}
+
+$class = ucfirst(substr($request_uri, strrpos($request_uri, '/')+1));
+if( DEBUG ){
+		printf("%s<br>",$class);
+}
+
+if (class_exists($class)) {
+    $server = new SoapServer(null, array('uri' => "http://webservice.example.com"));
+	$server->setClass($class);
+	$server->handle();
+}else{
+	die('Object isnot exist.');
+}
+			]]>
+			</programlisting>
+			<para>接口文件</para>
+			<programlisting>
+			<![CDATA[
+<?php
+require_once('common.class.php');
+
+class Members extends Common{
+	private $dbh = null;
+	public function __construct() {
+		parent::__construct();
+		$this->dbh = new Database('slave');
+	}
+	public function getAllByUsernameAndMobile($username,$mobile){
+		$result = array();
+		if(empty($username) or empty($mobile)){
+			return($result);
+		}
+		$sql = "SELECT username, chinese_name, sex FROM members m, members_digest md WHERE m.id = md.id and m.username= :username and md.mobile = md5( :mobile );";
+		$stmt = $this->dbh->prepare($sql);
+		$stmt->bindValue(':username', $username);
+		$stmt->bindValue(':mobile', $mobile);
+		$stmt->execute();
+		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+		return($result);
+	}
+	public function getAllByLimit($limit,$offset)
+	{
+		$sql = "SELECT username FROM members limit ".$limit.",".$offset;
+		$stmt = $this->dbh->query($sql);
+		while ($row = $stmt->fetch()) {
+			//printf("%s\r\n", $row['username']);
+			$result[] = $row['username'];
+		}
+		return $result;
+	}
+	function __destruct() {
+       $this->dbh = null;
+   }
+}
+			]]>
+			</programlisting>
+			<para>客户端调用实例</para>
+			<programlisting>
+			<![CDATA[
+<?php
+
+$options = array('uri' => "http://webservice.example.com",
+                'location'=>'http://webservice.example.com/members',
+				 'compression' => 'SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP',
+				'login'=>'neo',
+				'password'=>'chen',
+                'trace'=>true
+				);
+$client = new SoapClient(null, $options);
+
+try {
+
+	print_r($client->getAllByUsernameAndMobile('280600086','13113668890'));
+	print_r($client->getAllByLimit(20,20));
+
+}
+catch (Exception $e)
+{
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+			]]>
+			</programlisting>
+			<para>Nginx 虚拟主机配置文件 /etc/nginx/conf.d/webservice.example.com.conf</para>
+			<programlisting>
+			<![CDATA[
+server {
+    listen       80;
+    server_name  webservice.example.com;
+
+    charset utf-8;
+    access_log  /var/log/nginx/webservice.example.com.access.log  main;
+    auth_basic            "Login";
+    auth_basic_user_file  htpasswd;
+
+    location / {
+        root   /www/example.com/webservice.example.com/htdocs;
+        index  index.html index.php;
+		if ($request_filename !~ (js|css|images|robots/.txt|.*\.html|index/.php) ) {
+	            rewrite ^/(.*)$ /index.php/$1 last;
+		    break;
+		}
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    location ~ /index.php/ {
+        root           /www/example.com/webservice.example.com/htdocs;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  /www/example.com/webservice.example.com/htdocs$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+
+}
+			]]>
+			</programlisting>
+			<para>每增加一个功能需求，在library中创建一个 Class 文件即可。</para>
+			<para>index.php 有IP过滤功能，禁止非法IP访问</para>
+			<para>客户端采用压缩传输，节省xml传输开销</para>
+			<para>Nginx 设置了HTTP认证，防止他人探测，另外提示你还可以采用双向SSL认证。</para>
+		</section>
+		<section>
+			<title>MQ 实现</title>
+		</section>
 	</section>
--->
 
 	&chapter.dispatcher.xml;
 	&chapter.plugin.xml;
@@ -667,5 +823,5 @@ if(isset ($_GET['debug'])){
 			<title>尽量使用单引号</title>
 			<para>尽量使用单引号，迫不得已才使用双引号，因为双引号会处理转义字符。</para>
 		</section>
-	</section>		
+	</section>
 </chapter>
