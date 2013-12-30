@@ -220,11 +220,11 @@ INSERT INTO `test` (`id`, `pid`, `name`) VALUES
 	(6, 5, 'F');
 
 select (select t2.name from test t2 where t2.id=t1.pid) as name, count(pid) as sum from test t1 where t1.pid <> 0 group by t1.pid;
-			]]>			
+			]]>
 			</screen>
 			<para>统计所有节点包括数量为零的</para>
 			<screen>
-select t1.name, (select count(t2.name) from test t2 where t2.pid=t1.id) as sum from test t1 			
+select t1.name, (select count(t2.name) from test t2 where t2.pid=t1.id) as sum from test t1
 			</screen>
 		</section>
 		<section>
@@ -872,5 +872,107 @@ CREATE TABLE IF NOT EXISTS `mobile_location` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		</programlisting>
+	</section>
+	<section id="data.check">
+		<title>数据检查</title>
+		<section>
+			<title>身份证校验</title>
+			<para>该函数能够检查身份证号码是否正确</para>
+			<programlisting>
+			<![CDATA[
+CREATE DEFINER=`neo`@`%` FUNCTION `check_id_number`(`idnumber` CHAR(18))
+	RETURNS enum('true','false')
+	LANGUAGE SQL
+	NOT DETERMINISTIC
+	NO SQL
+	SQL SECURITY DEFINER
+	COMMENT ''
+BEGIN
+DECLARE status ENUM('true','false') default 'false';
+DECLARE verify CHAR(1);
+DECLARE sigma INT;
+DECLARE remainder INT;
+
+IF length(idnumber) = 18 THEN
+	set sigma = cast(substring(idnumber,1,1) as UNSIGNED) * 7
+		+cast(substring(idnumber,2,1) as UNSIGNED) * 9
+		+cast(substring(idnumber,3,1) as UNSIGNED) * 10
+		+cast(substring(idnumber,4,1) as UNSIGNED) * 5
+		+cast(substring(idnumber,5,1) as UNSIGNED) * 8
+		+cast(substring(idnumber,6,1) as UNSIGNED) * 4
+		+cast(substring(idnumber,7,1) as UNSIGNED) * 2
+		+cast(substring(idnumber,8,1) as UNSIGNED) * 1
+		+cast(substring(idnumber,9,1) as UNSIGNED) * 6
+		+cast(substring(idnumber,10,1) as UNSIGNED) * 3
+		+cast(substring(idnumber,11,1) as UNSIGNED) * 7
+		+cast(substring(idnumber,12,1) as UNSIGNED) * 9
+		+cast(substring(idnumber,13,1) as UNSIGNED) * 10
+		+cast(substring(idnumber,14,1) as UNSIGNED) * 5
+		+cast(substring(idnumber,15,1) as UNSIGNED) * 8
+		+cast(substring(idnumber,16,1) as UNSIGNED) * 4
+		+cast(substring(idnumber,17,1) as UNSIGNED) * 2;
+	set remainder = MOD(sigma,11);
+	set verify = (case remainder
+		when 0 then '1' when 1 then '0' when 2 then 'X' when 3 then '9'
+		when 4 then '8' when 5 then '7' when 6 then '6' when 7 then '5'
+		when 8 then '4' when 9 then '3' when 10 then '2' else '/' end
+	);
+
+END IF;
+
+IF right(idnumber,1) = verify THEN
+	set status = 'true';
+END IF;
+
+RETURN status;
+
+END
+			]]>
+			</programlisting>
+			<para>首先我们使用正确身份证号码进行测试，返回true</para>
+			<screen>
+			<![CDATA[
+mysql> select check_id_number('330702198003090915');
++---------------------------------------+
+| check_id_number('330702198003090915') |
++---------------------------------------+
+| true                                  |
++---------------------------------------+
+1 row in set (0.01 sec)
+			]]>
+			</screen>
+			<para>长度不符合18位直接返回false.</para>
+			<screen>
+			<![CDATA[
+mysql> select check_id_number('33070219800309');
++-----------------------------------+
+| check_id_number('33070219800309') |
++-----------------------------------+
+| false                             |
++-----------------------------------+
+1 row in set (0.00 sec)	
+
+mysql> select check_id_number('33070219800309091457889');
++--------------------------------------------+
+| check_id_number('33070219800309091457889') |
++--------------------------------------------+
+| false                                      |
++--------------------------------------------+
+1 row in set, 1 warning (0.00 sec)
+			]]>
+			</screen>
+			<para>随便改译为数，校验失败返回 false</para>
+			<screen>
+			<![CDATA[
+mysql> select check_id_number('330702198003090914');
++---------------------------------------+
+| check_id_number('330702198003090914') |
++---------------------------------------+
+| false                                 |
++---------------------------------------+
+1 row in set (0.00 sec)					
+			]]>
+			</screen>
+		</section>
 	</section>
 </chapter>
