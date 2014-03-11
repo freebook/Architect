@@ -78,7 +78,7 @@
 
 	<section id="framework.soa">
 		<title>Service-oriented architecture (SOA)</title>
-<!-- 		<graphic  format="png" fileref="" srccredit="neo" /> -->
+ 		<graphic  format="png" fileref="../images/framework/SOA.png" srccredit="neo" />
 
 		<para>SOA 与 REST很多相同之处，目前SOA主要是基于SOAP实现，也有基于MQ的实现。而REST只限于HTTP POST/GET/PUT/DELETE等等。</para>
 		<para>我个人比较喜欢机遇TCP的SOA实现，不喜欢SOAP大量XML传输。</para>
