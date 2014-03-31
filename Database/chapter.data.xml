@@ -22,6 +22,14 @@ Reversed
 Shipped
 Voided	
 		</screen>
+		<para>使用案例</para>
+		<screen>
+'New','Assigned','Unassigned','Pending','Invalid'
+		</screen>
+		<para>使用案例</para>
+		<screen>
+'New','Processing','Canceled','Completed','Failed'
+		</screen>
 	</section>
 
 <section id="data.shoe">
