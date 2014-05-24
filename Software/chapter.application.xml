@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="application">
 	<title>开发包</title>
-	<section id="messagepack">
-		<title>MessagePack</title>
-		<para>http://msgpack.org/</para>
-		<para>MessagePack 是二进制序列化解决方案，用以替代JSON</para>
-		<screen>
-		<![CDATA[
-easy_install msgpack-python
-import msgpack
-msg = msgpack.packb([1,2,3])    #=> "\x93\x01\x02\x03"
-msgpack.unpackb(msg)            #=> [1,2,3]
-help(msgpack)
-		]]>
-		</screen>
-	</section>
 </chapter>
