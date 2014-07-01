@@ -7,20 +7,13 @@
 	<section id="data.status">
 		<title>常用状态</title>
 		<screen>
-Canceled
-Canceled Reversal
-Chargeback
+Canceled, Canceled Reversal
 Complete
 Denied
-Expired
-Failed
-Pending
-Processed
-Processing
-Refunded
-Reversed
-Shipped
-Voided	
+Expired, Extension
+Pending, Processing, Processed
+Chargeback, Refunded, Reversed
+Shipped, Voided	
 		</screen>
 		<para>使用案例</para>
 		<screen>
@@ -29,6 +22,16 @@ Voided
 		<para>使用案例</para>
 		<screen>
 'New','Processing','Canceled','Completed','Failed'
+		</screen>
+		<screen>
+'New','Processing','Cancelling','Canceled','Completed','Failed','Hidden'		
+		</screen>
+		<screen>
+Success,Failure,Deleted
+'Succeed','Failed'
+		</screen>
+		<screen>
+Enabled, Disabled, Yes, No	
 		</screen>
 	</section>
 
