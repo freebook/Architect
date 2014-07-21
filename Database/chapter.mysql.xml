@@ -7,7 +7,7 @@
 		<title>数据字典</title>
 		<para>我比建议使用传统的《数据字典》，我的做法是E-R图加数据库注释</para>
 		<para>注释伴随表，视图，触发器，过程等等，便于维护</para>
-	</section>
+	</section>	
 	<section id="user">
 		<title>用户帐号表</title>
 		<para>用户帐号或通行证系统设计，下面以我的数库为例讲解。</para>
@@ -1000,5 +1000,21 @@ mysql> select check_id_number('330702198003090914');
 			]]>
 			</screen>
 		</section>
+	</section>
+	<section>
+		<title>创建与修改时间</title>
+		<para>ctime 为创建时间, mtime 是修改时间默认CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP</para>
+		<programlisting>
+CREATE TABLE `trades_platform` (
+	`id` INT(10) UNSIGNED NULL DEFAULT NULL,
+	`type` ENUM('A','B','C') NOT NULL,
+	`login` VARCHAR(10) NOT NULL,
+	`password` VARCHAR(10) NOT NULL,
+	`ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`mtime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+)
+COMMENT='平台'
+ENGINE=InnoDB;
+		</programlisting>
 	</section>
 </chapter>
