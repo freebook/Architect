@@ -1016,5 +1016,57 @@ CREATE TABLE `trades_platform` (
 COMMENT='平台'
 ENGINE=InnoDB;
 		</programlisting>
+		<para>我们还可以让mtime默认为NULL,这样更节省存储空间。</para>
+		<screen>
+	`ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`mtime` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,		
+		</screen>
+	</section>
+	<section>
+		<title>在线用户表</title>
+		<para>该表的功能是显示在线用户，控制多点登陆，防止异常退出</para>
+		<programlisting>
+		<![CDATA[
+CREATE TABLE IF NOT EXISTS `employees_online` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `username` varchar(20) NOT NULL COMMENT 'User ID',
+  `ipaddr` varchar(15) NOT NULL COMMENT 'IP Address',
+  `expire` datetime NOT NULL COMMENT 'Expire time',
+  `status` enum('Login','Logout','Offline') NOT NULL DEFAULT 'Login' COMMENT 'Current Status',
+  `message` varchar(255) NOT NULL COMMENT 'Leave a message',
+  `ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Created Time',
+  `mtime` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT 'Modified Time',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='show listing of last logged in users';
+
+DELIMITER //
+CREATE DEFINER=`dba`@`192.168.%` EVENT `employees_online` ON SCHEDULE EVERY 15 MINUTE STARTS '2014-08-22 10:33:24' ON COMPLETION NOT PRESERVE ENABLE COMMENT 'Employees Online Logging' DO BEGIN
+	update employees_online set `status` = 'Offline' where expire < now() and ctime > DATE_ADD(now(), INTERVAL -15 MINUTE);
+END//
+DELIMITER ;
+
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `employees_online_before_delete` BEFORE DELETE ON `employees_online` FOR EACH ROW BEGIN
+	SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Permission denied', MYSQL_ERRNO = 1001;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;
+
+SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_ENGINE_SUBSTITUTION';
+DELIMITER //
+CREATE TRIGGER `employees_online_before_update` BEFORE UPDATE ON `employees_online` FOR EACH ROW BEGIN
+	SET NEW.`id` = OLD.id;
+	SET NEW.`username` = OLD.username;
+	SET NEW.`ipaddr` = OLD.ipaddr;
+	SET NEW.`message` = OLD.message;
+	SET NEW.`ctime` = OLD.ctime;
+END//
+DELIMITER ;
+SET SQL_MODE=@OLDTMP_SQL_MODE;	
+		]]>	
+		</programlisting>
+		<para>登陆日志将永久保存，防止数据被删除由触发器employees_online_before_delete负责</para>
+		<para>防止有人撰改登陆信息，由触发器employees_online_before_update负责，主要是防止撰改登陆名与IP地址，这样讲不能从其他电脑登陆，必须用户Logout才能在其他电脑登陆。</para>
 	</section>
 </chapter>
