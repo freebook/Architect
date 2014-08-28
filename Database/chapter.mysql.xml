@@ -822,6 +822,8 @@ select `key`,`value` from config where `key` like 'database.?.status';
 		</screen>
 		<section>
 			<title>配置表历史记录</title>
+			<para>我有一个表，里面只有固定行数的行记录，这些数据就是配置参数，我们将配置文件保存在数据库中，因为需要做负载均衡而不能使用文件配置文件。</para>
+			<para>有这样一个需求，这个记录每次修改都要保存历史记录，用于审计等等。我是这样设计该表的</para>
 			<programlisting>
 CREATE TABLE `config_fee` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -840,6 +842,7 @@ COMMENT='手续费管理'
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB;
 			</programlisting>
+			<para>数据记录的形态</para>
 			<screen>
 			<![CDATA[
 mysql> select type,operator,status,ctime,mtime from config_mtf_fee;
