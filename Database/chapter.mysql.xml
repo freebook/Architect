@@ -820,6 +820,44 @@ payment.status.yeepay
 select `key`,`value` from config where `key` like 'payment.status.%';
 select `key`,`value` from config where `key` like 'database.?.status';
 		</screen>
+		<section>
+			<title>配置表历史记录</title>
+			<programlisting>
+CREATE TABLE `config_fee` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`level` INT(11) NULL DEFAULT NULL COMMENT '层级',
+	`type` ENUM('Deposit','Withdrawing') NOT NULL DEFAULT 'Withdrawing' COMMENT '类型，存款，取款',
+	`min_fee` FLOAT(10,2) NOT NULL COMMENT '最低手续费',
+	`max_fee` FLOAT(10,2) NOT NULL COMMENT '最高手续费',
+	`ratio` FLOAT(10,2) NOT NULL COMMENT '手续费比例',
+	`operator` VARCHAR(10) NOT NULL COMMENT '操作者',
+	`status` ENUM('Current','Trash') NOT NULL DEFAULT 'Current',
+	`ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`mtime` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`)
+)
+COMMENT='手续费管理'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+			</programlisting>
+			<screen>
+			<![CDATA[
+mysql> select type,operator,status,ctime,mtime from config_mtf_fee;
++---------+----------+---------+---------------------+---------------------+
+| type    | operator | status  | ctime               | mtime               |
++---------+----------+---------+---------------------+---------------------+
+| Deposit | 141      | Trash   | 2014-08-28 11:10:17 | 2014-08-28 11:10:57 |
+| Deposit | 141      | Trash   | 2014-08-28 11:10:17 | 2014-08-28 11:10:57 |
+| Deposit | 141      | Trash   | 2014-08-28 11:10:17 | 2014-08-28 11:10:57 |
+| Deposit | 141      | Trash   | 2014-08-28 11:10:17 | 2014-08-28 11:10:57 |
+| Deposit | 324      | Current | 2014-08-28 11:10:54 | 2014-08-28 11:10:59 |
++---------+----------+---------+---------------------+---------------------+
+2 rows in set (0.00 sec)
+			]]>			
+			</screen>
+			<para>如上图所示，状态 Current 是当前记录，而Trash是废弃的历史记录。</para>
+			<para>每次修改数据，首先将Current改为Trash，然后插入一条新数据状态为Current，我们只会使用最后一条状态为current的数据。</para>
+		</section>
 	</section>
 	<section id="captcha">
 		<title>验证码</title>
