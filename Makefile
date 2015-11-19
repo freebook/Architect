@@ -7,7 +7,7 @@ DOCBOOK=architect
 PUBLIC_HTML=~/public_html
 PROJECT_DIR=$(WORKSPACE)/$(PROJECT)
 HTML_DIR=$(PUBLIC_HTML)/$(DOCBOOK)
-HTMLHELP_DIR=~/htmlhelp/$(DOCBOOK)/chm
+HTMLHELP_DIR=$(PUBLIC_HTML)/htmlhelp/$(DOCBOOK)/chm
 
 all: html htmlhelp
 
@@ -29,8 +29,8 @@ htmlhelp:
 	
 rpm:
 	rpmbuild -ba --sign ../Miscellaneous/package/package.spec --define "book $(DOCBOOK)"
-	rpm -qpi ~/rpmbuild/RPMS/x86_64/netkiller-$(DOCBOOK)-*.x86_64.rpm
-	rpm -qpl ~/rpmbuild/RPMS/x86_64/netkiller-$(DOCBOOK)-*.x86_64.rpm
+	rpm -qpi $(PUBLIC_HTML)/rpmbuild/RPMS/x86_64/netkiller-$(DOCBOOK)-*.x86_64.rpm
+	rpm -qpl $(PUBLIC_HTML)/rpmbuild/RPMS/x86_64/netkiller-$(DOCBOOK)-*.x86_64.rpm
 
 clean:
 	rm -rf $(HTML)
