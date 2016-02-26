@@ -6,6 +6,7 @@
 	&chapter.designpattern.xml;
 	&chapter.framework.xml;
 	&chapter.defect.xml;
+	&chapter.serialization.xml;
 	<!--
 	&chapter.application.xml;
 	&chapter.rpc.xml;
