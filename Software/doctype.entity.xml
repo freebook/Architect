@@ -12,3 +12,4 @@
 	<!ENTITY chapter.application.xml			SYSTEM "chapter.application.xml">
 	<!ENTITY chapter.designpattern.xml			SYSTEM "chapter.designpattern.xml">
 	<!ENTITY chapter.rpc.xml 					SYSTEM "chapter.rpc.xml">
+	<!ENTITY chapter.serialization.xml			SYSTEM "chapter.serialization.xml">
