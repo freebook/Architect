@@ -1158,4 +1158,48 @@ select AES_DECRYPT(mobile,`key`), length(mobile) from encryption;
 			<para>这里方便演示将key 写入了数据库，实际应用key应该存储在应用程序配置文件中。通常能把获得key的人不应该用数据库权限。</para>
 		</section>
 	</section>
+	<section>
+		<title>HTML TO Text</title>
+		<para>实现 PHP strip_tags 函数的功能。</para>
+		<programlisting>
+		<![CDATA[
+CREATE DEFINER=`dba`@`%` FUNCTION `strip_tags`(`$str` TEXT)
+RETURNS text CHARSET utf8
+LANGUAGE SQL
+NOT DETERMINISTIC
+CONTAINS SQL
+SQL SECURITY DEFINER
+COMMENT ''
+BEGIN
+    DECLARE $start, $end INT DEFAULT 1;
+    LOOP
+        SET $start = LOCATE("<", $str, $start);
+        IF (!$start) THEN RETURN $str; END IF;
+        SET $end = LOCATE(">", $str, $start);
+        IF (!$end) THEN SET $end = $start; END IF;
+        SET $str = INSERT($str, $start, $end - $start + 1, "");
+    END LOOP;
+END		
+		]]>
+		</programlisting>
+		<screen>
+		<![CDATA[
+mysql> select strip_tags('<span><i>hello</i> <b>world</b>!!! <br /><a href="//www.netkiller/">netkiller</a>');
++----------------------------------------------------------------------+
+| strip_tags('<span>hel<b>lo <a href="world">wo<>rld</a> <<x>again<.') |
++----------------------------------------------------------------------+
+| hello world again.                                                   |
++----------------------------------------------------------------------+
+1 row in set
+
+mysql> select strip_tags('<span style="color:red"><i>hello</i> <b id="world" >world</b>!!! <br /><a class="home" href="//www.netkiller/">netkiller</a><span>') as TEXT;
++--------------------------+
+| TEXT                     |
++--------------------------+
+| hello world!!! netkiller |
++--------------------------+
+1 row in set (0.00 sec)
+		]]>
+		</screen>
+	</section>
 </chapter>
