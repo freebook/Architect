@@ -73,7 +73,35 @@
 		<para><graphic  format="png" fileref="../images/development/framework-rest.png" srccredit="neo" width=""/></para>
 		<section>
 			<title>RESTful JSON API</title>
+			<para>跨域</para>
 		</section>
+		
+		<section>
+			<title>Ajax 与 RESTful 跨域</title>
+			<para>允许所有域请求</para>
+			<screen>
+server {
+    listen       80;
+    server_name  inf.netkiller.cn;
+
+    charset utf-8;
+    access_log  /var/log/nginx/inf.netkiller.com.access.log  main;
+    error_log  /var/log/nginx/inf.netkiller.com.error.log;
+
+    add_header Access-Control-Allow-Origin *;
+    add_header Access-Control-Allow-Headers Content-Type,Origin;
+    add_header Access-Control-Allow-Methods GET,OPTIONS;
+
+	...
+	...
+}
+			</screen>
+			<para>允许特定的域请求</para>
+			<screen>
+add_header Access-Control-Allow-Origin http://www.netkiller.com;
+			</screen>
+		</section>
+		
 	</section>
 
 	<section id="framework.soa">
