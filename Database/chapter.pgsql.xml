@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="ordbms">
-	<title>PostgreSQL 数据库设计</title>
+<section id="ordbms">
+	<title>PostgreSQL 所特有数据库设计</title>
 	<subtitle>PostgreSQL 数据库 ORDBMS / OODBMS 等特有属性</subtitle>
 	<para>对象相关数据库管理系统(ORDBMS Object – Oriented Relative DBMS)</para>
 	<para></para>
@@ -249,4 +249,4 @@ test=# select acc.*, (select sum(balance)+acc.balance from account as ac where a
 		]]>		
 		</screen>
 	</section>
-</chapter>
+</section>

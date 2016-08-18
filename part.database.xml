@@ -2,8 +2,12 @@
 <part id="index"><?dbhtml dir="database" ?>
 	<title>Database Modeling Design</title>
 	<subtitle>RDBMS / ORDBMS / OODBMS / HDMS 数据库设计</subtitle>
-	<para>下面数据库设计实例中，大部分使用MySQL,PostgreSQL为例</para>
+	<para>下面数据库设计实例中，大部分使用MySQL,PostgreSQL为例,少部分以Oracle为例。</para>
 	&chapter.database.xml;
+	&chapter.rdbms.xml;
+	&chapter.rdbms.security.xml;
+	&chapter.sharding.xml;
 	&chapter.parallel.xml;
-	&chapter.security.xml;
+	&chapter.nosql.xml;
+	&chapter.data.xml;
 </part>

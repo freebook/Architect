@@ -1,6 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="nosql">
 	<title>NoSQL 数据库设计</title>
+<section id="mongodb">
+	<title>MongoDB</title>
+	<section>
+		<title>配置表 config</title>
+		<screen>
+{
+    "_id" : ObjectId("5799a8535a855eca473977e1"),
+    "key" : "payment",
+    "value" : {
+        "alpay" : true,
+        "tenpay" : false,
+        "unionpay" : false,
+    }
+},
+
+{
+    "_id" : ObjectId("5799a8535a855eca47397723"),
+    "key" : "signup",
+    "value" : {
+        "online" : true,
+        "manual" : false
+    }
+}
+		</screen>
+	</section>
+	<section>
+		<title>日志表</title>
+		<literallayout>
+	tag ENUM('unknow','www','user','admin') '日志标签',
+	time '插入时间',
+	facility ENUM('config','unionpay','sms','email') '类别',
+	priority ENUM('info','warning','error','critical','exception','debug') '级别',
+	message '内容'		
+		</literallayout>
+		<screen>
+/* 1 */
+{
+    "_id" : ObjectId("5799b0175a855eca473977e2"),
+    "tag" : "www",
+    "time" : "2016-07-30 12:12:00",
+    "facility" : "config",
+    "priority" : "info",
+    "message" : "xxxxxxxxxxxxxxxxxx"
+}
+
+/* 2 */
+{
+    "_id" : ObjectId("5799b10f5a855eca473977e3"),
+    "tag" : "www",
+    "time" : "2016-07-30 12:12:00",
+    "facility" : "config",
+    "priority" : "info",
+    "message" : {
+        "name" : "neo",
+        "age" : 30,
+        "sex" : true
+    }
+}
+		</screen>
+	</section>
+</section>
+
 <section id="cassandra">
 	<title>Cassandra</title>
 	<literallayout>

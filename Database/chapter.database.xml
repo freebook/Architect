@@ -7,9 +7,3 @@ NDBMS 网状数据库管理系统
 HDBMS - Hierarchical Data Base Management System
 Lotus Notes (the most popular HDBMS in use today)
 -->
-
-	&chapter.mysql.xml;
-	&chapter.pgsql.xml;
-	&chapter.sharding.xml;
-	&chapter.nosql.xml;
-	&chapter.data.xml;
