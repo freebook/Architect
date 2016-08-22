@@ -8,6 +8,7 @@
 	&chapter.rdbms.security.xml;
 	&chapter.sharding.xml;
 	&chapter.parallel.xml;
+	&chapter.communication.xml;
 	&chapter.nosql.xml;
 	&chapter.data.xml;
 </part>
