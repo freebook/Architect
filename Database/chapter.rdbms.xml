@@ -1155,5 +1155,163 @@ mysql> select strip_tags('<span style="color:red"><i>hello</i> <b id="world" >wo
 		]]>
 		</screen>
 	</section>
+	<section id="sns">
+		<title>SNS 数据库设计</title>
+		<para>这里讲解SNS交友社区的数据库设计与实现</para>
+		<para>我们要实现下面几个功能</para>
+		<orderedlist>
+			<listitem>朋友之间的关系，多对多关系</listitem>
+			<listitem>朋友之间的维度，如3度4度....</listitem>
+			<listitem>朋友的查找</listitem>
+		</orderedlist>
+		<programlisting>
+		<![CDATA[
+CREATE DATABASE `sns` /*!40100 COLLATE 'utf8_general_ci' */
+		]]>
+		</programlisting>
+		<section>
+			<title>people 表</title>
+			<para>people 是存储人，你可以用为user,member都可以</para>
+			<programlisting>
+			<![CDATA[
+CREATE TABLE `people` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(50) NOT NULL,
+	PRIMARY KEY (`id`)
+)
+COMMENT='Social Network Site - Six Degrees of Separation - http://www.netkiller.cn'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+			]]>
+			</programlisting>
+			<para>存储具体的这人</para>
+		</section>
+		<section>
+			<title>firend 表</title>
+			<para>这个表的功能主要是维持朋友之间的关系网，这里使用了多对多方式并且使用外键防止产生脏数据。</para>
+			<programlisting>
+			<![CDATA[
+CREATE TABLE `friend` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`people_id` INT(10) UNSIGNED NOT NULL,
+	`friend_id` INT(10) UNSIGNED NOT NULL,
+	`ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `unique` (`people_id`, `friend_id`),
+	INDEX `FK_firend_people` (`people_id`),
+	INDEX `FK_firend_people_2` (`friend_id`),
+	CONSTRAINT `FK_firend_people` FOREIGN KEY (`people_id`) REFERENCES `people` (`id`),
+	CONSTRAINT `FK_firend_people_2` FOREIGN KEY (`friend_id`) REFERENCES `people` (`id`)
+)
+COMMENT='Social Network Site - Six Degrees of Separation - http://www.netkiller.cn'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>演示</title>
+			<para>首先初始化用户数据</para>
+			<programlisting>
+			<![CDATA[
+INSERT INTO `people` (`id`, `name`) VALUES
+	(1, 'Neo'),
+	(2, 'Luke'),
+	(3, 'Jack'),
+	(4, 'Joey'),
+	(5, 'Jam'),
+	(6, 'John');
+			]]>
+			</programlisting>
+			<para>建立朋友之间的关系</para>
+			<programlisting>
+			<![CDATA[
+INSERT INTO `friend` (`id`, `people_id`, `friend_id`) VALUES
+	(1, 1, 2),
+	(2, 1, 3),
+	(3, 1, 4),
+	(4, 1, 5),
+	(5, 1, 6),
+	(6, 2, 1),
+	(7, 2, 3);
+			]]>
+			</programlisting>
+			<para>现在就可以查找你的朋友了</para>
+			<programlisting>
+			<![CDATA[
+select people.* from friend, people where friend.people_id = 1 and friend.friend_id = people.id;
+			]]>
+			</programlisting>
+			<para>查找朋友的朋友就比较麻烦了，必须使用递归方法，一层一层查下去，反复执行SQL效率是很低的，所以我们准备了第三张表。</para>
+		</section>
+		<section>
+			<title>network 表</title>
+			<para>关系网表，主要功能是弥补firend表，用于快速检索（在不使用递归的情况下）</para>
+			<programlisting>
+			<![CDATA[
+CREATE TABLE `network` (
+	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`people_id` INT(10) UNSIGNED NOT NULL,
+	`following_id` INT(10) UNSIGNED NOT NULL,
+	`friend_id` INT(10) UNSIGNED NULL DEFAULT NULL,
+	`degrees` VARCHAR(250) NOT NULL,
+	`ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`),
+	UNIQUE INDEX `unique` (`people_id`, `friend_id`, `following_id`),
+	INDEX `FK_firend_people` (`people_id`),
+	INDEX `FK_firend_people_2` (`friend_id`),
+	INDEX `FK_friend_people_following_id` (`following_id`),
+	CONSTRAINT `FK_firend_people` FOREIGN KEY (`people_id`) REFERENCES `people` (`id`),
+	CONSTRAINT `FK_friend_people_following_id` FOREIGN KEY (`following_id`) REFERENCES `people` (`id`),
+	CONSTRAINT `FK_friend_people_friend_id` FOREIGN KEY (`friend_id`) REFERENCES `people` (`id`)
+)
+COMMENT='Social Network Site - Six Degrees of Separation - http://www.netkiller.cn'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+
+			]]>
+			</programlisting>
+			<para>following 一个朋友, Neo following Jam</para>
+			<programlisting>
+			<![CDATA[
+INSERT INTO `people` (`id`, `name`) VALUES
+	(1, 'Neo'),
+	(2, 'Luke'),
+	(3, 'Jack'),
+	(4, 'Joey'),
+	(5, 'Jam'),
+	(6, 'John');
+
+INSERT INTO `network` (`people_id`, `following_id`, `friend_id`, `degrees`) VALUES ( 1, 5, NULL, '1.5');
+			]]>
+			</programlisting>
+			<para>之前Neo已经 following Jam，接下来查找Jam的朋友，现在Neo following John, John 是 Jam 的朋友，friend_id = NULL 表示 Jam 尚未有朋友</para>
+			<programlisting>
+			<![CDATA[
+select * from network where people_id=1 and friend_id = 5;
+
+INSERT INTO `sns`.`network` (`people_id`, `following_id`, `friend_id`, `degrees`) VALUES ('1', '6', '5', '1.5.6');
+			]]>
+			</programlisting>
+			<para>Neo following Joey, Joey 是 Luke 的朋友， 所以 Luke可能是 Neo的朋友</para>
+			<programlisting>
+			<![CDATA[
+INSERT INTO `sns`.`network` (`people_id`, `following_id`, `friend_id`, `degrees`) VALUES ('1', '4', '2', '1.2.4');
+			]]>
+			</programlisting>
+			
+			<para>查询不同维度下的所有好友，查询出的用户ID需要处理。</para>
+			<programlisting>
+			<![CDATA[
+select * from network where people_id=1 and degrees like "1.%";
+select * from network where people_id=1 and degrees like "1.2%";
+select * from network where people_id=1 and degrees like "1.2.%";
+			]]>
+			</programlisting>
+			<para>至此社区管理网就建立起来了</para>
+			<para>上面的例子演示了 people_id=1 即 Neo 的关系网</para>
+		</section>
+	</section>
 	&chapter.pgsql.xml;
 </chapter>
