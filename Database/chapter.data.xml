@@ -3,35 +3,46 @@
 <chapter id="data">
 	<title>数据属性</title>
 	<para>常用属性参考</para>
-		
+	<section>
+		<title>布尔状态</title>
+		<para>布尔状态</para>
+		<screen>
+Enabled, Disabled, Yes, No		
+		</screen>
+		<screen>
+Rejected, Approved
+Allowed, Denied
+		</screen>	
+		<screen>
+Success,Failure
+
+'Succeed','Failed'
+		</screen>
+	</section>
 	<section id="data.status">
-		<title>常用状态</title>
+		<title>流状态</title>
 		<screen>
 Canceled, Canceled Reversal
 Complete
-Denied
 Expired, Extension
-Pending, Processing, Processed
 Chargeback, Refunded, Reversed
 Shipped, Voided	
 		</screen>
-		<para>使用案例</para>
+		<para>状态流</para>
 		<screen>
-'New','Assigned','Unassigned','Pending','Invalid'
+New -> Pending -> Processing -> Processed	
 		</screen>
+
 		<para>使用案例</para>
 		<screen>
-'New','Processing','Canceled','Completed','Failed'
+'New' -> 'Unassigned' -> 'Assigned' -> 'Pending' -> 'Invalid'
+		</screen>
+		<para>混合使用案例</para>
+		<screen>
+'New' -> 'Processing' -> 'Canceled' / 'Completed' / 'Failed' / Deleted
 		</screen>
 		<screen>
 'New','Processing','Cancelling','Canceled','Completed','Failed','Hidden'		
-		</screen>
-		<screen>
-Success,Failure,Deleted
-'Succeed','Failed'
-		</screen>
-		<screen>
-Enabled, Disabled, Yes, No	
 		</screen>
 	</section>
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="nosql">
-	<title>NoSQL 数据库设计</title>
+	<title>NoSQL OOD(Object-Oriented Design)</title>
 <section id="mongodb">
 	<title>MongoDB</title>
 	<section>

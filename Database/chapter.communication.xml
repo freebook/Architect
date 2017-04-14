@@ -595,7 +595,7 @@ image_remove('recycle/path/to/images.jpg');
 		</screen>		
 	</section>
 </section>
-<section>
+<section id="socket">
 	<title>Socket 方式</title>
 		<para>TCP 方式还不如使用现在有的消息队列，所以数据库通过 Socket与应用程序通信，我推荐 UDP 方式。</para>
 		<para>UDP 有个好处，丢出去就不管了，性能非常好。并且可以实现组播，广播。下面是 UDP的例子</para>
