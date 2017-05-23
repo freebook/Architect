@@ -4,21 +4,16 @@
 	[
 	<!ENTITY homepage "http://netkiller.sf.net/">
 	<!ENTITY mirror "http://netkiller.github.com/">
-<!--
 	<!ENTITY Neo "<![CDATA[ <ulink url='&homepage;'>Neo</ulink> ]]>">
 	<!ENTITY BG7NYT "&Neo;">
 	<!ENTITY nickname "<ulink url='&homepage;'><emphasis>netkiller</emphasis></ulink>">
--->
 	<!ENTITY nickname "netkiller">
-	<!ENTITY book.info.author.xml			SYSTEM "../common/book.info.author.xml">
-	<!ENTITY book.info.legalnotice.xml		SYSTEM "../common/book.info.legalnotice.xml">
-	<!ENTITY book.info.abstract.xml			SYSTEM "../common/book.info.abstract.xml">
-    <!ENTITY book.preface.xml          		SYSTEM "../common/book.preface.xml">
-	<!ENTITY preface.about.me.xml      		SYSTEM "../common/about.me.xml">
-	<!ENTITY book.dedication.xml       		SYSTEM "../common/book.dedication.xml">
-	<!ENTITY book.appendix.xml	 			SYSTEM "book.appendix.xml">
 
-	<!ENTITY book.info 						SYSTEM "book.info.xml">
+	<!ENTITY % common.doctype.entity.xml 		SYSTEM "../common/doctype.entity.xml">
+	%common.doctype.entity.xml;
+	
+	<!ENTITY book.appendix.xml	 			SYSTEM "book.appendix.xml">
+	<!ENTITY book.info.xml					SYSTEM "book.info.xml">
 	<!ENTITY book.dedication 				SYSTEM "book.dedication.xml">
 	<!ENTITY book.preface 					SYSTEM "book.preface.xml">
 	<!ENTITY book.appendix 					SYSTEM "book.appendix.xml">
@@ -59,7 +54,9 @@
 		<subtitle>Multi-dimension Architecture Design &amp; Implementation / Full Stack Architect</subtitle>
 		<titleabbrev>Enterprise Architecture (Guide the implementation of Enterprise site)</titleabbrev>
 
-		&book.info;
+		&book.info.xml;
+		&book.info.legalnotice.xml;
+		<!-- &book.info.abstract.xml; -->
 
 	</info>
 
