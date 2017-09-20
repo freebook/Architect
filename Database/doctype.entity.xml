@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!ENTITY chapter.database.xml				SYSTEM "chapter.database.xml">
+<!ENTITY chapter.db.cache.xml				SYSTEM "chapter.db.cache.xml">
 <!ENTITY chapter.rdbms.xml 					SYSTEM "chapter.rdbms.xml">
 <!ENTITY chapter.rdbms.security.xml			SYSTEM "chapter.rdbms.security.xml">
 <!ENTITY chapter.pgsql.xml					SYSTEM "chapter.pgsql.xml">

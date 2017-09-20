@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- RDBMS 是关系数据库管理系统,是建立实体之间的联系,最后得到的是关系表 OODBMS 面向对象数据库管理系统,将所有实体都看着对象,并将这些对象类进行封装,对象之间的通信通过消息 ORDBMS 对象关系数据库在实质上还是关系数据库 NDBMS 网状数据库管理系统 HDBMS - Hierarchical Data Base Management System Lotus Notes (the most popular HDBMS in use today) -->
+<chapter id="db.cache">
+	<title>数据库与缓存</title>
+
+	<section id="what">
+		<title>什么是数据库缓存？</title>
+		<para>这里讲的缓存是数据库本身的缓存，并不是外部缓存例如Redis/Memcache等等。</para>
+		<para>数据库的数据分为冷数据和热数据库，通俗的讲冷数据是存储在磁盘上不经常查询的数据；而热数据是频繁查询的数据，这部分数据会被缓存到内存中。</para>
+	</section>
+	<section id="why">
+		<title>为什么缓存数据呢？</title>
+		<para>因为频繁查询相同结果集的数据时，每次到磁盘上查找数据是非常耗时的，所以数据库将频繁查询且返回相同结果集的数据放到内存中，可以减少磁盘访问操作。</para>
+	</section>
+	<section id="when">
+		<title>什么时候使用数据库缓存</title>
+		<para>频繁访问且返回相同结果集的情况下使用缓存。</para>
+		<para>偶尔查询一次且间隔时间较长的情况下不要使用缓存。</para>
+		<para>通常数据库默认情况是开启缓存的，也就是说正常的select查询，如果符合缓存规则就会经过缓存。</para>
+		<para>当一条SQL查询时如果结果集在内存中称作“命中”</para>
+	</section>
+	<section id="where">
+		<title>设计缓存的地方有哪些</title>
+		<para>数据库本身，查看数据库缓存状态</para>
+		<para>数据库应用程序接口（ODBC、JDBC......）</para>
+	</section>
+	<section id="who">
+		<title>谁来控制数据库缓存</title>
+		<para>通常DBA只能控制数据库缓存是否开启，分配多少内存给缓存使用，过期销毁时间，以及策略等等.</para>
+		<para>上面我已经说过，通常数据库默认都开启缓存，所以更多的时候我们的操作是禁用缓存。这就需要开发人员来通过特定的SQL操作来控制数据库缓存。</para>
+	</section>
+	<section id="how">
+		<title>怎么控制数据库缓存</title>
+		<para>以 MySQL 为例</para>
+		<screen>
+		<![CDATA[
+mysql> show variables like '%query_cache%'; 
++------------------------------+---------+
+| Variable_name                | Value   |
++------------------------------+---------+
+| have_query_cache             | YES     |
+| query_cache_limit            | 1048576 |
+| query_cache_min_res_unit     | 4096    |
+| query_cache_size             | 1048576 |
+| query_cache_type             | OFF     |
+| query_cache_wlock_invalidate | OFF     |
++------------------------------+---------+
+6 rows in set (0.04 sec)		
+		]]>
+		</screen>
+		<para>编辑 my.cnf 文件，加入配置项 query_cache_type=1 然后重启mysql服务</para>
+		<screen>
+		<![CDATA[
+mysql> show variables like '%query_cache%'; 
++------------------------------+---------+
+| Variable_name                | Value   |
++------------------------------+---------+
+| have_query_cache             | YES     |
+| query_cache_limit            | 1048576 |
+| query_cache_min_res_unit     | 4096    |
+| query_cache_size             | 1048576 |
+| query_cache_type             | ON      |
+| query_cache_wlock_invalidate | OFF     |
++------------------------------+---------+
+6 rows in set (0.00 sec)		
+		]]>
+		</screen>
+		<para>query_cache_type | ON 表示缓存已经开启。</para>
+		<section>
+			<title>SQL_CACHE</title>
+			<para>默认情况 select 查询操作只要符合数据库缓存规则那么结果集就会被缓存，如果你的数据库没有开启缓存，请参考下面</para>
+			<screen>
+			<![CDATA[
+set session query_cache_type=on;
+
+flush tables;
+show status like 'qcache_q%';
+select sql_cache * from member where id=1;
+show status like 'qcache_q%';
+select sql_cache * from member where id=1;
+show status like 'qcache_q%';
+			]]>
+			</screen>
+			<example>
+				<title>演示 SQL_CACHE</title>
+				<screen>
+				<![CDATA[
+mysql> flush tables;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show status like 'qcache_q%';
++-------------------------+-------+
+| Variable_name           | Value |
++-------------------------+-------+
+| Qcache_queries_in_cache | 0     |
++-------------------------+-------+
+1 row in set (0.00 sec)
+
+mysql> select sql_cache * from member where id=1;
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+| id | age | ctime               | ip_address | mobile | mtime | name | picture | sex  | status | wechat |
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+|  1 |   1 | 2017-08-24 17:05:43 | 1          | NULL   | NULL  | 1    | 1       | 1    | Enable | NULL   |
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> show status like 'qcache_q%';
++-------------------------+-------+
+| Variable_name           | Value |
++-------------------------+-------+
+| Qcache_queries_in_cache | 1     |
++-------------------------+-------+
+1 row in set (0.01 sec)
+
+mysql> select sql_cache * from member where id=1;
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+| id | age | ctime               | ip_address | mobile | mtime | name | picture | sex  | status | wechat |
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+|  1 |   1 | 2017-08-24 17:05:43 | 1          | NULL   | NULL  | 1    | 1       | 1    | Enable | NULL   |
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> show status like 'qcache_q%';
++-------------------------+-------+
+| Variable_name           | Value |
++-------------------------+-------+
+| Qcache_queries_in_cache | 1     |
++-------------------------+-------+
+1 row in set (0.01 sec)
+				]]>
+				</screen>
+				<para>我们可以看到 Qcache_queries_in_cache 值由0转为1表示缓存已经生效。</para>
+			</example>
+		</section>
+		<section>
+			<title>SQL_NO_CACHE</title>
+			<para>这里我们主要讲怎样禁止缓存，使查询出的结果集不进入缓存。</para>
+			<screen>
+SELECT SQL_NO_CACHE * FROM table where id=xxxx			
+			</screen>
+			<para>下面的用法比较安全，切换到其他数据库也能正常工作</para>
+			<screen>
+SELECT /*!40001 SQL_NO_CACHE */ * FROM table			
+			</screen>
+			<screen>
+set session query_cache_type=on;
+
+flush tables;
+show status like 'qcache_q%';
+select sql_no_cache * from member where id=1;
+show status like 'qcache_q%';
+select sql_no_cache * from member where id=1;
+show status like 'qcache_q%';						
+			</screen>
+			<example>
+				<title>演示 SQL_NO_CACHE</title>
+				<screen>
+				<![CDATA[
+mysql> flush tables;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show status like 'qcache_q%';
++-------------------------+-------+
+| Variable_name           | Value |
++-------------------------+-------+
+| Qcache_queries_in_cache | 0     |
++-------------------------+-------+
+1 row in set (0.00 sec)
+
+mysql> select sql_no_cache * from member where id=1;
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+| id | age | ctime               | ip_address | mobile | mtime | name | picture | sex  | status | wechat |
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+|  1 |   1 | 2017-08-24 17:05:43 | 1          | NULL   | NULL  | 1    | 1       | 1    | Enable | NULL   |
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> show status like 'qcache_q%';
++-------------------------+-------+
+| Variable_name           | Value |
++-------------------------+-------+
+| Qcache_queries_in_cache | 0     |
++-------------------------+-------+
+1 row in set (0.00 sec)
+
+mysql> select sql_no_cache * from member where id=1;
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+| id | age | ctime               | ip_address | mobile | mtime | name | picture | sex  | status | wechat |
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+|  1 |   1 | 2017-08-24 17:05:43 | 1          | NULL   | NULL  | 1    | 1       | 1    | Enable | NULL   |
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> show status like 'qcache_q%';
++-------------------------+-------+
+| Variable_name           | Value |
++-------------------------+-------+
+| Qcache_queries_in_cache | 0     |
++-------------------------+-------+
+1 row in set (0.00 sec)
+				]]>
+				</screen>
+				<para>使用 sql_no_cache 查询 Qcache_queries_in_cache 值始终是 0</para>
+			</example>
+		</section>
+		<section>
+			<title>set session query_cache_type=off</title>
+			<para>我们使用 set session query_cache_type=off 可以关闭本次查询缓存。</para>
+			<screen>
+set session query_cache_type=off;
+
+flush tables;
+show status like 'qcache_q%';
+select sql_cache * from member where id=1;
+show status like 'qcache_q%';
+select sql_cache * from member where id=1;
+show status like 'qcache_q%';						
+			</screen>
+			<example>
+				<title>演示 query_cache_type=off 关闭查询缓存</title>
+				<screen>
+				<![CDATA[
+mysql> set session query_cache_type=off;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> 
+mysql> flush tables;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> show status like 'qcache_q%';
++-------------------------+-------+
+| Variable_name           | Value |
++-------------------------+-------+
+| Qcache_queries_in_cache | 0     |
++-------------------------+-------+
+1 row in set (0.00 sec)
+
+mysql> select sql_cache * from member where id=1;
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+| id | age | ctime               | ip_address | mobile | mtime | name | picture | sex  | status | wechat |
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+|  1 |   1 | 2017-08-24 17:05:43 | 1          | NULL   | NULL  | 1    | 1       | 1    | Enable | NULL   |
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> show status like 'qcache_q%';
++-------------------------+-------+
+| Variable_name           | Value |
++-------------------------+-------+
+| Qcache_queries_in_cache | 0     |
++-------------------------+-------+
+1 row in set (0.00 sec)
+
+mysql> select sql_cache * from member where id=1;
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+| id | age | ctime               | ip_address | mobile | mtime | name | picture | sex  | status | wechat |
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+|  1 |   1 | 2017-08-24 17:05:43 | 1          | NULL   | NULL  | 1    | 1       | 1    | Enable | NULL   |
++----+-----+---------------------+------------+--------+-------+------+---------+------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> show status like 'qcache_q%';
++-------------------------+-------+
+| Variable_name           | Value |
++-------------------------+-------+
+| Qcache_queries_in_cache | 0     |
++-------------------------+-------+
+1 row in set (0.00 sec)
+				
+				]]>
+				</screen>
+			</example>
+		</section>
+	</section>
+
+</chapter>
