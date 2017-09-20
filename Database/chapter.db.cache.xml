@@ -16,11 +16,12 @@
 		<title>什么时候使用数据库缓存</title>
 		<para>频繁访问且返回相同结果集的情况下使用缓存。</para>
 		<para>偶尔查询一次且间隔时间较长的情况下不要使用缓存。</para>
+		<para>尺寸较大的结果集不建议使用缓存，因为数据太大太大，缓存不足以存储，会导致频繁载入与销毁，命中率低。</para>
 		<para>通常数据库默认情况是开启缓存的，也就是说正常的select查询，如果符合缓存规则就会经过缓存。</para>
 		<para>当一条SQL查询时如果结果集在内存中称作“命中”</para>
 	</section>
 	<section id="where">
-		<title>设计缓存的地方有哪些</title>
+		<title>涉及缓存的地方有哪些</title>
 		<para>数据库本身，查看数据库缓存状态</para>
 		<para>数据库应用程序接口（ODBC、JDBC......）</para>
 	</section>
@@ -67,7 +68,7 @@ mysql> show variables like '%query_cache%';
 		</screen>
 		<para>query_cache_type | ON 表示缓存已经开启。</para>
 		<section>
-			<title>SQL_CACHE</title>
+			<title>SQL_CACHE 缓存</title>
 			<para>默认情况 select 查询操作只要符合数据库缓存规则那么结果集就会被缓存，如果你的数据库没有开启缓存，请参考下面</para>
 			<screen>
 			<![CDATA[
@@ -133,7 +134,7 @@ mysql> show status like 'qcache_q%';
 			</example>
 		</section>
 		<section>
-			<title>SQL_NO_CACHE</title>
+			<title>禁止缓存 SQL_NO_CACHE</title>
 			<para>这里我们主要讲怎样禁止缓存，使查询出的结果集不进入缓存。</para>
 			<screen>
 SELECT SQL_NO_CACHE * FROM table where id=xxxx			
@@ -204,7 +205,7 @@ mysql> show status like 'qcache_q%';
 			</example>
 		</section>
 		<section>
-			<title>set session query_cache_type=off</title>
+			<title>关闭缓存 set session query_cache_type=off</title>
 			<para>我们使用 set session query_cache_type=off 可以关闭本次查询缓存。</para>
 			<screen>
 set session query_cache_type=off;
