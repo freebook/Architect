@@ -3,3 +3,4 @@
 # Visco
 *.vsd
 *.mm
+.DS_Store

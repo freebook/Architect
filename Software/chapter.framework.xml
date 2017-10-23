@@ -834,6 +834,7 @@ top10=前十位
 	</section>
 	&chapter.log.xml;
     &chapter.search.xml;
+    &chapter.microservices.xml;
 	<section id="debug">
 		<title>debug</title>
 		<para>生产环境不允许有任何调试输出，包括程序错误，这些信息应该写入error.log， 我们可以在网站放置一个调试入口，</para>
