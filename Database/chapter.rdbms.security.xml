@@ -246,7 +246,7 @@ CREATE TABLE `order_audit` (
 ) ENGINE=ARCHIVE DEFAULT CHARSET=utf8		
 		]]>
 		</programlisting>
-		<para></para>
+		<para>创建插入和更新触发器，用于插入和修改的时候同事写入一份到归档表中。</para>
 		<programlisting>
 		<![CDATA[
 DROP TRIGGER IF EXISTS `test`.`order_AFTER_INSERT`;
