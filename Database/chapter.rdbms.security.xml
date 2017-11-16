@@ -193,7 +193,8 @@ END; //
 DELIMITER;
 		</programlisting>
 		<para>进一步优化，我们可以为 history 历史表增加时间字段，用于记录被撰改那一时刻的时间。</para>
-<programlisting>
+		<programlisting>
+		<![CDATA[
 CREATE TABLE `article_history` (
 	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`article_id` MEDIUMINT(8) UNSIGNED NOT NULL,
@@ -210,9 +211,65 @@ CREATE TABLE `article_history` (
 ENGINE=MyISAM
 ROW_FORMAT=DEFAULT
 AUTO_INCREMENT=1
+		]]>
 		</programlisting>		
 		<para>我们还可以为该表（article_history）增加出发器，任何修改将被拒绝.</para>
-	</section>	
+	</section>
+	<section id="audit">
+		<title>数据库审计表</title>
+		<para>与上一章节所提到的历史表不同，历史表需要经常翻查所以我们需要用到索引。审计表通常是数据归档，不允许修改，且基本上很少访问。</para>
+		<programlisting>
+		<![CDATA[
+CREATE TABLE `order` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '订单ID',
+  `name` varchar(45) NOT NULL COMMENT '订单名称',
+  `price` float NOT NULL COMMENT '价格',
+  `ctime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表'		
+		]]>
+		</programlisting>
+		<para>基于 order 表创建 order_audit 审计表</para>
+		<programlisting>
+		<![CDATA[
+create table order_audit engine=archive as select * from `order`;
+		]]>
+		</programlisting>
+		<para>order_audit 表结构如下</para>
+		<programlisting>
+		<![CDATA[
+CREATE TABLE `order_audit` (
+  `id` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '订单ID',
+  `name` varchar(45) NOT NULL COMMENT '订单名称',
+  `price` float NOT NULL COMMENT '价格',
+  `ctime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
+) ENGINE=ARCHIVE DEFAULT CHARSET=utf8		
+		]]>
+		</programlisting>
+		<para></para>
+		<programlisting>
+		<![CDATA[
+DROP TRIGGER IF EXISTS `test`.`order_AFTER_INSERT`;
+
+DELIMITER $$
+USE `test`$$
+CREATE DEFINER=`dba`@`%` TRIGGER `test`.`order_AFTER_INSERT` AFTER INSERT ON `order` FOR EACH ROW
+BEGIN
+	INSERT INTO order_audit SELECT * FROM `order` WHERE id = NEW.id; 
+END$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `test`.`order_AFTER_UPDATE`;
+
+DELIMITER $$
+USE `test`$$
+CREATE DEFINER=`dba`@`%` TRIGGER `test`.`order_AFTER_UPDATE` AFTER UPDATE ON `order` FOR EACH ROW
+BEGIN
+	INSERT INTO order_audit SELECT * FROM `order` WHERE id = NEW.id; 
+END$$
+DELIMITER ;
+		]]>
+		</programlisting>
+	</section>
 	<section id="role">
 		<title>用户/角色认证</title>
 		<para>本小节我们实现一个功能，当用户插入，修改或者删除数据时，判断该操作是否具备应有的权限。如果权限不符合就拒绝操作同时提示用户。</para>
