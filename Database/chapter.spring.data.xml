@@ -4,8 +4,14 @@
 	<para>ORM的出现解决了程序猿学习数据库学历成本，也加快了开发的速度。程序猿无需再学习数据库定义语言DDL以及数据库客户端，也无需关注建表这些繁琐的工作，同时也降低了数据库结构变更管理中与DBA频繁沟通的成本。。
 	</para>
 	<para>在过去的两年中我们采用 Spring Data JPA 定义数据库，访问数据库，积累了很多经验，最终我们发现使用 Spring
-		Data 实体定义完全可以代替 DBA 的建模工作。</para>
-	<para>下面我们采用案例，一个一个讲解，各种数据库实体关系的定义。相关数据库建模知识请先阅读<ulink url="http://www.netkiller.cn/architect/index.html">《Netkiller Architect 手札》</ulink>以及<ulink url="http://www.netkiller.cn/spring/index.html">《Netkiller Spring 手札》</ulink></para>
+		Data 实体定义完全可以代替 DBA 的建模工作。
+	</para>
+	<para>
+		下面我们采用案例，一个一个讲解，各种数据库实体关系的定义。相关数据库建模知识请先阅读
+		<ulink url="http://www.netkiller.cn/architect/index.html">《Netkiller Architect 手札》</ulink>
+		以及
+		<ulink url="http://www.netkiller.cn/spring/index.html">《Netkiller Spring 手札》</ulink>
+	</para>
 	<section id="category">
 		<title>分类表</title>
 		<para>这是一个通用分类表，常见的父子关系加上path路径</para>
@@ -343,6 +349,115 @@ CREATE TABLE `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8		
 		]]>
 		</programlisting>
+	</section>
+	<section id="UniqueConstraint">
+		<title>复合索引</title>
+		<para>创建由多个字段组成的复合索引，如： "member_id", "articleId"</para>
+		<programlisting>
+		<![CDATA[
+package cn.netkiller.api.model;
+
+import java.io.Serializable;
+import java.util.Date;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@Entity
+@Table(name = "comment", uniqueConstraints = { @UniqueConstraint(columnNames = { "member_id", "articleId" }) })
+public class Comment implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1484408775034277681L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = false)
+	private int id;
+
+	@ManyToOne(cascade = { CascadeType.ALL })
+	@JoinColumn(name = "member_id")
+	private Member member;
+
+	private int articleId;
+
+	private String message;
+
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(updatable = false)
+	@org.hibernate.annotations.CreationTimestamp
+	protected Date createDate;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Member getMember() {
+		return member;
+	}
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	public int getArticleId() {
+		return articleId;
+	}
+
+	public void setArticleId(int articleId) {
+		this.articleId = articleId;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+}
+		]]>
+		</programlisting>
+		<para>期望结果</para>
+		<screen>
+		<![CDATA[
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) NOT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `member_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK5qxfiu92nwlvgli7bl3evl11m` (`member_id`,`article_id`),
+  CONSTRAINT `FKmrrrpi513ssu63i2783jyiv9m` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+		]]>
+		</screen>
 	</section>
 	<section id="spring.data.1n">
 		<title>一对多实例</title>
@@ -815,56 +930,54 @@ CREATE TABLE `article` (
 		</programlisting>
 		<para>现在我们已经将 categroy 与 article 两张表一对多关系建立起来。</para>
 	</section>
-	<section id="UniqueConstraint">
-		<title>复合索引</title>
-		<para>创建由多个字段组成的复合索引，如： "member_id", "articleId"</para>
+	<section id="ManyToMany">
+		<title>ManyToMany 多对多</title>
+		<para>用户与角色就是一个多对多的关系，多对多是需要中间表做关联的。所以需要一个 user_has_role 表。</para>
 		<programlisting>
-		<![CDATA[
-package cn.netkiller.api.model;
+			<![CDATA[
+    +----------+          +---------------+            +--------+
+    | users    |          | user_has_role |            | role   |
+    +----------+          +---------------+            +--------+
+    | id       | <------o | user_id       |      /---> | id     |
+    | name     |          | role_id       | o---+      | name   |
+    | password |          |               |            |        |
+    +----------+          +---------------+            +--------+
+			]]>
+		</programlisting>
+		<para>创建 User 表</para>
+		<programlisting>
+			<![CDATA[
+package cn.netkiller.api.domain.test;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import javax.persistence.JoinColumn;
 
 @Entity
-@Table(name = "comment", uniqueConstraints = { @UniqueConstraint(columnNames = { "member_id", "articleId" }) })
-public class Comment implements Serializable {
+@Table(name = "users")
+public class Users implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -1484408775034277681L;
+	private static final long serialVersionUID = -2480194112597046349L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = false)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	private String name;
+	private String password;
 
-	@ManyToOne(cascade = { CascadeType.ALL })
-	@JoinColumn(name = "member_id")
-	private Member member;
-
-	private int articleId;
-
-	private String message;
-
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(updatable = false)
-	@org.hibernate.annotations.CreationTimestamp
-	protected Date createDate;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "user_has_role", joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = { @JoinColumn(name = "role_id", referencedColumnName = "id") })
+	private Set<Roles> roles;
 
 	public int getId() {
 		return id;
@@ -874,54 +987,264 @@ public class Comment implements Serializable {
 		this.id = id;
 	}
 
-	public Member getMember() {
-		return member;
+	public String getName() {
+		return name;
 	}
 
-	public void setMember(Member member) {
-		this.member = member;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public int getArticleId() {
-		return articleId;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setArticleId(int articleId) {
-		this.articleId = articleId;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public String getMessage() {
-		return message;
+	public Set<Roles> getRoles() {
+		return roles;
 	}
 
-	public void setMessage(String message) {
-		this.message = message;
+	public void setRoles(Set<Roles> roles) {
+		this.roles = roles;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	@Override
+	public String toString() {
+		return "Users [id=" + id + ", name=" + name + ", password=" + password + ", roles=" + roles + "]";
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
 }
-		]]>
+			]]>
 		</programlisting>
-		<para>期望结果</para>
-		<screen>
-		<![CDATA[
-CREATE TABLE `comment` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `article_id` int(11) NOT NULL,
-  `create_date` datetime DEFAULT NULL,
-  `message` varchar(255) DEFAULT NULL,
-  `member_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UK5qxfiu92nwlvgli7bl3evl11m` (`member_id`,`article_id`),
-  CONSTRAINT `FKmrrrpi513ssu63i2783jyiv9m` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-		]]>
-		</screen>
+		<para>创建 Role 表</para>
+		<programlisting>
+			<![CDATA[
+package cn.netkiller.api.domain.test;
+
+import java.io.Serializable;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "roles")
+public class Roles implements Serializable {
+	private static final long serialVersionUID = 6737037465677800326L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	private String name;
+	@ManyToMany(mappedBy = "roles")
+	private Set<Users> users;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Set<Users> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<Users> users) {
+		this.users = users;
+	}
+
+	@Override
+	public String toString() {
+		return "Roles [id=" + id + ", name=" + name + ", users=" + users + "]";
+	}
+
+}
+
+			]]>
+		</programlisting>
+		<para>最终产生数据库表如下</para>
+		<programlisting>
+			<![CDATA[
+CREATE TABLE `users` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) NULL DEFAULT NULL,
+	`password` VARCHAR(255) NULL DEFAULT NULL,
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;	
+
+CREATE TABLE `roles` (
+	`id` INT(11) NOT NULL AUTO_INCREMENT,
+	`name` VARCHAR(255) NULL DEFAULT NULL,
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+			
+CREATE TABLE `user_has_role` (
+	`user_id` INT(11) NOT NULL,
+	`role_id` INT(11) NOT NULL,
+	PRIMARY KEY (`user_id`, `role_id`),
+	INDEX `FKsvvq61v3koh04fycopbjx72hj` (`role_id`),
+	CONSTRAINT `FK2dl1ftxlkldulcp934i3125qo` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+	CONSTRAINT `FKsvvq61v3koh04fycopbjx72hj` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+			]]>
+		</programlisting>
+		<programlisting>
+			<![CDATA[
+			]]>
+		</programlisting>
+	</section>
+	<section id="orphanRemoval">
+		<title>外键级联删除</title>
+		<para>orphanRemoval = true 可以实现数据级联删除</para>
+		<programlisting>
+			<![CDATA[
+package cn.netkiller.api.domain;
+
+import java.io.Serializable;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name = "member")
+public class Member implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", unique = true, nullable = false, insertable = true, updatable = false)
+	private int id;
+
+	private String name;
+	private String sex;
+	private int age;
+	private String wechat;
+
+	@Column(unique = true)
+	private String mobile;
+	private String picture;
+	private String ipAddress;
+
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "member")
+	private Set<Comment> comment;
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "member")
+	private Set<StatisticsHistory> statisticsHistory;
+
+	public Member() {
+	}
+
+	public Member(int id) {
+		this.id = id;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getWechat() {
+		return wechat;
+	}
+
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
+	public String getIpAddress() {
+		return ipAddress;
+	}
+
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
+	}
+
+	@Override
+	public String toString() {
+		return "Member [id=" + id + ", name=" + name + ", sex=" + sex + ", age=" + age + ", wechat=" + wechat + ", mobile=" + mobile + ", picture=" + picture + ", ipAddress=" + ipAddress + "]";
+	}
+
+}
+			
+			]]>
+		</programlisting>
 	</section>
 </chapter>
