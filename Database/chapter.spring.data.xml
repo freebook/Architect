@@ -34,7 +34,7 @@
 		</screen>
 		<programlisting>
 		<![CDATA[
-package common.domain;
+package cn.netkiller.domain;
 
 import java.util.Date;
 import java.util.Set;
@@ -191,7 +191,7 @@ CREATE TABLE `category` (
 		<para>我们希望为 name 和 path 字段增加普通索引</para>
 		<programlisting>
 		<![CDATA[
-package common.domain;
+package cn.netkiller.domain;
 
 import java.util.Date;
 import java.util.Set;
@@ -504,7 +504,7 @@ CREATE TABLE `comment` (
 		<para>首先定义分类实体类</para>
 		<programlisting>
 		<![CDATA[
-package common.domain;
+package cn.netkiller.domain;
 
 import java.util.Date;
 import java.util.Set;
@@ -649,7 +649,7 @@ public class Category {
 		<para>定义文章实体类</para>
 		<programlisting>
 		<![CDATA[
-package common.domain;
+package cn.netkiller.domain;
 
 import java.io.Serializable;
 import java.util.Date;
