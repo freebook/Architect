@@ -180,7 +180,7 @@ CREATE TABLE `category` (
 		]]>
 		</programlisting>
 	</section>
-	<section id="">
+	<section id="spring.data.index">
 		<title>为字段增加索引</title>
 		<para>我们希望为 name 和 path 字段增加普通索引</para>
 		<programlisting>
@@ -344,7 +344,7 @@ CREATE TABLE `category` (
 		]]>
 		</programlisting>
 	</section>
-	<section id="">
+	<section id="spring.data.1n">
 		<title>一对多实例</title>
 		<para>如下图，我们将实现 categroy 和 article 的一对多关系</para>
 		<programlisting role="sql">
@@ -815,7 +815,7 @@ CREATE TABLE `article` (
 		</programlisting>
 		<para>现在我们已经将 categroy 与 article 两张表一对多关系建立起来。</para>
 	</section>
-	<section>
+	<section id="UniqueConstraint">
 		<title>复合索引</title>
 		<para>创建由多个字段组成的复合索引，如： "member_id", "articleId"</para>
 		<programlisting>
