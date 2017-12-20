@@ -12,4 +12,5 @@
 	&chapter.nosql.xml;
 	&chapter.db.cache.xml;
 	&chapter.data.xml;
+	&chapter.spring.data.xml;
 </part>

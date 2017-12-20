@@ -8,3 +8,4 @@
 <!ENTITY chapter.data.xml 					SYSTEM "chapter.data.xml">
 <!ENTITY chapter.parallel.xml				SYSTEM "chapter.parallel.xml">
 <!ENTITY chapter.communication.xml			SYSTEM "chapter.communication.xml">
+<!ENTITY chapter.spring.data.xml				SYSTEM "chapter.spring.data.xml">
