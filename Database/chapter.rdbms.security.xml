@@ -485,11 +485,11 @@ select AES_DECRYPT(mobile,`key`), length(mobile) from encryption;
 			<para>这里方便演示将key 写入了数据库，实际应用key应该存储在应用程序配置文件中。通常能把获得key的人不应该用数据库权限。</para>
 		</section>
 	</section>
-	<section>
+	<section id="chain">
 		<title>数据链</title>
 		<para>背景：例如我们需要一个排行榜，存储活动的报名顺序或者考试成绩。我们防止有人作弊或者撰改，包括DBA在内。</para>
 		<para>任务：1.数据检查，2.发现撰改，2.风险提示</para>
-		<para>方案：使用链表指针方案</para>
+		<para>方案：使用链表指针方案,将数据看成一个链条，中间任何改动，就如同链条被剪断，改动之处之后的数据全部视为无效。</para>
 		<para>结果：达到数据后发现是否撰改，然后提示风险</para>
 		<programlisting>
 		<![CDATA[
