@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ENTITY chapter.blockchain.xml 			SYSTEM "chapter.blockchain.xml">
+<!ENTITY section.logistics.xml			SYSTEM "section.logistics.xml">
+<!ENTITY section.trace.xml 				SYSTEM "section.trace.xml">
+<!-- <!ENTITY chapter.hardware.network.xml		SYSTEM "chapter.hardware.network.xml"> -->

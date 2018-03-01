@@ -3,10 +3,3 @@
 <!ENTITY chapter.storage.xml 			SYSTEM "chapter.storage.xml">
 <!ENTITY chapter.cable.xml	 			SYSTEM "chapter.cable.xml">
 <!ENTITY chapter.server.xml				SYSTEM "chapter.server.xml">
-<!--
-	<!ENTITY chapter.operations.xml 			SYSTEM "Network/chapter.operations.xml">
-	<!ENTITY chapter.operations.security.xml	SYSTEM "Network/chapter.operations.security.xml">
-	<!ENTITY chapter.hardware.xml 				SYSTEM "Network/chapter.hardware.xml">
-
-	<!ENTITY chapter.hardware.network.xml		SYSTEM "Network/chapter.hardware.network.xml">
- -->
