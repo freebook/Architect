@@ -485,48 +485,6 @@ select AES_DECRYPT(mobile,`key`), length(mobile) from encryption;
 			<para>这里方便演示将key 写入了数据库，实际应用key应该存储在应用程序配置文件中。通常能把获得key的人不应该用数据库权限。</para>
 		</section>
 	</section>
-	<section id="chain">
-		<title>数据链</title>
-		<para>背景：例如我们需要一个排行榜，存储活动的报名顺序或者考试成绩。我们防止有人作弊或者撰改，包括DBA在内。</para>
-		<para>任务：1.数据检查，2.发现撰改，2.风险提示</para>
-		<para>方案：使用链表指针方案,将数据看成一个链条，中间任何改动，就如同链条被剪断，改动之处之后的数据全部视为无效。</para>
-		<para>结果：达到数据后发现是否撰改，然后提示风险</para>
-		<programlisting>
-		<![CDATA[
-CREATE TABLE `top100_list` (
-	`id` INT,
-	`name` VARBINARY(16) NOT NULL,
-	......
-	......
-	`extend` VARCHAR(32) NULL
-)
-ENGINE=InnoDB;
-		]]>
-		</programlisting>
-		<para>演示数据</para>
-		<screen>
-		<![CDATA[
-id | extend | ...
-1 | 0 | ...
-2 | 1 | ...
-3 | 2 | ...
-4 | 3 | ...		
-5 | 4 | ...
-		]]>
-		</screen>
-		<para>extend 始终集成上一条记录，保证数据是连续的。但这样还不够，这样只能防止数据被删除，如果其他字段被修改呢</para>
-		<screen>
-		<![CDATA[
-id | extend | ...
-1 | NULL | ...
-2 | crc32(...) | ...
-3 | crc32(...) | ...
-4 | crc32(...) | ...		
-5 | crc32(...) | ...
-		]]>
-		</screen>
-		<para>我们使用crc算法运算上一条一整行的数据，你还可以使用 salt 技术干扰，这个 salt 只有软件部署者知道，DBA和开发人员不得而知。</para>
-	</section>
 	<section id="plugin">
 		<title>开发加密插件开发</title>
 		<para>数据库内部提供的摘要函数MD5/SHA/CRC与现有的AES/DES加密函数以及不能满足我们的需求，所以我们有必要开发外挂插件实现数据加密。</para>
@@ -833,5 +791,48 @@ drop function safenet_decrypt;
 drop function safenet_config;	
 		]]>
 		</programlisting>
+	</section><section id="chain">
+		<title>数据区块链</title>
+		<para>背景：例如我们需要一个排行榜，存储活动的报名顺序或者考试成绩。我们防止有人作弊或者撰改，包括DBA在内。</para>
+		<para>任务：1.数据检查，2.发现撰改，2.风险提示</para>
+		<para>方案：使用链表指针方案,将数据看成一个链条，中间任何改动，就如同链条被剪断，改动之处之后的数据全部视为无效。</para>
+		<para>结果：达到数据后发现是否撰改，提示风险目的</para>
+		<programlisting>
+		<![CDATA[
+CREATE TABLE `top100_list` (
+	`id` INT,
+	`name` VARBINARY(16) NOT NULL,
+	......
+	......
+	`extend` VARCHAR(32) NULL
+)
+ENGINE=InnoDB;
+		]]>
+		</programlisting>
+		<para>演示数据</para>
+		<screen>
+		<![CDATA[
+id | extend | ...
+1 | 0 | ...
+2 | 1 | ...
+3 | 2 | ...
+4 | 3 | ...		
+5 | 4 | ...
+		]]>
+		</screen>
+		<para>extend 始终集成上一条记录，保证数据是连续的。但这样还不够，这样只能防止数据被删除，如果其他字段被修改呢</para>
+		<screen>
+		<![CDATA[
+id | extend | ...
+1 | NULL | ...
+2 | crc32(...) | ...
+3 | crc32(...) | ...
+4 | crc32(...) | ...		
+5 | crc32(...) | ...
+		]]>
+		</screen>
+		<para>我们使用crc算法运算上一条一整行的数据，你还可以使用 salt 技术干扰，这个 salt 只有软件部署者知道，DBA和开发人员不得而知。</para>
+		<para>对于一般数据crc32 可能做到性能和安全性平衡，如果安全要求更高可以使用 sha256 等等，甚至采用 RSA 非对称秘钥。</para>
 	</section>
+	
 </chapter>
