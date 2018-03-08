@@ -136,7 +136,10 @@ account5     	| 10
 		</screen>
 		<para>现在你应该看懂了把，代币是流通的，总量是不变的。account1 账号负责币的发行，回收等等工作。</para>
 		<para>同时任何转账将产生区块，历史数据永久记录。</para>
-		<para>下面是一个高级代币合约，地址<ulink url="https://github.com/ibook/NetkillerAdvancedToken" /></para>
+		<para>
+			下面是一个高级代币合约，地址
+			<ulink url="https://github.com/ibook/NetkillerAdvancedToken" />
+		</para>
 		<programlisting>
 		<![CDATA[
 pragma solidity ^0.4.20;
@@ -493,4 +496,47 @@ contract Player {
 		]]>
 		</programlisting>
 	</section>
+	<section>
+		<title>实施步骤</title>
+		<para>如果着手一个游戏项目上链，我们需要怎么做呢？</para>
+		<itemizedlist>
+			<title>上链步骤</title>
+			<listitem>
+				<para>收集需求，收集公司的内部上链需求，听取所有部门的建议和诉求。</para>
+				<para>收集内容例如，代币发行量多少？代币小数位数，代币名称，是否会增发，是否需要冻结，代币怎样流通，怎样回收</para>
+				<para>Dapp 的 UI 设计，各种功能流程</para>
+			</listitem>
+			<listitem>
+				<para>分析需求，因为需求来自各种部门，各种岗位等等，他们不一定从事需求分析工作，所以我们需求对他们的需求过滤，分析，然后给出初步的PRD文档（产品需求文档）</para>
+			</listitem>
+			<listitem>
+			<para>根据收集的需求设计合约</para>
+				<para>根据需求设计Dapp</para>
+				<para>系统架构设计，软件架构设计，技术选型；需要考虑扩展性，灵活性，并发设计，数据安全，部署，后期监控，各种埋点（统计、监控）</para>
+			</listitem>
+			<listitem>
+				<para>准备环境，我们需要三个环境，开发，测试，生产（运营）。</para>
+			</listitem>
+			<listitem>
+				<para>项目启动</para>
+				<para>运维部门准备环境</para>
+				<para>开发部门开发合约和Dapp</para>
+				<para>测试部门准备测试用例，测试环境</para>
+			</listitem>
+			<listitem>
+				<para>测试</para>
+				<para>Alpha 阶段，将合约部署到测试环境，测试合约的每个函数的工作逻辑，确保无误。因为合约一旦部署将不能更改，只能废弃使用新的合约，所以这个测试步骤必须重视。</para>
+				<para>Beta 阶段，将测试合约部署到测试网，例如 Ropsten ，可以邀请公司内部测试</para>
+			</listitem>
+			<listitem>
+				<para>部署生产环境</para>
+				<para>部署合约，将合约部署到主网</para>
+				<para>Dapp 部署到生产环境。</para>
+			</listitem>
+			<listitem>
+				<para>验收测试，在生产环境做最后验收测试</para>
+			</listitem>
+		</itemizedlist>
+	</section>
+
 </section>
