@@ -510,7 +510,7 @@ contract Player {
 				<para>分析需求，因为需求来自各种部门，各种岗位等等，他们不一定从事需求分析工作，所以我们需求对他们的需求过滤，分析，然后给出初步的PRD文档（产品需求文档）</para>
 			</listitem>
 			<listitem>
-			<para>根据收集的需求设计合约</para>
+			<para>根据收集的需求设计合约和Dapp</para>
 				<para>根据需求设计Dapp</para>
 				<para>系统架构设计，软件架构设计，技术选型；需要考虑扩展性，灵活性，并发设计，数据安全，部署，后期监控，各种埋点（统计、监控）</para>
 			</listitem>
@@ -519,7 +519,7 @@ contract Player {
 			</listitem>
 			<listitem>
 				<para>项目启动</para>
-				<para>运维部门准备环境</para>
+				<para>运维部门准备环境，开始建设监控系统</para>
 				<para>开发部门开发合约和Dapp</para>
 				<para>测试部门准备测试用例，测试环境</para>
 			</listitem>
@@ -535,6 +535,9 @@ contract Player {
 			</listitem>
 			<listitem>
 				<para>验收测试，在生产环境做最后验收测试</para>
+			</listitem>
+			<listitem>
+				<para>代币上交易所</para>
 			</listitem>
 		</itemizedlist>
 	</section>

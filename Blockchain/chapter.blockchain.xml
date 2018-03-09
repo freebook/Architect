@@ -5,4 +5,5 @@
 	&section.trace.xml;
 	&section.movie.xml;
 	&section.game.xml;
+	&section.guess.xml;
 </chapter>
