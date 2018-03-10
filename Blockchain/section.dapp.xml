@@ -334,7 +334,7 @@ web3.eth.personal.newAccount('!@superpassword').then(console.log);
 		</screen>
 	</section>
 	<section>
-		<title>送币</title>
+		<title>赠送代币</title>
 		<para>对于新开户，或者老用户绑定了钱包。我们通常要意思一下，就是送点币。</para>
 		<para>送币有两种方式，第一种是转账给用户，缺点是需要花店gas(气)，第二种是采用空投方式，就是在用户查询余额的时候送币。</para>
 		<para>先来说说第一种，转账方式。</para>
@@ -392,6 +392,16 @@ function balanceOf(address _owner) public view returns (uint256 balance) {
 		<para>空投币不好管理发行量。有一种做法，就是发行的时候分为2分，一份是 coinbase(msg.sender) 的 另一份是空投的。</para>
 	</section>
 	<section>
+		<title>赚取代币</title>
+		<para>这里我们举例几个场景</para>
+		<orderedlist>
+			<title>发放代币的方法</title>
+			<listitem><para>电商平台可以通过活动，订单量等等条件将代币发放给用户</para></listitem>
+			<listitem><para>智能穿戴，例如鞋子，手环，可以根据用户的运动值这算成代币，发放给用户</para></listitem>
+			<listitem><para>游戏平台，用户在线时间，电子竞技赢得分数都可以这算成代币，发放给用户</para></listitem>
+		</orderedlist>
+	</section>
+	<section>
 		<title>用户登录</title>
 		<para>第一个界面一定是，请输入用户名和密码，然后提交登录。</para>
 		<para>登录后进入用户信息页面</para>
@@ -445,5 +455,10 @@ contract.methods.balanceOf(toAddress).call().then(console.log).catch(console.err
 			<title>积分商城报表</title>
 			<para>进账财务数据，每日，每周，每月....</para>
 		</section>
+	</section>
+	<section>
+		<title>代币交易</title>
+		<para>代币上交易所后，用户间就可以了。</para>
+		<para>我们使用另外一个交易所账号，参与代币交易，可以卖币（回收），买币（发行）等等操作，实现代币的闭环流通。</para>
 	</section>
 </section>
