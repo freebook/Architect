@@ -5,3 +5,4 @@
 <!ENTITY section.movie.xml				SYSTEM "section.movie.xml">
 <!ENTITY section.game.xml				SYSTEM "section.game.xml">
 <!ENTITY section.guess.xml				SYSTEM "section.guess.xml">
+<!ENTITY section.dapp.xml				SYSTEM "section.dapp.xml">

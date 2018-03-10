@@ -6,4 +6,5 @@
 	&section.movie.xml;
 	&section.game.xml;
 	&section.guess.xml;
+	&section.dapp.xml;
 </chapter>
