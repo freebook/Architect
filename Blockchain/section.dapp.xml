@@ -420,6 +420,22 @@ function balanceOf(address _owner) public view returns (uint256 balance) {
 		]]>
 		</screen>
 		<para>NEO是代币符号，假设叫NEO，这是我的英文名。实际上NEO已经被其他代币使用：（</para>
+		<para>获取账号余额代码</para>
+		<programlisting>
+		<![CDATA[
+fs = require('fs');
+const Web3 = require('web3');
+const web3 = new Web3('http://localhost:8545');
+const abi = fs.readFileSync('output/TokenERC20.abi', 'utf-8');
+
+const contractAddress = "0x05A97632C197a0496bc939C4e666c2E03Cb95DD4";
+const fromAddress = "0x5c18a33DF2cc41a1bedDC91133b8422e89f041B7";	//用户账号
+const toAddress = "0x2C687bfF93677D69bd20808a36E4BC2999B4767C";	//收款账号
+
+const contract = new web3.eth.Contract(JSON.parse(abi), contractAddress, { from: fromAddress , gas: 100000});
+contract.methods.balanceOf(toAddress).call().then(console.log).catch(console.error);
+		]]>
+		</programlisting>
 	</section>
 	<section>
 		<title>积分商城</title>
