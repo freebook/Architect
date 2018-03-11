@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section>
+<section id="point">
 	<title>使用代币替代传统积分系统</title>
-	<para>首先我们使用代币是为了取代传统的积分机制。因为代币的“币”特性能够实现流通，交易等等，而传统的积分只能内部使用，无法流通，外接不承认加分的价值，积分无法交易，流通。</para>
+	<para>首先我们使用代币是为了取代传统的积分机制。因为代币的“币”特性能够实现流通，交易等等，实现一个闭环生态系统。而传统的积分只能内部使用，无法流通，外接不承认加分的价值，积分无法交易，流通。</para>
 	<para>其次我们并非是为了ICO炒作，然后割韭菜，代币取代积分是刚性需求。</para>
 	<para>这里假设您已经看我我之前写的文章，知道什么是代币，并且能用钱包部署代币合约。例如现在合约已经部署到主网，已经可以使用钱包转账代币，甚至代币已经上了交易所，接下来我们要做什么呢？</para>
 	<para>接下来的工作是将代币和网站或者手机App打通，只有将代币整合到现有业务场景中代币才有意义。</para>
@@ -62,6 +62,17 @@
 				</listitem>
 			</orderedlist>
 
+		</section>
+		<section id="">
+			<title>代币构成规划</title>
+			<para>例如总量发行1亿，1亿代币怎样构成的？</para>
+			<orderedlist>
+				<title>代币构成</title>
+				<listitem><para>1000万是空投赠送给 XXX 个用户</para></listitem>
+				<listitem><para>3000万作为福利发给公司员工</para></listitem>
+				<listitem><para>3000万放在交易</para></listitem>
+				<listitem><para>3000万放在网站流通</para></listitem>
+			</orderedlist>
 		</section>
 	</section>
 	<section>
