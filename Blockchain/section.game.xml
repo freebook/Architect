@@ -398,7 +398,7 @@ contract NetkillerAdvancedToken {
 		</programlisting>
 		<para>这个代币合约实现了，增发，减持，全局锁，账号冻结/解冻 等等功能。</para>
 	</section>
-	<section id="">
+	<section>
 		<title>玩家属性与游戏装备</title>
 		<para>下面的合约实现了游戏玩家上链，上链信息有玩家属性，例如肤色，眼睛，头发，血统等等。身上的穿戴物品包括武器等等。</para>
 		<programlisting>
@@ -495,6 +495,12 @@ contract Player {
 }		
 		]]>
 		</programlisting>
+	</section>
+	<section>
+		<title>装备属性与规范</title>
+		<para>假设我们开发一个游戏平台，很多厂商可以在这个平台上出售游戏。</para>
+		<para>例如屠龙宝刀只有一把，但是实际情况只要能赚钱，游戏厂商可以卖给了10个玩家，甚至更多。</para>
+		<para>为了公平起见，对于稀有的装备管理，我们要求游戏厂商在平台上备案。包括装备属性，应该归谁所有等等</para>
 	</section>
 	<section>
 		<title>物品合成计算</title>

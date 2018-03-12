@@ -7,4 +7,5 @@
 	&section.game.xml;
 	&section.guess.xml;
 	&section.dapp.xml;
+	&section.credit.xml;
 </chapter>

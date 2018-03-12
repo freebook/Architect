@@ -6,3 +6,4 @@
 <!ENTITY section.game.xml				SYSTEM "section.game.xml">
 <!ENTITY section.guess.xml				SYSTEM "section.guess.xml">
 <!ENTITY section.dapp.xml				SYSTEM "section.dapp.xml">
+<!ENTITY section.credit.xml				SYSTEM "section.credit.xml">
