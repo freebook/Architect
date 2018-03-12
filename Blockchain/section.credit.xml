@@ -77,6 +77,7 @@ type Person struct {
 	</section>
 	<section>
 		<title>将征信资料写入区块链</title>
+		<para>通过下面的函数，将征信数据写入到区块链上。</para>
 		<programlisting>
 		<![CDATA[
 func (s *SmartContract) createPerson(stub shim.ChaincodeStubInterface, args []string) sc.Response {
@@ -97,6 +98,7 @@ func (s *SmartContract) createPerson(stub shim.ChaincodeStubInterface, args []st
 	</section>
 	<section>
 		<title>查询区块数据</title>
+		<para>通过下面方法查询链上的征信资料。</para>
 		<programlisting>
 		<![CDATA[
 func (s *SmartContract) queryPerson(stub shim.ChaincodeStubInterface, args []string) sc.Response {
@@ -110,4 +112,31 @@ func (s *SmartContract) queryPerson(stub shim.ChaincodeStubInterface, args []str
 		]]>
 		</programlisting>
 	</section>
+	<section>
+		<title>删除区块</title>
+		<para>通过下面方法删除征信数据。</para>
+		<programlisting>
+		<![CDATA[
+func (s *SmartContract) deletePerson(stub shim.ChaincodeStubInterface, args []string) sc.Response {
+ 
+    if len(args) != 1 {
+        return shim.Error("Incorrect number of arguments. Expecting 1")
+    }
+    personAsBytes, _ := stub.GetState(args[0])
+    
+    err= stub.DelState(args[0])
+	if err != nil {
+		return shim.Error("Failed to delete Student from DB, key is: "+args[0])
+	}
+    
+    return shim.Success(personAsBytes)
+}	
+		
+		
+		]]>
+		</programlisting>
+	</section>
+	
+	
+	
 </section>
