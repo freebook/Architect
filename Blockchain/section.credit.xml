@@ -130,9 +130,7 @@ func (s *SmartContract) deletePerson(stub shim.ChaincodeStubInterface, args []st
 	}
     
     return shim.Success(personAsBytes)
-}	
-		
-		
+}
 		]]>
 		</programlisting>
 	</section>
