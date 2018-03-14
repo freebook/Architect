@@ -125,12 +125,22 @@
 		<para>上图数据写入时，保存了四份，分别在搜索引擎，关系型数据库，数据仓库和区块的</para>
 		<para>具体怎么实现，有很多方式，这里就不讨论了，否则就跑题了。</para>
 	</section>
-	<section>
+	<section id="bi">
 		<title>BI商业智能</title>
 		<para>数据采集，大数据分析</para>
 		<para>溯源信息的查询是通过用户手机终端实现，有几种途径，微信扫二维码，APP扫二维码，微信小程序等等。</para>
 		<para>我们可以收集到很多有价值的数据，例如地理位置，手机号码，性别，年龄等等......</para>
-		<para>有了这些数据便可以挖掘出有价值的数据。例如用户行为分析，消费与地理分析的关系，年龄段与购买力的关系等等....</para>
+		<para>有了这些数据便可以挖掘出有价值的数据，甚至可以将数据提供给生产企业作参考。</para>
+		<orderedlist>
+			<title>大数据能做什么？</title>
+			<listitem><para>用户行为分析，用户的喜好，这些数据能为后面精准推送提供支持。</para></listitem>
+			<listitem><para>消费与地理分析的关系</para></listitem>
+			<listitem><para>年龄段与购买力的关系</para></listitem>
+			<listitem><para>区域产品的存量，例如：用户扫描了一次二维码，可能用户就已经使用了改产品。我们就知道该地区投放的1000件商品被消耗了意见。</para></listitem>
+			<listitem><para>性别与消费习惯</para></listitem>
+			<listitem><para>两次间隔消费时间</para></listitem>
+			<listitem><para>活跃用户和沉睡用户</para></listitem>
+		</orderedlist>
 	</section>
 	<section>
 		<title>采集终端</title>
@@ -143,7 +153,7 @@
 UUID -> 二维码 -> 设备扫描二维码激活-> 入数据库 -> 异步消息队列 -> 上链 > ---+
                        ^                                             |
                        |                                             |
-                       +------------------- 追加数据 ------------------+ 
+                       +------------------- 追加数据 -----------------+ 
 		]]>
 		</screen>
 		<para>终端会帮助用户欲录入信息，用户可以在信息基础上修改或者重写。同时终端支持图片，图像记录上传。</para>
@@ -169,6 +179,14 @@ UUID -> 二维码 -> 设备扫描二维码激活-> 入数据库 -> 异步消息�
 		<para>根据业务需要，可以发行布置一套币，例如水果币，流量币，话费币，每种币的功能不同，这些币可以在交易所中撮合交易，例如卖出水果币，换成流量币等等。</para>
 		<para>由于国家的法规问题，代币系统设计原则一定是代币只能用来购买商城中的物品，不能直接兑换成RMB，否则会触碰到国家的红线。但是通过交易所，币币之间兑换我们就控制不了了。</para>
 		<para>另外扫描二维码显示溯源防伪信息的同时我们有很多可以操作空间，可以获取用户地理位置，手机号码等等信息，为后面大数据分析埋点。</para>
+		<orderedlist>
+			<title>用户激励手段</title>
+			<listitem><para>分享激励</para></listitem>
+			<listitem><para>好评激励</para></listitem>
+			<listitem><para>用户等级激励</para></listitem>
+			<listitem><para>代币激励</para></listitem>
+		</orderedlist>
+		<para>等等，手段众多，目的是让用户查询溯源信息，手机用户数据，鼓励代币消费等等.......</para>
 	</section>
 	<section>
 		<title>以太坊解决方案</title>
