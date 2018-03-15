@@ -224,6 +224,11 @@ UUID -> 二维码 -> 设备扫描二维码激活-> 入数据库 -> 异步消息�
 		<para>等等，手段众多，目的是让用户查询溯源信息，手机用户数据，鼓励代币消费等等.......</para>
 	</section>
 	<section>
+		<title>上链</title>
+		<para>并不是所有数据都上链，哪些数据上链呢？</para>
+		<para>产地(出生、生长)、采购、加工(检疫、屠宰)、库存、运输、销售、配送等等......</para>
+	</section>
+	<section>
 		<title>以太坊解决方案</title>
 		<para>我们设计一个简单的合约，模拟上面提到的解决方案</para>
 		<programlisting>
@@ -730,3 +735,4 @@ func main(){
 		</section>
 	</section>
 </section>
+<!-- 扫码返点激励，填写手机号后CC立即回访 -->
