@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section id="trace">
 	<title>食品安全溯源案例</title>
-	<para></para>
+	<para>下面的方案，同样适合药品安全溯源</para>
 	<section>
 		<title>背景</title>
 		<para>需求是通过区块链跟踪产品，实现产品产地，生产，流通等环节溯源。</para>
@@ -31,7 +31,7 @@
 	+----------+-----------------------------+
 		]]>
 		</screen>
-		<para>并不是实施了区块链技术就安全无忧了，安全分为很多层，区块链只能做到存储层的安全。区块链无法解决用户层，应用层，逻辑层等安全问题，他只能保证存储在硬盘上的区块不被修改。</para>
+		<para>并不是实施了区块链技术就安全无忧了，安全分为很多层，区块链只能做到网络层和存储层的安全。区块链无法解决用户层，应用层，逻辑层等安全问题，他只能保证存储在硬盘上的区块不被修改。</para>
 		<para>因为区块链仅仅能解决数据存储层的安全问题，不能保证上链的数据是真实的，上链前绝对不会被篡改；所以仅仅朔源，不考虑防伪是没有意义的，防伪仍然是重中之重。</para>
 	</section>
 	<section>
@@ -487,6 +487,70 @@ func main(){
 }
 		]]>
 			</screen>
+			<section id="">
+				<title>食品安全朔源</title>
+				<programlisting>
+				<![CDATA[
+	trace := &Trace{
+		Name: "牦牛肉干",
+		Address: "内蒙古呼和浩特",
+		Attribute: map[string]string{},
+		Element: []structElement{structElement{Name:"塑料袋",Company: "XXX塑料制品有限公司", Description: "外包装"},structElement{Name:"辣椒粉",Company: "XXX调味品有限公司", Description: "采摘年份2016-10-10"},structElement{Name:"调和油",Company: "XXX调味品有限公司", Description: "生产日期2016-10-10"}},
+		Logistics: map[string]structLogistics{}}
+	
+	trace.putAttribute("Color","Red")
+	trace.putAttribute("Size","10")
+	trace.putAttribute("Weight","100kg")
+	
+	trace.putLogistics("1", structLogistics{"呼和浩特","2016-10-15", Origin, "牦牛收购"})
+	trace.putLogistics("2", structLogistics{"呼和浩特","2016-10-18", Factory, "牦牛宰杀"})
+	trace.putLogistics("3", structLogistics{"呼和浩特","2016-10-15", QA, "经过质检"})
+	trace.putLogistics("4", structLogistics{"北京市","2016-10-15", Shipping, "运输中"})
+	trace.putLogistics("5", structLogistics{"杭州市","2016-10-15", Shipping, "XXX冷库"})
+	trace.putLogistics("5", structLogistics{"深圳市","2016-10-15", Supermarket, "XXX超市"})
+	trace.putLogistics("5", structLogistics{"龙华区","2016-10-15", Received, "用户签收"})				
+				]]>
+				</programlisting>
+			</section>
+			<section id="">
+				<title>水平移植</title>
+				<para>这个方案可以水平移植到其他领域，例如 药品安全溯源</para>
+				<programlisting>
+				<![CDATA[
+	trace := &Trace{
+		Name: "强身大力丸",
+		Address: "深圳是XXX制药有限公司",
+		Attribute: map[string]string{},
+		Element: []structElement{
+			structElement{Name:"枸杞",Company: "宁夏XXX农业有限公司", Description: "采摘年份2016-10-10，10g"},
+			structElement{Name:"茯苓",Company: "河南XXX农业有限公司", Description: "采摘年份2016-10-10，20kg"},
+			structElement{Name:"XXX",Company: "XXX有限公司", Description: "生产日期2016-10-10"},
+			structElement{Name:"XXX",Company: "XXX有限公司", Description: "生产日期2016-10-10"},
+			...
+			...
+			structElement{Name:"塑料包装",Company: "XXX有限公司", Description: "生产日期2016-10-10"}，
+			structElement{Name:"包装盒",Company: "XXX有限公司", Description: "生产日期2016-10-10"}
+			},
+		Logistics: map[string]structLogistics{}}
+	
+	trace.putAttribute("Color","Red")
+	trace.putAttribute("Size","10")
+	...
+	...
+	trace.putAttribute("Weight","100kg")
+	
+	trace.putLogistics("1", structLogistics{"呼和浩特","2016-10-15", Origin, "原材料...."})
+	trace.putLogistics("2", structLogistics{"呼和浩特","2016-10-18", Factory, "生产...."})
+	trace.putLogistics("3", structLogistics{"呼和浩特","2016-10-15", QA, "经过质检"})
+	trace.putLogistics("3", structLogistics{"XXX市药品监督局","2016-10-15", QA, "经过质检"})
+	trace.putLogistics("4", structLogistics{"北京市","2016-10-15", Shipping, "运输中"})
+	trace.putLogistics("5", structLogistics{"杭州市","2016-10-15", Shipping, "XXX冷库"})
+	trace.putLogistics("5", structLogistics{"深圳市","2016-10-15", Supermarket, "XXX超市"})
+	trace.putLogistics("5", structLogistics{"龙华区","2016-10-15", Received, "用户签收"})				
+				]]>
+				</programlisting>
+				<para>合约落地，还需要做一些调整已适应实际场景。但基本思路是通的。</para>
+			</section>
 		</section>
 
 		<section id="hyperledger.token">
