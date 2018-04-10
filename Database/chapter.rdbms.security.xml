@@ -843,6 +843,7 @@ CREATE TABLE `card` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`uuid` VARCHAR(36) NOT NULL COMMENT 'UUID' COLLATE 'utf8mb4_unicode_ci',
 	`number` VARCHAR(36) NOT NULL COMMENT '充值卡号码' COLLATE 'utf8mb4_unicode_ci',
+	`price` MEDIUMINT(8) UNSIGNED NOT NULL COMMENT '面值',
 	`status` ENUM('New','Activated','Recharged','Discard') NOT NULL DEFAULT 'New' COMMENT '充值卡状态' COLLATE 'utf8mb4_unicode_ci',
 	`ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
 	`mtime` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
@@ -875,6 +876,7 @@ AUTO_INCREMENT=1;
 CREATE DEFINER=`root`@`%` TRIGGER `card_before_update` BEFORE UPDATE ON `card` FOR EACH ROW BEGIN
 	set new.uuid 		= old.uuid;
 	set new.number		= old.number;
+	set new.price		= old.price;
 	set new.ctime		= old.ctime;
 	
 	IF old.status = "New" THEN
