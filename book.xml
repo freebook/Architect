@@ -45,9 +45,6 @@
 	<!ENTITY % testing.doctype.entity.xml 		SYSTEM "Testing/doctype.entity.xml">
 	%testing.doctype.entity.xml;
 	<!ENTITY part.testing.xml 					SYSTEM "part.testing.xml">
-	
-	<!ENTITY % blockchain.doctype.entity.xml 		SYSTEM "Blockchain/doctype.entity.xml">
-	%blockchain.doctype.entity.xml;
 
 ] >
 <book xml:base="http://netkiller.github.com/architect/"
@@ -74,7 +71,6 @@
 	&part.testing.xml;
 	&part.hardware.xml;
 	&part.solution.xml;
-	&chapter.blockchain.xml;
 	
 	&book.appendix;
 	&book.glossary;
