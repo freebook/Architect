@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="spring.data">
 	<title>Spring Data 最佳实践</title>
-	<para>ORM的出现解决了程序猿学习数据库学历成本，也加快了开发的速度。程序猿无需再学习数据库定义语言DDL以及数据库客户端，也无需关注建表这些繁琐的工作，同时也降低了数据库结构变更管理中与DBA频繁沟通的成本。。
-	</para>
-	<para>在过去的两年中我们采用 Spring Data JPA 定义数据库，访问数据库，积累了很多经验，最终我们发现使用 Spring
-		Data 实体定义完全可以代替 DBA 的建模工作。
-	</para>
-	<para>
-		下面我们采用案例，一个一个讲解，各种数据库实体关系的定义。相关数据库建模知识请先阅读
-		<ulink url="http://www.netkiller.cn/architect/index.html">《Netkiller Architect 手札》</ulink>
-		以及
-		<ulink url="http://www.netkiller.cn/spring/index.html">《Netkiller Spring 手札》</ulink>
-	</para>
-	<section id="category">
-		<title>分类表</title>
-		<para>这是一个通用分类表，常见的父子关系加上path路径</para>
-		<screen>
+	<section id="spring.data.mysql">
+		<title>MySQL</title>
+
+		<para>ORM的出现解决了程序猿学习数据库学历成本，也加快了开发的速度。程序猿无需再学习数据库定义语言DDL以及数据库客户端，也无需关注建表这些繁琐的工作，同时也降低了数据库结构变更管理中与DBA频繁沟通的成本。。
+		</para>
+		<para>在过去的两年中我们采用 Spring Data JPA 定义数据库，访问数据库，积累了很多经验，最终我们发现使用 Spring
+			Data 实体定义完全可以代替 DBA 的建模工作。
+		</para>
+		<para>
+			下面我们采用案例，一个一个讲解，各种数据库实体关系的定义。相关数据库建模知识请先阅读
+			<ulink url="http://www.netkiller.cn/architect/index.html">《Netkiller Architect 手札》</ulink>
+			以及
+			<ulink url="http://www.netkiller.cn/spring/index.html">《Netkiller Spring 手札》</ulink>
+		</para>
+		<section id="category">
+			<title>分类表</title>
+			<para>这是一个通用分类表，常见的父子关系加上path路径</para>
+			<screen>
 		<![CDATA[
  +-----------+
  | category  |
@@ -31,8 +34,8 @@
  |mtime      |
  +-----------+
 		]]>
-		</screen>
-		<programlisting>
+			</screen>
+			<programlisting>
 		<![CDATA[
 package cn.netkiller.domain;
 
@@ -168,9 +171,9 @@ public class Category {
 }
 		
 		]]>
-		</programlisting>
-		<para>期望结果</para>
-		<programlisting>
+			</programlisting>
+			<para>期望结果</para>
+			<programlisting>
 		<![CDATA[
 CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -184,12 +187,12 @@ CREATE TABLE `category` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8
 		]]>
-		</programlisting>
-	</section>
-	<section id="spring.data.index">
-		<title>为字段增加索引</title>
-		<para>我们希望为 name 和 path 字段增加普通索引</para>
-		<programlisting>
+			</programlisting>
+		</section>
+		<section id="spring.data.index">
+			<title>为字段增加索引</title>
+			<para>我们希望为 name 和 path 字段增加普通索引</para>
+			<programlisting>
 		<![CDATA[
 package cn.netkiller.domain;
 
@@ -328,9 +331,9 @@ public class Category {
 }
 				
 		]]>
-		</programlisting>
-		<para>期望结果</para>
-		<programlisting>
+			</programlisting>
+			<para>期望结果</para>
+			<programlisting>
 		<![CDATA[
 CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -348,12 +351,12 @@ CREATE TABLE `category` (
   CONSTRAINT `FKeiel7nqjxu4kmefso9tm9qcsu` FOREIGN KEY (`pid`) REFERENCES `category` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8		
 		]]>
-		</programlisting>
-	</section>
-	<section id="UniqueConstraint">
-		<title>复合索引</title>
-		<para>创建由多个字段组成的复合索引，如： "member_id", "articleId"</para>
-		<programlisting>
+			</programlisting>
+		</section>
+		<section id="UniqueConstraint">
+			<title>复合索引</title>
+			<para>创建由多个字段组成的复合索引，如： "member_id", "articleId"</para>
+			<programlisting>
 		<![CDATA[
 package cn.netkiller.api.model;
 
@@ -442,9 +445,9 @@ public class Comment implements Serializable {
 	}
 }
 		]]>
-		</programlisting>
-		<para>期望结果</para>
-		<screen>
+			</programlisting>
+			<para>期望结果</para>
+			<screen>
 		<![CDATA[
 CREATE TABLE `comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -457,12 +460,12 @@ CREATE TABLE `comment` (
   CONSTRAINT `FKmrrrpi513ssu63i2783jyiv9m` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		]]>
-		</screen>
-	</section>
-	<section id="spring.data.1n">
-		<title>一对多实例</title>
-		<para>如下图，我们将实现 categroy 和 article 的一对多关系</para>
-		<programlisting role="sql">
+			</screen>
+		</section>
+		<section id="spring.data.1n">
+			<title>一对多实例</title>
+			<para>如下图，我们将实现 categroy 和 article 的一对多关系</para>
+			<programlisting role="sql">
 		<![CDATA[
       +-----------+
       | category  |
@@ -500,9 +503,9 @@ CREATE TABLE `comment` (
       |status    |
       +----------+
 		]]>
-		</programlisting>
-		<para>首先定义分类实体类</para>
-		<programlisting>
+			</programlisting>
+			<para>首先定义分类实体类</para>
+			<programlisting>
 		<![CDATA[
 package cn.netkiller.domain;
 
@@ -645,9 +648,9 @@ public class Category {
 }
 
 		]]>
-		</programlisting>
-		<para>定义文章实体类</para>
-		<programlisting>
+			</programlisting>
+			<para>定义文章实体类</para>
+			<programlisting>
 		<![CDATA[
 package cn.netkiller.domain;
 
@@ -882,9 +885,9 @@ public class Article implements Serializable {
 }
 
 		]]>
-		</programlisting>
-		<para>希望结果</para>
-		<programlisting>
+			</programlisting>
+			<para>希望结果</para>
+			<programlisting>
 		<![CDATA[
 CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -927,13 +930,13 @@ CREATE TABLE `article` (
   CONSTRAINT `FKy5kkohbk00g0w88fi05k2hcw` FOREIGN KEY (`category_id`) REFERENCES `category` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		]]>
-		</programlisting>
-		<para>现在我们已经将 categroy 与 article 两张表一对多关系建立起来。</para>
-	</section>
-	<section id="ManyToMany">
-		<title>ManyToMany 多对多</title>
-		<para>用户与角色就是一个多对多的关系，多对多是需要中间表做关联的。所以需要一个 user_has_role 表。</para>
-		<programlisting>
+			</programlisting>
+			<para>现在我们已经将 categroy 与 article 两张表一对多关系建立起来。</para>
+		</section>
+		<section id="ManyToMany">
+			<title>ManyToMany 多对多</title>
+			<para>用户与角色就是一个多对多的关系，多对多是需要中间表做关联的。所以需要一个 user_has_role 表。</para>
+			<programlisting>
 			<![CDATA[
     +----------+          +---------------+            +--------+
     | users    |          | user_has_role |            | role   |
@@ -943,9 +946,9 @@ CREATE TABLE `article` (
     | password |          |               |            |        |
     +----------+          +---------------+            +--------+
 			]]>
-		</programlisting>
-		<para>创建 User 表</para>
-		<programlisting>
+			</programlisting>
+			<para>创建 User 表</para>
+			<programlisting>
 			<![CDATA[
 package cn.netkiller.api.domain.test;
 
@@ -1018,9 +1021,9 @@ public class Users implements Serializable {
 
 }
 			]]>
-		</programlisting>
-		<para>创建 Role 表</para>
-		<programlisting>
+			</programlisting>
+			<para>创建 Role 表</para>
+			<programlisting>
 			<![CDATA[
 package cn.netkiller.api.domain.test;
 
@@ -1077,9 +1080,9 @@ public class Roles implements Serializable {
 }
 
 			]]>
-		</programlisting>
-		<para>最终产生数据库表如下</para>
-		<programlisting>
+			</programlisting>
+			<para>最终产生数据库表如下</para>
+			<programlisting>
 			<![CDATA[
 CREATE TABLE `users` (
 	`id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -1109,16 +1112,16 @@ CREATE TABLE `user_has_role` (
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB;
 			]]>
-		</programlisting>
-		<programlisting>
+			</programlisting>
+			<programlisting>
 			<![CDATA[
 			]]>
-		</programlisting>
-	</section>
-	<section id="orphanRemoval">
-		<title>外键级联删除</title>
-		<para>orphanRemoval = true 可以实现数据级联删除</para>
-		<programlisting>
+			</programlisting>
+		</section>
+		<section id="orphanRemoval">
+			<title>外键级联删除</title>
+			<para>orphanRemoval = true 可以实现数据级联删除</para>
+			<programlisting>
 			<![CDATA[
 package cn.netkiller.api.domain;
 
@@ -1245,6 +1248,102 @@ public class Member implements Serializable {
 }
 			
 			]]>
-		</programlisting>
+			</programlisting>
+		</section>
+	</section>
+	<section id="spring.data.mongo">
+		<title>MongoDB</title>
+		<section>
+			<title>日志表</title>
+			<programlisting>
+			<![CDATA[
+package api.domain;
+
+import java.util.Date;
+
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document
+public class Logging {
+
+	public enum Priority {
+		info, warning, error, critical, exception, debug
+	}
+
+	public enum Facility {
+		app, sms, ios, android, api, db
+	}
+
+	@Id
+	private String id;
+	private String tag;
+	private Date time;
+	private Facility facility;
+	private Priority priority;
+	private String message;
+
+	public Logging() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getTag() {
+		return tag;
+	}
+
+	public void setTag(String tag) {
+		this.tag = tag;
+	}
+
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
+	public Facility getFacility() {
+		return facility;
+	}
+
+	public void setFacility(Facility facility) {
+		this.facility = facility;
+	}
+
+	public Priority getPriority() {
+		return priority;
+	}
+
+	public void setPriority(Priority priority) {
+		this.priority = priority;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	@Override
+	public String toString() {
+		return "Logging [id=" + id + ", tag=" + tag + ", time=" + time + ", facility=" + facility + ", priority=" + priority + ", message=" + message + "]";
+	}
+
+}
+
+			]]>
+			</programlisting>
+		</section>
 	</section>
 </chapter>
