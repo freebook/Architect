@@ -1254,6 +1254,42 @@ public class Member implements Serializable {
 	<section id="spring.data.mongo">
 		<title>MongoDB</title>
 		<section>
+			<title>枚举定义</title>
+			<programlisting>
+			<![CDATA[
+package api.pojo;
+
+public class Enum {
+
+	public enum Authority {
+		USER, EXPERTS, ORGANIZATION, ADMIN
+	}
+
+	public enum Status {
+		Enabled, Disabled, Yes, No, Y, N
+	}
+
+	public enum Examine {
+		New, Pending, Rejected, Approved
+	}
+
+	public enum Task {
+		New, Processing, Canceled, Completed
+	}
+
+	public enum Sex {
+		True, False, T, F, Male, Female, Boy, Girl
+	}
+
+	public Enum() {
+		// TODO Auto-generated constructor stub
+	}
+}
+			
+			]]>
+			</programlisting>
+		</section>
+		<section>
 			<title>日志表</title>
 			<programlisting>
 			<![CDATA[
