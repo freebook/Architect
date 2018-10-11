@@ -1381,5 +1381,55 @@ public class Logging {
 			]]>
 			</programlisting>
 		</section>
+		<section>
+			<title>地址与定位</title>
+			<programlisting>
+			<![CDATA[
+package cn.netkiller.api.domain;
+
+import org.springframework.data.geo.Point;
+import org.springframework.data.redis.core.index.GeoIndexed;
+import org.springframework.data.redis.core.index.Indexed;
+
+public class Address {
+
+	private @Indexed String city;
+	private String country;
+	private @GeoIndexed Point location;
+
+	public Address(String city, String country, Point location) {
+		this.city = city;
+		this.country = country;
+		this.location = location;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public Point getLocation() {
+		return location;
+	}
+
+	public void setLocation(Point location) {
+		this.location = location;
+	}
+
+}			
+			]]>
+			</programlisting>
+		</section>
 	</section>
 </chapter>
