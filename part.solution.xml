@@ -120,5 +120,4 @@
  	&chapter.firewall.xml;
  	&chapter.logging.xml;
  	&chapter.permission.xml;
- 	&chapter.oscm.xml;
 </part>
