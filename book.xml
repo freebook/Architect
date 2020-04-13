@@ -56,6 +56,14 @@
 
 		&book.info.xml;
 		&book.info.legalnotice.xml;
+		<cover>
+			<para role="tagline">Netkiller Architect 手札</para>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="images/cover.png" />
+				</imageobject>
+			</mediaobject>
+		</cover>
 		<!-- &book.info.abstract.xml; -->
 
 	</info>
