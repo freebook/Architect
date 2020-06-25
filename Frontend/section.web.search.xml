@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id: chapter.dev.search.xml 391 2012-04-20 10:59:22Z netkiller $ -->
 <section id="search">
-	<title>Search</title>
+	<title>搜索引擎相关优化</title>
 	<section id="search.url">
 		<title>搜索结果静态化</title>
 		<para>每个搜索关键字都应该有一个惟一的URL，例如</para>
@@ -14,19 +14,18 @@ https://www.google.com.hk/search?sourceid=chrome&ie=UTF-8&q=bg7nyt
 		</screen>
 		<para>每搜索一次新的关键字就会产生一条唯一的URL，这样就可以实现反向代理缓存，甚者通过HTTP头，实现浏览器段的缓存。</para>
 	</section>
-	<section id="search.seo">
-		<title>SEO Module</title>
-		<section>
-			<title>robots.txt</title>
-			<screen>
+	<section>
+		<title>robots.txt</title>
+		<screen>
 			<![CDATA[
 <meta name="robots" content="noarchive">
-			]]>		
-			</screen>
-			<example>
-				<title>example robots.txt</title>
-				<para>http://www.google.com/robots.txt</para>
-				<screen>
+			]]>
+		</screen>
+		<example>
+			<title>example robots.txt</title>
+			<para>http://www.google.com/robots.txt</para>
+			<screen>
+				<![CDATA[
 User-agent: *
 Disallow: /search
 Disallow: /groups
@@ -243,23 +242,105 @@ Sitemap: http://www.google.com/ventures/sitemap_ventures.xml
 Sitemap: http://www.google.com/sitemaps_webmasters.xml
 Sitemap: http://www.gstatic.com/trends/websites/sitemaps/sitemapindex.xml
 Sitemap: http://www.gstatic.com/dictionary/static/sitemaps/sitemap_index.xml
-				</screen>
-			</example>		
-			<section>
-				<title>Sitemap in robots.txt</title>
-				<screen>
+				]]>
+			</screen>
+		</example>
+		
+	</section>
+	<section id="sitemaps">
+		<title>sitemaps</title>
+		<para>
+			<ulink url="http://www.sitemaps.org/">http://www.sitemaps.org/</ulink>
+		</para>
+		<para>sitemap.xml</para>
+	</section>
+	<section>
+		<title>Sitemap in robots.txt</title>
+		<screen>
+				<![CDATA[
 User-agent: *
 Allow: *
 Disallow: /management/
 Sitemap: http://netkiller.sourceforge.net/sitemaps.xml.gz			
-				</screen>
-			</section>
-		</section>
-		<section id="sitemaps">
-			<title>sitemaps</title>
-			<para><ulink url="http://www.sitemaps.org/">http://www.sitemaps.org/</ulink></para>
-			<para>sitemap.xml</para>
-		</section>
-	</section>	
+				]]>
+		</screen>
+	</section>
+	<section id="sitemap.tools">
+		<title>sitemap 静态内容生成工具</title>
+		<programlisting>
+		<![CDATA[
+#!/bin/bash
+DOMAIN="http://www.netkiller.cn"
+PUBLIC_HTML=~/public_html
+if [ ! -z $1 ]; then
+	DOMAIN=$1
+fi
+lastmod=`date "+%Y-%m-%d"`
+
+echo '<?xml version="1.0" encoding="UTF-8"?>'
+echo '<?xml-stylesheet type="text/xsl" href="gss.xsl"?>'
+echo '<urlset xmlns="http://www.google.com/schemas/sitemap/0.84" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.google.com/schemas/sitemap/0.84 http://www.google.com/schemas/sitemap/0.84/sitemap.xsd">'
+#echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
+
+for htmlfile in $(find $PUBLIC_HTML/ -type f -name "*.html")
+do
+	url=`echo $htmlfile | sed -e "s:$PUBLIC_HTML/::"`
+	echo '   <url>'
+	echo '      <loc>'${DOMAIN}'/'${url}'</loc>'
+	echo '      <lastmod>'${lastmod}'</lastmod>'
+	echo '      <changefreq>daily</changefreq>'
+	echo '      <priority>0.5</priority>'
+	echo '   </url>'
+done
+
+for htmlfile in $(find $PUBLIC_HTML/ -type f -name "*.epub")
+do
+        url=`echo $htmlfile | sed -e "s:$PUBLIC_HTML/::"`
+        echo '   <url>'
+        echo '      <loc>'${DOMAIN}'/'${url}'</loc>'
+        echo '      <lastmod>'${lastmod}'</lastmod>'
+        echo '      <changefreq>daily</changefreq>'
+        echo '      <priority>0.5</priority>'
+        echo '   </url>'
+done
+
+for htmlfile in $(find $PUBLIC_HTML/ -type f -name "*.mobi")
+do
+        url=`echo $htmlfile | sed -e "s:$PUBLIC_HTML/::"`
+        echo '   <url>'
+        echo '      <loc>'${DOMAIN}'/'${url}'</loc>'
+        echo '      <lastmod>'${lastmod}'</lastmod>'
+        echo '      <changefreq>daily</changefreq>'
+        echo '      <priority>0.5</priority>'
+        echo '   </url>'
+done
+
+for htmlfile in $(find $PUBLIC_HTML/ -type f -name "*.chm")
+do
+        url=`echo $htmlfile | sed -e "s:$PUBLIC_HTML/::"`
+        echo '   <url>'
+        echo '      <loc>'${DOMAIN}'/'${url}'</loc>'
+        echo '      <lastmod>'${lastmod}'</lastmod>'
+        echo '      <changefreq>daily</changefreq>'
+        echo '      <priority>0.5</priority>'
+        echo '   </url>'
+done
+
+for htmlfile in $(find $PUBLIC_HTML/ -type f -name *.pdf)
+do
+	url=`echo $htmlfile | sed -e "s:$PUBLIC_HTML/::"`
+	echo '   <url>'
+	echo '      <loc>'${DOMAIN}'/'${url}'</loc>'
+	echo '      <lastmod>'${lastmod}'</lastmod>'
+	echo '      <changefreq>daily</changefreq>'
+	echo '      <priority>0.5</priority>'
+	echo '   </url>'
+done
+
+echo "</urlset>"		
+		]]>
+		</programlisting>
+
+	</section>
 
 </section>

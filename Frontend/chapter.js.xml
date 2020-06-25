@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="framework.js">
+	<title>Javascript Framework</title>
+	<para>javascript是面向过程的，只要请引用.js文件即可访问他的方法（function），并且传统方式会定义很多全局变量。如果大量使用javascript难免会出现变量覆盖，或function同名。</para>
+	<para>所以我们要将javascript封装成class，另一点我们也需要面向对象支持。下面是几个常用的JS开发框架（javascript framework）。</para>
+	<itemizedlist>
+		<listitem>
+			<para>prototype</para>
+		</listitem>
+		<listitem>
+			<para>jQuery</para>
+		</listitem>
+		<listitem>
+			<para>mootools</para>
+		</listitem>
+		<listitem>
+			<para>script.aculo.us</para>
+		</listitem>
+		<listitem>
+			<para>Dojo</para>
+		</listitem>
+		<listitem>
+			<para>MochiKit</para>
+		</listitem>
+		<listitem>
+			<para>rico</para>
+		</listitem>
+	</itemizedlist>
+	<itemizedlist>
+		<title>Javascript GUI</title>
+		<listitem>
+			<para>ExtJS</para>
+		</listitem>
+		<listitem>
+			<para>qooxdoo</para>
+		</listitem>
+	</itemizedlist>
+	<section>
+		<title>Minify JS</title>
+		<para>最小化js文件</para>
+		<section>
+			<title>jsmin</title>
+			<para>http://crockford.com/javascript/jsmin</para>
+			<screen>
+				<![CDATA[
+jsmin <fulljslint.js >jslint.js
+				]]>
+			</screen>
+		</section>
+		<section>
+			<title>yuicompressor</title>
+			<para>http://developer.yahoo.com/yui/compressor/</para>
+			<screen>
+				<![CDATA[
+Usage: java -jar yuicompressor-x.y.z.jar [options] [input file]
+				]]>
+			</screen>
+		</section>
+		<section>
+			<title>shrinksafe</title>
+			<para>http://dojotoolkit.org/docs/shrinksafe</para>
+		</section>
+	</section>
+</chapter>

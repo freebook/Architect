@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ENTITY book.appendix.xml	 			SYSTEM "book.appendix.xml">
+<!ENTITY book.info.xml					SYSTEM "book.info.xml">
+<!ENTITY book.dedication 				SYSTEM "book.dedication.xml">
+<!ENTITY book.preface 					SYSTEM "book.preface.xml">
+<!ENTITY book.appendix 					SYSTEM "book.appendix.xml">
+<!ENTITY book.glossary 					SYSTEM "book.glossary.xml">
+<!ENTITY book.history 					SYSTEM "book.history.xml">
+	
+<!ENTITY part.frontend.xml 				SYSTEM "part.frontend.xml">
+<!ENTITY chapter.web.xml 				SYSTEM "Frontend/chapter.web.xml">
+<!ENTITY chapter.js.xml 				SYSTEM "Frontend/chapter.js.xml">
+<!ENTITY section.web.search.xml			SYSTEM "Frontend/section.web.search.xml">
+
+<!ENTITY part.backend.xml 				SYSTEM "part.backend.xml">
+<!ENTITY chapter.microservices.xml		SYSTEM "Backend/chapter.microservices.xml">

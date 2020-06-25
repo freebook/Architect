@@ -12,18 +12,12 @@
 	<!ENTITY % common.doctype.entity.xml 		SYSTEM "common/doctype.entity.xml">
 	%common.doctype.entity.xml;
 	
-	<!ENTITY book.appendix.xml	 			SYSTEM "book.appendix.xml">
-	<!ENTITY book.info.xml					SYSTEM "book.info.xml">
-	<!ENTITY book.dedication 				SYSTEM "book.dedication.xml">
-	<!ENTITY book.preface 					SYSTEM "book.preface.xml">
-	<!ENTITY book.appendix 					SYSTEM "book.appendix.xml">
-	<!ENTITY book.glossary 					SYSTEM "book.glossary.xml">
-	<!ENTITY book.history 					SYSTEM "book.history.xml">
+	<!ENTITY % doctype.entity.xml 			SYSTEM "doctype.entity.xml">
+	%doctype.entity.xml;
 
 	<!ENTITY part.architecture.xml 				SYSTEM "part.architecture.xml">
 	<!ENTITY chapter.architecture.xml 			SYSTEM "chapter.architecture.xml">
 
-	<!ENTITY chapter.system.xml 				SYSTEM "chapter.system.xml">
 	<!ENTITY chapter.architecture.enterprise.xml	SYSTEM "chapter.architecture.enterprise.xml">
 	
 	<!ENTITY % software.doctype.entity.xml 		SYSTEM "Software/doctype.entity.xml">
@@ -72,8 +66,9 @@
 	&book.preface.xml;
 
 	&part.architecture.xml;
-	&chapter.system.xml;
-
+	&part.frontend.xml;
+	&part.backend.xml;
+	
 	&part.database.xml;
 	&part.software.xml;
 	&part.testing.xml;

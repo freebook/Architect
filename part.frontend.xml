@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<part id="frontend">
+	<title>前端架构</title>
+	&chapter.web.xml;
+	&chapter.js.xml;
+</part>

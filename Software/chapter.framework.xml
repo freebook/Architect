@@ -270,52 +270,7 @@ server {
 	&chapter.plugin.xml;
 	&chapter.interface.xml;
 
-	<section id="framework.js">
-		<title>Javascript Framework</title>
-		<para>javascript是面向过程的，只要请引用.js文件即可访问他的方法（function），并且传统方式会定义很多全局变量。如果大量使用javascript难免会出现变量覆盖，或function同名。</para>
-		<para>所以我们要将javascript封装成class，另一点我们也需要面向对象支持。下面是几个常用的JS开发框架（javascript framework）。</para>
-		<itemizedlist>
-			<listitem><para>prototype</para></listitem>
-			<listitem><para>jQuery</para></listitem>
-			<listitem><para>mootools</para></listitem>
-			<listitem><para>script.aculo.us</para></listitem>
-			<listitem><para>Dojo</para></listitem>
-			<listitem><para>MochiKit</para></listitem>
-			<listitem><para>rico</para></listitem>
-		</itemizedlist>
-		<itemizedlist>
-			<title>Javascript GUI</title>
-			<listitem><para>ExtJS</para></listitem>
-			<listitem><para>qooxdoo</para></listitem>
-		</itemizedlist>
-		<section>
-			<title>Minify JS</title>
-			<para>最小化js文件</para>
-			<section>
-				<title>jsmin</title>
-				<para>http://crockford.com/javascript/jsmin</para>
-				<screen>
-				<![CDATA[
-jsmin <fulljslint.js >jslint.js
-				]]>
-				</screen>
-			</section>
-			<section>
-				<title>yuicompressor</title>
-				<para>http://developer.yahoo.com/yui/compressor/</para>
-				<screen>
-				<![CDATA[
-Usage: java -jar yuicompressor-x.y.z.jar [options] [input file]
-				]]>
-				</screen>
-			</section>
-			<section>
-				<title>shrinksafe</title>
-				<para>http://dojotoolkit.org/docs/shrinksafe</para>
-			</section>
-		</section>
-	</section>
-
+	
 	<section id="framework.template">
 		<title>模板(template)</title>
 		<para>模板最早是在cgi程序中广泛应用，cgi是动态页面的第一代，同期还有NSAPI,ISAPI,第二代是fastcgi,asp,php,ColdFusion...第三代是.net与java。</para>
@@ -449,17 +404,7 @@ setcookie("test", $_GET['id'], time()+3600, "/", ".a.com");
 				<para>Unicode不是最好的选择，它占用三个字节，数据量较大，选择适合你的编码，如果你是英文网站，请使用ISO-8859-1，如果是简体中文，请使用GB2312</para>
 			</tip>
 		</section>
-		<section>
-			<title>繁简转换</title>
-			<para>方案1: User -> Squid ->Web Server</para>
-			<para>
-				修改squid源码，加入iconv(big5,gb2312,html page)
-			</para>
-			<screen>
-e.g.1 user (gb.example.org) -> Squid (big5->gb2312) -> web server
-e.g.2 user (big5.example.org) -> Squid (gb2312->big5) -> web server
-			</screen>
-		</section>
+
 	</section>
 
 	<section id="framework.database">
@@ -833,8 +778,6 @@ top10=前十位
 		</section>
 	</section>
 	&chapter.log.xml;
-    &chapter.search.xml;
-    &chapter.microservices.xml;
 	<section id="debug">
 		<title>debug</title>
 		<para>生产环境不允许有任何调试输出，包括程序错误，这些信息应该写入error.log， 我们可以在网站放置一个调试入口，</para>
