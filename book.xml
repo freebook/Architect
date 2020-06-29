@@ -42,6 +42,9 @@
 	<!ENTITY % testing.doctype.entity.xml 		SYSTEM "Testing/doctype.entity.xml">
 	%testing.doctype.entity.xml;
 	<!ENTITY part.testing.xml 					SYSTEM "part.testing.xml">
+	
+	<!ENTITY % devops.doctype.entity.xml 				SYSTEM "DevOps/doctype.entity.xml">
+	%devops.doctype.entity.xml;
 
 ] >
 <book xml:base="http://netkiller.github.com/architect/"
@@ -73,6 +76,8 @@
 	&part.backend.xml;
 	
 	&part.database.xml;
+	&part.devops.xml;
+	
 	&part.software.xml;
 	&part.testing.xml;
 	&part.hardware.xml;
