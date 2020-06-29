@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!ENTITY chapter.traffic.xml 			SYSTEM "chapter.traffic.xml">
 <!ENTITY chapter.storage.xml 			SYSTEM "chapter.storage.xml">
-<!ENTITY chapter.cable.xml	 			SYSTEM "chapter.cable.xml">
 <!ENTITY chapter.server.xml				SYSTEM "chapter.server.xml">
+<!ENTITY section.idc.move.xml			SYSTEM "section.idc.move.xml">
+<!ENTITY section.idc.cable.xml	 		SYSTEM "section.idc.cable.xml">

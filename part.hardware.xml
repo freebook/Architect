@@ -2,7 +2,12 @@
 	<title>硬件篇</title>
 	<subtitle>网络设备与服务器硬件相关</subtitle>
 	<para></para>
-	&chapter.cable.xml;
+	<chapter id="idc">
+		<title>IDC</title>
+		&section.idc.move.xml;
+		&section.idc.cable.xml;
+	</chapter>
+	
 	&chapter.traffic.xml;
 	&chapter.storage.xml;
 	&chapter.server.xml;

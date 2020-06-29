@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="cable">
+<section id="cable">
 	<title>网线怎样连接才合理</title>
 	<section>
 		<title>单个硬件防火墙方案</title>
@@ -60,4 +60,4 @@ G0/0/6-24	Server
 		<screen>
 		</screen>
 	</section>
-</chapter>
+</section>
