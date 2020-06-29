@@ -1,5 +1,11 @@
 <revhistory>
 	<revision>
+		<revnumber>1.0.0</revnumber>
+		<date>Jun 29, 2020</date>
+		<authorinitials>Neo</authorinitials>
+		<revremark>计划改变，启动写作计划</revremark>
+	</revision>
+	<revision>
 		<revnumber>0.1.1</revnumber>
 		<date>Sep 12, 2011</date>
 		<authorinitials>Neo</authorinitials>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ENTITY chapter.web.xml 				SYSTEM "chapter.web.xml">
+<!ENTITY chapter.js.xml 				SYSTEM "chapter.js.xml">
+<!ENTITY section.web.search.xml			SYSTEM "section.web.search.xml">
+<!ENTITY section.web.static.xml			SYSTEM "section.web.static.xml">

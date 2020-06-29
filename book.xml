@@ -14,11 +14,14 @@
 	
 	<!ENTITY % doctype.entity.xml 			SYSTEM "doctype.entity.xml">
 	%doctype.entity.xml;
-
-	<!ENTITY part.architecture.xml 				SYSTEM "part.architecture.xml">
-	<!ENTITY chapter.architecture.xml 			SYSTEM "chapter.architecture.xml">
-
-	<!ENTITY chapter.architecture.enterprise.xml	SYSTEM "chapter.architecture.enterprise.xml">
+	
+	<!ENTITY % frontend.doctype.entity.xml 		SYSTEM "Frontend/doctype.entity.xml">
+	%frontend.doctype.entity.xml;
+	<!ENTITY part.frontend.xml 					SYSTEM "part.frontend.xml">
+	
+	<!ENTITY % backend.doctype.entity.xml 		SYSTEM "Backend/doctype.entity.xml">
+	%backend.doctype.entity.xml;
+	<!ENTITY part.backend.xml 					SYSTEM "part.backend.xml">
 	
 	<!ENTITY % software.doctype.entity.xml 		SYSTEM "Software/doctype.entity.xml">
 	%software.doctype.entity.xml;
@@ -58,14 +61,14 @@
 				</imageobject>
 			</mediaobject>
 		</cover>
-		<!-- &book.info.abstract.xml; -->
+		&book.info.abstract.xml;
 
 	</info>
 
 	&book.dedication.xml;
 	&book.preface.xml;
 
-	&part.architecture.xml;
+<!-- 	&part.architecture.xml; -->
 	&part.frontend.xml;
 	&part.backend.xml;
 	
@@ -75,9 +78,9 @@
 	&part.hardware.xml;
 	&part.solution.xml;
 	
-	&book.appendix;
-	&book.glossary;
-	&book.history;
+	&book.appendix.xml;
+	&book.glossary.xml;
+	&book.history.xml;
 	<!--
 		<xi:include href="chapter.case.xml" xmlns:xi="http://www.w3.org/2003/XInclude" />
 	-->

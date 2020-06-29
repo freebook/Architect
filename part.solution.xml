@@ -119,5 +119,5 @@
  	&chapter.wechat.xml;
  	&chapter.firewall.xml;
  	&chapter.logging.xml;
- 	&chapter.permission.xml;
+ 	
 </part>

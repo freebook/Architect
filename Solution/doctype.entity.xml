@@ -8,4 +8,3 @@
 <!ENTITY chapter.backup.xml				SYSTEM "chapter.backup.xml">
 <!ENTITY chapter.firewall.xml			SYSTEM "chapter.firewall.xml">
 <!ENTITY chapter.logging.xml				SYSTEM "chapter.logging.xml">
-<!ENTITY chapter.permission.xml			SYSTEM "chapter.permission.xml">
