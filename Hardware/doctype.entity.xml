@@ -1,4 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!ENTITY chapter.storage.xml 			SYSTEM "chapter.storage.xml">
-<!ENTITY chapter.server.xml				SYSTEM "chapter.server.xml">

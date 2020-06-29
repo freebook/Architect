@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="tomcat">
+<section id="tomcat">
 	<title>Tomcat 安全配置与性能优化</title>
 	<subtitle>http://netkiller.github.io/journal/tomcat.html</subtitle>
 	<section id="jvm">
@@ -243,6 +243,4 @@ adduser --home /www -c "Web Application" www
 			<ulink url="http://www.netkiller.cn/www/tomcat/">《Netkiller Web 手札》 之 Tomcat 篇</ulink>
 		</para>
 	</section>
-
-
-</chapter>
+</section>

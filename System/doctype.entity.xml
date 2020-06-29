@@ -4,7 +4,10 @@
 <!ENTITY chapter.oscm.xml				SYSTEM "chapter.oscm.xml">
 <!ENTITY chapter.shell.xml				SYSTEM "chapter.shell.xml">
 <!ENTITY chapter.os.xml					SYSTEM "chapter.os.xml">
-<!ENTITY chapter.tomcat.xml				SYSTEM "chapter.tomcat.xml">
+
+<!ENTITY chapter.server.xml				SYSTEM "chapter.server.xml">
+<!ENTITY section.server.tomcat.xml		SYSTEM "section.server.tomcat.xml">
+<!ENTITY section.server.logging.xml		SYSTEM "section.server.logging.xml">
 
 <!ENTITY chapter.idc.xml		 		SYSTEM "chapter.idc.xml">
 <!ENTITY section.idc.logging.xml 		SYSTEM "section.idc.logging.xml">

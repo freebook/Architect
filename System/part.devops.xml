@@ -5,6 +5,6 @@
 	&chapter.os.xml;
 	&chapter.oscm.xml;
 	&chapter.shell.xml;
-	&chapter.tomcat.xml;
 	&chapter.idc.xml;
+	&chapter.server.xml;
 </part>

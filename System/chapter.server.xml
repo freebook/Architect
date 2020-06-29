@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="server"?>
 	<title>Server</title>
+	&section.server.tomcat.xml;
+	&section.server.logging.xml;
 	<section id="logs">
 		<title>日志集中管理</title>
 		<para>传统做法是文件型日志，分布在各个服务器上。在大规模部署服务器后代来很多不便，增加很多管理成本，所有我们需要集中管理服务器产生的所有日志，我们叫他日志中心服务器</para>
