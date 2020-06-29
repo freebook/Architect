@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ENTITY part.devops.xml 				SYSTEM "part.devops.xml">
+<!ENTITY chapter.devops.xml				SYSTEM "chapter.devops.xml">
+<!ENTITY chapter.oscm.xml				SYSTEM "chapter.oscm.xml">
+<!ENTITY chapter.shell.xml				SYSTEM "chapter.shell.xml">
+<!ENTITY chapter.os.xml					SYSTEM "chapter.os.xml">
+<!ENTITY chapter.tomcat.xml				SYSTEM "chapter.tomcat.xml">
+
+<!ENTITY chapter.idc.xml		 		SYSTEM "chapter.idc.xml">
+<!ENTITY section.idc.logging.xml 		SYSTEM "section.idc.logging.xml">
+<!ENTITY section.idc.move.xml			SYSTEM "section.idc.move.xml">
+<!ENTITY section.idc.cable.xml	 		SYSTEM "section.idc.cable.xml">
+<!ENTITY section.idc.traffic.xml 		SYSTEM "section.idc.traffic.xml">

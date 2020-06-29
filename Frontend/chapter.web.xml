@@ -464,6 +464,7 @@ C:\>
 			</screen>
 		</section>
 	</section>
+	&section.web.image.xml;
 	<section id="compress">
 		<title>压缩数据传输</title>
 		<para>服务器将html或脚本输出压缩，用户从服务器取得数据后由浏览器解压</para>

@@ -43,7 +43,7 @@
 	%testing.doctype.entity.xml;
 	<!ENTITY part.testing.xml 					SYSTEM "part.testing.xml">
 	
-	<!ENTITY % devops.doctype.entity.xml 				SYSTEM "DevOps/doctype.entity.xml">
+	<!ENTITY % devops.doctype.entity.xml 		SYSTEM "System/doctype.entity.xml">
 	%devops.doctype.entity.xml;
 
 ] >
@@ -68,7 +68,7 @@
 
 	</info>
 
-	&book.dedication.xml;
+<!-- 	&book.dedication.xml; -->
 	&book.preface.xml;
 
 <!-- 	&part.architecture.xml; -->

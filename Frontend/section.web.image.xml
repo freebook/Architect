@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="">
+	<title>图片尺寸优化与自动裁剪</title>
+	<subtitle>http://netkiller.github.io/journal/image.html</subtitle>
+	<section>
+		<title>背景</title>
+		<para>某天我的前同事给我打电话，说他们的负载很高，经查发现网站首页有20M，原因是首页直接引用高清图片，没有安装分辨率生成缩图。于是我便想出了下面的方案。</para>
+		<orderedlist>
+			<title>我认为方案需求有如下几个要素：</title>
+			<listitem>
+				<para>图片压缩</para>
+			</listitem>
+			<listitem>
+				<para>尺寸修改</para>
+			</listitem>
+			<listitem>
+				<para>图片缓存</para>
+			</listitem>
+			<listitem>
+				<para>带宽因素</para>
+			</listitem>
+		</orderedlist>
+		<para>例如用户使用手机访问网站，手机屏幕尺寸非常多样化，常见的有QVGA(320×240)、HGVA(480×320)、WVGA(800×480)、QCIF(176×144)、SVGA(640x480)、WXGA(1280×800)。如果一个用户的手机屏幕是320×240，打开网站后显示1027*768图片很不切合实际。同时用户也多出不少带宽开销。</para>
+		<para>我们需要给用户更好的体验，就要多从用户的角度去考虑，如根据用户网速，带宽，分辨率，为用户提供更适合他终端的多媒体资源。</para>
+	</section>
+	<section>
+		<title>实现思路</title>
+		<section>
+			<title>尺寸动态变化</title>
+			<para>B/S结构应用程序无法获取客户端的分辨率等信息，我们将采用Javascript取出参数，然后告知服务器端。</para>
+			<orderedlist>
+				<title>有下面几种实现方式：</title>
+				<listitem>
+					<para>通过cookie</para>
+				</listitem>
+				<listitem>
+					<para>post传递给服务器，然后存储在session中</para>
+				</listitem>
+				<listitem>
+					<para>get 传递给服务器，然后存储在session中</para>
+				</listitem>
+			</orderedlist>
+			<para>仅举一个例子</para>
+			<screen>
+			<![CDATA[
+<script type="text/javascript">
+$(function(){
+    var width=window.screen.height;
+    var height=window.screen.width;
+    $.post('http://www.example.com/screen/resize.html',{w:width,h:height});
+});
+</script>
+			]]>
+			</screen>
+			<para>HTML页面中的图片的引用路径</para>
+			<screen>
+			<![CDATA[
+<img src="http://img.example.com/sample.jpg" />		
+			]]>
+			</screen>
+			<para>图片服务器rewrite处理</para>
+			<screen>
+			<![CDATA[
+http://img.example.com/sample.jpg => http://img.example.com/index.php/sample.jpg		
+			]]>
+			</screen>
+			<para>index.php会首先载入sample.jpg文件，然后综合网速，带宽，分辨率等因素，重新压缩图片，修改尺寸，发送mime头，输出正文。</para>
+		</section>
+		<section>
+			<title>实时裁剪并静态化</title>
+			<para>为了防止图片地址冲突，我们首先需要URL唯一化，这样每访问一次会生成一张符合你需求尺寸的图片。</para>
+			<para>http://img.example.com/sample_(width)x(height)_(quality).jpg </para>
+			<screen>
+			<![CDATA[
+<img src="http://img.example.com/sample_1980x1080_100.jpg" />	
+<img src="http://img.example.com/sample_800x600_80.jpg" />
+<img src="http://img.example.com/sample_640x480_50.jpg" />
+			]]>
+			</screen>
+			<para>配置nginx通过try_files配置项可以实现检查静态文件是否存在，如果不存在边调用index.php生成图片，当再次访问时会直接读取静态文件，不会再重新生成。 </para>
+			<screen>
+			<![CDATA[
+server {
+    listen       80;
+    server_name  inf.example.com;
+
+    charset utf-8;
+    access_log  /var/log/nginx/inf.example.com.access.log  main;
+    error_log  /var/log/nginx/inf.example.com.error.log;
+
+    location / {
+        root   /www/example.com/inf.example.com/images;
+        index  index.html;
+		try_files $uri $uri/ /index.php?_url=$request_uri;
+    }
+
+    #error_page  404              /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+    #
+    #location ~ \.php$ {
+    #    proxy_pass   http://127.0.0.1;
+    #}
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    #
+    location ~ /index\.php$ {
+        root           html;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  /www/example.com/inf.example.com/frontend/public$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+
+    # deny access to .htaccess files, if Apache's document root
+    # concurs with nginx's one
+    #
+    location ~ /\.ht {
+        deny  all;
+    }
+}			
+			]]>
+			</screen>
+			<para>通过这种方法还可以实现更复杂的需求，例如调整亮度，对比度，饱和度，色阶，图层叠加等等......</para>
+		</section>
+	</section>
+	<section>
+		<title>web或代理服务器插件实现方案</title>
+		<para>首先我们要将分辨率参数放到cookie中，因为web服务器是可以跟踪cookie数据的</para>
+		<para>通过 web 扩展实现，例如我们开发一个apache插件，编译后是".so"文件，配置httpd.conf载入插件，插件具体功能是综合网速，带宽，分辨率等因素，重新压缩图片，修改尺寸，最后展现图片。</para>
+		<para>反向代理与web服务器实现原理相同</para>
+	</section>
+
+</section>

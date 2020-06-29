@@ -3,3 +3,4 @@
 <!ENTITY chapter.schedule.xml			SYSTEM "chapter.schedule.xml">
 <!ENTITY chapter.permission.xml			SYSTEM "chapter.permission.xml">
 <!ENTITY chapter.communication.xml		SYSTEM "chapter.communication.xml">
+<!ENTITY chapter.php.xml				SYSTEM "chapter.php.xml">

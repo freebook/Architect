@@ -5,4 +5,5 @@
 	&chapter.schedule.xml;
 	&chapter.permission.xml;
 	&chapter.communication.xml;
+	&chapter.php.xml;
 </part>

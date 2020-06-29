@@ -12,4 +12,5 @@
 	&chapter.db.cache.xml;
 	&chapter.data.xml;
 	&chapter.spring.data.xml;
+	&chapter.bigdata.xml;
 </part>
