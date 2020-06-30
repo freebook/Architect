@@ -7,7 +7,3 @@
 <!ENTITY book.appendix.xml				SYSTEM "book.appendix.xml">
 <!ENTITY book.glossary.xml				SYSTEM "book.glossary.xml">
 <!ENTITY book.history.xml				SYSTEM "book.history.xml">
-
-<!ENTITY part.architecture.xml 			SYSTEM "part.architecture.xml">
-<!ENTITY chapter.architecture.xml 		SYSTEM "chapter.architecture.xml">
-<!ENTITY chapter.architecture.enterprise.xml	SYSTEM "chapter.architecture.enterprise.xml">

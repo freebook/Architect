@@ -112,6 +112,9 @@
 	</section>
 </chapter>
  -->
+ 	&chapter.trader.xml;
+ 	&chapter.architecture.xml;
+	&chapter.architecture.enterprise.xml;
  	&chapter.monitor.xml;
 	&chapter.backup.xml;
  	&chapter.payment.xml;

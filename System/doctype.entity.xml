@@ -10,7 +10,11 @@
 <!ENTITY section.server.logging.xml		SYSTEM "section.server.logging.xml">
 
 <!ENTITY chapter.idc.xml		 		SYSTEM "chapter.idc.xml">
+<!ENTITY section.idc.version.xml 		SYSTEM "section.idc.version.xml">
 <!ENTITY section.idc.logging.xml 		SYSTEM "section.idc.logging.xml">
 <!ENTITY section.idc.move.xml			SYSTEM "section.idc.move.xml">
 <!ENTITY section.idc.cable.xml	 		SYSTEM "section.idc.cable.xml">
 <!ENTITY section.idc.traffic.xml 		SYSTEM "section.idc.traffic.xml">
+
+<!ENTITY chapter.security.xml		 	SYSTEM "chapter.security.xml">
+<!ENTITY chapter.storage.xml 			SYSTEM "chapter.storage.xml">

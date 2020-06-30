@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!ENTITY part.solution.xml 					SYSTEM "part.solution.xml">
 <!ENTITY chapter.case.xml 				SYSTEM "chapter.case.xml">
 <!ENTITY chapter.payment.xml	 			SYSTEM "chapter.payment.xml">
 <!ENTITY chapter.shop.xml		 		SYSTEM "chapter.shop.xml">
@@ -8,3 +9,10 @@
 <!ENTITY chapter.backup.xml				SYSTEM "chapter.backup.xml">
 <!ENTITY chapter.firewall.xml			SYSTEM "chapter.firewall.xml">
 <!ENTITY chapter.logging.xml				SYSTEM "chapter.logging.xml">
+
+<!ENTITY part.architecture.xml 			SYSTEM "part.architecture.xml">
+<!ENTITY chapter.architecture.xml 		SYSTEM "chapter.architecture.xml">
+<!ENTITY chapter.architecture.enterprise.xml	SYSTEM "chapter.architecture.enterprise.xml">
+
+<!ENTITY chapter.trader.xml				SYSTEM "chapter.trader.xml">
+

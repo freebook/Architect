@@ -7,4 +7,6 @@
 	&chapter.shell.xml;
 	&chapter.idc.xml;
 	&chapter.server.xml;
+	&chapter.security.xml;
+	&chapter.storage.xml;
 </part>

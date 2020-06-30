@@ -5,12 +5,6 @@
 	&chapter.idc.application.xml;
 	&chapter.idc.backup.xml;
 </part>
-
-<chapter id="hardware">
-	<title>Hardware</title>
-	&chapter.hardware.server.xml;
-</chapter>
-
 <chapter id="opensource">
 	<title>How Opensource Helps Optimize IT and Save You Money</title>
 	<para>OS	Linux/FreeBSD</para>
