@@ -40,7 +40,6 @@
 
 	<!ENTITY % testing.doctype.entity.xml 		SYSTEM "Testing/doctype.entity.xml">
 	%testing.doctype.entity.xml;
-	<!ENTITY part.testing.xml 					SYSTEM "part.testing.xml">
 	
 	<!ENTITY % devops.doctype.entity.xml 		SYSTEM "System/doctype.entity.xml">
 	%devops.doctype.entity.xml;

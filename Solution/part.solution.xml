@@ -122,5 +122,5 @@
  	&chapter.wechat.xml;
  	&chapter.firewall.xml;
  	&chapter.logging.xml;
- 	
+ 	&chapter.testing.xml;
 </part>

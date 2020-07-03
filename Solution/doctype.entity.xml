@@ -16,3 +16,4 @@
 
 <!ENTITY chapter.trader.xml				SYSTEM "chapter.trader.xml">
 
+<!ENTITY chapter.testing.xml 			SYSTEM "chapter.testing.xml">
