@@ -10,7 +10,7 @@
 	&chapter.parallel.xml;
 	&chapter.nosql.xml;
 	&chapter.db.cache.xml;
-	&chapter.data.xml;
+	&chapter.db.example.xml;
 	&chapter.spring.data.xml;
 	&chapter.bigdata.xml;
 </part>

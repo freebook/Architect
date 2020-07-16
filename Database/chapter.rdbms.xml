@@ -1314,4 +1314,5 @@ select * from network where people_id=1 and degrees like "1.2.%";
 		</section>
 	</section>
 	&chapter.pgsql.xml;
+	
 </chapter>
