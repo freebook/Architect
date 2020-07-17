@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- RDBMS 是关系数据库管理系统,是建立实体之间的联系,最后得到的是关系表 OODBMS 面向对象数据库管理系统,将所有实体都看着对象,并将这些对象类进行封装,对象之间的通信通过消息 ORDBMS 对象关系数据库在实质上还是关系数据库 NDBMS 网状数据库管理系统 HDBMS - Hierarchical Data Base Management System Lotus Notes (the most popular HDBMS in use today) -->
-<chapter id="db.cache">
+<section id="db.cache">
 	<title>数据库与缓存</title>
 
 	<section id="what">
@@ -273,5 +273,4 @@ mysql> show status like 'qcache_q%';
 			</example>
 		</section>
 	</section>
-
-</chapter>
+</section>

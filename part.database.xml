@@ -5,12 +5,7 @@
 	<para>下面数据库设计实例中，大部分使用MySQL,PostgreSQL为例,少部分以Oracle为例。</para>
 	
 	&chapter.rdbms.xml;
-	&chapter.rdbms.security.xml;
-	&chapter.sharding.xml;
-	&chapter.parallel.xml;
+	&section.db.example.xml;
 	&chapter.nosql.xml;
-	&chapter.db.cache.xml;
-	&chapter.db.example.xml;
 	&chapter.spring.data.xml;
-	&chapter.bigdata.xml;
 </part>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="db.bigdata">
+<section id="db.bigdata">
 	<title>MySQL 大数据操作注意事项</title>
 	<subtitle>http://netkiller.github.io/journal/mysql.parallel.html</subtitle>
 	<section>
@@ -166,4 +166,4 @@ SET @@session.low_priority_updates = 1;
 		]]>
 		</screen>
 	</section>
-</chapter>
+</section>

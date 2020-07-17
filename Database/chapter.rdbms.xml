@@ -1313,6 +1313,10 @@ select * from network where people_id=1 and degrees like "1.2.%";
 			<para>上面的例子演示了 people_id=1 即 Neo 的关系网</para>
 		</section>
 	</section>
-	&chapter.pgsql.xml;
-	
+	&section.db.cache.xml;
+	&section.db.pgsql.xml;
+	&section.db.parallel.xml;
+	&section.db.sharding.xml;
+	&section.db.security.xml;
+	&section.db.bigdata.xml;
 </chapter>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="parallel">
+<section id="db.parallel">
 	<title>数据库并行访问控制</title>
 	<para>这里主要讲述有关开发中遇到的数据库并行问题</para>
 	<section id="show">
@@ -14,7 +14,7 @@
 			</screen>
 			<para>有多个岗位，每个岗位上有多个工作人员。需要实现相同岗位上的工作人员看到的订单不能重复，防止多人同时操作一个订单。</para>
 		</sidebar>
-		<screen>
+		<screen><![CDATA[
 id | user | sn    | status
 -----------------------------------
 1  | neo  | x001  | new
@@ -25,9 +25,9 @@ id | user | sn    | status
 6  | leo  | x006  | new
 7  | ant  | x007  | new
 8  | cat  | x008  | new
-		</screen>
+		]]></screen>
 		<para>正常情况只要是多人一起打开订单页面就会显示上面的订单，并且每个人显示的内容都相同。</para>
-		<screen>
+		<screen><![CDATA[
 CREATE TABLE `orders` (
 	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`name` VARCHAR(50) NOT NULL,
@@ -39,8 +39,8 @@ CREATE TABLE `orders` (
 COMMENT='订货单'
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB	
-		</screen>
-		<screen>
+		]]></screen>
+		<screen><![CDATA[
 INSERT INTO `orders` (`id`, `name`, `sn`, `status`) VALUES
 	(1, 'neo', 0000000001, 'New'),
 	(2, 'jam', 0000000002, 'New'),
@@ -50,7 +50,7 @@ INSERT INTO `orders` (`id`, `name`, `sn`, `status`) VALUES
 	(6, 'leo', 0000000006, 'New'),
 	(7, 'ant', 0000000007, 'New'),
 	(8, 'cat', 0000000008, 'New');
-		</screen>
+		]]></screen>
 		<!-- 
 update orders set status='New';	
 select id into @id from orders where status='New';		
@@ -163,4 +163,4 @@ commit;
 		<para>上面以MySQL为例，每次都需要使用for update 查出要处理的订单，如果是PostgreSQL 可以使用update + returning 来返回修改的数据，更为方便。</para>
 	</section>
 
-</chapter>
+</section>

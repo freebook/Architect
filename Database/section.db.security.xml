@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="security">
+<section id="security">
 	<title>数据库安全</title>
 	<section id="mysql.struct">
 		<title>数据库结构版本控制</title>
@@ -1039,4 +1039,4 @@ AUTO_INCREMENT=1;
 		]]>
 		</programlisting>
 	</section>
-</chapter>
+</section>
