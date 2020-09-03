@@ -1,3 +1,4 @@
+git submodule init
 git submodule update
 #rm -rf ~/tmp/architect/
 mkdir -p ~/tmp/architect/
