@@ -4,8 +4,17 @@
 	<graphic format="png" fileref="../images/backend/microservice/SpringCloud.png" srccredit="neo" width="" />
 	<section>
 		<title>微服务安全吗？</title>
+		<para>微服务安全吗？其实存在很多隐患，常规的做法是将微服务置于私有局域网中，通过网关报漏服务。如果破坏者一旦进入了你的私有局域网中，微服务是及其危险的。</para>
 		<section>
 			<title>配置中心的隐患</title>
+			<para>配置中心的安全隐患</para>
+			<orderedlist>
+				<title>配置中心有以下几种安全隐患</title>
+				<listitem>配置中心报漏在公网IP之下</listitem>
+				<listitem>配置中心没有做用户验证</listitem>
+				<listitem>配置文件中存在敏感信息</listitem>
+				<listitem>明文传输内容</listitem>
+			</orderedlist>
 			<para>配置有泄漏敏感信息的隐患，你的配置中心是不是也这样？</para>
 			<screen>
 			<![CDATA[
@@ -13,10 +22,38 @@ iMac:workspace neo$ curl http://localhost:8888/netkiller-dev-master.json
 {"sms":{"gateway":{"url":"https://sms.netkiller.cn/v1","username":"netkiller","password":"123456"}}}
 			]]>
 			</screen>
+			<para>给配置中心增加SSL和HTTP认证，可以让配置中心更安全。</para>
+			<programlisting>
+			<![CDATA[
+iMac:resources neo$ curl -i -k https://config:s3cr3t@localhost:8888/netkiller-dev.json
+HTTP/2 200 
+set-cookie: JSESSIONID=9E77660C8DC7669121C8D122A48D8737; Path=/; Secure; HttpOnly
+x-content-type-options: nosniff
+x-xss-protection: 1; mode=block
+cache-control: no-cache, no-store, max-age=0, must-revalidate
+pragma: no-cache
+expires: 0
+strict-transport-security: max-age=31536000 ; includeSubDomains
+x-frame-options: DENY
+content-type: application/json
+content-length: 100
+date: Mon, 07 Sep 2020 08:24:39 GMT
+
+{"sms":{"gateway":{"url":"https://sms.netkiller.cn/v1","username":"netkiller","password":"123456"}}}	
+			]]>
+			</programlisting>
+			<para>我们将 HTTP2 SSL 应用在配置中心后，就不担心配置文件被嗅探器抓到。</para>
 		</section>
 		<section>
 			<title>注册中心的隐患</title>
 			<para>注册中心一不小心就被公网IP报漏出去，甚至有被恶意注册的风险。</para>
+			<orderedlist>
+				<title>注册中心有以下几种安全隐患</title>
+				<listitem>注册中心没有做用户验证，任何人都能访问</listitem>
+				<listitem>注册中心报漏在公网IP之下，被恶意注册的风险。</listitem>
+				<listitem>从openfeign 访问 euerka server 明文传输内容</listitem>
+			</orderedlist>
+			<para>你的注册中心是不是这样的？</para>
 			<screen>
 			<![CDATA[
 iMac:workspace neo$ curl http://localhost:8761/eureka/apps
@@ -63,6 +100,134 @@ iMac:workspace neo$ curl http://localhost:8761/eureka/apps
 </applications>			
 			]]>
 			</screen>
+			<para>经过安全加固后</para>
+			<para>Eureka Web 界面进入需要输入用户名和密码，HTTP2 SSL 加密传输页面内容。</para>
+			<para>
+				<ulink url="https://localhost:8761" />
+			</para>
+			<screen>
+			<![CDATA[
+iMac:resources neo$ curl -k https://eureka:s3cr3t@localhost:8761/eureka/apps
+<applications>
+  <versions__delta>1</versions__delta>
+  <apps__hashcode>UP_2_</apps__hashcode>
+  <application>
+    <name>MICROSERVICE-RESTFUL</name>
+    <instance>
+      <instanceId>192.168.3.85:microservice-restful:8081</instanceId>
+      <hostName>192.168.3.85</hostName>
+      <app>MICROSERVICE-RESTFUL</app>
+      <ipAddr>192.168.3.85</ipAddr>
+      <status>UP</status>
+      <overriddenstatus>UNKNOWN</overriddenstatus>
+      <port enabled="true">8081</port>
+      <securePort enabled="false">443</securePort>
+      <countryId>1</countryId>
+      <dataCenterInfo class="com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo">
+        <name>MyOwn</name>
+      </dataCenterInfo>
+      <leaseInfo>
+        <renewalIntervalInSecs>30</renewalIntervalInSecs>
+        <durationInSecs>90</durationInSecs>
+        <registrationTimestamp>1599532959290</registrationTimestamp>
+        <lastRenewalTimestamp>1599533499404</lastRenewalTimestamp>
+        <evictionTimestamp>0</evictionTimestamp>
+        <serviceUpTimestamp>1599532959290</serviceUpTimestamp>
+      </leaseInfo>
+      <metadata>
+        <management.port>8081</management.port>
+      </metadata>
+      <homePageUrl>http://192.168.3.85:8081/</homePageUrl>
+      <statusPageUrl>http://192.168.3.85:8081/actuator/info</statusPageUrl>
+      <healthCheckUrl>http://192.168.3.85:8081/actuator/health</healthCheckUrl>
+      <vipAddress>microservice-restful</vipAddress>
+      <secureVipAddress>microservice-restful</secureVipAddress>
+      <isCoordinatingDiscoveryServer>false</isCoordinatingDiscoveryServer>
+      <lastUpdatedTimestamp>1599532959291</lastUpdatedTimestamp>
+      <lastDirtyTimestamp>1599532959204</lastDirtyTimestamp>
+      <actionType>ADDED</actionType>
+    </instance>
+  </application>
+  <application>
+    <name>OPENFEIGN</name>
+    <instance>
+      <instanceId>192.168.3.85:openfeign:8088</instanceId>
+      <hostName>192.168.3.85</hostName>
+      <app>OPENFEIGN</app>
+      <ipAddr>192.168.3.85</ipAddr>
+      <status>UP</status>
+      <overriddenstatus>UNKNOWN</overriddenstatus>
+      <port enabled="true">8088</port>
+      <securePort enabled="false">443</securePort>
+      <countryId>1</countryId>
+      <dataCenterInfo class="com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo">
+        <name>MyOwn</name>
+      </dataCenterInfo>
+      <leaseInfo>
+        <renewalIntervalInSecs>30</renewalIntervalInSecs>
+        <durationInSecs>90</durationInSecs>
+        <registrationTimestamp>1599533216972</registrationTimestamp>
+        <lastRenewalTimestamp>1599533517001</lastRenewalTimestamp>
+        <evictionTimestamp>0</evictionTimestamp>
+        <serviceUpTimestamp>1599533216972</serviceUpTimestamp>
+      </leaseInfo>
+      <metadata>
+        <management.port>8088</management.port>
+      </metadata>
+      <homePageUrl>http://192.168.3.85:8088/</homePageUrl>
+      <statusPageUrl>http://192.168.3.85:8088/actuator/info</statusPageUrl>
+      <healthCheckUrl>http://192.168.3.85:8088/actuator/health</healthCheckUrl>
+      <vipAddress>openfeign</vipAddress>
+      <secureVipAddress>openfeign</secureVipAddress>
+      <isCoordinatingDiscoveryServer>false</isCoordinatingDiscoveryServer>
+      <lastUpdatedTimestamp>1599533216972</lastUpdatedTimestamp>
+      <lastDirtyTimestamp>1599533216920</lastDirtyTimestamp>
+      <actionType>ADDED</actionType>
+    </instance>
+  </application>
+</applications>			
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>Eureka 客户端</title>
+			<para>Eureka Client 的安全配置与Eureka Server/Config Server 类似</para>
+			<orderedlist>
+				<title>Eureka 客户端有以下几种安全隐患</title>
+				<listitem>服务报漏在公网IP之下，任何人都不经过 Eureka Server 和 Openfeign 绕开后直接访问服务</listitem>
+				<listitem>明文传输内容</listitem>
+			</orderedlist>
+		</section>
+		<section>
+			<title>最终总结</title>
+			<screen>
+			<![CDATA[
+H5 / App 
+    ^
+    |
+ HTTP2 ssl
+    |
+    V		
+Openfeign <--- HTTP2 ssl ---> Eureka Server
+                                  ^
+                                  |
+                                  |
+                              HTTP2 ssl
+                                  |
+                                  |
+                                  V
+                             Eureka Client  <--- HTTP2 ssl ---> Config Server
+			]]>
+			</screen>
+		</section>
+	</section>
+	<section>
+		<title>熔断器解决了什么问题</title>
+	</section>
+	<section>
+		<title>微服务的性能</title>
+		<section>
+			<title>微服务的开销</title>
 		</section>
 	</section>
 	<section id="microservice.interface">
@@ -135,7 +300,7 @@ name=Neo&age=23&md5=xxxxxxx
 			<para>这个方案可以满足绝大部分用户的需求。</para>
 		</section>
 		<section>
-			<title>第三阶段 Oauth</title>
+			<title>第三阶段 Oauth2</title>
 			<para>由于需要为手机端提供 restful
 				服务，之前的方式已经不能满足我们的需求，之前的方式更适合提供私有服务，不适合提供公共服务。所谓私有服务是指它的使用范围限制在企业内部，或者事业部间共享服务，总的来说可以通过防火墙控制服务区域。
 			</para>
@@ -169,11 +334,5 @@ App(IOS/Android) -->  SSL 双向认证 --> SLB/Proxy --> Feign Client
 
 		</section>
 	</section>
-	<section>
-		<title>微服务的性能</title>
-		<section>
-			<title>微服务的开销</title>
-		</section>
-	</section>
-</chapter>
 
+</chapter>
