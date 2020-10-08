@@ -69,14 +69,14 @@
 <!-- 	&book.dedication.xml; -->
 	&book.preface.xml;
 
-<!-- 	&part.architecture.xml; -->
-	&part.frontend.xml;
-	&part.backend.xml;
+	<!-- &part.architecture.xml; -->
+	&part.software.xml;
+	<!-- &part.frontend.xml;
+	&part.backend.xml; -->
 	
 	&part.database.xml;
 	&part.devops.xml;
 	
-	&part.software.xml;
 	&part.testing.xml;
 	&part.solution.xml;
 	

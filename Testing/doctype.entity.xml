@@ -1,2 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!ENTITY part.testing.xml 					SYSTEM "part.testing.xml">
+
+<!ENTITY chapter.testing.xml 			SYSTEM "chapter.testing.xml">

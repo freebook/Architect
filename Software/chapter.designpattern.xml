@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="pattern">
+<section id="pattern">
 	<title>Design pattern (设计模式)</title>
 	<para>常用设计模式包括</para>
 	<screen>
@@ -110,8 +110,8 @@ print("---------------------------\r\n");
 		</screen>
 	</section>
 
-</chapter>
-<chapter id="aop">
+</section>
+<section id="aop">
 	<title>AOP（Aspect Oriented Programming)</title>
 	<screen>
 	<![CDATA[
@@ -172,4 +172,4 @@ catch(Exception $e)
 
 	]]>
 	</screen>
-</chapter>
+</section>

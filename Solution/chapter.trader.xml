@@ -2,7 +2,7 @@
 <chapter id="trader">
 	<title>金融交易系统异地灾备方案</title>
 	<subtitle>http://netkiller.github.io/journal/trader.html</subtitle>
-
+	<!-- 股票，电影数据 tushare.org -->
 	<para>本文从灾备角度出发，并不局限于灾备，而是从多维度让你看到完成灾备需要做哪些工作，解决哪些问题。</para>
 	<para>灾备不仅仅是运维的工作，一个完善的灾备系统需要多个部门的努力，网络拓扑需要做特别的调整，服务器需要特别的部署，软件方面需要配合灾备做特别的开发，才能满足灾备的需求，最终实现真正的7*24*365灾备，并且尽量做到无人值守故障转移。</para>
 

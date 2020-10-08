@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="index"><?dbhtml dir="web" ?>
+<section id="index"><?dbhtml dir="web" ?>
 	<title>网站架构</title>
 	<subtitle></subtitle>
 	<screen>
@@ -533,4 +533,4 @@ e.g.2 user (big5.example.org) -> Squid (gb2312->big5) -> web server
 		]]>
 		</screen>
 	</section>
-</chapter>
+</section>

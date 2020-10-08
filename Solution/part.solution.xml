@@ -113,14 +113,8 @@
 </chapter>
  -->
  	&chapter.trader.xml;
- 	&chapter.architecture.xml;
-	&chapter.architecture.enterprise.xml;
- 	&chapter.monitor.xml;
-	&chapter.backup.xml;
  	&chapter.payment.xml;
  	&chapter.shop.xml;
  	&chapter.wechat.xml;
- 	&chapter.firewall.xml;
- 	&chapter.logging.xml;
- 	&chapter.testing.xml;
+ 	
 </part>

@@ -2,6 +2,7 @@
 <chapter id="index"><?dbhtml dir="server"?>
 	<title>Server</title>
 	&section.server.tomcat.xml;
+	&section.server.php.xml;
 	&section.server.logging.xml;
 	<section id="logs">
 		<title>日志集中管理</title>
@@ -31,8 +32,10 @@
 			</listitem>
 		</orderedlist>
 		<screen>
-			$ sudo ntpdate asia.pool.ntp.org
-			21 May 10:34:18 ntpdate[6687]: adjust time server 203.185.69.60 offset 0.031079 sec
+		<![CDATA[
+$ sudo ntpdate asia.pool.ntp.org
+21 May 10:34:18 ntpdate[6687]: adjust time server 203.185.69.60 offset 0.031079 sec
+		]]>
 		</screen>
 	</section>
 	<section id="email">

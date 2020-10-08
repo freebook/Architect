@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!ENTITY part.architecture.xml 			SYSTEM "part.architecture.xml">
+<!ENTITY chapter.architecture.xml 		SYSTEM "chapter.architecture.xml">
+<!ENTITY chapter.architecture.enterprise.xml	SYSTEM "chapter.architecture.enterprise.xml">
+
 <!ENTITY chapter.development.xml 			SYSTEM "chapter.development.xml">
 <!ENTITY chapter.framework.xml 				SYSTEM "chapter.framework.xml">
 <!ENTITY chapter.defect.xml 					SYSTEM "chapter.defect.xml">

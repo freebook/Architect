@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="communication">
+<section id="communication">
 	<title>数据与应用程序间通信</title>
 	<para>本章讲解数据与应用程序间通信，这里会涉及到</para>
 <section id="fifo">
@@ -636,4 +636,4 @@ select udp_sendto('192.168.2.1','4000','hello');
 		</screen>
 	</section>
 </section>
-</chapter>
+</section>

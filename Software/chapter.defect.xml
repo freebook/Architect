@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="defect">
+<section id="defect">
 	<title>信息安全</title>
 	<para>SQL注入，OS命令注入，缓冲溢出、跨站脚本、缺少验证、缺少认证、使用硬编码证书、敏感数据忘记加密、不受限制上传文件类型、依赖不可信的输入、用不必要的高级权限执行任务、跨站请求伪造....</para>
 	<section id="defect.csrf">
@@ -254,4 +254,4 @@ warn_plus_overloading = Off ; 当将‘+’用于字符串时警告
 		</section>
 	</section>
  -->	
-</chapter>
+</section>

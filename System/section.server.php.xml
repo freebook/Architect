@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="performance.php">
+<section id="performance.php">
 	<title>PHP 安全与性能优化</title>
 	<section id="fastcgi">
 		<title>Apache mod_php / php-fpm</title>
@@ -639,6 +639,4 @@ client_max_body_size 8M
 			<para>设置不能过大，因为可以通过你的网站上传功能，持续上传实现攻击。</para>
 		</section>
 	</section>
-
-
-</chapter>
+</section>
