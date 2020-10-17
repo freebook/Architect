@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="storage">
+<section id="storage">
 	<title>Distributed File System(簇文件系统)</title>
 	<para>我吧分布式文件系统分为三类，聚合文件系统，全局文件系统，负载均衡文件系统。</para>
 	<para>除了gfs其他文件系统都是建立在本地文件系统之上的网络文件系统。</para>
 	<para>几乎所有DFS都能通过fuse mount 到本地，但有些DFS mount 后性能不佳。</para>
 	<para>还有一个与分布式文件系统密切相关的，就是块设备，块设备不是文件系统，可以称为裸设备。</para>
+	<section id="server.hba">
+		<title>FC 光纤存储</title>
+		<para>常用 Fibre Channel HBA 卡</para>
+		<para>QLogic QLE2562 - PCI-Express Dual Channel 8Gb Fibre Channel HBA</para>
+		<para>Emulex LightPulse Fibre Channel SCSI driver 8.2.0.87.1p</para>
+		<para>HBA 卡使用SFP+光纤模块，LC-LC光纤跳线</para>
+	</section>
 	<section id="storage.nfs">
 		<title>聚合文件系统</title>
 		<para>以NFS, glusterfs 为代表，其特点是server独立运行，Server与Server间没有通信，然后访问者将其聚合组织并规划目录，为client提供数据共享。</para>
@@ -337,4 +344,4 @@ ID 284 gen 18583 top level 5 path backup_2016-05-23
 		</procedure>
 
 	</section>
-</chapter>
+</section>

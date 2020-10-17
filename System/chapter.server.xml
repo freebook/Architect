@@ -6,6 +6,7 @@
 	&section.server.logging.xml;
 	<section id="logs">
 		<title>日志集中管理</title>
+		<para><graphic  format="png" fileref="../images/development/logging.png" srccredit="neo" width=""/></para>
 		<para>传统做法是文件型日志，分布在各个服务器上。在大规模部署服务器后代来很多不便，增加很多管理成本，所有我们需要集中管理服务器产生的所有日志，我们叫他日志中心服务器</para>
 		<section>
 			<title>系统日志</title>
@@ -179,13 +180,7 @@ MC:最大的CPU利用率（推荐< 70%）
 			<para>通过RAID卡所带的功能，划分两个逻辑卷，然后将操作系统与数据分别安装在 不同的逻辑卷上。</para>
 		</section>
 	</section>
-	<section id="server.hba">
-		<title>Fibre Channel HBA 卡</title>
-		<para>常用HBA卡</para>
-		<para>QLogic QLE2562 - PCI-Express Dual Channel 8Gb Fibre Channel HBA</para>
-		<para>Emulex LightPulse Fibre Channel SCSI driver 8.2.0.87.1p</para>
-		<para>HBA 卡使用SFP+光纤模块，LC-LC光纤跳线</para>
-	</section>
+	&section.server.storage.xml;
 	<section id="server.mgmt">
 		<title>iDRAC / iLO / IMM</title>
 		<para>远程管理卡</para>

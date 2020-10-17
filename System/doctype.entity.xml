@@ -18,7 +18,7 @@
 <!ENTITY section.idc.traffic.xml 		SYSTEM "section.idc.traffic.xml">
 
 <!ENTITY chapter.security.xml		 	SYSTEM "chapter.security.xml">
-<!ENTITY chapter.storage.xml 			SYSTEM "chapter.storage.xml">
+<!ENTITY section.server.storage.xml 	SYSTEM "section.server.storage.xml">
 <!ENTITY chapter.monitor.xml 			SYSTEM "chapter.monitor.xml">
 <!ENTITY chapter.backup.xml				SYSTEM "chapter.backup.xml">
 <!ENTITY chapter.firewall.xml			SYSTEM "chapter.firewall.xml">

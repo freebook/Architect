@@ -9,9 +9,7 @@
 	&chapter.idc.xml;
 	&chapter.server.xml;
 	&chapter.security.xml;
-	&chapter.storage.xml;
 	&chapter.monitor.xml;
 	&chapter.backup.xml;
 	&chapter.firewall.xml;
- 	&chapter.logging.xml;
 </part>
