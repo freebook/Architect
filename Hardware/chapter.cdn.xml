@@ -5,13 +5,3 @@
 	&chapter.idc.application.xml;
 	&chapter.idc.backup.xml;
 </part>
-<chapter id="opensource">
-	<title>How Opensource Helps Optimize IT and Save You Money</title>
-	<para>OS	Linux/FreeBSD</para>
-	<para>Web	Apache/Lighttpd/Nginx</para>
-	<para>DB	MySQL/PostgreSQL</para>
-<section id="server.passwd">
-		<title>密码管理</title>
-		<para><ulink url="https://sourceforge.net/projects/keepass/">KeePass Password Safe</ulink></para>
-	</section>
-</chapter>

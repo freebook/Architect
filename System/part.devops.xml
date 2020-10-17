@@ -2,6 +2,7 @@
 <part id="index"><?dbhtml dir="system"?>
 	<title>运维篇</title>
 	&chapter.devops.xml;
+ 	&chapter.virtualization.xml;
 	&chapter.os.xml;
 	&chapter.oscm.xml;
 	&chapter.shell.xml;
@@ -13,5 +14,4 @@
 	&chapter.backup.xml;
 	&chapter.firewall.xml;
  	&chapter.logging.xml;
- 	&chapter.virtualization.xml;
 </part>
