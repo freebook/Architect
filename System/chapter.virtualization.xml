@@ -121,9 +121,21 @@
 		</section>
 		<section>
 			<title>容器与安全</title>
-			<para>很多容器的镜像中是不包含 iptables 的，所以无法做颗粒度很细的容器内部网络安全设置。即使你制作的镜像带有iptables ，多数容器的侧咯，IP地址和端口是随机变化的。绑定IP地址又带了容器的复杂性。</para>
-			<para>一旦攻入一个容器，进入容器后，容器与容器间基本是畅通无阻。</para>
-			<para>在容器中藏一个后门比物理机更容易，如上文所说很多容器中没有调试相关命令，限制了你排查后门的难度。所以Dockerfile 制作镜像，最好使用官方镜像衍生出你的镜像。</para>
+			<section>
+				<title>网络安全</title>
+				<para>很多容器的镜像中是不包含 iptables 的，所以无法做颗粒度很细的容器内部网络安全设置。即使你制作的镜像带有iptables ，多数容器的侧咯，IP地址和端口是随机变化的。绑定IP地址又带了容器的复杂性。</para>
+				<para>一旦攻入一个容器，进入容器后，容器与容器间基本是畅通无阻。</para>
+			</section>
+			<section>
+				<title>挂马风险</title>
+				<para>在容器中藏一个后门比物理机更容易，如上文所说很多容器中没有调试相关命令，限制了你排查后门的难度。所以Dockerfile 制作镜像，最好使用官方镜像衍生出你的镜像。</para>
+			</section>
+			<section>
+				<title>隔离安全</title>
+				<para>容器间是隔离安全的，kubernetes 还有明明空间和RBAC等等。但是......</para>
+				<para>有时我们为了产生持久化的临时文件，会将 /tmp 挂载到容器中，因为 /tmp 是 777 权限，任何都可以向其中写入临时文件。这也带来一个安全问题，一是可能大家使用了相同的文件或目录名，相互覆盖对方的文件。二是不小心将敏感信息写入了 /tmp 存在信息泄露风险。</para>
+				<para>除此之外 local volume, hostPath 以及没有用户认证的网络文件系统，都存在这种风险。例如NFS，因为Pod是随机IP地址，NFS服务器无法通过IP地址设置访问规则。</para>
+			</section>
 		</section>
 		<section>
 			<title>容器与监控</title>
