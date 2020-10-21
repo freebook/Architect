@@ -2,14 +2,9 @@
 <part id="index"><?dbhtml dir="software" ?>
 	<title>Software architecture (软件架构)</title>
 	<subtitle>Software Development &amp; Architecture</subtitle>
-	&chapter.architecture.xml;
-
 	&chapter.frontend.xml;
 	&chapter.backend.xml;
-	
 	&chapter.development.xml;
-	
 	&chapter.framework.xml;
-	
 	<!-- &chapter.application.xml; &chapter.rpc.xml; -->
 </part>

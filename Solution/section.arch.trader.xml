@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="trader">
+<section id="trader">
 	<title>金融交易系统异地灾备方案</title>
 	<subtitle>http://netkiller.github.io/journal/trader.html</subtitle>
 	<!-- 股票，电影数据 tushare.org -->
@@ -647,6 +647,4 @@ C服务器: 3, 6, 9, 12
 			]]></screen>
 		</section>
 	</section>
-
-
-</chapter>
+</section>

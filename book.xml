@@ -69,7 +69,7 @@
 <!-- 	&book.dedication.xml; -->
 	&book.preface.xml;
 
-	<!-- &part.architecture.xml; -->
+	&part.architecture.xml;
 	&part.software.xml;
 	<!-- &part.frontend.xml;
 	&part.backend.xml; -->

@@ -9,10 +9,10 @@
 	<para>在项目中实施容器技术，你可以遇到下列问题。</para>
 	<section>
 		<title>镜像会遇到的问题</title>
-		<para>目前docker 镜像，没有统一标准，体现在一下几个方面。</para>
+		<para>目前docker 镜像，没有统一标准，体现在以下几个方面。</para>
 		<section>
 			<title>镜像使用的OS发行版不统一</title>
-			<para> 在使用过程中会遇到过各种本班的 OS。包括 alpine, debian, ubuntu, centos, oraclelinux, redhat 等等……</para>
+			<para> 在使用过程中会遇到过各种版本的 OS。包括 alpine, debian, ubuntu, centos, oraclelinux, redhat 等等……</para>
 			<para>经过裁剪的 OS 面目全非，不完整</para>
 			<para>即使是镜像采用 CentOS 母版，很多镜像制作者会给操作系统减肥。经过优化后，已经不是官方版本，在使用过程中你会遇到各种麻烦。例如调试的时候需要 curl,wget,telnet,nslookup 等工具在镜像中没有。甚至 ps, top, free, find, netstat, ifconfig 命令都没有。</para>
 			<para>很多容器都不带 iptables 所以，即使带有iptables 在容器中修改规则也很麻烦。</para>
@@ -133,7 +133,7 @@
 			<section>
 				<title>隔离安全</title>
 				<para>容器间是隔离安全的，kubernetes 还有明明空间和RBAC等等。但是......</para>
-				<para>有时我们为了产生持久化的临时文件，会将 /tmp 挂载到容器中，因为 /tmp 是 777 权限，任何都可以向其中写入临时文件。这也带来一个安全问题，一是可能大家使用了相同的文件或目录名，相互覆盖对方的文件。二是不小心将敏感信息写入了 /tmp 存在信息泄露风险。</para>
+				<para>有时我们为了产生持久化会使用本地卷，或将容器目录挂载到节点宿主主机中。这也带来一个安全问题，一是可能大家使用了相同的文件或目录名，相互覆盖对方的文件。二是不小心将敏感信息写入了到宿主主机，存在信息泄露风险。</para>
 				<para>除此之外 local volume, hostPath 以及没有用户认证的网络文件系统，都存在这种风险。例如NFS，因为Pod是随机IP地址，NFS服务器无法通过IP地址设置访问规则。</para>
 			</section>
 		</section>

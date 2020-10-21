@@ -5,5 +5,7 @@
 		<title>人际关系网络</title>
 		<graphic  format="png" fileref="../images/solution/sns/sns-people.png" srccredit="neo" />
 	</section>
-
+	<section id="wms">
+		<title>仓库管理系统（warehouse management system）</title>
+	</section>
 </chapter>

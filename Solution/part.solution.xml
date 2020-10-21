@@ -112,7 +112,7 @@
 	</section>
 </chapter>
  -->
- 	&chapter.trader.xml;
+ 	
  	&chapter.payment.xml;
  	&chapter.shop.xml;
  	&chapter.wechat.xml;
