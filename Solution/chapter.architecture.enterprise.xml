@@ -1,5 +1,7 @@
 <chapter>
 	<title>多维度思考</title>
 	&section.arch.delay.xml;
+	&section.arch.timeout.xml;
 	&section.arch.trader.xml;
+	
 </chapter>

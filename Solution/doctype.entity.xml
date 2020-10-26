@@ -3,11 +3,13 @@
 <!ENTITY chapter.architecture.xml 		SYSTEM "chapter.architecture.xml">
 <!ENTITY chapter.architecture.enterprise.xml	SYSTEM "chapter.architecture.enterprise.xml">
 <!ENTITY section.arch.delay.xml			SYSTEM "section.arch.delay.xml">
+<!ENTITY section.arch.timeout.xml		SYSTEM "section.arch.timeout.xml">
+<!ENTITY section.arch.trader.xml		SYSTEM "section.arch.trader.xml">
 
 <!ENTITY part.solution.xml 				SYSTEM "part.solution.xml">
 <!ENTITY chapter.case.xml 				SYSTEM "chapter.case.xml">
-<!ENTITY chapter.payment.xml	 			SYSTEM "chapter.payment.xml">
+<!ENTITY chapter.payment.xml	 		SYSTEM "chapter.payment.xml">
 <!ENTITY chapter.shop.xml		 		SYSTEM "chapter.shop.xml">
 <!ENTITY chapter.wechat.xml		 		SYSTEM "chapter.wechat.xml">
-<!ENTITY chapter.sns.xml		 			SYSTEM "chapter.sns.xml">
-<!ENTITY section.arch.trader.xml				SYSTEM "section.arch.trader.xml">
+<!ENTITY chapter.sns.xml		 		SYSTEM "chapter.sns.xml">
+

@@ -165,10 +165,7 @@ Swap	mem * 2
 	<title>Analytics</title>
 	<para>我们从下面的分析软件反馈的结果，可以用于网站我一些调整，也可能给市场人员一个参考。</para>
 
-	<section>
-		<title>Google Analytics</title>
-		<para>类似Google Analytics服务的网站很多，之所以选择Google Analytics是因为他没有任何输出和广告。</para>
-	</section>
+
 	<section>
 		<title>Webtrends</title>
 		<para>http://www.webtrends.com/</para>

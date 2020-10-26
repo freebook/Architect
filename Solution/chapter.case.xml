@@ -58,30 +58,6 @@
 <chapter>
 	<title>新闻出版类网站</title>
 </chapter>
-
-<chapter>
-	<title>在线视频服务网站</title>
-	<orderedlist>
-		<title>YouTube 架构</title>
-		<listitem>
-			<para>YouTube 大部分代码都是 Python开发的,Web 服务器有部分是 Apache+ FastCGI
-				模式。对于视频内容,视频的缩略图(Thumbnails)则用 Lighttpd 。</para>
-		</listitem>
-		<listitem>
-			<para>数据存储：最初的 DB 只有 10 块硬盘，RAID 10 ，后来追加了一组 RAID 1</para>
-		</listitem>
-		<listitem>
-			<para>YouTube 也用 Memcached.</para>
-		</listitem>
-	</orderedlist>
-	<para></para>
-	<para></para>
-	<para></para>
-	<screen>
-		<![CDATA[
-		]]>
-	</screen>
-</chapter>
  -->
 <section id="solution.catalyst">
 	<title>Perl 解决方案</title>
