@@ -7,7 +7,6 @@
 
 <!ENTITY chapter.server.xml				SYSTEM "chapter.server.xml">
 <!ENTITY section.server.tomcat.xml		SYSTEM "section.server.tomcat.xml">
-<!ENTITY section.server.logging.xml		SYSTEM "section.server.logging.xml">
 <!ENTITY section.server.php.xml			SYSTEM "section.server.php.xml">
 
 <!ENTITY chapter.idc.xml		 		SYSTEM "chapter.idc.xml">
@@ -17,11 +16,8 @@
 <!ENTITY section.idc.cable.xml	 		SYSTEM "section.idc.cable.xml">
 <!ENTITY section.idc.traffic.xml 		SYSTEM "section.idc.traffic.xml">
 
-<!ENTITY chapter.security.xml		 	SYSTEM "chapter.security.xml">
 <!ENTITY section.server.storage.xml 	SYSTEM "section.server.storage.xml">
 <!ENTITY chapter.monitor.xml 			SYSTEM "chapter.monitor.xml">
 <!ENTITY chapter.backup.xml				SYSTEM "chapter.backup.xml">
 <!ENTITY chapter.firewall.xml			SYSTEM "chapter.firewall.xml">
 <!ENTITY chapter.logging.xml			SYSTEM "chapter.logging.xml">
-
-<!ENTITY chapter.virtualization.xml		SYSTEM "chapter.virtualization.xml">

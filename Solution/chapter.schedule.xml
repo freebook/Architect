@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="分布式计划任务">
+<chapter id="分布式计划任务">
 	<title>分布式计划任务</title>
 	<para>本章主要通过分布式计划任务设计与实现。</para>
 	<section id="what">
@@ -163,4 +163,4 @@
 			<para>计划任务可以分布式运行了，但并不能保证万无一失，配套其他服务器也要做调整。例如数据库，缓存等等。</para>
 		</section>
 	</section>
-</section>
+</chapter>

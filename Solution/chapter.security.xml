@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="多维度架构之安全">
+	<title>多维度架构之安全</title>
+	<section>
+		<title>植入式攻击入侵检测解决方案</title>
+		<section id="what">
+			<title>什么是植入式攻击？</title>
+			<para>什么是植入式攻击，通俗的说就是挂马，通过各种手段将木马上传到你的系统，修改原有程序，或者伪装程序是你很难发现，常住系统等等。</para>
+		</section>
+		<section id="why">
+			<title>为什么骇客会在你的系统里面植入木马？</title>
+			<para>通常挂马攻击骇客都是有目的的很少会破坏你的系统，而是利用你的系统。</para>
+			<para>例如，使用你的网络作DDOS攻击，下载你的数据资料卖钱等等</para>
+		</section>
+		<section id="when">
+			<title>什么时候被挂马？</title>
+			<para>有时你到一家新公司，接手一堆烂摊子，俗称“擦屁股”。这是中国是离职，中国式裁员，中国式工作交接.....的结果，各种奇葩等着你。</para>
+			<para>你接手第一项工作就是工作交接，最重要的工作可能就是检查系统后门。通常工作交接少有积极配合的，全要靠你自己。</para>
+		</section>
+		<section id="where">
+			<title>在那里挂马的？</title>
+			<para>在我多年的工作中遇到过很多种形式挂马，有基于Linux的rootkit，有PHP脚本挂马，Java挂马，ASP挂马。通常骇客会植入数据库浏览工具，文件目录管理工具，压缩解压工具等等。</para>
+		</section>
+		<section id="who">
+			<title>谁会在你的系统里挂马？</title>
+			<para>98%是骇客入侵，1%是内人干的，1%是开后门仅仅为了工作方便。</para>
+			<para>本文对现有的系统无能为力，只能监控新的入侵植入</para>
+		</section>
+		<section id="how">
+			<title>怎样监控植入式攻击</title>
+			<section>
+				<title>程序与数据分离</title>
+				<para>程序包括脚本，变异文件等等，通常是只读权限</para>
+				<para>数据是指由程序生成的文件，例如日志</para>
+				<para>将程序与数据分离，存放在不同目录，设置不同权限, 请关注“延伸阅读”中的文章，里面有详细介绍，这里略过。</para>
+				<para>我们这里关注一旦运行的程序被撰改怎么办，包括入侵进入与合法进入。总之我们要能快速知道那些程序文件被修改。前提是我们要将程序与数据分离，才能更好地监控程序目录。</para>
+			</section>
+			<section>
+				<title>监控文件变化</title>
+				<para>我使用 Incron 监控文件变化</para>
+				<screen><![CDATA[
+# yum install -y incron
+# systemctl enable incrond
+# systemctl start incrond
+			]]></screen>
+				<para>安装日志推送程序</para>
+				<screen><![CDATA[
+$ git clone https://github.com/netkiller/logging.git
+$ cd logging
+$ python3 setup.py sdist
+$ python3 setup.py install			
+			]]></screen>
+				<para>配置触发事件</para>
+				<screen><![CDATA[
+# incrontab -e
+/etc IN_MODIFY /srv/bin/monitor.sh $@/$#
+/www IN_MODIFY /srv/bin/monitor.sh $@/$#
+
+# incrontab -l
+/etc IN_MODIFY /srv/bin/monitor.sh $@/$#
+/www IN_MODIFY /srv/bin/monitor.sh $@/$#
+			]]></screen>
+				<para>/srv/bin/monitor.sh 脚本</para>
+				<screen><![CDATA[
+# cat /srv/bin/monitor.sh
+#!/bin/bash
+echo $@ | /usr/local/bin/rlog -d -H 172.16.0.10 -p 1220 --stdin						
+			]]></screen>
+				<para>/etc 与 /www 目录中的任何文件被修改都回运行/srv/bin/monitor.sh脚本，/srv/bin/monitor.sh脚本通过/usr/local/bin/rlog程序将文件路径数据发给远程主机172.16.0.10。</para>
+			</section>
+			<section>
+				<title>安装日志收集程序</title>
+				<screen><![CDATA[
+$ git clone https://github.com/netkiller/logging.git
+$ cd logging
+$ python3 setup.py sdist
+$ python3 setup.py install				
+			]]></screen>
+				<para>配置收集端端口，编辑文件logging/init.d/ucollection</para>
+				<screen>
+			<![CDATA[
+done << EOF
+1220 /backup/172.16.0.10/incron.log
+1221 /backup/172.16.0.11/incron.log
+1222 /backup/172.16.0.12/incron.log
+EOF
+			]]>
+				</screen>
+				<para>然后根据incron.log给相关管理人员发送邮件或短信警报等等，关于怎么发邮件与短信不再本文谈论范围，有兴趣留意我的官网。</para>
+			</section>
+		</section>
+	</section>
+	<section>
+		<title>Shell 历史记录异地留痕审计与监控</title>
+		<section id="what">
+			<title>什么是Shell历史记录异地留痕与监控</title>
+			<para>首先谈谈什么是“历史记录异地留痕”，历史记录就是~/.bash_history文件，不同Shell名字可能不同，它会记录每次用户在键盘上敲下的命令，我们可以通过下面命令查询历史记录。 </para>
+			<screen>
+		<![CDATA[
+$ history | head
+ 1009  ls /www
+ 1010  vim Makefile
+ 1011  cat Makefile
+ 1012  make index.html
+ 1013  vim Makefile
+ 1014  make index.html
+ 1015  vim Makefile
+ 1016  make index.html
+ 1017  vim Makefile
+ 1018  make index.html
+
+ $ history | tail
+ 2000  find /tmp/var/
+ 2001  ll
+ 2002  cd workspace/Journal/
+ 2003  s
+ 2004  ls
+ 2005  make shell.html
+ 2006  cat ~/.bash_history
+ 2007  history
+ 2008  history | head
+ 2009  history | tail
+
+ $ cat ~/.bash_history | head -n 100
+ cat /etc/issue
+cat /etc/resolv.conf
+ifconfig
+cat /etc/resolv.conf
+dmd
+df
+df -T
+cat /etc/fstab
+cat /etc/issue
+uname -a
+ps ax
+cd /srv/
+ls
+cd workspace/
+ls
+df
+df -T
+df
+ls
+cd ..
+ls
+		]]>
+			</screen>
+			<para>由于篇幅的限制，我是用了head,tail 命令限制显示长度。</para>
+			<para>现在我在看看“监控”，监控就是过滤 ~/.bash_history 文件内字符串，达到匹配标准，做出报警操作等等。例如我们发现adduser命令应立即报警，通知相关人员检查。</para>
+		</section>
+		<section id="why">
+			<title>什么要将Shell历史记录异地留痕并监控</title>
+			<para>首先我们将要用户操作留痕，以方便随时调阅，我们要知道系统管理员做了那些操作，还可用于审计工作。例如我们开发工作中有一个环节就是Code Review (代码审查)，可以帮助我们提前发现BUG，以及不合理做法，甚至是人为恶意植入后门等等。</para>
+			<para>历史记录异地留痕就是运维工作的 sysop review(运维审查)。</para>
+			<para>其次是监控，注意这里的~/.bash_history监控并非实时监控，因为只有用户推出shell后才能保存~/.bash_history文件。所以监控是滞后的，但也足够能帮助我们更早的知道系统发生了那些变化。</para>
+		</section>
+		<section id="when">
+			<title>何时做历史记录异地留痕</title>
+			<para>这个系统可以实时部署，对现有的业务不会影响。</para>
+		</section>
+		<section id="where">
+			<title>在哪里做历史记录异地留痕</title>
+			<para>历史记录异地留痕分为两个部分，第一个部分是节点，第二部分是收集端，收集段同时还负责监控与报警。节点将收集的数据发送给收集端，然后收集端归档日志。</para>
+		</section>
+		<section id="who">
+			<title>角色与权限</title>
+			<para>最高权限着负责部署即可</para>
+		</section>
+		<section id="how">
+			<title>怎么实现历史记录异地留痕</title>
+			<section>
+				<title>节点配置</title>
+				<para>首先修改history格式，默认只有行号，我需要记录每一个命令的输入时间点。</para>
+				<screen>
+			<![CDATA[
+cat >> /etc/bashrc <<EOF
+export HISTTIMEFORMAT="%Y-%m-%d-%H:%M:%S "
+EOF
+			]]>
+				</screen>
+				<para>此时输入history命令你可以看到时间点</para>
+				<screen>
+			<![CDATA[
+# history
+  741  2014-12-24-10:06:26 ll
+  742  2014-12-24-10:06:40 ls
+  743  2014-12-24-10:06:44 ll
+  744  2014-12-24-10:06:47 ls
+  745  2014-12-24-10:58:13 history
+			]]>
+				</screen>
+			</section>
+			<section>
+				<title>推送端</title>
+				<screen>
+			<![CDATA[
+$ git clone https://github.com/netkiller/logging.git
+$ cd logging
+$ python3 setup.py sdist
+$ python3 setup.py install
+			]]>
+				</screen>
+				<para>配置启动脚本，打开文件logging/init.d/uhistory</para>
+				<screen>
+			<![CDATA[
+HOST=127.0.0.1 #此处为收集端的IP地址
+
+# Port | User 
+# -------------------
+# 配置端口号与用户
+done << EOF
+1220 neo
+1221 jam
+1222 sam
+EOF
+			]]>
+				</screen>
+			</section>
+			<section>
+				<title>收集端</title>
+				<screen>
+			<![CDATA[
+$ git clone https://github.com/netkiller/logging.git
+$ cd logging
+$ python3 setup.py sdist
+$ python3 setup.py install			
+			]]>
+				</screen>
+				<para>配置收集端端口，编辑文件logging/init.d/ucollection</para>
+				<screen>
+			<![CDATA[
+done << EOF
+1220 /backup/neo/.bash_history
+1221 /backup/jam/.bash_history
+1222 /backup/sam/.bash_history
+EOF
+			]]>
+				</screen>
+			</section>
+		</section>
+	</section>
+
+	<section>
+		<title>延伸阅读</title>
+		<para>
+			<ulink url="http://netkiller.github.io/journal/log.html">《日志归档与数据挖掘》</ulink>
+		</para>
+		<para>
+			<ulink url="http://netkiller.github.io/journal/mysql.security.html">数据库记录安全解决方案</ulink>
+		</para>
+		<para>
+			<ulink url="http://netkiller.github.io/journal/tomcat.html">Tomcat 安全配置与性能优化</ulink>
+		</para>
+		<para>
+			<ulink url="http://netkiller.github.io/journal/security.html">Linux 系统安全与优化配置</ulink>
+		</para>
+		<para>
+			<ulink url="http://netkiller.github.io/journal/refresh.html">网站防刷方案</ulink>
+		</para>
+		<para>
+			<ulink url="http://netkiller.github.io/journal/security.php.html">PHP 安全与性能</ulink>
+		</para>
+		<para>
+			<ulink url="http://netkiller.github.io/storage/incron.html" />
+		</para>
+	</section>
+</chapter>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="microservices"><!-- <?dbhtml dir="microservices" ?> -->
-	<title>微服务</title>
+<chapter id="多维度架构之微服务"><!-- <?dbhtml dir="microservices" ?> -->
+	<title>多维度架构之微服务</title>
 	<graphic format="png" fileref="../images/backend/microservice/SpringCloud.png" srccredit="neo" width="" />
 	<section id="微服务安全吗">
 		<title>微服务安全吗？</title>
@@ -437,4 +437,4 @@ App(IOS/Android) -->  SSL 双向认证 --> SLB/Proxy --> Feign Client
 
 	</section>
 
-</section>
+</chapter>

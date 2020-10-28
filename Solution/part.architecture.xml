@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- $Id: part.architecture.xml 590 2013-05-20 02:55:09Z netkiller $ -->
-<part id="index"><?dbhtml dir="architecture"?>
+<part id="architecture"><!-- <?dbhtml dir="architecture"?> -->
 	<title>多维度架构</title>
 	<subtitle>Multi-dimension Architecture</subtitle>
 	<!-- Design and implementation of a website solution with step by step -->
 	<para></para>
 	&chapter.architecture.xml;
- 	&chapter.architecture.enterprise.xml;
+ 	&section.arch.delay.xml;
+	&section.arch.timeout.xml;
+	&section.arch.session.xml;
+	&section.arch.logging.xml;
+	&section.arch.devops.xml;
+	&section.arch.virtualization.xml;
+	&section.arch.microservices.xml;
+	&section.arch.trader.xml;
+	&section.arch.monitor.xml;
+	&chapter.schedule.xml;
+	&chapter.security.xml;
 </part>
 
 

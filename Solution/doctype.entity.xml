@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!ENTITY part.architecture.xml 			SYSTEM "part.architecture.xml">
 <!ENTITY chapter.architecture.xml 		SYSTEM "chapter.architecture.xml">
-<!ENTITY chapter.architecture.enterprise.xml	SYSTEM "chapter.architecture.enterprise.xml">
+<!ENTITY section.arch.monitor.xml		SYSTEM "section.arch.monitor.xml">
 <!ENTITY section.arch.delay.xml			SYSTEM "section.arch.delay.xml">
 <!ENTITY section.arch.timeout.xml		SYSTEM "section.arch.timeout.xml">
 <!ENTITY section.arch.trader.xml		SYSTEM "section.arch.trader.xml">
+<!ENTITY section.arch.session.xml		SYSTEM "section.arch.session.xml">
+<!ENTITY section.arch.devops.xml		SYSTEM "section.arch.devops.xml">
+<!ENTITY section.arch.virtualization.xml	SYSTEM "section.arch.virtualization.xml">
+<!ENTITY section.arch.logging.xml		SYSTEM "section.arch.logging.xml">
+<!ENTITY section.arch.microservices.xml	SYSTEM "section.arch.microservices.xml">
+
+<!ENTITY chapter.schedule.xml			SYSTEM "chapter.schedule.xml">
+<!ENTITY chapter.security.xml		 	SYSTEM "chapter.security.xml">
 
 <!ENTITY part.solution.xml 				SYSTEM "part.solution.xml">
 <!ENTITY chapter.case.xml 				SYSTEM "chapter.case.xml">

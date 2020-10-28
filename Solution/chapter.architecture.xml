@@ -8,13 +8,20 @@
 解决方案架构师SA (Solution Architect)
  -->
 	<para>Overall structure</para>
-	<graphic format="png" fileref="../images/solution/perfect.png" srccredit="neo" />
+	<graphic format="png" fileref="images/solution/perfect.png" srccredit="neo" />
 
-	<section id="cdn">
+	<section>
 		<title>CDN (Content Delivery Network)</title>
 		<para>I analyzed CDN realization principle, look at the picture below.</para>
-		<graphic format="png" fileref="../images/network/cdn.png" srccredit="neo" />
+		<graphic format="png" fileref="images/network/cdn.png" srccredit="neo" />
 		<!-- "data:image/png;base64, " -->
 	</section>
-
+	<section>
+		<title>微服务</title>
+		<graphic format="png" fileref="images/backend/microservice/SpringCloud.png" srccredit="neo" width="" />
+	</section>
+	<section>
+		<title>日志</title>
+		<graphic format="png" fileref="images/development/logging.png" srccredit="neo" width="" />
+	</section>
 </chapter>

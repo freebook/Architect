@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="多维度架构之超时时间">
+<chapter id="多维度架构之超时时间">
 	<title>多维度架构之超时时间</title>
 	<para>超时时间俗称 Timeout 它是引起应用程序无响应或者网络服务雪崩灾难的罪魁祸首。</para>
 	<para>超时时间设置非常讲究，太长不行，太短也不行。</para>
@@ -55,4 +55,4 @@
 		]]>
 		</screen>
 	</section>
-</section>
+</chapter>

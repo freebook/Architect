@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <part id="index"><?dbhtml dir="system"?>
 	<title>运维篇</title>
-	&chapter.devops.xml;
- 	&chapter.virtualization.xml;
 	&chapter.os.xml;
 	&chapter.oscm.xml;
 	&chapter.shell.xml;
 	&chapter.idc.xml;
 	&chapter.server.xml;
-	&chapter.security.xml;
 	&chapter.monitor.xml;
 	&chapter.backup.xml;
 	&chapter.firewall.xml;
