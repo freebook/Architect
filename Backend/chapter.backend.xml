@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter>
 	<title>后端架构</title>
-	&chapter.schedule.xml;
-	&chapter.permission.xml;
-	&chapter.communication.xml;
+
 </chapter>

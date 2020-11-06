@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="server"?>
 	<title>Server</title>
+	&section.server.os.xml;
 	&section.server.tomcat.xml;
 	&section.server.php.xml;
+	&section.server.oscm.xml;
 	<section id="ntp">
 		<title>时间同步</title>
 		<para>将通信网上各种通信设备或计算机设备的时间信息(年月日时分秒)基于UTC（协调世界时）时间偏差限定在足够小的范围内（如100ms），这种同步过程叫做时间同步。 </para>

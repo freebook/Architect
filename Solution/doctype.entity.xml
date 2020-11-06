@@ -13,6 +13,14 @@
 
 <!ENTITY chapter.schedule.xml			SYSTEM "chapter.schedule.xml">
 <!ENTITY chapter.security.xml		 	SYSTEM "chapter.security.xml">
+<!ENTITY chapter.shell.xml				SYSTEM "chapter.shell.xml">
+<!ENTITY chapter.permission.xml			SYSTEM "chapter.permission.xml">
+<!ENTITY chapter.communication.xml		SYSTEM "chapter.communication.xml">
+
+<!ENTITY section.web.xml 				SYSTEM "section.web.xml">
+<!ENTITY section.web.search.xml			SYSTEM "section.web.search.xml">
+<!ENTITY section.web.static.xml			SYSTEM "section.web.static.xml">
+<!ENTITY section.web.image.xml			SYSTEM "section.web.image.xml">
 
 <!ENTITY part.solution.xml 				SYSTEM "part.solution.xml">
 <!ENTITY chapter.case.xml 				SYSTEM "chapter.case.xml">

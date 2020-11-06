@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="os">
+<section id="os">
 	<title>Linux 系统安全与优化配置</title>
 
 	<section>
@@ -531,4 +531,4 @@ su: incorrect password
 		</section>
 	</section>
 
-</chapter>
+</section>

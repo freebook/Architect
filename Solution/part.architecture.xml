@@ -6,17 +6,21 @@
 	<!-- Design and implementation of a website solution with step by step -->
 	<para></para>
 	&chapter.architecture.xml;
+	&section.web.xml;
  	&section.arch.delay.xml;
 	&section.arch.timeout.xml;
 	&section.arch.session.xml;
 	&section.arch.logging.xml;
+	&section.arch.monitor.xml;
+	&chapter.schedule.xml;
+	&chapter.security.xml;
+	&chapter.shell.xml;
 	&section.arch.devops.xml;
 	&section.arch.virtualization.xml;
 	&section.arch.microservices.xml;
 	&section.arch.trader.xml;
-	&section.arch.monitor.xml;
-	&chapter.schedule.xml;
-	&chapter.security.xml;
+	&chapter.permission.xml;
+	&chapter.communication.xml;	
 </part>
 
 

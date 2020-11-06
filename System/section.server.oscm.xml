@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="oscm">
+<section id="oscm">
 	<title>环境安装模板化</title>
 	<para>OSCM 是一套操作系统安装与配置SHELL工具箱，</para>
 	<section>
@@ -97,4 +97,4 @@ curl -s https://raw.githubusercontent.com/oscm/shell/master/database/mongodb/mon
 		]]>
 		</screen>
 	</section>
-</chapter>	
+</section>	

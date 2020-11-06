@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="overview">
 	<title>Architecture Overview</title>
-<!--
-企业架构师EA(Enterprise Architect)
-基础结构架构师IA(Infrastructure Architect)
-特定技术架构TSA(Technology-Specific Architect)
-解决方案架构师SA (Solution Architect)
- -->
+	<!-- 企业架构师EA(Enterprise Architect) 基础结构架构师IA(Infrastructure Architect) 特定技术架构TSA(Technology-Specific Architect) 解决方案架构师SA (Solution Architect) -->
 	<para>Overall structure</para>
 	<graphic format="png" fileref="images/solution/perfect.png" srccredit="neo" />
 
@@ -23,5 +18,14 @@
 	<section>
 		<title>日志</title>
 		<graphic format="png" fileref="images/development/logging.png" srccredit="neo" width="" />
+	</section>
+	<section>
+		<title>监控</title>
+		<para>
+			<graphic format="png" fileref="images/architecture/idc-mgr.png" srccredit="neo" width="1000" />
+		</para>
+		<para>
+			<graphic format="png" fileref="images/monitor/monitor.png" srccredit="neo" width="1000" />
+		</para>
 	</section>
 </chapter>

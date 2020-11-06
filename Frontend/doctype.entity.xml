@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!ENTITY chapter.frontend.xml			SYSTEM "chapter.frontend.xml">
-<!ENTITY section.web.xml 				SYSTEM "section.web.xml">
 <!ENTITY section.js.xml 				SYSTEM "section.js.xml">
-<!ENTITY section.web.search.xml			SYSTEM "section.web.search.xml">
-<!ENTITY section.web.static.xml			SYSTEM "section.web.static.xml">
-<!ENTITY section.web.image.xml			SYSTEM "section.web.image.xml">
+

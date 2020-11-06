@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <part id="index"><?dbhtml dir="system"?>
 	<title>运维篇</title>
-	&chapter.os.xml;
-	&chapter.oscm.xml;
-	&chapter.shell.xml;
 	&chapter.idc.xml;
 	&chapter.server.xml;
 	&chapter.monitor.xml;

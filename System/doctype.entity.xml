@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!ENTITY part.devops.xml 				SYSTEM "part.devops.xml">
 <!ENTITY chapter.devops.xml				SYSTEM "chapter.devops.xml">
-<!ENTITY chapter.oscm.xml				SYSTEM "chapter.oscm.xml">
-<!ENTITY chapter.shell.xml				SYSTEM "chapter.shell.xml">
-<!ENTITY chapter.os.xml					SYSTEM "chapter.os.xml">
 
 <!ENTITY chapter.server.xml				SYSTEM "chapter.server.xml">
+<!ENTITY section.server.os.xml			SYSTEM "section.server.os.xml">
 <!ENTITY section.server.tomcat.xml		SYSTEM "section.server.tomcat.xml">
 <!ENTITY section.server.php.xml			SYSTEM "section.server.php.xml">
+<!ENTITY section.server.oscm.xml		SYSTEM "section.server.oscm.xml">
 
 <!ENTITY chapter.idc.xml		 		SYSTEM "chapter.idc.xml">
 <!ENTITY section.idc.version.xml 		SYSTEM "section.idc.version.xml">

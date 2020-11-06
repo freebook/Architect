@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="service.firewall">
-	<title>应用防火墙</title>
+<chapter id="多维度架构之应用防火墙">
+	<title>多维度架构之应用防火墙</title>
 	<section>
 		<title>什么是应用防火墙</title>
 		<para>应用防火墙用于保护应用及服务不受恶意访问和攻击。</para>
@@ -480,4 +480,4 @@ print_r($client->get($key));
 		</section>
 
 	</section>
-</section>
+</chapter>

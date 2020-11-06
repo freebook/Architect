@@ -1,5 +1,11 @@
 <chapter id="多维度架构之监控">
 	<title>多维度架构之监控</title>
+	<para>
+		<graphic format="png" fileref="images/architecture/idc-mgr.png" srccredit="neo" width="1000" />
+	</para>
+	<para>
+		<graphic format="png" fileref="images/monitor/monitor.png" srccredit="neo" width="1000" />
+	</para>
 	<section>
 		<title>背景</title>
 		<para>每个企业都意识到监控工作的重要性，但80%企业的监控工作仍然处在监控的初级阶段。</para>

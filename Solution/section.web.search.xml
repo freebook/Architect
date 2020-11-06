@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id: chapter.dev.search.xml 391 2012-04-20 10:59:22Z netkiller $ -->
-<section id="search">
+<section id="h5.search">
 	<title>搜索引擎相关优化</title>
 	<section id="search.url">
 		<title>搜索结果静态化</title>

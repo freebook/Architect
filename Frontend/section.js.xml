@@ -35,30 +35,5 @@
 			<para>qooxdoo</para>
 		</listitem>
 	</itemizedlist>
-	<section>
-		<title>Minify JS</title>
-		<para>最小化js文件</para>
-		<section>
-			<title>jsmin</title>
-			<para>http://crockford.com/javascript/jsmin</para>
-			<screen>
-				<![CDATA[
-jsmin <fulljslint.js >jslint.js
-				]]>
-			</screen>
-		</section>
-		<section>
-			<title>yuicompressor</title>
-			<para>http://developer.yahoo.com/yui/compressor/</para>
-			<screen>
-				<![CDATA[
-Usage: java -jar yuicompressor-x.y.z.jar [options] [input file]
-				]]>
-			</screen>
-		</section>
-		<section>
-			<title>shrinksafe</title>
-			<para>http://dojotoolkit.org/docs/shrinksafe</para>
-		</section>
-	</section>
+	
 </section>

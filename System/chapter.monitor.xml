@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="monitoring">
 	<title>Monitor solution</title>
-	<para>
-		<graphic format="png" fileref="../images/architecture/idc-mgr.png" srccredit="neo" width="1000" />
-	</para>
-	<para>
-		<graphic format="png" fileref="../images/monitor/monitor.png" srccredit="neo" width="1000" />
-	</para>
+
 	<section id="monitoring.flow">
 		<title>网络监控</title>
 		<para></para>
