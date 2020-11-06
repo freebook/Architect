@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter>
 	<title>瓶颈分析</title>
-	<section>
-		<title>网络带宽瓶颈</title>
-		<para>iptraf </para>
-		<screen>
-
-		</screen>
-	</section>
-	<section>
-		<title>IO 瓶颈</title>
-	</section>
+	
+	
 	<section>
 		<title>pmap/strace</title>
 		<screen>
@@ -129,46 +121,12 @@ rm  -f timelog
 		]]>
 		</screen>
 	</section>
-	<section>
-		<title>数据库瓶颈</title>
-	</section>
+
 </chapter>
 
-		<section>
-			<title>www/app</title>
-			<para>Processor: 5650 </para>
-			<para>Memory: 32GB </para>
-			<para>Maximum Internal Storage: 146GB*4, 2.5" drives</para>
-			<screen>
-/boot	200M
-/		30G
-/var	50G
-Swap	mem * 2
-/www
-			</screen>
-		</section>
-		<section>
-			<title>cache</title>
-			<para>Processor: 7500 </para>
-			<para>Memory: 64GB </para>
-			<para>Maximum Internal Storage: 146GB*2, 2.5" drives</para>
-		</section>
-		<section>
-			<title>database</title>
-			<para>Processor: 7500 </para>
-			<para>Memory: 64GB </para>
-			<para>Maximum Internal Storage: 146GB*8, 2.5" drives </para>
-			<para>Maximum Storage: 2TB*12, 3.5" drives </para>
-		</section>
+		
 
 <chapter>
 	<title>Analytics</title>
 	<para>我们从下面的分析软件反馈的结果，可以用于网站我一些调整，也可能给市场人员一个参考。</para>
-
-
-	<section>
-		<title>Webtrends</title>
-		<para>http://www.webtrends.com/</para>
-		<para>Webtrends 是一个商业软件，如果‘不差钱’选他没错。</para>
-	</section>
 </chapter>

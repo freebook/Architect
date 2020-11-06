@@ -10,6 +10,7 @@
 <!ENTITY section.arch.virtualization.xml	SYSTEM "section.arch.virtualization.xml">
 <!ENTITY section.arch.logging.xml		SYSTEM "section.arch.logging.xml">
 <!ENTITY section.arch.microservices.xml	SYSTEM "section.arch.microservices.xml">
+<!ENTITY section.arch.mq.xml			SYSTEM "section.arch.mq.xml">
 
 <!ENTITY chapter.schedule.xml			SYSTEM "chapter.schedule.xml">
 <!ENTITY chapter.security.xml		 	SYSTEM "chapter.security.xml">

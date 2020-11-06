@@ -21,6 +21,7 @@
 	&section.arch.trader.xml;
 	&chapter.permission.xml;
 	&chapter.communication.xml;	
+	&section.arch.mq.xml;
 </part>
 
 
