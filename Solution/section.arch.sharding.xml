@@ -63,8 +63,8 @@
 			<para>服务于第二个UI，通过 member_id 关联数据</para>
 			<para>怎么样？用户登录过程并不会去访问 profile 表，只有登录成功才会访问。</para>
 			<para>用户表怎样垂直拆分呢？ 将 username 做crc32/md5/sha1 运算，使用哪种随你，取出第一个字符用于分表。</para>
-			<para>例如 neo, netkiller 两个用户被分到 member_n 表中，jerry,jam 被分到member_j 表中，与支配套的还有 profile_n, profile_j 等等。我们甚至还可以使用外键约束 member_n 和 profile_n 两个表。</para>
-			<para>当用户登录是，对用户ID做一次 hash 运算，就知道去哪个表中找到该用户的数据。</para>
+			<para>例如 neo, netkiller 两个用户被分到 member_n 表中，jerry,jam 被分到member_j 表中，配套的还有 profile_n, profile_j 等等。我们甚至还可以使用外键约束 member_n 和 profile_n 两个表。</para>
+			<para>当用户登录时，对用户ID做一次 hash 运算，就知道去哪个表中找到该用户的数据。</para>
 		</simplesect>
 		<simplesect>
 			<title>举例二，商品表如何分表？</title>
@@ -106,7 +106,7 @@ PARTITION BY LIST(YEAR(cdate))
 	</section>
 	<section>
 		<title>最后总结</title>
-		<para>分库和分表不是简单的切割，而出需要从业务的角度出发，从产品经理视角，你需要展现什么数据，什么样的数据库结构能更好的为UI服务。或者我们应该设计什么样的UI才能更好的展现数据。</para>
+		<para>分库和分表不是简单的切割，而是需要从业务的角度出发，从产品经理视角，你需要展现什么数据，什么样的数据库结构能更好的为UI服务。或者我们应该设计什么样的UI才能更好的展现数据。</para>
 		<para>多维度架构的核心就是跨界，用跨界知识解决架构中存在的问题。</para>
 	</section>
 </chapter>
