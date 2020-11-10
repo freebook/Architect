@@ -411,6 +411,19 @@ Warning: file(/etc/fstab): failed to open stream: Operation not permitted in /ww
 			<para>然后放行index.php文件，在URL上不允许请求任何其他php文件，并返回404错误</para>
 		</section>
 		<section>
+			<title>目录访问控制</title>
+			<screen>
+			<![CDATA[
+
+<Location ~ "/((static/)|(css/)|(images/)).*\.php">
+	Order Deny,Allow
+	Deny from all
+</Location>
+
+			]]>
+			</screen>
+		</section>
+		<section>
 			<title>Session / Cookie安全</title>
 			<para>session.save_path 默认session 存储在/tmp, 并且一明文的方式将变量存储在以sess_为前缀的文件中</para>
 			<screen>
@@ -638,5 +651,25 @@ client_max_body_size 8M
 			]]></screen>
 			<para>设置不能过大，因为可以通过你的网站上传功能，持续上传实现攻击。</para>
 		</section>
+	</section>
+	<section>
+		<title>服务器版本信息</title>
+		<screen>
+		<![CDATA[
+Apache:
+ServerTokens ProductOnly
+ServerSignature Off
+
+Nginx:
+server_tokens off;
+
+PHP:
+expose_php Off
+
+Tomcat:
+server="Your App Server"
+		]]>
+		</screen>
+
 	</section>
 </section>

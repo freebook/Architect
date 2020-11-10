@@ -22,6 +22,7 @@
 	&chapter.permission.xml;
 	&chapter.communication.xml;	
 	&section.arch.mq.xml;
+	&section.arch.sharding.xml;
 </part>
 
 
