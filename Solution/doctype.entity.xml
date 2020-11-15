@@ -12,6 +12,7 @@
 <!ENTITY section.arch.microservices.xml	SYSTEM "section.arch.microservices.xml">
 <!ENTITY section.arch.mq.xml			SYSTEM "section.arch.mq.xml">
 <!ENTITY section.arch.sharding.xml		SYSTEM "section.arch.sharding.xml">
+<!ENTITY section.arch.test.xml			SYSTEM "section.arch.test.xml">
 
 <!ENTITY chapter.schedule.xml			SYSTEM "chapter.schedule.xml">
 <!ENTITY chapter.security.xml		 	SYSTEM "chapter.security.xml">

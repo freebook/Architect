@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<part id="idc"><?dbhtml dir="idc" ?>
-	<title>IDC 运维</title>
-	&chapter.idc.xml;
-	&chapter.idc.application.xml;
-	&chapter.idc.backup.xml;
-</part>

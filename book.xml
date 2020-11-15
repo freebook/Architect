@@ -73,7 +73,7 @@
 	&part.database.xml;
 	&part.devops.xml;
 	&part.software.xml;
-	&part.testing.xml;
+	<!-- &part.testing.xml; -->
 	&part.solution.xml;
 	
 	&book.appendix.xml;
