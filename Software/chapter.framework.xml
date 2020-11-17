@@ -79,7 +79,7 @@
 		<section>
 			<title>Ajax 与 RESTful 跨域</title>
 			<para>允许所有域请求</para>
-			<screen>
+			<screen><![CDATA[
 server {
     listen       80;
     server_name  inf.netkiller.cn;
@@ -95,11 +95,11 @@ server {
 	...
 	...
 }
-			</screen>
+			]]></screen>
 			<para>允许特定的域请求</para>
-			<screen>
+			<screen><![CDATA[
 add_header Access-Control-Allow-Origin http://www.netkiller.com;
-			</screen>
+			]]></screen>
 		</section>
 		
 	</section>
@@ -334,10 +334,10 @@ server {
 			<para>PHP Session很有解决方案：</para>
 			<para>查看PHP手册 Session Extensions 章节，重写Session逻辑。</para>
 			<para>共享Session用Memcache，在php.ini中配置即可</para>
-			<screen>
+			<screen><![CDATA[
 session.save_handler = memcache
 session.save_path = tcp://127.0.0.1:10001
-			</screen>
+			]]></screen>
 		</section>
 		<section>
 			<title>Cookie</title>
@@ -501,208 +501,20 @@ setcookie("test", $_GET['id'], time()+3600, "/", ".a.com");
 	<section id="app.logs">
 		<title>日志系统</title>
 		<para>开源的日志系统，包括facebook的scribe，apache的chukwa，linkedin的kafka和cloudera的flume等</para>
-		<screen>
+		<screen><![CDATA[
 Scribe：https://github.com/facebook/scribe
 Chukwa：http://incubator.apache.org/chukwa/
 Kafka：http://sna-projects.com/kafka/
 Flume：https://github.com/cloudera/flume/
-		</screen>
+		]]></screen>
 	</section>
 	<section id="cache">
 		<title>Cache</title>
-		<section>
-			<title>CDN (Content Delivery Network) 与反向代理</title>
-			<para><graphic format="png" fileref="../images/workflow/user-browser-server.png" srccredit="neo" /></para>
-			<para>与CDN有关的开发工作</para>
 			<section>
-				<title>CDN接口API</title>
-				<para>CDN 内容更新，一般厂商会提供一个SOAP接口，你可以通过接口刷新你的内容。但接口有限制，不能随意使用，一般是多少秒可以刷新一次，或者一天可以刷新几次</para>
-			</section>
-			<section>
-				<title>方向代理页面过期处理</title>
-				<para>方向代理一般都支持PURGE协议，Squid,Varnish等等向管理端口发送 PURGE 即可是使用页面刷新</para>
-				<screen>
-PURGE http://netkiller.github.net/index.html
-				</screen>
-				<para>有些方向代理如：Varnish 可以使用正则表达式</para>
-				<para>同时这些代理服务器都承受管理命令</para>
-				<para>squid: 	squidclient </para>
-				<para>varnish: 	varnishadm</para>
-			</section>
-			<section>
-				<title>内容版本化</title>
-				<para>例如这样的URL</para>
-				<screen>
-http://images.example.com/logo.gif
-http://images.example.com/product.jpg
-				</screen>
-				<para>我们可以通过Rewrite或PATHINFO等技术做为静态化。例如首次版本</para>
-				<screen>
-http://images.example.com/logo.1.gif		=> logo.gif
-http://images.example.com/product.1.jpg		=> product.jpg
-				</screen>
-				<para>原图发生变化后，版本递增</para>
-				<screen>
-http://images.example.com/logo.2.gif		=> logo.gif
-http://images.example.com/product.2.jpg		=> product.jpg
-				</screen>
-				<para>就的URL将丢弃</para>
-				<screen>
-http://images.example.com/logo.1.gif
-http://images.example.com/product.1.jpg
-				</screen>
-				<para>CDN 就回源去下面的URL，并且取到的是新图</para>
-				<screen>
-http://images.example.com/logo.2.gif
-http://images.example.com/product.2.jpg
-				</screen>
-			</section>
+			<title>CDN/逆向代理缓存</title>
+			
 		</section>
-		<section>
-			<title>HTTP Cache</title>
-			<para>Cache-Control</para>
-			<screen>
-max-age
-max-age 格式写为：max-age=n，n是以秒为单位, 这个值是告知客户端GMT + N 后页面过期，缓存服务器在s-maxage值为空的时候也会使用这个参数的值。
-
-s-maxage
-s-maxage的格式跟max-age一样，只不过他是给缓存服务器使用的。
-
-must-revalidate
-这个参数用来告知客户端和缓存服务器，在GET请求的时候必须与源服务器验证实体是否为最新版本。
-
-Cache-Control:max-age=1200,s-maxage=3600
-			</screen>
-			<screen>
-Last-Modified
-这个参数提供了实体最近一次被修改的时间。这个名字起得不错，当实体被修改了之后，这个参数也就会被修改.
-			</screen>
-			<para>ETag</para>
-			<screen>
-ETag
-ETag是根据内容生成的一段hash字符串，采用信息摘要算法，保证每一个页面有一个唯一字串。
-			</screen>
-			<para>expires</para>
-			<para>expires 是HTTP 1.0 中定义的，已经不能满足用户的需要在 HTTP 1.1 加入了max-age，建议使用 max-age替代expires</para>
-			<screen>
-指令					含义
-public				可以在任何地方缓存
-private				只能被浏览器缓存
-no-cache			不能在任何地方缓存
-must-revalidate		缓存必须检查更新版本
-proxy-revalidate	代理缓存必须检查更新版本
-max-age				内容能够被缓存的时期，以秒表示
-s-maxage			覆盖共享缓存的max-age设置
-			</screen>
-			<para>在Squid, Varnish, Apache, Lighttpd, Nginx 中都可是实现HTTP Cache-Control推送，每次修改都需要重新加载，不太灵活。</para>
-			<screen>
-ExpiresActive On
-ExpiresByType image/gif "access plus 1 month"
-ExpiresByType image/png "access plus 1 month"
-ExpiresByType image/jpeg "access plus 1 month"
-ExpiresByType text/css "access plus 1 month"
-ExpiresByType text/javascript "access plus 1 month"
-ExpiresByType application/x-javascript "access plus 1 month"
-ExpiresByType application/x-shockwave-flash "access plus 1 month"
-
-
-server.modules = (
-...
-"mod_expire",
-...
-)
-
-$HTTP["url"] =~ "^/images/" {
-expire.url = ( "" => "access 30 days" )
-}
-			</screen>
-			<para>我喜欢自己控制TTL时间，且每个页面单独设置，可以随时调整设置。</para>
-
-			<section>
-				<title>在程序中灵活操作 Cache-Control</title>
-
-				<para>在MVC框架中每个控制器下的方法都可以单独操作Cache</para>
-				<screen>
-Class blog extend Controller{
-	blog(){
-		header('Cache-Control: max-age=28800');
-	}
-	list(){
-		header('Cache-Control: max-age=3600');
-	}
-	details(){
-		header('Cache-Control: max-age=160');
-	}
-}
-				</screen>
-				<para>你还可以封装到Controller中</para>
-				<screen>
-Class blog extend Controller{
-	blog(){
-		this->cache('28800');
-	}
-	list(){
-		this->cache('3600');
-	}
-	details(){
-		this->cache('160');
-	}
-}
-				</screen>
-			</section>
-			<section>
-				<title>非程序文件缓存处理</title>
-				<para>首先做一个Rewrite让程序接管所有图片请求</para>
-				<screen>
-url.rewrite = ( "^/(.+)" => "/index.php/$1" )
-				</screen>
-				<para>然后程序通过PATHINFO取出图片URL</para>
-				<screen>
-http://images.example.com/your/dir/test.jpg => http://images.example.com/index.php/your/dir/test.jpg
-				</screen>
-				<para>程序取出 /your/dir/test.jpg 设置 Content-type 并输出二进制流</para>
-				<para>详细参考</para>
-				<screen>
-				<![CDATA[
-<?php
-    // Test image.
-    $images = '/test/foo.png';
-
-    $headers = apache_request_headers();
-
-    if (isset($headers['If-Modified-Since']) && (strtotime($headers['If-Modified-Since']) == filemtime($images))) {
-        header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime($images)).' GMT', true, 304);
-    } else {
-        header('Content-Type: image/png');
-        print file_get_contents($fn);
-		if (file_exists($images)) {
-			header('Last-Modified: '.gmdate('D, d M Y H:i:s', filemtime($images)).' GMT', true, 200);
-			header("Cache-Control: max-age=3600, must-revalidate");
-			header('Content-Length: '.filesize($images));
-			header('Content-type: ' .mime_content_type($images));
-			flush();
-			readfile($images);
-			exit;
-		}
-    }
-				]]>
-				</screen>
-				<para>javascript 文件也可以使用类似方法处理</para>
-				<screen>
-				<![CDATA[
-	private function js($file){
-		if (file_exists($file)) {
-			header("Cache-Control: max-age=3600, must-revalidate");
-			header('Content-type: text/javascript');
-			flush();
-			readfile($file);
-			exit;
-		}
-	}
-				]]>
-				</screen>
-			</section>
-		</section>
+		
 		<section>
 			<title>Cache 生存时间</title>
 			<para>你不必一开始加费劲心机去考虑这个值，当网站运行一段时间后，利用玩站流量数据作为参考，一步一地尝试调整。</para>
@@ -781,13 +593,13 @@ top10=前十位
 	<section id="debug">
 		<title>debug</title>
 		<para>生产环境不允许有任何调试输出，包括程序错误，这些信息应该写入error.log， 我们可以在网站放置一个调试入口，</para>
-		<screen>
+		<screen><![CDATA[
 if(isset ($_GET['debug'])){
 
 }else{
 
 }
-		</screen>
+		]]></screen>
 	</section>
 	<section id="optimization">
 		<title>性能优化</title>
