@@ -24,6 +24,7 @@
 	&section.arch.mq.xml;
 	&section.arch.sharding.xml;
 	&section.arch.test.xml;
+	&chapter.testing.xml;
 </part>
 
 

@@ -45,4 +45,10 @@
 			<graphic format="png" fileref="images/monitor/monitor.png" srccredit="neo" width="1000" />
 		</para>
 	</section>
+	<section>
+		<title>Cluster Testing</title>
+		<para>
+			<graphic format="png" fileref="images/test/testing.png" srccredit="neo" width="" />
+		</para>
+	</section>
 </chapter>
