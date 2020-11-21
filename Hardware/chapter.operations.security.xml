@@ -1,10 +1,1 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section>
-	<title>fastcgi 安全</title>
-	<para>nginx 用户 www:www</para>
-	<para>php-fpm 用户 nobody:nogroup</para>
-</section>
-<section>
-	<title>php 函数安全</title>
-	<para>细节参考《Netkiller Linux 手札》</para>
-</section>

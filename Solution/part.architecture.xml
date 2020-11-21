@@ -23,7 +23,7 @@
 	&chapter.communication.xml;	
 	&section.arch.mq.xml;
 	&section.arch.sharding.xml;
-	&section.arch.test.xml;
+	&section.arch.socket.xml;
 	&chapter.testing.xml;
 </part>
 
