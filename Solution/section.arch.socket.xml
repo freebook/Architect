@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="多维度架构之Socket连接数">
+<chapter id="多维度架构之Socket连接数">
 	<title>多维度架构之Socket连接数</title>
 	<para>在上一节《多维度架构之会话数》中从运维角度详细介绍了会话数，本章将从开发角度介绍TCP Socket最大连接数。</para>
 	<orderedlist>
@@ -42,4 +42,4 @@
 		<para>还没完，我们上网的出口是走默认网关那个网卡的默认IP地址，Linux eth0 上配置的IP地址，而你设置了另外254个IP地址是 eth0:1~254 或者分布到其他网卡上（eth1,eth2……）。你测试会发现，对于服务器来说访问过来的IP地址永远都是 eth0 那个IP地址，也无法突破 65535的限制。如果你想使用其他的IP地址发起请求，需要额外的配置，修改路由表。</para>
 		<para>好了，到此为止原理已经将完，你可以试试写一个百万链接的服务器端试试。</para>
 	</section>
-</section>
+</chapter>
