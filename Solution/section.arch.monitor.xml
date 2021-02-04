@@ -15,7 +15,7 @@
 			<listitem>监控IP地址与TCP端口，很多时候HTTP 80端口正常接受请求，但WEB服务器不能正常工作。</listitem>
 			<listitem>人肉监控（人肉运维），采用人海战术，桌面摆放很多显示器，甚至投影仪，要求监控者盯着各种仪表板界面，制定各种工作流程以及KPI考核监控人员。</listitem>
 			<listitem>人肉测试，要求监控人员每间隔几分钟人工操作一次，以确认系统正常工作，例如（没15分钟登陆一次，下一笔顶单，做一次支付等等）。</listitem>
-			<listitem>万能的重启，定其重启所有的服务器。</listitem>
+			<listitem>万能的重启，定期重启所有的服务器，遇到解决不了的问题，先重启，再下载日志给开发人员。</listitem>
 		</orderedlist>
 		<orderedlist>
 			<title>什么是中级阶段呢？</title>
