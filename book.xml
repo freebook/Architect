@@ -48,9 +48,10 @@
 <book xml:base="http://netkiller.github.com/architect/"
 	xmlns="http://docbook.org/ns/docbook" xml:lang="zh-cn">
 	<info>
-		<title>Netkiller Architect 手札（<?dbtimestamp format="Y"?>版）</title>
-		<subtitle>Multi-dimension Architecture Design &amp; Implementation / Full Stack Architect</subtitle>
-		<titleabbrev>Enterprise Architecture (Guide the implementation of Enterprise site)</titleabbrev>
+		<title>Netkiller Architect 手札</title>
+		<subtitle>Netkiller Architect 手札: 多维度架构（<?dbtimestamp format="Y"?>版）</subtitle>
+		<titleabbrev>Multi-dimension Architecture Design &amp; Implementation / Full Stack Architect</titleabbrev>
+		<!-- Enterprise Architecture (Guide the implementation of Enterprise site) -->
 
 		&book.info.xml;
 		&book.info.legalnotice.xml;

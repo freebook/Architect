@@ -7,7 +7,7 @@
 	<para></para>
 	&chapter.architecture.xml;
 	&section.web.xml;
- 	&section.arch.delay.xml;
+ 	&section.arch.latency.xml;
 	&section.arch.timeout.xml;
 	&section.arch.session.xml;
 	&section.arch.logging.xml;
