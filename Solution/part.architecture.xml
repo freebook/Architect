@@ -12,6 +12,7 @@
 	&section.arch.session.xml;
 	&section.arch.logging.xml;
 	&section.arch.monitor.xml;
+	&section.arch.sharding.xml;
 	&chapter.schedule.xml;
 	&chapter.security.xml;
 	&chapter.shell.xml;
@@ -22,7 +23,6 @@
 	&chapter.permission.xml;
 	&chapter.communication.xml;	
 	&section.arch.mq.xml;
-	&section.arch.sharding.xml;
 	&section.arch.socket.xml;
 	&chapter.testing.xml;
 </part>

@@ -21,8 +21,8 @@
 | user     |
 |----------|
 |id        | <---+
-|user      |     |
-|passwd    |     |
+|username  |     |
+|password  |     |
 |nickname  |     |
 |status    |     |
 +----------+     |
