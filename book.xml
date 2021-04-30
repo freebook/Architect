@@ -5,6 +5,8 @@
 	[
 	<!ENTITY homepage "http://netkiller.sf.net/">
 	<!ENTITY mirror "http://netkiller.github.com/">
+	<!ENTITY bilibili "https://www.bilibili.com/video/BV1mK4y1D7xd">
+	<!ENTITY course "https://edu.51cto.com/course/26987.html">
 	<!ENTITY Neo "<![CDATA[ <ulink url='&homepage;'>Neo</ulink> ]]>">
 	<!ENTITY BG7NYT "&Neo;">
 	<!ENTITY nickname "<ulink url='&homepage;'><emphasis>netkiller</emphasis></ulink>">
@@ -50,7 +52,7 @@
 	xmlns="http://docbook.org/ns/docbook" xml:lang="zh-cn">
 	<info>
 		<title>Netkiller Architect 手札</title>
-		<subtitle>Netkiller Architect 手札: 多维度架构（<?dbtimestamp format="Y"?>版）</subtitle>
+		<subtitle><ulink url="&course;">《Netkiller Architect 手札》视频教程</ulink>（<?dbtimestamp format="Y"?>版）</subtitle>
 		<titleabbrev>Multi-dimension Architecture Design &amp; Implementation / Full Stack Architect</titleabbrev>
 		<!-- Enterprise Architecture (Guide the implementation of Enterprise site) -->
 

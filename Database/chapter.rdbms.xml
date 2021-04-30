@@ -1317,6 +1317,5 @@ select * from network where people_id=1 and degrees like "1.2.%";
 	&section.db.pgsql.xml;
 	&section.db.parallel.xml;
 	&section.db.sharding.xml;
-	&section.db.security.xml;
 	&section.db.bigdata.xml;
 </chapter>

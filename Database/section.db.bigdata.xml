@@ -165,5 +165,19 @@ SET @@global.low_priority_updates = 1;
 SET @@session.low_priority_updates = 1;
 		]]>
 		</screen>
+		<para>使用 limit 限制更新记录的数量</para>
+		<screen>
+		<![CDATA[
+update mytable set status='Y' where status='N' limit 1000;		
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>记录操作者</title>
+		<screen>
+		<![CDATA[
+update mytable set status='Y',update_date=now(),op_user='neo' where status='N';
+		]]>
+		</screen>
 	</section>
 </section>
