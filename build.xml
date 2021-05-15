@@ -166,7 +166,7 @@
 
 		<copy todir="${public_html}" file="common/docbook.css" />
 	</target>
-	<target name="html" depends="images,clean">
+	<target name="html" depends="clean,images">
 		<echo>Output: ${public_html}</echo>
 		<xsltproc output="${public_html}" stylesheet="${stylesheet}" file="book.xml" />
 		<!--
