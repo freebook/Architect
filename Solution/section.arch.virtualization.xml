@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="index"><?dbhtml dir="container"?>
 	<title>Kubernetes &amp; Docker 实施中你会遇到的问题</title>
+	<para>在项目中实施容器技术，你可以遇到下列问题。</para>
 	<literallayout>
 		<![CDATA[
-
+真的需要容器吗？
+技术人员强上容器的问题？
+使用容器技术会遇到哪些问题？
+如何解决遇到的问题？
 		]]>
 	</literallayout>
-	<para>在项目中实施容器技术，你可以遇到下列问题。</para>
+	<section>
+		<title>真的需要容器吗？</title>
+		<itemizedlist>
+			<title>请仔细思考以下几个问题</title>
+			<listitem>非用不可的理由是什么？仅仅是趋势吗？</listitem>
+			<listitem>容器能为企业带来哪些价值？能降本增效？</listitem>
+			<listitem>目前团队对容器技术掌握程度？包括架构师，开发人员，测试人员，运维人员</listitem>
+			<listitem>技术转型的成本有多高？是否需要停服升级？</listitem>
+			<listitem>人力成本呢？是否要为此招聘新的员工？</listitem>
+			<listitem>转到容器后故障降低了吗？转型失败有回撤方案吗？</listitem>
+			<listitem>从产品角度解决了用户的那些痛点？用户体验改善了吗？		</listitem>
+		</itemizedlist>
+	</section>
 	<section>
 		<title>镜像会遇到的问题</title>
 		<para>目前docker 镜像，没有统一标准，体现在以下几个方面。</para>
@@ -166,7 +182,7 @@
 	<section>
 		<title>最后总结</title>
 		<para>使用物理机，虚拟机，学习成本，试错成本，部署成本远远低于容器技术，对于事故排查可能容器需要更多的时间。Google 官方也曾经说过，未来 kubernetes 重点可能会转向虚拟机。</para>
-		<para>掌握容器技术需要很多跨界知识，对人员的要求非常高，深耕自己领域程序猿或运维工程狮都无法全面掌握容器技术，冒然跟风蹭热度，项目只会变成试炼场，成功员工打怪升级，点亮技能树。</para>
+		<para>掌握容器技术需要很多跨界知识，对人员的要求非常高，深耕自己领域程序猿或运维工程狮都无法全面掌握容器技术，冒然跟风蹭热度，项目只会变为成为员工打怪升级，点亮技能树的试炼场。</para>
 		<para>我个人认为容器更适合CPU密集型的业务，前期制作符合你需求的镜像，可能需要花费很长时间，我的架构中 KVM，Docker，Kubernetes，物理机混合使用，根据业务场景的需要来选择最佳方案。</para>
 	</section>
 </chapter>
