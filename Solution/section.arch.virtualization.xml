@@ -166,9 +166,6 @@
 			<para>于是乎，我们做了 Cache。 不用每次都 pull 镜像，缓存 Maven 的 .m2 库，不再清理代码（mvn clean）提速不少，测试环境凑合用吧。 注意不mvn clean 有时会编译出错</para>
 			<para>至于生产环境，我就不说了，有多少人真用CD部署生产环境。</para>
 		</section>
-		<section>
-			<title></title>
-		</section>
 	</section>
 	<section>
 		<title>人员的问题</title>
