@@ -10,7 +10,7 @@
 如何解决遇到的问题？
 		]]>
 	</literallayout>
-	<section>
+	<section id="真的需要容器吗">
 		<title>真的需要容器吗？</title>
 		<itemizedlist>
 			<title>请仔细思考以下几个问题</title>
@@ -23,7 +23,7 @@
 			<listitem>从产品角度解决了用户的那些痛点？用户体验改善了吗？		</listitem>
 		</itemizedlist>
 	</section>
-	<section>
+	<section id="镜像会遇到的问题">
 		<title>镜像会遇到的问题</title>
 		<para>目前docker 镜像，没有统一标准，体现在以下几个方面。</para>
 		<section>
@@ -62,7 +62,7 @@
 			<para>在我的20年执业生涯中是遇到过 Linux 系统有BUG的，还向 Redhat 提交过 BUG。如果你采用的镜像有BUG，你想过怎么去debug 吗？</para>
 		</section>
 	</section>
-	<section>
+	<section id="容器会遇到的问题">
 		<title>容器会遇到的问题</title>
 		<section>
 			<title>程序启动的区别</title>
@@ -152,6 +152,18 @@
 				<para>有时我们为了产生持久化会使用本地卷，或将容器目录挂载到节点宿主主机中。这也带来一个安全问题，一是可能大家使用了相同的文件或目录名，相互覆盖对方的文件。二是不小心将敏感信息写入了到宿主主机，存在信息泄露风险。</para>
 				<para>除此之外 local volume, hostPath 以及没有用户认证的网络文件系统，都存在这种风险。例如NFS，因为Pod是随机IP地址，NFS服务器无法通过IP地址设置访问规则。</para>
 			</section>
+			<section>
+				<title>用户认证</title>
+				<para>虚拟主机与物理机是一样的，进入虚拟机只能通过终端或OpenSSH两个入口，必须输入正确的用户和密码。</para>
+				<para>容器没有用户认证机制，从宿主主机可以直接进入容器内部。例如：</para>
+				<screen>
+				<![CDATA[
+docker exec 执行容器 shell 进入容器内部
+docker cp 从容器中复制文件
+				]]>
+				</screen>
+				<para>只要控制宿主主机就能控制所有容器。</para>
+			</section>
 		</section>
 		<section>
 			<title>容器与监控</title>
@@ -167,7 +179,7 @@
 			<para>至于生产环境，我就不说了，有多少人真用CD部署生产环境。</para>
 		</section>
 	</section>
-	<section>
+	<section id="人员的问题">
 		<title>人员的问题</title>
 		<para>现实中真正精通容器应用的人很少，容器实在太复杂。Google 将 Kubernetes 设计成大而全系统，想用 Kubernetes 解决所有问题。它涵盖了几大块。</para>
 		<para>操作系统，虚拟化，软件定义网络，存储，容器管理，用户体系，权限体系……</para>
