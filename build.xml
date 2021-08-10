@@ -187,7 +187,7 @@
 		</xsltproc>
 		<!--			@test -f $(HTMLHELP_DIR)/htmlhelp.hhp && ../common/chm.sh $(HTMLHELP_DIR) -->
 	</target>
-	<target name="epub" depends="images">
+	<target name="epub" depends="">
 		<delete dir="${epub}" />
 		<mkdir dir="${epub}" />
 		<tstamp>
@@ -205,14 +205,18 @@
 		<zip destfile="${download}/epub/${epub.bookname}.epub" basedir="${epub}" update="true" />
 		<delete dir="${epub}" />
 	</target>
-
-	<target name="mac" depends="images">
+	<target name="mac" depends="">
 		<tstamp>
 			<format property="TIMEPOINT" pattern="yyyy-MM-dd.HH:mm:ss" locale="cn,CN" />
 		</tstamp>
 		<echo>the backup directory is ${TIMEPOINT}.</echo>
 		<!-- <mkdir dir="${backup.dir}/${TIMEPOINT}" /> -->
 		<xsltproc output="${tmp}/${ant.project.name}" stylesheet="docbook-xsl/docbook.preview.xsl" file="book.xml" />
+		<copy todir="${tmp}/${ant.project.name}/images" overwrite="true">
+			<fileset dir="images">
+				<include name="**/*" />
+			</fileset>
+		</copy>
 	</target>
 	<target name="usage" depends="">
 		<echo>Java deploy tools by netkiller</echo>
