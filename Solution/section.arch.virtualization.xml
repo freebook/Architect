@@ -58,6 +58,11 @@
 			<para>常常存储目录被放置在根目录。例如 /data</para>
 		</section>
 		<section>
+			<title>时区遇到的问题</title>
+			<para>很多外国人制作的镜像，根本没有考虑国际话问题，包括时区，日期格式等等。</para>
+			<para>例如监控系统 Prometheus 和 Alertmanager 默认是 UTC 时区，由于镜像制作并不规范，无论你怎么修改，你都无法将时区改为 CST，最终你只能自己制作镜像。</para>
+		</section>
+		<section>
 			<title>Linux 系统也存在BUG</title>
 			<para>在我的20年执业生涯中是遇到过 Linux 系统有BUG的，还向 Redhat 提交过 BUG。如果你采用的镜像有BUG，你想过怎么去debug 吗？</para>
 		</section>
@@ -177,6 +182,61 @@ docker cp 从容器中复制文件
 			<para>卧槽！！！速度能急死你。</para>
 			<para>于是乎，我们做了 Cache。 不用每次都 pull 镜像，缓存 Maven 的 .m2 库，不再清理代码（mvn clean）提速不少，测试环境凑合用吧。 注意不mvn clean 有时会编译出错</para>
 			<para>至于生产环境，我就不说了，有多少人真用CD部署生产环境。</para>
+		</section>
+		<section>
+			<title>宿主主机与容器的参数设置问题</title>
+			<para>虚拟机是 100% 隔离的，容器是半隔离的。容器的有些配置是继承来自宿主主机的，一些可以修改，一些则不允许修改，有些配置会造成容器与宿主主机相互覆盖，例如 sysctl, ulimit 以及 时区时间等等，下面我来演示一下。</para>
+			<para>首先是 sysctl </para>
+			<screen>
+			<![CDATA[
+宿主主机查看 vm.overcommit_memory 默认是 0 ：
+
+[root@localhost redis]# sysctl vm.overcommit_memory
+vm.overcommit_memory=0
+
+容器中查看 vm.overcommit_memory 默认也是 0 ：
+
+[root@localhost redis]# docker exec -it redis sh
+/data # sysctl vm.overcommit_memory
+vm.overcommit_memory=0
+
+现在修改容器的 vm.overcommit_memory 配置
+/data # sysctl -w vm.overcommit_memory=1
+vm.overcommit_memory=1
+/data # sysctl vm.overcommit_memory
+vm.overcommit_memory=1
+/data # exit
+
+回到宿主主机查看 vm.overcommit_memory：
+[root@localhost redis]# sysctl vm.overcommit_memory
+vm.overcommit_memory=1
+
+宿主主机的 vm.overcommit_memory 被覆盖了
+			]]>
+			</screen>
+			<para>再举一个例子日期</para>
+			<screen>
+			<![CDATA[
+查看宿主主机日期和时间
+[www@localhost ~]$ date
+Mon Oct 10 18:59:18 CST 2011
+
+查看容器的日期和时间
+[www@localhost ~]$ sudo docker exec -it redis sh
+/data $ date
+Mon Oct 10 18:59:22 CST 2011
+/data $ exit
+
+修改宿主主机的日期和
+[www@localhost ~]$ sudo date -s "1991-2-1 06:30:00"
+Fri Feb  1 06:30:00 CST 1991
+
+在进入容器查看，日期也被修改了
+[www@localhost ~]$ sudo docker exec -it redis sh
+/data $ date
+Fri Feb  1 06:30:04 CST 1991
+			]]>
+			</screen>
 		</section>
 	</section>
 	<section id="人员的问题">
