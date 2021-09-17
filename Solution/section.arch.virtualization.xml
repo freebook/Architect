@@ -239,6 +239,12 @@ Fri Feb  1 06:30:04 CST 1991
 			</screen>
 		</section>
 	</section>
+	<section id="运维会遇到的问题">
+		<title>运维会遇到的问题</title>
+		<para>由于 Docker 采用守护进程统一管理，当我们运行大量容器的时候，常常出现 docker 命令卡死，无响应。</para>
+		<para>docker-compose 无响应更是家常便饭</para>
+		<para></para>
+	</section>
 	<section id="人员的问题">
 		<title>人员的问题</title>
 		<para>现实中真正精通容器应用的人很少，容器实在太复杂。Google 将 Kubernetes 设计成大而全系统，想用 Kubernetes 解决所有问题。它涵盖了几大块。</para>

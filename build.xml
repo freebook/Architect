@@ -197,9 +197,8 @@
 		<xsltproc output="${epub}" stylesheet="docbook-xsl/epub3.mac.xsl" file="book.xml" />
 		<copy todir="${epub}/OEBPS/" file="common/docbook.css" />
 		<copy todir="${epub}/OEBPS/images" overwrite="true">
-			<fileset dir="images">
-				<include name="**/*" />
-			</fileset>
+			<fileset dir="${resources}" includes="**/*" />
+			<fileset dir="common/images" includes="**/*.*" />
 		</copy>
 		<echo file="${epub}/mimetype" append="false">application/epub+zip</echo>
 		<zip destfile="${download}/epub/${epub.bookname}.epub" basedir="${epub}" update="true" />
@@ -213,9 +212,8 @@
 		<!-- <mkdir dir="${backup.dir}/${TIMEPOINT}" /> -->
 		<xsltproc output="${tmp}/${ant.project.name}" stylesheet="docbook-xsl/docbook.preview.xsl" file="book.xml" />
 		<copy todir="${tmp}/${ant.project.name}/images" overwrite="true">
-			<fileset dir="images">
-				<include name="**/*" />
-			</fileset>
+			<fileset dir="${resources}" includes="**/*" />
+			<fileset dir="common/images" includes="**/*.*" />
 		</copy>
 	</target>
 	<target name="usage" depends="">
