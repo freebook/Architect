@@ -243,7 +243,8 @@ Fri Feb  1 06:30:04 CST 1991
 		<title>运维会遇到的问题</title>
 		<para>由于 Docker 采用守护进程统一管理，当我们运行大量容器的时候，常常出现 docker 命令卡死，无响应。</para>
 		<para>docker-compose 无响应更是家常便饭</para>
-		<para></para>
+		<para>工作中还遇到多启动一组容器，其中 A 容器会访问 B 容器，此时 B 容器停止，重启 B 后 A 无法连接。找不出原因，重启 A 之后正常。</para>
+		<para>总之很多各种各样的问题等着你，这是此前在物理机和虚拟机中从未有过的。</para>
 	</section>
 	<section id="人员的问题">
 		<title>人员的问题</title>
