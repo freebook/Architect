@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="多维度架构之网络延迟">
+<section id="多维度架构之网络延迟">
 	<title>多维度架构之网络延迟</title>
 	<section id="中国的大网络环境">
 		<title>中国的大网络环境</title>
@@ -68,4 +68,4 @@
 		<para>除了网络延迟损耗，每增加一个节点就会多一个故障节点，如果超时时间设置不合理，就会出现雪崩效应。导致这个链路节点后面所有服务瘫痪。</para>
 		<para>我曾经写过一篇文章叫《警惕IT黑洞》有兴趣可以看看，在网上可以搜索到，现在我认为应该警惕架构黑洞。</para>
 	</section>
-</chapter>
+</section>

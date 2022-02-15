@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="index"><?dbhtml dir="testing"?>
+<section id="index"><?dbhtml dir="testing"?>
 	<title>多维度架构之压力测试</title>
 	<section id="压力测试中存在的问题">
 		<title>压力测试中存在的问题</title>
@@ -608,4 +608,4 @@
 		</section>
 	</section>
 	<!-- <section id="test.static"> <title>静态内容并发测试</title> <para>apache 自带 ab 测试命令</para> </section> <section id="test.dynamic"> <title>动态内容测试</title> <para>简单动态内容展示，可以 apache 自带 ab 测试命令</para> </section> <section id="test.Logical"> <title>业务逻辑并发能力</title> <para>如测试一定时间内，系统能承受多少笔交易</para> <para>对于简单的业务逻辑测试可以使用curl模拟，在使用多线程进行压力</para> </section> -->
-</chapter>
+</section>

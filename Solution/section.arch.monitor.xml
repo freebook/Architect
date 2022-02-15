@@ -1,4 +1,4 @@
-<chapter id="多维度架构之监控">
+<section id="多维度架构之监控">
 	<title>多维度架构之监控</title>
 	<para>
 		<graphic format="png" fileref="images/architecture/idc-mgr.png" srccredit="neo" width="1000" />
@@ -107,4 +107,4 @@
 		<title>总结</title>
 		<para>好的监控的能让你对系统了如指掌，做到心里有数。有数据才好说话。</para>
 	</section>
-</chapter>
+</section>

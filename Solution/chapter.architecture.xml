@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="什么是多维度架构">
-	<title>什么是多维度架构</title>
+	<title>多维度架构</title>
+	<subtitle>Multi-dimension Architecture</subtitle>
 	<!-- 企业架构师EA(Enterprise Architect) 基础结构架构师IA(Infrastructure Architect) 特定技术架构TSA(Technology-Specific Architect) 解决方案架构师SA (Solution Architect) -->
+	<!-- <para>什么是多维度架构</para> -->
+	<para></para>
 	<section>
 		<title>架构与格局</title>
 		<para>俗话说：烙饼再大，也大不过烙饼的锅。一个人的成就再大，也大不过他的格局。</para>
@@ -51,4 +54,26 @@
 			<graphic format="png" fileref="images/test/testing.png" srccredit="neo" width="" />
 		</para>
 	</section>
+	
+	&section.web.xml;
+ 	&section.arch.latency.xml;
+	&section.arch.timeout.xml;
+	&section.arch.session.xml;
+	&section.arch.logging.xml;
+	&section.arch.monitor.xml;
+	&section.arch.sharding.xml;
+	&chapter.schedule.xml;
+	&chapter.security.xml;
+	&chapter.shell.xml;
+	&section.arch.devops.xml;
+	&section.arch.virtualization.xml;
+	&section.arch.container.xml;
+	&section.arch.microservices.xml;
+	&section.arch.trader.xml;
+	&chapter.permission.xml;
+	&chapter.communication.xml;	
+	&section.arch.mq.xml;
+	&section.arch.socket.xml;
+	&chapter.testing.xml;
+	
 </chapter>

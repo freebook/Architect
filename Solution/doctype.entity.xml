@@ -8,6 +8,7 @@
 <!ENTITY section.arch.session.xml		SYSTEM "section.arch.session.xml">
 <!ENTITY section.arch.devops.xml		SYSTEM "section.arch.devops.xml">
 <!ENTITY section.arch.virtualization.xml	SYSTEM "section.arch.virtualization.xml">
+<!ENTITY section.arch.container.xml		SYSTEM "section.arch.container.xml">
 <!ENTITY section.arch.logging.xml		SYSTEM "section.arch.logging.xml">
 <!ENTITY section.arch.microservices.xml	SYSTEM "section.arch.microservices.xml">
 <!ENTITY section.arch.mq.xml			SYSTEM "section.arch.mq.xml">

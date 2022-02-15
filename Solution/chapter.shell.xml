@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="shell">
+<section id="shell">
 	<title>Shell 高级编程</title>
 	<section>
 		<title>递归调用</title>
@@ -202,4 +202,4 @@ fi
 		<para>这个程序使用管道作为进程见通信手段，所以只能在一个系统下运行，如果改为Socket通信就可以实现跨服务器数据处理</para>
 	</section>
 	
-</chapter>
+</section>

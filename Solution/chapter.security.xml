@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="多维度架构之安全">
+<section id="多维度架构之安全">
 	<title>多维度架构之安全</title>
 	<section>
 		<title>植入式攻击入侵检测解决方案</title>
@@ -264,4 +264,4 @@ EOF
 			<ulink url="http://netkiller.github.io/storage/incron.html" />
 		</para>
 	</section>
-</chapter>
+</section>

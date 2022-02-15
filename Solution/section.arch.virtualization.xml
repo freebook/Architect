@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="index"><?dbhtml dir="container"?>
+<section id="index"><?dbhtml dir="container"?>
 	<title>Kubernetes &amp; Docker 实施中你会遇到的问题</title>
 	<para>在项目中实施容器技术，你可以遇到下列问题。</para>
 	<literallayout>
@@ -261,4 +261,4 @@ Fri Feb  1 06:30:04 CST 1991
 		<para>掌握容器技术需要很多跨界知识，对人员的要求非常高，深耕自己领域程序猿或运维工程狮都无法全面掌握容器技术，冒然跟风蹭热度，项目只会变为成为员工打怪升级，点亮技能树的试炼场。</para>
 		<para>我个人认为容器更适合CPU密集型的业务，前期制作符合你需求的镜像，可能需要花费很长时间，我的架构中 KVM，Docker，Kubernetes，物理机混合使用，根据业务场景的需要来选择最佳方案。</para>
 	</section>
-</chapter>
+</section>

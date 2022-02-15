@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="多维度架构之消息队列">
+<section id="多维度架构之消息队列">
 	<title>多维度架构之消息队列</title>
 	<section>
 		<title>你是怎样使用消息队列的？</title>
@@ -64,4 +64,4 @@ update goods set price=price+10 where category_id = xxx
 		<para>就如上面所说的更新商品信息需求，增加了消息队列之后，开发复杂了，测试复杂了，运维复杂了，监控复杂了，出现故障排查时间变长了。</para>
 		<para>架构设计中我们应该收缩技术栈，做减法，而不是做加法，强上消息队列？</para>
 	</section>
-</chapter>
+</section>

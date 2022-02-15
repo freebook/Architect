@@ -32,7 +32,6 @@
 
 	<!ENTITY % database.doctype.entity.xml 		SYSTEM "Database/doctype.entity.xml">
 	%database.doctype.entity.xml;
-	<!ENTITY part.database.xml 					SYSTEM "part.database.xml">
 
 	<!ENTITY % solution.doctype.entity.xml 		SYSTEM "Solution/doctype.entity.xml">
 	%solution.doctype.entity.xml;
@@ -73,8 +72,9 @@
 	&book.dedication.xml; 
 	&book.preface.xml;
 
-	&part.architecture.xml;
-	&part.database.xml;
+	<!-- &part.architecture.xml; -->
+	&chapter.architecture.xml;
+	&chapter.database.xml;
 	&part.devops.xml;
 	&part.software.xml;
 	<!-- &part.testing.xml; -->

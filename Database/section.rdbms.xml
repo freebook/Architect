@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id: chapter.rdbms.xml 654 2013-07-30 07:30:20Z netkiller $ -->
-<chapter id="rdbms">
+<section id="rdbms">
 	<title>关系型数据库设计</title>
 	<subtitle>MySQL 数据库设计案例</subtitle>
 	<section id="data.dictionary">
@@ -1318,4 +1318,4 @@ select * from network where people_id=1 and degrees like "1.2.%";
 	&section.db.parallel.xml;
 	&section.db.sharding.xml;
 	&section.db.bigdata.xml;
-</chapter>
+</section>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="index"><?dbhtml dir="database" ?>
+	<title>数据库设计</title>
+	<subtitle>Database Modeling Design / RDBMS / ORDBMS / OODBMS / HDMS</subtitle>
+	<para>下面数据库设计实例中，大部分使用MySQL,PostgreSQL为例,少部分以Oracle为例。</para>
+	
+	&section.rdbms.xml;
+	&section.db.security.xml;
+	&section.db.example.xml;
+	&section.nosql.xml;
+	&section.spring.data.xml;
+</chapter>

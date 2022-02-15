@@ -4,27 +4,6 @@
 	<title>多维度架构</title>
 	<subtitle>Multi-dimension Architecture</subtitle>
 	<!-- Design and implementation of a website solution with step by step -->
-	<para></para>
-	&chapter.architecture.xml;
-	&section.web.xml;
- 	&section.arch.latency.xml;
-	&section.arch.timeout.xml;
-	&section.arch.session.xml;
-	&section.arch.logging.xml;
-	&section.arch.monitor.xml;
-	&section.arch.sharding.xml;
-	&chapter.schedule.xml;
-	&chapter.security.xml;
-	&chapter.shell.xml;
-	&section.arch.devops.xml;
-	&section.arch.virtualization.xml;
-	&section.arch.microservices.xml;
-	&section.arch.trader.xml;
-	&chapter.permission.xml;
-	&chapter.communication.xml;	
-	&section.arch.mq.xml;
-	&section.arch.socket.xml;
-	&chapter.testing.xml;
 </part>
 
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="当kubernetes遇上微服务">
+	<title>当 kubernetes 遇上微服务</title>
+	<subtitle>kubernetes + spring cloud 能碰撞出什么火花？</subtitle>
+	<para>大家好今天是2022年正月十五元宵节，我一直想写这篇文章，拖到今天。这篇文章我会详细讲讲我们在实施 kubernetes + spring cloud 过程中遇到的问题。</para>
+	<para>在此前我们使用单体服务 springboot 足以完美解决我们的需求，即客户满意，产品满意，运营满意……</para>
+	<para>但是……技术不满意，呵呵～～</para>
+	<section>
+		<title>docker + springboot 完美解决方案</title>
+		<para>我们项目采用 docker + springboot 单体运行方案，使用传统的负载均衡等技术解决高可用。一台干净的主机，部署 docker 容器，然后所有应用都在容器中跑。</para>
+		<para>其中java项目会使用同一个镜像（OpenJDK8），然后将 jar 文件放在指定目录，挂载到容器中运行。系统升级，持续部署（Gitlab runner）只需将 jar 复制到宿主主机，然后重启容器即可。我们并没有为Java项目制作自己的镜像，那样增加了复杂度，升级需要更新镜像。</para>
+	</section>
+	<section>
+		<title>升级到 kubernetes + spring cloud 遇到的问题。</title>
+		<sidebar>
+			<title>首先遇到的问题是镜像制作</title>
+			<para>我们知道Java采用 Maven 管理依赖，maven 打包之后会将项目依赖的所有 Jar 文件放入 BOOT-INF/lib/ 目录中，对于 Springboot / Spring cloud 项目来说，最终jar包的尺寸在100～200MB跟正常不过。</para>
+			<para>我们项目从单体拆分成微服务之后有10多个子项目之多，如果制作一个镜像把10几jar放进去，最终镜像尺寸接近4GB。于是尝试每个项目一个镜像，制作出的镜像约有250M左右，持续集成和持续部署的时间很慢，拉代码、编译、打包、制作镜像、上传镜像、拉镜像、重启容器。这个过程变得难易忍受。</para>
+			<para>原来项目，内存8G跑的飞快，现在32G跑满，体验远不如单体服务。</para>
+		</sidebar>
+		<sidebar>
+			<title>然后遇到的是启动顺序的问题</title>
+			<para>微服务有严格的启动顺序，例如 mysql, redis, mongodb, elasitsearch, rabbitmq, nacos, gateway ...... 一路下去，如果启动过程中某个 pod 出现异常会导致后面连锁反应。</para>
+			<para>有时不仅仅是启动顺序，我们还需要确认服务可用之后，才能启动另外的服务。</para>
+		</sidebar>
+		<sidebar>
+			<title>接着遇到的是共享存储的问题</title>
+			<para>一般中小企业，在办公室环境，很少有40GB光纤网络，只能用1GB的双绞线和网络交换机搭建分布式存储。1GB做储存，速度勉强使用。</para>
+		</sidebar>
+	</section>
+</section>
