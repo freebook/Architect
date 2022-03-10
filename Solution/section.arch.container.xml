@@ -289,6 +289,12 @@ Fri Feb  1 06:30:04 CST 1991
 				<para>我们有 feature / development / testing /staging / production 五个基本环境，就需要在 nacos 中克隆无份配置文件，放在五个不同的命名空间下。克隆之后需要在 nacos 配置中心，一个一个点进去，修改配置项。还是很繁琐的，当我们需要并行测试是，需要增加 feature 测试环境的数量，就需要每次都克隆一次配置文件，然后再修改配置项。</para>
 			</sidebar>
 		</section>
+		<section>
+			<title>链接池遇到的问题</title>
+			<para>当我们将淡实例拆分成微服务后，还有遇到一个问题，就是数据库、缓存、搜索引擎、MongoDB等等服务的链接开销问题。</para>
+			<para>单体服务只需要链接一次数据库，如果单体程序拆分成10个微服务，这个10个服务都需要与数据库建立链接，这种开销是成指数级增长的。如果单体服务器联系池配置128个链接，那么10个微服务呢？是 128*10 = 1280 也就10个微服务都需要与数据库建立链接，这时你会发现数据库的最大链接数已经不够，必须做调整。</para>
+			<para>同理，其他服务例如 缓存 Redis, MongoDB, Elasticsearch 等所有服务都需要同时调整最大链接数限制。</para>
+		</section>
 	</section>
 	<section>
 		<title>最后总结</title>
