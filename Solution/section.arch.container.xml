@@ -20,7 +20,7 @@
 			<listitem>技术转型的成本有多高？是否需要停服升级？</listitem>
 			<listitem>人力成本呢？是否要为此招聘新的员工？</listitem>
 			<listitem>转到容器后故障降低了吗？转型失败有回撤方案吗？</listitem>
-			<listitem>从产品角度解决了用户的那些痛点？用户体验改善了吗？		</listitem>
+			<listitem>从产品角度解决了用户的哪些痛点？用户体验改善了吗？		</listitem>
 		</itemizedlist>
 	</section>
 	<section id="镜像会遇到的问题">
@@ -59,12 +59,12 @@
 		</section>
 		<section>
 			<title>时区遇到的问题</title>
-			<para>很多外国人制作的镜像，根本没有考虑国际话问题，包括时区，日期格式等等。</para>
+			<para>很多外国人制作的镜像，根本没有考虑国际化问题，包括时区，日期格式等等。</para>
 			<para>例如监控系统 Prometheus 和 Alertmanager 默认是 UTC 时区，由于镜像制作并不规范，无论你怎么修改，你都无法将时区改为 CST，最终你只能自己制作镜像。</para>
 		</section>
 		<section>
 			<title>Linux 系统也存在BUG</title>
-			<para>在我的20年执业生涯中是遇到过 Linux 系统有BUG的，还向 Redhat 提交过 BUG。如果你采用的镜像有BUG，你想过怎么去debug 吗？</para>
+			<para>在我的20年职业生涯中是遇到过 Linux 系统有BUG的，还向 Redhat 提交过 BUG。如果你采用的镜像有BUG，你想过怎么去debug 吗？</para>
 		</section>
 	</section>
 	<section id="容器会遇到的问题">
@@ -270,8 +270,8 @@ Fri Feb  1 06:30:04 CST 1991
 			<title>升级到 kubernetes + spring cloud 遇到的问题。</title>
 			<sidebar>
 				<title>首先遇到的问题是镜像制作</title>
-				<para>我们知道Java采用 Maven 管理依赖，maven 打包之后会将项目依赖的所有 Jar 文件放入 BOOT-INF/lib/ 目录中，对于 Springboot / Spring cloud 项目来说，最终jar包的尺寸在100～200MB跟正常不过。</para>
-				<para>我们项目从单体拆分成微服务之后有10多个子项目之多，如果制作一个镜像把10几jar放进去，最终镜像尺寸接近4GB。于是尝试每个项目一个镜像，制作出的镜像约有250M左右，持续集成和持续部署的时间很慢，拉代码、编译、打包、制作镜像、上传镜像、拉镜像、重启容器。这个过程变得难易忍受。</para>
+				<para>我们知道Java采用 Maven 管理依赖，maven 打包之后会将项目依赖的所有 Jar 文件放入 BOOT-INF/lib/ 目录中，对于 Springboot / Spring cloud 项目来说，最终jar包的尺寸在100～200MB在正常不过。</para>
+				<para>我们项目从单体拆分成微服务之后有10多个子项目之多，如果制作一个镜像把10几jar放进去，最终镜像尺寸接近4GB。于是尝试每个项目一个镜像，制作出的镜像约有250M左右，持续集成和持续部署的时间很慢，拉代码、编译、打包、制作镜像、上传镜像、拉镜像、重启容器。这个过程变得难已忍受。</para>
 				<para>原来项目，内存8G跑的飞快，现在32G跑满，体验远不如单体服务。</para>
 			</sidebar>
 			<sidebar>
@@ -286,12 +286,12 @@ Fri Feb  1 06:30:04 CST 1991
 			<sidebar>
 				<title>最后遇到配置文件的问题</title>
 				<para>此前我们只有一个配置文件，现在有许多配置文件，有些配置文件是放在 jar 包中的，例如 nacos 的配置项。有些配置是业务配置放在 nacos 配置中心。</para>
-				<para>我们有 feature / development / testing /staging / production 五个基本环境，就需要在 nacos 中克隆无份配置文件，放在五个不同的命名空间下。克隆之后需要在 nacos 配置中心，一个一个点进去，修改配置项。还是很繁琐的，当我们需要并行测试是，需要增加 feature 测试环境的数量，就需要每次都克隆一次配置文件，然后再修改配置项。</para>
+				<para>我们有 feature / development / testing /staging / production 五个基本环境，就需要在 nacos 中克隆无份配置文件，放在五个不同的命名空间下。克隆之后需要在 nacos 配置中心，一个一个点进去，修改配置项。还是很繁琐的，当我们需要并行测试时，需要增加 feature 测试环境的数量，就需要每次都克隆一次配置文件，然后再修改配置项。</para>
 			</sidebar>
 		</section>
 		<section>
 			<title>链接池遇到的问题</title>
-			<para>当我们将淡实例拆分成微服务后，还有遇到一个问题，就是数据库、缓存、搜索引擎、MongoDB等等服务的链接开销问题。</para>
+			<para>当我们将实例拆分成微服务后，还有遇到一个问题，就是数据库、缓存、搜索引擎、MongoDB等等服务的链接开销问题。</para>
 			<para>单体服务只需要链接一次数据库，如果单体程序拆分成10个微服务，这个10个服务都需要与数据库建立链接，这种开销是成指数级增长的。如果单体服务器联系池配置128个链接，那么10个微服务呢？是 128*10 = 1280 也就10个微服务都需要与数据库建立链接，这时你会发现数据库的最大链接数已经不够，必须做调整。</para>
 			<para>同理，其他服务例如 缓存 Redis, MongoDB, Elasticsearch 等所有服务都需要同时调整最大链接数限制。</para>
 		</section>
