@@ -15,7 +15,7 @@
 	<!ENTITY % common.doctype.entity.xml 		SYSTEM "common/doctype.entity.xml">
 	%common.doctype.entity.xml;
 	
-	<!ENTITY % doctype.entity.xml 			SYSTEM "doctype.entity.xml">
+	<!ENTITY % doctype.entity.xml 				SYSTEM "doctype.entity.xml">
 	%doctype.entity.xml;
 	
 	<!ENTITY % frontend.doctype.entity.xml 		SYSTEM "Frontend/doctype.entity.xml">

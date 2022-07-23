@@ -2,49 +2,13 @@
 <chapter id="monitoring">
 	<title>Monitor solution</title>
 
-	<section id="monitoring.flow">
-		<title>网络监控</title>
-		<para></para>
-		<section>
-			<title>流量监控</title>
-		</section>
-		<section>
-			<title>交换机监控</title>
-		</section>
-	</section>
-	<section id="monitoring.cluster">
-		<title>集群监控</title>
-		<para>在线人数</para>
-		<para>每个节点的负载情况</para>
-	</section>
+
+
 
 	<section id="monitoring.os">
 		<title>操作系统监控需求</title>
-		<section>
-			<title>CPU 相关监控</title>
-			<itemizedlist spacing="compact">
-				<listitem>
-					<para>负载监控</para>
-				</listitem>
-				<listitem>
-					<para>使用率监控</para>
-				</listitem>
-				<listitem>
-					<para></para>
-				</listitem>
-			</itemizedlist>
-		</section>
-		<section>
-			<title>磁盘相关监控</title>
-			<itemizedlist spacing="compact">
-				<listitem>
-					<para>容量监控</para>
-				</listitem>
-				<listitem>
-					<para>IO 监控</para>
-				</listitem>
-			</itemizedlist>
-		</section>
+
+
 		<section>
 			<title>内存相关监控</title>
 			<itemizedlist spacing="compact">
@@ -57,173 +21,70 @@
 			</itemizedlist>
 		</section>
 
-		<section>
-			<title>网络监控</title>
-			<itemizedlist spacing="compact">
-				<listitem>
-					<para>流量监控</para>
-				</listitem>
-				<listitem>
-					<para>TCP状态监控</para>
-				</listitem>
-			</itemizedlist>
-		</section>
-		<section>
-			<title>权限监控</title>
-			<itemizedlist spacing="compact">
-				<listitem>
-					<para>用户登录监控</para>
-				</listitem>
-				<listitem>
-					<para>穷举密码监控</para>
-				</listitem>
-				<listitem>
-					<para>防火墙规则监控</para>
-				</listitem>
-				<listitem>
-					<para></para>
-				</listitem>
-			</itemizedlist>
-		</section>
+
+
 		<section>
 			<title>进程相关监控</title>
 			<itemizedlist spacing="compact">
 				<listitem>
 					<para>僵尸进程监控</para>
 				</listitem>
-				<listitem>
-					<para></para>
-				</listitem>
+
 			</itemizedlist>
 		</section>
-		<section>
-			<title>时间同步监控</title>
-			<screen>
-			</screen>
-			<para></para>
-			<screen>
-			</screen>
-		</section>
 
-		<section id="log">
-			<title>文件系统与系统日志监控</title>
-			<itemizedlist spacing="compact">
-				<listitem>
-					<para>文件目录监控，如理在在指定目录创建目录或者创建文件将发出报警，主要用于防止挂马攻击。</para>
-				</listitem>
-				<listitem>
-					<para>磁盘设备监控，服务器上冲入新的磁盘设备发出报警，例如用户在服务器的USB口上冲入U盘。</para>
-				</listitem>
-				<listitem>
-					<para>监控系统日志监控，日志中出现特定的关键字发布警报。</para>
-				</listitem>
-				<listitem>
-					<para></para>
-				</listitem>
-			</itemizedlist>
-
-
-		</section>
 	</section>
 
 	<section id="monitoring.server">
 		<title>服务监控</title>
 		<subtitle></subtitle>
-		<section id="nginx">
-			<title>Nginx 监控</title>
-			<para>Web 服务器进程监控</para>
-			<para>Web 服务器端口监控</para>
-			<para>Web 服务器状态监控</para>
-			<para>SSL 证书监控，证书是否过期，证书连是否完整。</para>
-			<para>状态监控指标：</para>
-			<screen>
-			<![CDATA[
-* 活动连接数
-* 完成连接数
-* 等待连接数
-			]]>
-			</screen>
-		</section>
-		<section id="redis">
-			<title>Redis 监控</title>
-			<para>Redis 进程监控</para>
-			<para>Redis 端口监控</para>
-			<para>Redis 状态监控</para>
-			<para>监控指标要求</para>
-			<screen>
-			<![CDATA[
-CPU 使用率
-内存使用率
-客户短连接数
-从服务器连接数
-Key 数量监控
-过期 key 数量
-命令处理数量
-订阅频道数量
-			]]>
-			</screen>
-		</section>
-		<section id="rabbit">
-			<title>Rabbit 监控</title>
 
-			<itemizedlist>
-				<title>RabbitMQ 监控指标</title>
-				<listitem>
-					<para>客户端连接数据</para>
-				</listitem>
-				<listitem>
-					<para>队列数量</para>
-				</listitem>
-				<listitem>
-					<para>队列内存开销</para>
-				</listitem>
-				<listitem>
-					<para>exchanges 数量监控</para>
-				</listitem>
-			</itemizedlist>
+		<itemizedlist spacing="compact">
+			<listitem>
+				<para>负载监控</para>
+			</listitem>
+			<listitem>
+				<para>使用率监控</para>
+			</listitem>
 
-		</section>
+		</itemizedlist>
+
 		<section id="elasticsearch">
 			<title>Elasticsearch 监控</title>
 			<itemizedlist>
 				<title>Elasticsearch 监控指标</title>
-				<listitem>
-					<para></para>
-				</listitem>
+
 			</itemizedlist>
 		</section>
 
 		<section id="mysql">
 			<title>数据库监控需求</title>
-			<para>MySQL 线程数</para>
-			<para>MySQL Slow日志</para>
-			<para>MySQL 节点</para>
+
+
 			<section>
 				<title>数据库监控指标</title>
 				<itemizedlist spacing="compact">
-					<listitem>
-						<para>SQL查询缓存监控</para>
-					</listitem>
+
 					<listitem>
 						<para>数据库线程数监控</para>
 					</listitem>
 					<listitem>
-						<para></para>
+
 					</listitem>
 					<listitem>
-						<para></para>
+
 					</listitem>
 					<listitem>
-						<para></para>
+
 					</listitem>
 					<listitem>
-						<para></para>
+						
 					</listitem>
 					<listitem>
-						<para></para>
+						
 					</listitem>
 					<listitem>
-						<para></para>
+						
 					</listitem>
 				</itemizedlist>
 				<screen>
@@ -232,104 +93,6 @@ Key 数量监控
 		</section>
 
 	</section>
-	<section id="monitoring.alert">
-		<title>网站安全与预警机制</title>
-	</section>
-
-	<section id="network">
-		<title>网络监控</title>
-		<subtitle>网络监控我认为也可以叫做 3层监控 </subtitle>
-		<section>
-			<title>DNS解析監控</title>
-			<para>ns 记录监控</para>
-			<para>A 记录监控</para>
-			<para>MX 记录监控</para>
-			<para>主从DNS同步监控</para>
-			<screen>
-			</screen>
-		</section>
-
-		<section>
-			<title>路由監控</title>
-			<screen>
-				HSRP/VRRP 網関監控
-
-			</screen>
-		</section>
-		<section id="">
-			<title>流量監控</title>
-
-		</section>
-		<section id="">
-			<title>会话数监控</title>
-			<para>会话数是指NAT建立地址转换链数量，你要考虑你的网络是流量密集型，还是会话密集型。有时可能你的带宽并没有用完，但你的防火墙、路由器会话数已经用光，这样会导致网络出现断续情况，网速非常慢。所以会话数要纳入监控范围。</para>
-			<para>防火墙会话数监控</para>
-			<screen>
-
-			</screen>
-		</section>
-	</section>
-
-	<section id="vlan">
-		<title>内容监控</title>
-		<subtitle>内容监控主要WEB应用监控 </subtitle>
-
-
-	</section>
-
-
-	<section id="dhcp">
-		<title>DHCP</title>
-		<section id="dhcp.server">
-			<title>DHCP Server</title>
-			<para>S3600 SI 没有DHCP Server，只有EI版本提供，狗日的H3C(fuck h3c)</para>
-			<screen>
-			<![CDATA[
-
-			]]>
-			</screen>
-			<screen>
-			<![CDATA[
-
-			]]>
-			</screen>
-
-			<screen>
-			<![CDATA[
-			]]>
-			</screen>
-		</section>
-		<screen>
-			<![CDATA[
-
-			]]>
-		</screen>
-		<screen>
-			<![CDATA[
-
-			]]>
-		</screen>
-		<screen>
-		<![CDATA[
-
-		]]>
-		</screen>
-
-		<screen>
-
-		</screen>
-		<screen>
-
-
-		</screen>
-		<screen>
-
-		</screen>
-		<screen>
-
-		</screen>
-	</section>
-
 
 	<section id="routing">
 		<title>Routing</title>
@@ -355,11 +118,7 @@ Key 数量监控
 	</section>
 	<section id="routing-table">
 		<title>routing-table</title>
-		<screen>
-				<![CDATA[
 
-				]]>
-		</screen>
 		<screen>
 
 		</screen>
@@ -368,10 +127,7 @@ Key 数量监控
 
 		]]>
 		</screen>
-		<para></para>
-		<screen>
 
-		</screen>
 	</section>
 
 
@@ -381,31 +137,10 @@ Key 数量监控
 		<title>Example</title>
 		<example>
 			<title>dhcp vlan rip</title>
-			<screen>
-			<![CDATA[
 
-			]]>
-			</screen>
 		</example>
 
-		<screen>
-			<![CDATA[
-			]]>
-		</screen>
-		<screen>
-		</screen>
 
 	</section>
-	<section id="type">
-		<title>监控方法</title>
-		<section id="">
-			<title>人工监控</title>
-		</section>
-		<section id="">
-			<title>机器监控</title>
-		</section>
 
-
-
-	</section>
 </chapter>

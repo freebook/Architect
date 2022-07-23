@@ -1,31 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!ENTITY part.architecture.xml 			SYSTEM "part.architecture.xml">
-<!ENTITY chapter.architecture.xml 		SYSTEM "chapter.architecture.xml">
-<!ENTITY section.arch.monitor.xml		SYSTEM "section.arch.monitor.xml">
-<!ENTITY section.arch.latency.xml		SYSTEM "section.arch.latency.xml">
-<!ENTITY section.arch.timeout.xml		SYSTEM "section.arch.timeout.xml">
-<!ENTITY section.arch.trader.xml		SYSTEM "section.arch.trader.xml">
-<!ENTITY section.arch.session.xml		SYSTEM "section.arch.session.xml">
-<!ENTITY section.arch.devops.xml		SYSTEM "section.arch.devops.xml">
-<!ENTITY section.arch.virtualization.xml	SYSTEM "section.arch.virtualization.xml">
-<!ENTITY section.arch.container.xml		SYSTEM "section.arch.container.xml">
-<!ENTITY section.arch.logging.xml		SYSTEM "section.arch.logging.xml">
-<!ENTITY section.arch.microservices.xml	SYSTEM "section.arch.microservices.xml">
-<!ENTITY section.arch.mq.xml			SYSTEM "section.arch.mq.xml">
-<!ENTITY section.arch.sharding.xml		SYSTEM "section.arch.sharding.xml">
-<!ENTITY section.arch.socket.xml		SYSTEM "section.arch.socket.xml">
-
-<!ENTITY chapter.schedule.xml			SYSTEM "chapter.schedule.xml">
-<!ENTITY chapter.security.xml		 	SYSTEM "chapter.security.xml">
-<!ENTITY chapter.shell.xml				SYSTEM "chapter.shell.xml">
-<!ENTITY chapter.permission.xml			SYSTEM "chapter.permission.xml">
-<!ENTITY chapter.communication.xml		SYSTEM "chapter.communication.xml">
-
-<!ENTITY section.web.xml 				SYSTEM "section.web.xml">
-<!ENTITY section.web.search.xml			SYSTEM "section.web.search.xml">
-<!ENTITY section.web.static.xml			SYSTEM "section.web.static.xml">
-<!ENTITY section.web.image.xml			SYSTEM "section.web.image.xml">
-
 <!ENTITY part.solution.xml 				SYSTEM "part.solution.xml">
 <!ENTITY chapter.case.xml 				SYSTEM "chapter.case.xml">
 <!ENTITY chapter.payment.xml	 		SYSTEM "chapter.payment.xml">

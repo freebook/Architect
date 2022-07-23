@@ -54,7 +54,7 @@
 			<graphic format="png" fileref="images/test/testing.png" srccredit="neo" width="" />
 		</para>
 	</section>
-	
+	&section.work.handover.xml;
 	&section.web.xml;
  	&section.arch.latency.xml;
 	&section.arch.timeout.xml;
@@ -62,16 +62,15 @@
 	&section.arch.logging.xml;
 	&section.arch.monitor.xml;
 	&section.arch.sharding.xml;
-	&chapter.schedule.xml;
-	&chapter.security.xml;
-	&chapter.shell.xml;
+	&section.arch.schedule.xml;
+	&section.arch.security.xml;
+	&section.arch.shell.xml;
 	&section.arch.devops.xml;
-	&section.arch.virtualization.xml;
 	&section.arch.container.xml;
 	&section.arch.microservices.xml;
 	&section.arch.trader.xml;
-	&chapter.permission.xml;
-	&chapter.communication.xml;	
+	&section.arch.permission.xml;
+	&section.arch.communication.xml;	
 	&section.arch.mq.xml;
 	&section.arch.socket.xml;
 	&chapter.testing.xml;
