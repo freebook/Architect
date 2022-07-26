@@ -2,15 +2,15 @@
 <section id="工作交接">
 	<title>工作交接</title>
 	<para>在国内工作交接如同家常便饭，有数据显示员工服务于公司的平均时间，其中80后平均是3年时间，90后平均为2～2.5，95后约半年～1.5年。如此频繁的更换工作不仅仅是员工自身问题，公司用人单位也存在一定问题，这里就不讨论了。</para>
-	<para>所以在工作中，工作交接是不可避免的，无论是用人单位找到你，还是你主动应聘岗位，工作交接都是一项极具挑战的工作，俗称“擦屁股”，我们怎样做好工作交接呢？</para>
 	<para>在早期管理学还未在中国普及的时候，50/60/70后沿用了自古以来的老旧的管理思想，搞仁制和驭人术那套，如今已经是2022年了，管理学已经非常成熟，大学有专门管理课，社会上有专业的管理培训，但仍有大量公司在采用中式管理，且管理层搞得不亦乐乎，并未有改变的想法。</para>
 	<itemizedlist spacing="compact">
 		<title>国内公司存在的问题：</title>
+		<listitem>管理混乱，换个领导就意味着换套新流程</listitem>
 		<listitem>口头管理，没有形成流程和文档化</listitem>
 		<listitem>驭人术，讲忠诚和服从性</listitem>
-		<listitem></listitem>
 	</itemizedlist>
-	<para>如何做工作交接？</para>
+	<para>所以在工作中，工作交接是不可避免的，无论是用人单位找到你，还是你主动应聘岗位，工作交接都是一项极具挑战的工作，俗称“擦屁股”，我们怎样做好工作交接呢？</para>
+
 	<section>
 		<title>工作交接过程</title>
 		<para>任何工作交接都会丢失80%内容，交接者只能接受20%的工作内容。</para>
@@ -66,17 +66,18 @@
 	</section>
 	<section>
 		<title>网络设备</title>
-		<subtitle></subtitle>
-		<para>登陆网络设备，备份配置文件，然后分析网络拓扑，如果有交接文档，就按照文档核对 vlan和每个路由器和交换机端口功能。</para>
-		<para>Cisco 网络设备使用 show running-config 查看配置文件</para>
-		<screen>
+		<section>
+			<title>备份配置文件</title>
+			<para>登陆网络设备，备份配置文件，然后分析网络拓扑，如果有交接文档，就按照文档核对 vlan和每个路由器和交换机端口功能。</para>
+			<para>Cisco 网络设备使用 show running-config 查看配置文件</para>
+			<screen>
 		<![CDATA[
 Router#show running-config
 Router#show startup-config
 		]]>
-		</screen>
-		<para>H3C 网络设备使用 display current-configuration 查看配置文件</para>
-		<screen>
+			</screen>
+			<para>H3C 网络设备使用 display current-configuration 查看配置文件</para>
+			<screen>
 		<![CDATA[
 [WA2220E-AG]display current-configuration
 #
@@ -100,9 +101,9 @@ domain system
  idle-cut disable
  self-service-url disable		
 		]]>
-		</screen>
-		<para>Juniper 网络设备，使用 get config 查看配置文件</para>
-		<screen>
+			</screen>
+			<para>Juniper 网络设备，使用 get config 查看配置文件</para>
+			<screen>
 		<![CDATA[
 [root@netkiller ~]# ssh neo@192.168.1.1
 neo@192.168.3.1's password:
@@ -127,8 +128,36 @@ set vrouter "trust-vr"
 exit
 firewall->		
 		]]>
-		</screen>
-		<para>这些网络设备如何使用，请参考《Netkiller Network 手札》</para>
+			</screen>
+			<para>这些网络设备如何使用，请参考《Netkiller Network 手札》</para>
+		</section>
+		<section>
+			<title>绘制网络拓扑图</title>
+			<para>几乎90%（可以我说少了）公司，在IT这块的管理十分混乱，走进机房，网线乱如麻，你根本不知道那根网线链接了什么设备，我们需要先理清重点设备的链接拓扑图。</para>
+			<para>这里以 H3C 为例，其他设备操作方式大同小异，下面是找到接口对等设备的IP地址</para>
+			<screen>
+			<![CDATA[
+<H3C>display arp interface GE1/0/32
+  Type: S-Static   D-Dynamic   O-Openflow   R-Rule   M-Multiport  I-Invalid
+IP address      MAC address    VLAN/VSI name Interface                Aging Type
+172.16.200.75   b07b-2523-5326 200           GE1/0/32                 501   D   		
+			]]>
+			</screen>
+			<para>通过 mac 地址找接口</para>
+			<screen>
+			<![CDATA[
+<H3C>display arp all | include 6227-d242-269e
+172.16.0.68     6227-d242-269e 10            GE1/0/3                  1085  D 			
+			]]>
+			</screen>
+			<para>通过 ip 地址找接口</para>
+			<screen>
+			<![CDATA[
+<H3C>display arp all | include 172.16.200.102
+172.16.200.102  001e-67fa-df92 200           GE1/0/36                 282   D  			
+			]]>
+			</screen>
+		</section>
 	</section>
 	<section>
 		<title>服务器系统检查</title>
