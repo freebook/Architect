@@ -2,6 +2,10 @@
 <section id="log">
 	<title>Logging 日志</title>
 	<section>
+		<title>日志</title>
+		<graphic format="png" fileref="images/development/logging.png" srccredit="neo" width="" />
+	</section>
+	<section>
 		<title>日志的格式</title>
 
 	</section>
@@ -21,35 +25,35 @@
 		<title>Remote Syslog</title>
 		<para>syslog</para>
 		<screen>
-syslogd
-----------------------
-main {
-	fork(){
-		socket()
+			syslogd
+			----------------------
+			main {
+			fork(){
+			socket()
 
-		threading{
+			threading{
 			while buffer() {
-				queue.add()
+			queue.add()
 			}
-		}
+			}
 
-		socket.close()
-	}
-}
+			socket.close()
+			}
+			}
 
-storage_engine
-----------------------
-main(){
-		queue()
-		format()
-		save()
-}
+			storage_engine
+			----------------------
+			main(){
+			queue()
+			format()
+			save()
+			}
 
-save(){
-	open()
-	write()
-	close()
-}
+			save(){
+			open()
+			write()
+			close()
+			}
 
 		</screen>
 	</section>

@@ -40,8 +40,8 @@
 	%hardware.doctype.entity.xml;
 	<!ENTITY part.hardware.xml 					SYSTEM "part.hardware.xml">
 
-	<!ENTITY % testing.doctype.entity.xml 		SYSTEM "Testing/doctype.entity.xml">
-	%testing.doctype.entity.xml;
+<!-- 	<!ENTITY % testing.doctype.entity.xml 		SYSTEM "Testing/doctype.entity.xml">
+	%testing.doctype.entity.xml; -->
 	
 	<!ENTITY % devops.doctype.entity.xml 		SYSTEM "System/doctype.entity.xml">
 	%devops.doctype.entity.xml;
@@ -72,6 +72,7 @@
 	&book.dedication.xml; 
 	&book.preface.xml;
 
+	&chapter.strategy.xml;
 	<!-- &part.architecture.xml; -->
 	&chapter.architecture.xml;
 	&chapter.database.xml;

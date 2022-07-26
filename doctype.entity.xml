@@ -8,6 +8,8 @@
 <!ENTITY book.glossary.xml				SYSTEM "book.glossary.xml">
 <!ENTITY book.history.xml				SYSTEM "book.history.xml">
 
+<!ENTITY chapter.strategy.xml 			SYSTEM "chapter.strategy.xml">
+
 <!ENTITY part.architecture.xml 			SYSTEM "part.architecture.xml">
 <!ENTITY chapter.architecture.xml 		SYSTEM "chapter.architecture.xml">
 <!ENTITY section.arch.monitor.xml		SYSTEM "section.arch.monitor.xml">
@@ -22,16 +24,14 @@
 <!ENTITY section.arch.mq.xml			SYSTEM "section.arch.mq.xml">
 <!ENTITY section.arch.sharding.xml		SYSTEM "section.arch.sharding.xml">
 <!ENTITY section.arch.socket.xml		SYSTEM "section.arch.socket.xml">
-
 <!ENTITY section.arch.schedule.xml		SYSTEM "section.arch.schedule.xml">
 <!ENTITY section.arch.security.xml		SYSTEM "section.arch.security.xml">
 <!ENTITY section.arch.shell.xml			SYSTEM "section.arch.shell.xml">
 <!ENTITY section.arch.permission.xml	SYSTEM "section.arch.permission.xml">
 <!ENTITY section.arch.communication.xml	SYSTEM "section.arch.communication.xml">
+<!ENTITY section.arch.testing.xml		SYSTEM "section.arch.testing.xml">
 
 <!ENTITY section.web.xml 				SYSTEM "section.web.xml">
 <!ENTITY section.web.search.xml			SYSTEM "section.web.search.xml">
 <!ENTITY section.web.static.xml			SYSTEM "section.web.static.xml">
 <!ENTITY section.web.image.xml			SYSTEM "section.web.image.xml">
-
-<!ENTITY section.work.handover.xml		SYSTEM "section.work.handover.xml">

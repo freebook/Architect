@@ -3,7 +3,6 @@
 	<title>运维篇</title>
 	&chapter.idc.xml;
 	&chapter.server.xml;
-	&chapter.monitor.xml;
 	&chapter.backup.xml;
 	&chapter.firewall.xml;
 </part>
