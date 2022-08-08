@@ -5,7 +5,10 @@
 	<section>
 		<title>关于 delete</title>
 		<para>delete from mytable 必死无疑，你需要分批删除，尽量缩小每个批次删除的记录数，delete 是可以并行执行的，你可以同时运行多个删除操作</para>
-		<screen>
+		<section>
+			<title>手工分批删除</title>
+			<para>通过 where 条件和 limit 限制条数，缩小删除结果集，分多笔执行，手工删除。</para>
+			<screen>
 		<![CDATA[
 mysql> show processlist;
 +--------+-----------------+---------------------+-----------+---------+-------+-----------------------------+--------------------------------------------------------+
@@ -22,7 +25,72 @@ mysql> show processlist;
 +--------+-----------------+---------------------+-----------+---------+-------+-----------------------------+--------------------------------------------------------+
 23 rows in set (0.00 sec)
 		]]>
-		</screen>
+			</screen>
+		</section>
+		<section>
+			<title>自动定时执行，分批删除数据</title>
+			<para>需求：数据需要删除100万条数据，直接删除会对系统造成压力，导致主库阻塞。</para>
+			<para>解决方案：分批删除，使用 event 定时执行删除 SQL 直到删完位置。</para>
+			<para>开启 EVENT</para>
+			<programlisting>
+		<![CDATA[
+set global event_scheduler = on;		
+		]]>
+			</programlisting>
+			<para>准备数据备份、删除和回撤所需的三条SQL</para>
+			<programlisting>
+			<![CDATA[
+备份 SQL：
+CREATE TABLE mytable_2022_7_30 SELECT * FROM mytable;
+
+删除 SQL：
+DELETE FROM mytable LIMIT 1; 
+
+回撤 SQL：
+INSERT INTO mytable SELECT * FROM mytable_2022_7_30;	
+			]]>
+			</programlisting>
+			<para>通过 where 缩小结果集</para>
+			<programlisting>
+			<![CDATA[
+备份 SQL：
+CREATE TABLE mytable_2022_7_30 SELECT * FROM mytable where level = 'info';
+
+删除 SQL：
+DELETE FROM mytable where level = 'info' LIMIT 1; 
+
+回撤 SQL：
+INSERT INTO mytable SELECT * FROM mytable_2022_7_30;
+			]]>
+			</programlisting>
+			<para>上面条SQL在测试环境验证无误后，编写定时删除 EVENT</para>
+			<programlisting>
+			<![CDATA[
+DELIMITER $$
+CREATE EVENT IF NOT EXISTS event_delete
+ON SCHEDULE EVERY 1 SECOND ON COMPLETION PRESERVE 
+DO BEGIN
+	DECLARE num integer;
+
+	SELECT  COUNT(*) INTO num FROM mytable;
+    
+	IF num > 0 THEN
+		delete from mytable limit 1;
+		insert into logs(ctime) values(now());
+	END IF;
+    
+END$$
+			]]>
+			</programlisting>
+			<para>EVENT 在测试环境运行无误才能在生产环境执行。</para>
+			<para>通过 limit 调整每次删除的数量，为了观察 EVENT 执行状态，这里会插入一条执行日志。</para>
+			<para>数据删除完毕之后回收 EVENT</para>
+			<screen>
+			<![CDATA[
+DROP EVENT event_delete;
+			]]>
+			</screen>
+		</section>
 	</section>
 	<section>
 		<title>关于 update</title>

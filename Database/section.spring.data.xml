@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="spring.data">
+<section id="spring.data">
 	<title>Spring Data 最佳实践</title>
 	<section id="spring.data.mysql">
 		<title>MySQL</title>
@@ -1432,4 +1432,4 @@ public class Address {
 			</programlisting>
 		</section>
 	</section>
-</chapter>
+</section>

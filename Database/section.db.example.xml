@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id: chapter.data.xml 422 2012-06-01 12:39:37Z netkiller $ -->
-<chapter id="db.exmaple">
+<section id="db.exmaple">
 	<title>参考例子</title>
 	<section>
 		<title>CMS 数据库设计</title>
@@ -4269,4 +4269,4 @@ insert into identity_location(prefix,province,city,county) select md5(number) as
 			</screen>
 		</section>
 	</section>
-</chapter>
+</section>

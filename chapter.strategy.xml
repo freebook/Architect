@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <chapter id="什么是多维度架构">
 	<title>什么是多维度架构</title>
-
 	<para></para>
 	<para></para>
 	<section>
@@ -19,45 +18,45 @@
 		<para>当今的社会，几乎所有的企业情况都是岗位职责清晰，分工明确，员工是企业机器上的一颗螺丝钉，我们在招聘下属的时候也仅仅是用他的一技之长。项目一旦立项，我们就根据项目需求针对性性的招聘，短短半年团队就会膨胀数倍，但效率并不是成正比增长。另一个问题是这个庞大的团队合作起来并不尽人意。结果是 80% 协调的时间，20% 实际工作时间。</para>
 		<para>很多技术人员埋头在自己的专业领域，更擅长解决自己专业范畴的问题，这样是不对的，技术人员应该培养广泛的兴趣，不仅仅要成为技术全栈，还要涉略艺术等领域。</para>
 	</section>
-
+	<section id="运维的三重境界">
+		<title>运维的三重境界</title>
+		<para>运维的三重境界你知道吗？</para>
+		<para>为什么公司在运维上投入很多，高层对运维也足够重视，花了不少钱，但是落地效果不尽人意。</para>
+		<screen>
+		<![CDATA[
+发现问题-> 运维救火-> 事后复盘，再发现问题-> 再运维救火-> 再事后复盘，进入了一个死循环。		
+		]]>
+		</screen>
+		<para>每次救火，领导远程等结果，看着运维这么辛苦，还会发一个表彰报告。</para>
+		<itemizedlist>
+			<title>运维的三重境界：器、术、道</title>
+			<listitem>器的层面：即工具的安装、配置及使用，包括对操作系统的熟悉程度、各种应用服务器精通程度。比如Linux、Docker、JVM、MySQL、Redis、Ngnix、Elasticsearch、Kubernetes、Prometheus、Grafana……</listitem>
+			<listitem>术的层面：方法论，流程，规范，架构。涉及技术点：负载均衡、埋点、探针、应用监控、故障报警、日志中心、性能调优、链路追踪、故障定位…… DevOps、AIOps……</listitem>
+			<listitem>道的层面：运维体系的建设，最终结果是为产品和运营服务，用户是否满意，运营是否满意，客服是否满意……</listitem>
+			<listitem></listitem>
+		</itemizedlist>
+		<para>80%运维无法突破器这个层面，最终只能做工具的安装和配置。18%有开发经验才能到达“术”的层面，从更高维度审视运维，明白运维的目的。最后2%具备技术背景和产品思维的人才能进入道的层面，明白公司角度要做什么。</para>
+		<para>所以你会发现运维团队常常是把技术武装到牙齿，你能想到的技术，能装上的都装上，能用的都用上，最终还是开发乱，开发环境乱，测试乱，测试环境乱，生产环境乱，部署乱，部署回撤如家常便饭。</para>
+		<para>每次出故障第一个发现的不是运维而是客服，是用户遇到问题解决不了，只能800/400客服投诉，客服找运维解决。</para>
+	</section>
 
 <!-- 
-
 	<section id="monitoring.server">
 		<title>服务监控</title>
 		<subtitle></subtitle>
-
 		<itemizedlist spacing="compact">
-			<listitem>
 
-			</listitem>
-			<listitem>
-
-			</listitem>
-
+			<listitem></listitem>
 		</itemizedlist>
-
-		<section id="elasticsearch">
-			<title>Elasticsearch 监控</title>
-			<itemizedlist>
-				<title>Elasticsearch 监控指标</title>
-
-			</itemizedlist>
-		</section>
-
 		<section id="mysql">
 			<title>数据库监控需求</title>
-
-
 			<section>
 				<title>数据库监控指标</title>
 				<itemizedlist spacing="compact">
-
 					<listitem>
 						<para>数据库线程数监控</para>
 					</listitem>
 					<listitem>
-
 					</listitem>
 					<listitem>
 

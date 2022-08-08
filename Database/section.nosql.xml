@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="nosql">
+<section id="nosql">
 	<title>NoSQL OOD(Object-Oriented Design)</title>
 <section id="mongodb">
 	<title>MongoDB</title>
@@ -232,4 +232,4 @@ employee_has_devices
 		</screen>
 	</section>
 </section>	
-</chapter>
+</section>
