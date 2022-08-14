@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter>
-	<title>规范</title>
-	<para>这块本来不想写，考虑到国内每个公司都有自己的规范，非常混乱</para>
-	
-	
-</chapter>
-<!-- 
+<setction id="数据库规范">
+	<title>数据库规范</title>
+	<para></para>
+	<section>
+		<title>建表规范</title>
+	</section>
+	<section>
+		<title>查询规范</title>
+		<para></para>
+		<section>
+			<title>join 规范</title>
+		</section>
+	</section>
 
+</setction>
+<!-- 
 虽然oracle主要的工作是dba所做的事情，不过作为一个普通的开发人员也时时刻刻和数据库打交道，普通开发人员也得有一些基本数据库技能。下面是我在开发中的一些oracle数据库开发的一些经验。欢迎大家提意见。
- 
- 
+
 表命名规则
 表命名是以英文名称为原则，表示该表的具体意义，例如商品表可以叫item，商品图片表可以叫item_image。
 如果公司业务复杂，数据库过多，schema也比较多，则要根据schema的来命名，例如：在crm下面可以用crm开头命名CRM_USER.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="db.parallel">
+<section id="多维度架构设计之数据库并行访问控制">
 	<title>数据库并行访问控制</title>
 	<para>这里主要讲述有关开发中遇到的数据库并行问题</para>
 	<section id="show">

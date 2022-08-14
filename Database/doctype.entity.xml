@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!ENTITY chapter.database.xml 				SYSTEM "chapter.database.xml">
-<!ENTITY section.rdbms.xml 					SYSTEM "section.rdbms.xml">
+<!ENTITY section.db.rdbms.xml 				SYSTEM "section.db.rdbms.xml">
 <!ENTITY section.db.cache.xml				SYSTEM "section.db.cache.xml">
 <!ENTITY section.db.security.xml			SYSTEM "section.db.security.xml">
 <!ENTITY section.db.example.xml				SYSTEM "section.db.example.xml">
 <!ENTITY section.db.pgsql.xml				SYSTEM "section.db.pgsql.xml">
-<!ENTITY section.nosql.xml					SYSTEM "section.nosql.xml">
 <!ENTITY section.db.sharding.xml			SYSTEM "section.db.sharding.xml">
 <!ENTITY section.db.parallel.xml			SYSTEM "section.db.parallel.xml">
-<!ENTITY section.spring.data.xml			SYSTEM "section.spring.data.xml">
 <!ENTITY section.db.bigdata.xml				SYSTEM "section.db.bigdata.xml">
+<!ENTITY section.db.standard.xml			SYSTEM "section.db.standard.xml">
+<!ENTITY section.spring.data.xml			SYSTEM "section.spring.data.xml">
+<!ENTITY section.nosql.xml					SYSTEM "section.nosql.xml">
