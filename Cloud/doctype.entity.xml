@@ -1,2 +1,3 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!ENTITY part.cloud.xml 					SYSTEM "part.cloud.xml">
 <!ENTITY chapter.aliyun.xml			SYSTEM "chapter.aliyun.xml">

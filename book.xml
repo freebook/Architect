@@ -38,7 +38,6 @@
 
 	<!ENTITY % cloud.doctype.entity.xml 		SYSTEM "Cloud/doctype.entity.xml">
 	%cloud.doctype.entity.xml;
-	<!ENTITY part.cloud.xml 					SYSTEM "part.cloud.xml">
 	
 	<!ENTITY % devops.doctype.entity.xml 		SYSTEM "System/doctype.entity.xml">
 	%devops.doctype.entity.xml;
