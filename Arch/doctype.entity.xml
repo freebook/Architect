@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!ENTITY chapter.architecture.xml 		SYSTEM "chapter.architecture.xml">
+<!ENTITY section.arch.monitor.xml		SYSTEM "section.arch.monitor.xml">
+<!ENTITY section.arch.latency.xml		SYSTEM "section.arch.latency.xml">
+<!ENTITY section.arch.timeout.xml		SYSTEM "section.arch.timeout.xml">
+<!ENTITY section.arch.trader.xml		SYSTEM "section.arch.trader.xml">
+<!ENTITY section.arch.session.xml		SYSTEM "section.arch.session.xml">
+<!ENTITY section.arch.devops.xml		SYSTEM "section.arch.devops.xml">
+<!ENTITY section.arch.container.xml		SYSTEM "section.arch.container.xml">
+<!ENTITY section.arch.logging.xml		SYSTEM "section.arch.logging.xml">
+<!ENTITY section.arch.microservices.xml	SYSTEM "section.arch.microservices.xml">
+<!ENTITY section.arch.mq.xml			SYSTEM "section.arch.mq.xml">
+<!ENTITY section.arch.sharding.xml		SYSTEM "section.arch.sharding.xml">
+<!ENTITY section.arch.socket.xml		SYSTEM "section.arch.socket.xml">
+<!ENTITY section.arch.schedule.xml		SYSTEM "section.arch.schedule.xml">
+<!ENTITY section.arch.security.xml		SYSTEM "section.arch.security.xml">
+<!ENTITY section.arch.shell.xml			SYSTEM "section.arch.shell.xml">
+<!ENTITY section.arch.permission.xml	SYSTEM "section.arch.permission.xml">
+<!ENTITY section.arch.communication.xml	SYSTEM "section.arch.communication.xml">
+<!ENTITY section.arch.testing.xml		SYSTEM "section.arch.testing.xml">
+
+<!ENTITY section.web.xml 				SYSTEM "section.web.xml">
+<!ENTITY section.web.search.xml			SYSTEM "section.web.search.xml">
+<!ENTITY section.web.static.xml			SYSTEM "section.web.static.xml">
+<!ENTITY section.web.image.xml			SYSTEM "section.web.image.xml">

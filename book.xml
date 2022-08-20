@@ -22,9 +22,9 @@
 	%frontend.doctype.entity.xml;
 	<!ENTITY part.frontend.xml 					SYSTEM "part.frontend.xml">
 	
-	<!ENTITY % backend.doctype.entity.xml 		SYSTEM "Backend/doctype.entity.xml">
-	%backend.doctype.entity.xml;
-	<!ENTITY part.backend.xml 					SYSTEM "part.backend.xml">
+	<!ENTITY % arch.doctype.entity.xml 			SYSTEM "Arch/doctype.entity.xml">
+	%arch.doctype.entity.xml;
+	<!ENTITY part.architecture.xml				SYSTEM "part.architecture.xml">
 	
 	<!ENTITY % software.doctype.entity.xml 		SYSTEM "Software/doctype.entity.xml">
 	%software.doctype.entity.xml;
@@ -36,9 +36,9 @@
 	<!ENTITY % solution.doctype.entity.xml 		SYSTEM "Solution/doctype.entity.xml">
 	%solution.doctype.entity.xml;
 
-	<!ENTITY % hardware.doctype.entity.xml 		SYSTEM "Hardware/doctype.entity.xml">
-	%hardware.doctype.entity.xml;
-	<!ENTITY part.hardware.xml 					SYSTEM "part.hardware.xml">
+	<!ENTITY % cloud.doctype.entity.xml 		SYSTEM "Cloud/doctype.entity.xml">
+	%cloud.doctype.entity.xml;
+	<!ENTITY part.cloud.xml 					SYSTEM "part.cloud.xml">
 	
 	<!ENTITY % devops.doctype.entity.xml 		SYSTEM "System/doctype.entity.xml">
 	%devops.doctype.entity.xml;
@@ -75,7 +75,7 @@
 	&chapter.database.xml;
 	&part.devops.xml;
 	&part.software.xml;
-	<!-- &part.testing.xml; -->
+	&part.cloud.xml;
 	&part.solution.xml;
 	
 	&book.appendix.xml;
