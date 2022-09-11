@@ -41,4 +41,8 @@
 	<section>
 		<title>Kubernetes 日志</title>
 	</section>
+	<section>
+		<title>Aliyun LOG Java Producer</title>
+		<para>https://github.com/aliyun/aliyun-log-java-producer</para>
+	</section>
 </section>

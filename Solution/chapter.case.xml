@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <section id="ecshop">
 	<title>技术架构</title>
 	<para>CMS + ECSHOP(ECSHIT)</para>
 	<graphic format="png" fileref="../images/solution/php.png"
 		srccredit="neo" />
 </section>
-
-<section>
-	<title>小型个人网站</title>
-	<para>Varnish -> lighttpd -> fastcgi -> CodeIgniter -> APC Cache -> PostgreSQL</para>
-</section>
-
 <section id="solution.pylons">
 	<title>Python pylons</title>
 	<screenshot>

@@ -1,56 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!--
-ITEYE看到有人问：
-现在各大电商都有自己的促销优惠方式，满减，立减，折扣，现金券，返现，积分抵现，赠送积分，使用范围也可能是单种商品，大类商品，单笔订单等，优惠环节涉及购买时，订单时和支付时，可谓非常纷繁复杂。
-现在我正在开发的电子商务平台有商品Goods和货品Product，有订单Order和订单项OrderItem，我希望能尽量减少与现有功能的耦合，而设计一个尽可能全面覆盖上述优惠促销的组件，并可在以后进行扩展，现在初步有一个设计雏形，但是实际过程中发现还是太复杂，并且不得不开始耦合了，所以决定停工重新整理思路。
-希望有能人给点思路和建议
-
-一般市场上的促销分为以下九种：
-一、无偿促销（如附赠、试用）
-二、惠赠促销（如买赠、换赠）
-三、折扣促销（优惠券、优惠卡、打折等）
-四、竞赛促销（智力性竞赛、有奖问答、广告语征集等）
-五、活动促销（如新闻发布会、商品展示会、抽奖与摸奖、娱乐与游戏等）
-六、双赢促销（二个或几个企业合作的促销）
-七、直效促销（挂海报、发传单、商品堆头陈列等）
-八、服务促销（如售后服务、订购订做、送货上门等）
-九、组合促销（就是将以上八种中的二种或以上组合在一起进行促销）
-
-1、产品折价让利
-2、赠品销售
-3、现金返还
-4、凭证优惠
-5、集点购买
-6、联合促销
-7、免费试用
-8、抽奖销售
-9、有奖参与
-10、游戏参与
-11、竞技活动
-12、公关赞助
-13、现场展示
-14、顾客会员俱乐部
-15、人员推介
-16、经销商政策激励
-17、捆绑销售
-18、限量特供
-19、服务举措
-20、老顾客回访
-21、社会热点炒作
-22、产品概念炒作
-23、独特卖点炒作
-24、顾客消费引导
-25、免费咨询指导
-26、其它创新促销策略
-		 -->
-<!--
-
 	<section>
 		<title>会员管理</title>
-		<section>
-			<title>用户管理</title>
-		</section>
 		<section>
 			<title>权限管理</title>
 		</section>
@@ -70,9 +21,7 @@ ITEYE看到有人问：
 			<title>站内消息</title>
 		</section>
 	</section>
-	<section>
-		<title>分类管理</title>
-	</section>
+	
 	<section>
 		<title>商品管理</title>
 		<section>
@@ -85,18 +34,11 @@ ITEYE看到有人问：
 				<para>该属性常用于服装类商品</para>
 				<para></para>
 			</section>
-			<section>
-				<title>颜色管理</title>
-			</section>
-			<section>
-				<title>洗涤方式管理</title>
-			</section>
+			
 		</section>
 
 	</section>
-	<section>
-		<title>品牌管理</title>
-	</section>
+	
 	
 	<section>
 		<title>销售管理</title>
@@ -105,12 +47,7 @@ ITEYE看到有人问：
 			<para>限时促销</para>
 			<para>限时抢购</para>
 		</section>
-		<section>
-			<title>折扣管理</title>
-		</section>
-		<section>
-			<title>特卖管理</title>
-		</section>
+		
 		<section>
 			<title>推荐管理</title>
 			<para>新品</para>
@@ -132,10 +69,6 @@ ITEYE看到有人问：
 		<section>
 			<title>订单处理</title>
 		</section>
-	</section>
-
-	<section>
-		<title>报表管理</title>
 	</section>
 	<section>
 		<title>广告管理</title>
