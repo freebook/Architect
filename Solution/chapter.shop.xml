@@ -1,45 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-	<section>
-		<title>会员管理</title>
-		<section>
-			<title>权限管理</title>
-		</section>
-		<section>
-			<title>角色管理</title>
-		</section>
-		<section>
-			<title>日志管理</title>
-		</section>
-		<section>
-			<title>积分管理</title>
-		</section>
-		<section>
-			<title>回访管理</title>
-		</section>
-		<section>
-			<title>站内消息</title>
-		</section>
-	</section>
-	
+<!--	
 	<section>
 		<title>商品管理</title>
 		<section>
 			<title>属性管理</title>
-			<section>
-				<title>材质管理</title>
-			</section>
-			<section>
-				<title>尺码管理</title>
-				<para>该属性常用于服装类商品</para>
-				<para></para>
-			</section>
-			
 		</section>
 
 	</section>
-	
-	
+
 	<section>
 		<title>销售管理</title>
 		<section>
@@ -63,12 +31,8 @@
 
 	<section>
 		<title>订单管理</title>
-		<section>
-			<title>订单查询</title>
-		</section>
-		<section>
-			<title>订单处理</title>
-		</section>
+		
+		
 	</section>
 	<section>
 		<title>广告管理</title>
@@ -131,12 +95,8 @@
 		<section>
 			<title>库存管理</title>
 		</section>
-		<section>
-			<title>配货管理</title>
-		</section>
-		<section>
-			<title>发货管理</title>
-		</section>
+		
+		
 	</section>
 	
  -->

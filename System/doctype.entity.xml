@@ -7,6 +7,7 @@
 <!ENTITY section.server.tomcat.xml		SYSTEM "section.server.tomcat.xml">
 <!ENTITY section.server.php.xml			SYSTEM "section.server.php.xml">
 <!ENTITY section.server.oscm.xml		SYSTEM "section.server.oscm.xml">
+<!ENTITY section.server.spring.xml		SYSTEM "section.server.spring.xml">
 
 <!ENTITY chapter.idc.xml		 		SYSTEM "chapter.idc.xml">
 <!ENTITY section.idc.version.xml 		SYSTEM "section.idc.version.xml">
@@ -18,4 +19,3 @@
 <!ENTITY section.server.storage.xml 	SYSTEM "section.server.storage.xml">
 <!ENTITY chapter.backup.xml				SYSTEM "chapter.backup.xml">
 <!ENTITY chapter.firewall.xml			SYSTEM "chapter.firewall.xml">
-<!ENTITY chapter.logging.xml			SYSTEM "chapter.logging.xml">

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section>
+	<title>瓶颈分析</title>
+	<section>
+		<title>Springboot</title>
+		<screen>
+		<![CDATA[
+/ # cat /proc/1/status | grep Threads
+Threads:        61		
+		]]>
+		</screen>
+		<para>另一中方式，记得数值要 -1 因为ls -l 第一行是 total 0 统计文件数量。</para>
+		<screen>
+		<![CDATA[
+/ # ls -l /proc/1/task/ | wc -l
+61		
+		]]>
+		</screen>
+
+	</section>
+	<section>
+		<title>日志管理</title>
+		<screen>
+		<![CDATA[
+		
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>积分管理</title>
+		<screen>
+		<![CDATA[
+		
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>回访管理</title>
+		<screen>
+		<![CDATA[
+		
+		]]>
+		</screen>
+	</section>
+	<section>
+		<title>站内消息</title>
+		<screen>
+		<![CDATA[
+		
+		]]>
+		</screen>
+	</section>
+</section>

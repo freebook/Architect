@@ -2,8 +2,9 @@
 <chapter id="index"><?dbhtml dir="server"?>
 	<title>Server</title>
 	&section.server.os.xml;
-	&section.server.tomcat.xml;
 	&section.server.php.xml;
+	&section.server.tomcat.xml;
+	&section.server.spring.xml;
 	&section.server.oscm.xml;
 	<section id="ntp">
 		<title>时间同步</title>
@@ -24,6 +25,7 @@ $ sudo ntpdate asia.pool.ntp.org
 		]]>
 		</screen>
 	</section>
+	
 	<section id="email">
 		<title>邮件系统</title>
 		<orderedlist>
