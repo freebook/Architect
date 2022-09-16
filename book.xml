@@ -71,10 +71,10 @@
 	&chapter.strategy.xml;
 	<!-- &part.architecture.xml; -->
 	&chapter.architecture.xml;
+	&part.cloud.xml;
 	&chapter.database.xml;
 	&part.devops.xml;
 	&part.software.xml;
-	&part.cloud.xml;
 	&part.solution.xml;
 	
 	&book.appendix.xml;
