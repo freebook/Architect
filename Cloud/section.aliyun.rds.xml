@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section>
+	<title>RDS MySQL</title>
+	<section>
+		<title>RDS MySQL =&gt; 本地 MySQL 数据库</title>
+		<para>从 RDS 上下载的物理备份</para>
+		<screen>
+		<![CDATA[
+[root@master backup]# ls
+hins19648946_data_20220913035432_qp.xb		
+		]]>
+		</screen>
+		<section>
+			<title>MySQL 5.7</title>
+			<para>安装依赖库</para>
+			<screen>
+			<![CDATA[
+[root@master backup]# dnf install -y qpress libaio		
+			]]>
+			</screen>
+			<para>安装恢复软件</para>
+			<screen>
+			<![CDATA[
+[root@master backup]# wget https://downloads.percona.com/downloads/Percona-XtraBackup-2.4/Percona-XtraBackup-2.4.24/binary/tarball/percona-xtrabackup-2.4.24-Linux-x86_64.glibc2.12.tar.gz
+[root@master backup]# tar zxvf percona-xtrabackup-2.4.24-Linux-x86_64.glibc2.12.tar.gz
+[root@master backup]# mv percona-xtrabackup-2.4.24-Linux-x86_64.glibc2.12 /srv/
+[root@master backup]# rm -f /srv/percona-xtrabackup
+[root@master backup]# ln -s /srv/percona-xtrabackup-2.4.24-Linux-x86_64.glibc2.12 /srv/percona-xtrabackup			
+			]]>
+			</screen>
+			<screen>
+			<![CDATA[
+cat >> /etc/profile.d/percona.sh <<EOF
+# Percona Xtrabackup
+export PATH=$PATH:/srv/percona-xtrabackup/bin
+EOF
+
+source /etc/profile.d/percona.sh
+			]]>
+			</screen>
+			<para>恢复数据</para>
+			<screen>
+			<![CDATA[
+[root@master backup]# xbstream -v -x  -C ./rds
+[root@master backup]# xbstream -x -C rds/ < hins19648946_data_20220913035432_qp.xb	
+			]]>
+			</screen>
+			<para></para>
+			<screen>
+			<![CDATA[
+innobackupex --decompress --remove-original rds/			
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>MySQL 8.0</title>
+			<para>安装 percona-xtrabackup 恢复软件</para>
+			<screen>
+			<![CDATA[
+[root@master backup]# tar zxvf percona-xtrabackup-8.0.29-22-Linux-x86_64.glibc2.17.tar.gz
+[root@master backup]# mv percona-xtrabackup-8.0.29-22-Linux-x86_64.glibc2.17 /srv/
+[root@master backup]# rm -f /srv/percona-xtrabackup
+[root@master backup]# ln -s /srv/percona-xtrabackup-8.0.29-22-Linux-x86_64.glibc2.17/ /srv/percona-xtrabackup
+			]]>
+			</screen>
+			<screen>
+			<![CDATA[
+cat >> /etc/profile.d/percona.sh <<EOF
+# Percona Xtrabackup
+export PATH=$PATH:/srv/percona-xtrabackup/bin
+EOF
+
+source /etc/profile.d/percona.sh
+			]]>
+			</screen>
+		</section>
+	</section>
+
+</section>

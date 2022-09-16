@@ -2,3 +2,5 @@
 <!ENTITY part.cloud.xml 			SYSTEM "part.cloud.xml">
 <!ENTITY chapter.aliyun.xml			SYSTEM "chapter.aliyun.xml">
 <!ENTITY section.aliyun.sls.xml		SYSTEM "section.aliyun.sls.xml">
+<!ENTITY section.aliyun.ecs.xml		SYSTEM "section.aliyun.ecs.xml">
+<!ENTITY section.aliyun.rds.xml		SYSTEM "section.aliyun.rds.xml">

@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--	
 	<section>
-		<title>商品管理</title>
-		<section>
-			<title>属性管理</title>
-		</section>
-
-	</section>
-
-	<section>
 		<title>销售管理</title>
 		<section>
 			<title>限时销售</title>
@@ -24,14 +16,6 @@
 		<section>
 			<title>赠品管理</title>
 		</section>
-		<section>
-			<title>积分管理</title>
-		</section>
-	</section>
-
-	<section>
-		<title>订单管理</title>
-		
 		
 	</section>
 	<section>
@@ -65,9 +49,7 @@
 			<title>汇率管理</title>
 		</section>
 
-		<section>
-			<title></title>
-		</section>
+	
 	</section>
 	<section>
 		<title>消息管理</title>
