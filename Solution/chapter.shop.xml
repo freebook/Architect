@@ -7,7 +7,6 @@
 			<para>限时促销</para>
 			<para>限时抢购</para>
 		</section>
-		
 		<section>
 			<title>推荐管理</title>
 			<para>新品</para>
@@ -16,24 +15,12 @@
 		<section>
 			<title>赠品管理</title>
 		</section>
-		
 	</section>
-	<section>
-		<title>广告管理</title>
-		<section>
-			<title>广告位管理</title>
-		</section>
-		<section>
-			<title>时间段管理</title>
-		</section>
-	</section>
+
 	<section>
 		<title>新闻资讯</title>
 		<section>
 			<title>文章分类</title>
-		</section>
-		<section>
-			<title>发布</title>
 		</section>
 	</section>
 
@@ -48,8 +35,6 @@
 		<section>
 			<title>汇率管理</title>
 		</section>
-
-	
 	</section>
 	<section>
 		<title>消息管理</title>
@@ -74,9 +59,7 @@
 		<section>
 			<title>仓位管理</title>
 		</section>
-		<section>
-			<title>库存管理</title>
-		</section>
+		
 		
 		
 	</section>

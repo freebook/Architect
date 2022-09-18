@@ -45,12 +45,25 @@ source /etc/profile.d/percona.sh
 [root@master backup]# xbstream -x -C rds/ < hins19648946_data_20220913035432_qp.xb	
 			]]>
 			</screen>
-			<para></para>
+			<para>解压</para>
 			<screen>
 			<![CDATA[
-innobackupex --decompress --remove-original rds/			
+innobackupex --decompress --remove-original rds/
 			]]>
 			</screen>
+			<para>恢复日志</para>
+			<screen>
+			<![CDATA[
+innobackupex --defaults-file=/etc/my.cnf --apply-log rds/
+			]]>
+			</screen>
+			<para>启动 mysql 增加 --skip-grant-tables 选项，然后运行 mysql_upgrade</para>
+			<screen>
+			<![CDATA[
+mysql_upgrade			
+			]]>
+			</screen>
+			<para>去掉 --skip-grant-tables 选项，重启 MySQL，恢复完成。</para>
 		</section>
 		<section>
 			<title>MySQL 8.0</title>
