@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<part>
+<part id="index"><?dbhtml dir="cloud" ?>
 	<title>云计算</title>
 	&chapter.aliyun.xml;
 </part>
