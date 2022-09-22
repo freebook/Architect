@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section id="performance.php">
 	<title>PHP 安全与性能优化</title>
-	<section id="fastcgi">
-		<title>Apache mod_php / php-fpm</title>
+	<section id="mod_php">
+		<title>Apache mod_php</title>
 		<para>目录权限安全</para>
 		<section>
 			<title>用户权限</title>
@@ -396,6 +396,29 @@ Warning: file(/etc/fstab): failed to open stream: Operation not permitted in /ww
 			]]>
 			</screen>
 		</section>
+	</section>
+	<section id="php-fpm">
+		<title>php-fpm</title>
+		<para>pm = static 静态配置</para>
+		<screen>
+		<![CDATA[
+pm.max_children = 1024		
+rlimit_files = 65535	
+		]]>
+		</screen>
+		<para>pm = dynamic 动态配置</para>
+		<screen>
+		<![CDATA[
+pm.max_children = 1024
+
+pm.start_servers = 32
+pm.min_spare_servers = 10
+pm.max_spare_servers = 128
+
+rlimit_files = 65535		
+		]]>
+		</screen>
+		<para>如果操作系统没有设置 ulimit, 可以 rlimit_files = 65535	 设置。</para>
 	</section>
 	<section id="directory">
 		<title>开发于安全</title>

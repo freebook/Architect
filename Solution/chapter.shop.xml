@@ -16,24 +16,7 @@
 			<title>赠品管理</title>
 		</section>
 	</section>
-	<section>
-		<title>系统设置</title>
-		<section>
-			<title>配送方式</title>
-		</section>
-		<section>
-			<title>支付方式</title>
-		</section>
-		<section>
-			<title>汇率管理</title>
-		</section>
-	</section>
-	<section>
-		<title>消息管理</title>
-		<section>
-			<title>站内消息</title>
-		</section>
-	</section>
+	
 	<section>
 		<title>供应链</title>
 		<section>
@@ -42,14 +25,7 @@
 		<section>
 			<title>商品采购</title>
 		</section>
-		<section>
-			<title>订货管理</title>
-		</section>
+		
 	</section>
-	<section>
-		<title>物流配送</title>
-		<section>
-			<title>仓位管理</title>
-		</section>
-	</section>
+	
  -->

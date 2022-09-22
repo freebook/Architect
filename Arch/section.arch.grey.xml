@@ -1,1 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<section id="多维度架构设计之灰度测试方案">
+	<title>多维度架构设计之灰度测试方案</title>
+	<section>
+		<title>什么是灰度测试？</title>
+		<para>灰度测试是指将产品/产品新功能，少量给一部分目标人群使用，通过用户的反馈结果来决定是否进一步扩大用户群，直到这个新功能覆盖所有用户，灰度测试能用最少的试错成本收集用户反馈，并及时修改产品的一些不足和缺陷，完善产品的功能，使产品的质量得到提高。</para>
+	</section>
+	<section>
+		<title>解决方案</title>
+		<para>灰度测试解决方案有很多，并自由统一的标准，只要最终实现需求，达到效果即可。</para>
+		<para>这里的解决方案使用的是 Openresty</para>
+	</section>
+	<section>
+		<title>接口定义</title>
+	</section>
+	<section>
+		<title>接口测试</title>
+	</section>
+</section>
