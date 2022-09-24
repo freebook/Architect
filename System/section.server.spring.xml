@@ -1199,7 +1199,13 @@ security.user.password=s3cr3t
 feign.compression.response.enabled=true
 feign.compression.request.enabled=true
 feign.compression.request.mime-types=text/xml,application/xml,application/json
-feign.compression.request.min-request-size=2048		
+feign.compression.request.min-request-size=2048
+			]]>
+			</screen>
+			<para>Feign metrics</para>
+			<screen>
+			<![CDATA[
+feign.metrics.enabled=true			
 			]]>
 			</screen>
 		</section>

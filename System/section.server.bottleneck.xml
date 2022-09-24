@@ -1,97 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section>
+<section id="瓶颈分析">
 	<title>瓶颈分析</title>
-	<section id="server.tpc">
-		<title>TPC</title>
-		<para>
-			<ulink url="http://www.tpc.org/">http://www.tpc.org/</ulink>
-		</para>
-		<orderedlist>
-			<title> Transaction Processing Performance Council</title>
-			<listitem>
-				<para>TPC-C：是在线事务处理(OLTP)的基准程序</para>
-			</listitem>
-			<listitem>
-				<para>TPC-D：是决策支持(Decision Support) 的基准程序</para>
-			</listitem>
-			<listitem>
-				<para>TPC-E：作为大型企业(Enterprise)信息服务的基准程序</para>
-			</listitem>
-			<listitem>
-				<para>TPC-H：DecisionSupportforAdHocQueries基于特定查询的决策支持</para>
-			</listitem>
-			<listitem>
-				<para>TPC-W：Webe-Commerce（互联网及电子商务）</para>
-			</listitem>
-			<listitem>
-				<para>TPC-R：DecisionSupportforBusinessReporting（基于商业报告的决策支持）</para>
-			</listitem>
-		</orderedlist>
-	</section>
-	<section id="server.iops">
-		<title>IOPS (Input/Output Operations Per Second, pronounced i-ops)</title>
-		<para>
-			<ulink url="http://www.storageperformance.org/home/">http://www.storageperformance.org/home/</ulink>
-		</para>
-	</section>
-	<section id="server.rperf">
-		<title>rPerf</title>
-		<para>http://www-03.ibm.com/systems/power/hardware/notices/rperf.html</para>
-		<screen>
-		<![CDATA[
 
-服务器所需要的rPerf值=SUM(NU * TX * CS/PP) / MC
 
-NU:高峰时并发的用户数
-
-TX:高峰时每个用户的交易数量
-
-CS:在rPerf=1的服务器上，每个交易所需要的CPU秒
-
-PP:高峰持续的时间
-
-MC:最大的CPU利用率（推荐< 70%）
-
-下面举例说明如何计算所需的rPerf值，假定某公司的情况如下：
-
-业务高峰时间：  10:00-11:00=1Hour=3600秒
-
-交易类型：      无复杂查询的简单应用
-
-相对交易类型，用户数目分布:轻的=2000,   一般=50,   重的=5
-
-在高峰时，每个用户的交易数量：
-
-   轻的=120交易/用户
-
-   一般=60交易/用户
-
-   重的=15交易/用户
-
-对于rPerf=1的服务器，每个交易响应的CPU秒
-
-   轻的=1
-
-   一般=3
-
-   重的=15
-
-最大的CPU利用率：60%
-
-根据上述公式，可推算出不同交易类型所对应的rPerf值。
-
-轻的交易：NU*TX*CS/PP=2000*120*1/3600=66.0
-
-一般交易：NU*TX*CS/PP=50*60*3/3600=2.5
-
-重的交易：NU*TX*CS/PP=5*15*15/3600=0.3
-
-所需的总的rPerf/MC=(66.0+2.5+0.3)/0.7=98.3 rPerf
-		]]>
-		</screen>
-	</section>
-
-	<section>
+	<section id="Springboot内置Tomcat">
 		<title>Springboot</title>
 		<screen>
 		<![CDATA[
@@ -108,7 +20,7 @@ Threads:        61
 		</screen>
 
 	</section>
-	<section>
+	<section id="Redis连接池分析">
 		<title>Redis 连接池不生效</title>
 		<para>压力测试中，系统出现瓶颈，流量始终无法达到数据库。</para>
 		<para>开发小伙伴这样配置 Redis 由于太久脱离一线，我也不清楚配置是否正确，只能验证一下。</para>
@@ -302,7 +214,7 @@ clients_in_timeout_table:0
 		<para>lettuce 连接池，始终还没有解决，目前先用 jedis，其实连接池是同质化产品，虽有性能差异，但差距非常小，对于项目整体而言可以说微乎其微。就如同 Tomcat 跟 Undertow 差距，有时我们需要整理考虑架构方案，并不是所有好工具组合后就一定是好产品。</para>
 
 	</section>
-	<section>
+	<section id="Springboot数据库连接池">
 		<title>数据库链接池</title>
 		<para>很多时候人们从网上找到 springboot 文章，文章中说这样配置连接池，于是就复制站台到自己的配置文件中，也没有去深究，最终流到生产环境。</para>
 		<screen>
@@ -405,7 +317,67 @@ mysql> show full processlist;
 35 rows in set (0.00 sec)
 		]]>
 		</screen>
-		<para></para>
+		
+	</section>
+	<section id="Openfeign瓶颈分析">
+		<title>Openfeign 瓶颈分析</title>
+		<para>在公司代码库中找到这样的配置，总觉得不对，我最后一次写代码是 2017 年，最开始叫 Feign 后来改为 Openfeign，为了分析出整个系统的瓶颈，有必要深挖一下 Feign/Openfeign。</para>
+		<screen>
+		<![CDATA[
+spring:
+  feign:
+    httpclient:
+      enabled: true		
+		]]>
+		</screen>
+		<para>大多数人的学习路径是看书或去网上找别人的文章，复制里面的代码和配置。这种学习方式有两个弊端，书上的内容知识更新太慢，版本比较旧。网上找文章也是如此，别人的例子就是编译不通过，配置也很多是过时或错误的，一股脑，不做验证的饮引用别人的代码和配置。我更习惯看官网文档和翻看官方源码。</para>
+		<para>上面的配置就很可能某小伙伴，在网上看到别人那样配置，然后复制过来，就上生产了，并且这段配置在公司已经存在很多年，所有人都没有质疑过，直到我来公司，解决系统瓶颈问题才发现。</para>
+		<para>下面再说 okhttp 的问题，okhttp 在 openfeign 项目中并不成熟，属于实验产品。配置项只有 feign.okhttp.enabled，没有 max-connections 配置。</para>
+		<screen>
+		<![CDATA[
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>		
+		]]>
+		</screen>
+		<para>面临问题：如果使用 okhttp 怎么设置 max-connections，于是我便翻看 spring-cloud-starter-openfeign 源码，请看 openfeign 源码 https://github.com/spring-cloud/spring-cloud-openfeign/blob/main/spring-cloud-openfeign-core/src/main/java/org/springframework/cloud/openfeign/support/FeignHttpClientProperties.java，明显 openfeign 源码没有体现 feign.okhttp.max-connections。如果强行使用 okhttp 只能这样设置</para>
+		<screen>
+		<![CDATA[
+# 禁用 httpclient
+feign.httpclient.enabled=false
+# 启用 okhttp
+feign.okhttp.enabled=true
+# 因为没有提供 feign.okhttp.max-connections,只能用这种方式，从代码上看feign.httpclient.enabled=false并不影响这样使用
+feign.httpclient.max-connections=1000
+feign.httpclient.max-connections-per-route=50
+		]]>
+		</screen>
+		<para>另有新发现，重点看这里 @ConfigurationProperties(prefix = "spring.cloud.openfeign.httpclient") 如果是这样 spring.cloud.openfeign.httpclient</para>
+		<screen>
+		<![CDATA[
+那我的配置应该必须是 
+spring.cloud.openfeign.httpclient.max-connections=200 
+
+可是官网手册上写：
+feign.httpclient.max-connections=200 		
+		]]>
+		</screen>
+		<para>所以，官网手册也有滞后，我看的源码是 Openfeign 3.x 版本的，也就是说下一个版本 Openfeign 的配置文件将改为 spring.cloud.openfeign 前缀，同时 Openfeign 3.x 也没有解决 okhttp 的 max-connections 配置问题，还是这样使用 spring.cloud.openfeign.httpclient.max-connections=1000</para>
+		<screen>
+		<![CDATA[
+spring.cloud.openfeign.httpclient.enabled=false
+spring.cloud.openfeign.okhttp.enabled=true
+spring.cloud.openfeign.httpclient.max-connections=1000
+spring.cloud.openfeign.httpclient.max-connections-per-route=50		
+		]]>
+		</screen>
+		<para>如果我年轻10年，以我的性格会吧这个缺陷修复了，然后 merge request 到官网，现在让给年轻人做吧。</para>
+		<screen>
+		<![CDATA[
+
+		]]>
+		</screen>
 		<screen>
 		<![CDATA[
 		
@@ -413,19 +385,95 @@ mysql> show full processlist;
 		</screen>
 	</section>
 	<section>
-		<title>回访管理</title>
-		<screen>
+		<title>性能指标</title>
+		<section id="server.tpc">
+			<title>TPC</title>
+			<para>
+				<ulink url="http://www.tpc.org/">http://www.tpc.org/</ulink>
+			</para>
+			<orderedlist>
+				<title> Transaction Processing Performance Council</title>
+				<listitem>
+					<para>TPC-C：是在线事务处理(OLTP)的基准程序</para>
+				</listitem>
+				<listitem>
+					<para>TPC-D：是决策支持(Decision Support) 的基准程序</para>
+				</listitem>
+				<listitem>
+					<para>TPC-E：作为大型企业(Enterprise)信息服务的基准程序</para>
+				</listitem>
+				<listitem>
+					<para>TPC-H：DecisionSupportforAdHocQueries基于特定查询的决策支持</para>
+				</listitem>
+				<listitem>
+					<para>TPC-W：Webe-Commerce（互联网及电子商务）</para>
+				</listitem>
+				<listitem>
+					<para>TPC-R：DecisionSupportforBusinessReporting（基于商业报告的决策支持）</para>
+				</listitem>
+			</orderedlist>
+		</section>
+		<section id="server.iops">
+			<title>IOPS (Input/Output Operations Per Second, pronounced i-ops)</title>
+			<para>
+				<ulink url="http://www.storageperformance.org/home/">http://www.storageperformance.org/home/</ulink>
+			</para>
+		</section>
+		<section id="server.rperf">
+			<title>rPerf</title>
+			<para>http://www-03.ibm.com/systems/power/hardware/notices/rperf.html</para>
+			<screen>
 		<![CDATA[
-		
+
+服务器所需要的rPerf值=SUM(NU * TX * CS/PP) / MC
+
+NU:高峰时并发的用户数
+
+TX:高峰时每个用户的交易数量
+
+CS:在rPerf=1的服务器上，每个交易所需要的CPU秒
+
+PP:高峰持续的时间
+
+MC:最大的CPU利用率（推荐< 70%）
+
+下面举例说明如何计算所需的rPerf值，假定某公司的情况如下：
+
+业务高峰时间：  10:00-11:00=1Hour=3600秒
+
+交易类型：      无复杂查询的简单应用
+
+相对交易类型，用户数目分布:轻的=2000,   一般=50,   重的=5
+
+在高峰时，每个用户的交易数量：
+
+   轻的=120交易/用户
+
+   一般=60交易/用户
+
+   重的=15交易/用户
+
+对于rPerf=1的服务器，每个交易响应的CPU秒
+
+   轻的=1
+
+   一般=3
+
+   重的=15
+
+最大的CPU利用率：60%
+
+根据上述公式，可推算出不同交易类型所对应的rPerf值。
+
+轻的交易：NU*TX*CS/PP=2000*120*1/3600=66.0
+
+一般交易：NU*TX*CS/PP=50*60*3/3600=2.5
+
+重的交易：NU*TX*CS/PP=5*15*15/3600=0.3
+
+所需的总的rPerf/MC=(66.0+2.5+0.3)/0.7=98.3 rPerf
 		]]>
-		</screen>
-	</section>
-	<section>
-		<title>站内消息</title>
-		<screen>
-		<![CDATA[
-		
-		]]>
-		</screen>
+			</screen>
+		</section>
 	</section>
 </section>
