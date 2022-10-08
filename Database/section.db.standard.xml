@@ -1,9 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<setction id="数据库规范">
-	<title>数据库规范</title>
+<section id="数据库设计规范">
+	<title>数据库设计规范</title>
 	<para></para>
 	<section>
 		<title>建表规范</title>
+		<section>
+			<title>使用 UNSIGNED 无符号整形</title>
+			<para> INT[(M)] [UNSIGNED] [ZEROFILL] M 默认为11 普通大小的整数。带符号的范围是-2147483648到2147483647。无符号的范围是0到4294967295。</para>
+			<programlisting>
+			<![CDATA[
+CREATE TABLE `test` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;			
+TRUNCATE `test`.`test`;
+ALTER TABLE `test` AUTO_INCREMENT = 2147483645;
+			]]>
+			</programlisting>
+			<para>重复执行下面SQL插入数据</para>
+			<programlisting>
+			<![CDATA[
+INSERT INTO `test`.`test` (`name`) VALUES ('chen');			
+			]]>
+			</programlisting>
+			<para>直到提示错误 Error Code: 1062. Duplicate entry '2147483647' for key 'PRIMARY' 表示 id 已经到了最大值，无法再插入数据。</para>
+			<programlisting>
+			<![CDATA[
+CREATE TABLE `test` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2147483647 DEFAULT CHARSET=utf8mb4
+			]]>
+			</programlisting>
+			<para>现在改为无符号整形，然后在执行插入SQL</para>
+			<programlisting>
+			<![CDATA[
+ALTER TABLE `test`.`test` CHANGE COLUMN `id` `id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT ;			
+			]]>
+			</programlisting>
+			<para>再次调整 AUTO_INCREMENT 值，然后运行插入数据的 SQL</para>
+			<programlisting>
+			<![CDATA[
+ALTER TABLE `test` AUTO_INCREMENT = 4294967295;
+			]]>
+			</programlisting>
+			<para>Error Code: 1062. Duplicate entry '4294967295' for key 'PRIMARY'，INT已经达到最大值，此时仍需要插入数据，就需要将字段的数据类型改为 BIGINT</para>
+			<programlisting>
+			<![CDATA[
+ALTER TABLE `test`.`test` CHANGE COLUMN `id` `id` BIGINT UNSIGNED NOT NULL ;
+			]]>
+			</programlisting>
+			<para>BIGINT[(M)] [UNSIGNED] [ZEROFILL] M默认为 20 大整数。带符号的范围是-9223372036854775808到9223372036854775807。无符号的范围是0到18446744073709551615。</para>
+		</section>
 	</section>
 	<section>
 		<title>查询规范</title>
@@ -13,7 +63,7 @@
 		</section>
 	</section>
 
-</setction>
+</section>
 <!-- 
 虽然oracle主要的工作是dba所做的事情，不过作为一个普通的开发人员也时时刻刻和数据库打交道，普通开发人员也得有一些基本数据库技能。下面是我在开发中的一些oracle数据库开发的一些经验。欢迎大家提意见。
 

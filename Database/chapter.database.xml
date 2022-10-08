@@ -3,13 +3,12 @@
 	<title>数据库设计</title>
 	<subtitle>Database Modeling Design / RDBMS / ORDBMS / OODBMS / HDMS</subtitle>
 	<para>下面数据库设计实例中，大部分使用MySQL,PostgreSQL为例,少部分以Oracle为例。</para>
-	
+	&section.db.standard.xml;
 	&section.db.rdbms.xml;
 	&section.db.cache.xml;
 	&section.db.parallel.xml;
 	&section.db.security.xml;
 	&section.db.example.xml;
-	&section.db.standard.xml;
 	&section.nosql.xml;
 	&section.spring.data.xml;
 </chapter>

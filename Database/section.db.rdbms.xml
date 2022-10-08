@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- $Id: chapter.rdbms.xml 654 2013-07-30 07:30:20Z netkiller $ -->
-<section id="rdbms">
+<section id="关系型数据库设计">
 	<title>关系型数据库设计</title>
 	<subtitle>MySQL 数据库设计案例</subtitle>
 	<section id="data.dictionary">
