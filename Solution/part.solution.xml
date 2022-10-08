@@ -1,5 +1,4 @@
 ﻿<part id="index"><?dbhtml dir="solution"?>
 	<title>设计与解决方案</title>
  	&chapter.payment.xml;
- 	&chapter.shop.xml;
 </part>

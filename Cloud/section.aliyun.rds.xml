@@ -88,5 +88,21 @@ source /etc/profile.d/percona.sh
 			</screen>
 		</section>
 	</section>
-
+	<section>
+		<title>换表升级</title>
+		<para>当前表改名，然后再基于旧表创建新的空表</para>
+		<screen>
+		<![CDATA[
+ALTER TABLE old_table_name  RENAME TO new_table_name; 
+CREATE TABLE current_table_name LIKE new_table_name;		
+		]]>
+		</screen>
+		<para></para>
+		<screen>
+		<![CDATA[
+ALTER TABLE old_table_name  RENAME TO new_table_name; 		
+CREATE TABLE old_table_name SELECT * FROM new_table_name WHERE ...;
+		]]>
+		</screen>
+	</section>
 </section>

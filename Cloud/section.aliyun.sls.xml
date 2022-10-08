@@ -4,7 +4,7 @@
 	<section>
 		<title>SLB 日志</title>
 		<section>
-			<title>注册流程</title>
+			<title>IP 地址查看</title>
 			<screen>
 			<![CDATA[
 * | select COALESCE(client_ip, vip_addr, upstream_addr) as source, COALESCE(upstream_addr, vip_addr, client_ip) as dest, sum(request_length) as inflow group by grouping sets( (client_ip, vip_addr), (vip_addr, upstream_addr))			
@@ -34,6 +34,28 @@
 			<screen>
 			<![CDATA[
 (request_uri = '/v2/api')| select  ROUND(request_time) request_time,  count(ROUND(request_time)) count group by  request_time order by  request_time desc limit  1000000 			
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>TOP 20 URL</title>
+			<screen>
+			<![CDATA[
+(*)| select  request_uri, count(1) countGROUP by  request_uri ORDER by  count DESC LIMIT  20 			
+			]]>
+			</screen>
+			<screen>
+			<![CDATA[
+(slb_vport not 8080 and request_uri not '/v2/api')| select  request_uri, count(1) countGROUP by  request_uri ORDER by  count DESC LIMIT  20 			
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>QPS</title>
+			<screen>
+			<![CDATA[
+* | select time_series(__time__, '100s', '%H:%i:%s', '0') as time, COUNT(1)/100 as QPS GROUP by time ORDER by time LIMIT 1000
+* | select time_series(__time__, '10s', '%H:%i:%s', '0') as time, COUNT(1)/10 as QPS GROUP by time ORDER by time LIMIT 1000		
 			]]>
 			</screen>
 		</section>

@@ -22,5 +22,6 @@
 	&section.arch.mq.xml;
 	&section.arch.socket.xml;
 	&section.arch.testing.xml;
+	&section.arch.grey.xml;
 	
 </chapter>

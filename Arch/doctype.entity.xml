@@ -18,6 +18,7 @@
 <!ENTITY section.arch.permission.xml	SYSTEM "section.arch.permission.xml">
 <!ENTITY section.arch.communication.xml	SYSTEM "section.arch.communication.xml">
 <!ENTITY section.arch.testing.xml		SYSTEM "section.arch.testing.xml">
+<!ENTITY section.arch.grey.xml			SYSTEM "section.arch.grey.xml">
 
 <!ENTITY section.web.xml 				SYSTEM "section.web.xml">
 <!ENTITY section.web.search.xml			SYSTEM "section.web.search.xml">
