@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="数据库设计规范">
-	<title>数据库设计规范</title>
+<section id="数据库设计于使用规范">
+	<title>数据库设计于使用规范</title>
 	<para></para>
 	<section>
 		<title>建表规范</title>
 		<section>
 			<title>使用 UNSIGNED 无符号整形</title>
-			<para> INT[(M)] [UNSIGNED] [ZEROFILL] M 默认为11 普通大小的整数。带符号的范围是-2147483648到2147483647。无符号的范围是0到4294967295。</para>
+			<para>没有特别需要，不要使用有符号整形，尤其是是 AUTO_INCREMENT。</para>
+			<para>INT[(M)] [UNSIGNED] [ZEROFILL] M 默认为11 普通大小的整数。带符号的范围是-2147483648到2147483647。无符号的范围是0到4294967295。</para>
 			<programlisting>
 			<![CDATA[
 CREATE TABLE `test` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;			
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+		
 TRUNCATE `test`.`test`;
 ALTER TABLE `test` AUTO_INCREMENT = 2147483645;
 			]]>
 			</programlisting>
-			<para>重复执行下面SQL插入数据</para>
+			<para>下面演示插入失败的情况，重复执行下面SQL插入数据</para>
 			<programlisting>
 			<![CDATA[
 INSERT INTO `test`.`test` (`name`) VALUES ('chen');			
@@ -54,116 +56,60 @@ ALTER TABLE `test`.`test` CHANGE COLUMN `id` `id` BIGINT UNSIGNED NOT NULL ;
 			</programlisting>
 			<para>BIGINT[(M)] [UNSIGNED] [ZEROFILL] M默认为 20 大整数。带符号的范围是-9223372036854775808到9223372036854775807。无符号的范围是0到18446744073709551615。</para>
 		</section>
+		<section>
+			<title>使用 ENUM( 'true' , 'false') 替代 TINYINT(1)</title>
+			<para>ENUM 提高数据可读性，TINYINT 需要查数据字典。</para>
+			<programlisting>
+			<![CDATA[
+			
+			]]>
+			</programlisting>
+		</section>
+		<section>
+			<title>尽量不使用 utf8mb4</title>
+			<para>GB2312 占用两个字节，UTF-8 占用三个字节，utf8mb4 占用4个字节。如果是大系统不建议使用 utf8mb4，他会增加磁盘的开销。</para>
+			<para>建议这样使用，数据库默认是 utf8，表也是 utf8，在需要存储表情符号是使用 utf8mb4</para>
+			<programlisting>
+			<![CDATA[
+CREATE SCHEMA `netkiller_schema` DEFAULT CHARACTER SET utf8 ;
+
+CREATE TABLE `netkiller_table` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `nickname` varchar(45) CHARACTER SET utf8mb4 DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8			
+			]]>
+			</programlisting>
+			<para>上面表中 name 存储姓名没有只有文字所以使用 utf8, nickname 昵称字段允许使用各种符号，所以使用 utf8mb4。</para>
+			<programlisting>
+			<![CDATA[
+CREATE TABLE `test`.`table_utf8` (
+  `name` VARCHAR(10) CHARACTER SET 'utf8' COLLATE 'utf8_general_ci' NOT NULL);
+  
+CREATE TABLE `test`.`table_utf8mb4` (
+  `name` VARCHAR(10) CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_general_ci' NOT NULL);
+  	
+			]]>
+			</programlisting>
+		</section>
+		
 	</section>
 	<section>
 		<title>查询规范</title>
 		<para></para>
+		<section>
+			<title>count(*) 可以使用吗？</title>
+			<para>可以使用，目前的数据库对 count(*) 都有优化</para>
+		</section>
 		<section>
 			<title>join 规范</title>
 		</section>
 	</section>
 
 </section>
-<!-- 
-虽然oracle主要的工作是dba所做的事情，不过作为一个普通的开发人员也时时刻刻和数据库打交道，普通开发人员也得有一些基本数据库技能。下面是我在开发中的一些oracle数据库开发的一些经验。欢迎大家提意见。
-
-表命名规则
-表命名是以英文名称为原则，表示该表的具体意义，例如商品表可以叫item，商品图片表可以叫item_image。
-如果公司业务复杂，数据库过多，schema也比较多，则要根据schema的来命名，例如：在crm下面可以用crm开头命名CRM_USER.
-临时表应该以tmp开头TMP_USER,这样的表一段时间后将会清除。
-备份数据使用的表应该使用bak开头，这样的表在被确认不需要后将被清除。
-注:表的命名不能超过30个字符 
- 
- 
-字段命名
-表达该字段的含义
-不能用oracle中的保留字
-注释一定要详细加上，如status 状态，0 有效，1删除
-注：字段长度也尽量简化（如crm_test_times_currently，太长）
- 
- 
-索引的命名规则
-主键(primary key)索引
-    PK_表名_列名
-唯一键(unique key)索引
-    UK_表名_列名
-普通索引
-     IND_表名_列名
-注:索引的命名不能超过30个字符(在索引中的列名可以简写,一般情况下不简写索引中的表名)
- 
- 
-过程与函数
-过程的命名规则
-    以SP_开头,过程中要注解此过程的作者,编写时间,此过程的功能
-函数的命名规则
-    以FUN_开头,函数中要注解此函数的作者,编写时间,此函数的功能
-变量的命名规则
-    本地变量以l_开头;
-    传递参数：p_变量名_in  （传入）
-              p_变量名_out（传出） 
-    游标类型cur_开头;
- 
- 
-序列的命名规则
-           序列的命名
-    SEQ_表名_列名
-    如何在程序中使用序列所产生的值
-         INSERT INTO test(id,nick)
-                        VALUES(seq_test_id.nextval,'test');
-    如何查询序列的当前值：
-         select seq_test_id.currval from dual;
- 
- 
-SQL编写规范
-SQL语句所有表名,字段名全部小写,SQL保留字大写；
- 
-select  *查询语句不允许出现,要明确写查询哪些列；
- 
-连接符or、in、and、以及＝、<=、>=等前后加上一个空格 
- 
-SQL语句注意缩进
-where子句书写时，每个条件占一行，语句另起一行时，以保留字或者连接符开始，连接符右对齐
- 
-多表连接时，使用表的别名来引用列
-sql示例：
-SELECT aa.title,aw.bid,aw.closingdate,u.nick
-                            FROM t_users u,
-                                        t_test tt
-                                        t_item aa
-                             WHERE u.id = tt.seller
-                                   AND aw.auction = aa.id
-                                   AND u.nick =‘test’;
- 
-where条件中尽量减少使用常量比较，改用绑定变量 
- 
-尽量减少order by和group by排序操作 ,有些排序操作可以由应用程序完成
-如必须使用排序操作，请遵循如下规则 :
-                             1.排序列上有索引
-                             2.如结果集不需唯一，使用union all代替                  
-                                 union 
- 
-尽量避免对索引列进行计算，或者对列进行函数操作然后查询 
-    例如:
-         SELECT t.id FROM test t 
-                           WHERE upper(t.nick) = :1
-         正确的是:
-         SELECT t.id FROM test t 
-                            WHERE t.nick = upper(:1)
-注意绑定变量与索引列数据类型的一致性
-       表test字段id的类型为number
-错误的是：
-    SELECT  t.subject from test 
-                                    WHERE t.id=‘5’; 
-    此写法将不会走id字段上的索引,执行计划为全表扫描
-正确的是：
-    SELECT  t.subject FROM test 
-                                    WHERE t.id=5; 
- 
-分页sql写法
-select * from (select t.*,rownum as rn from (select id,name,sex from test order by id desc) t where rownum < 21) where rn >19;
- 
-适当使用提示优化
-select /* + index(a idx_test)*/ count(*) from test a;
-提示符很多，有时间整理下和大家讨论讨论
-
- -->
+<!-- 虽然oracle主要的工作是dba所做的事情，不过作为一个普通的开发人员也时时刻刻和数据库打交道，普通开发人员也得有一些基本数据库技能。下面是我在开发中的一些oracle数据库开发的一些经验。欢迎大家提意见。 表命名规则 表命名是以英文名称为原则，表示该表的具体意义，例如商品表可以叫item，商品图片表可以叫item_image。 如果公司业务复杂，数据库过多，schema也比较多，则要根据schema的来命名，例如：在crm下面可以用crm开头命名CRM_USER. 临时表应该以tmp开头TMP_USER,这样的表一段时间后将会清除。 备份数据使用的表应该使用bak开头，这样的表在被确认不需要后将被清除。 注:表的命名不能超过30个字符 字段命名 表达该字段的含义 不能用oracle中的保留字 注释一定要详细加上，如status 状态，0 有效，1删除 注：字段长度也尽量简化（如crm_test_times_currently，太长） 索引的命名规则 主键(primary key)索引 PK_表名_列名 唯一键(unique key)索引 UK_表名_列名 普通索引 IND_表名_列名 注:索引的命名不能超过30个字符(在索引中的列名可以简写,一般情况下不简写索引中的表名) 
+	过程与函数 过程的命名规则 以SP_开头,过程中要注解此过程的作者,编写时间,此过程的功能 函数的命名规则 以FUN_开头,函数中要注解此函数的作者,编写时间,此函数的功能 变量的命名规则 本地变量以l_开头; 传递参数：p_变量名_in （传入） p_变量名_out（传出） 游标类型cur_开头; 序列的命名规则 序列的命名 SEQ_表名_列名 如何在程序中使用序列所产生的值 INSERT INTO test(id,nick) VALUES(seq_test_id.nextval,'test'); 如何查询序列的当前值： select seq_test_id.currval from dual; SQL编写规范 SQL语句所有表名,字段名全部小写,SQL保留字大写； select *查询语句不允许出现,要明确写查询哪些列； 连接符or、in、and、以及＝、<=、>=等前后加上一个空格 SQL语句注意缩进 where子句书写时，每个条件占一行，语句另起一行时，以保留字或者连接符开始，连接符右对齐 多表连接时，使用表的别名来引用列 sql示例： SELECT aa.title,aw.bid,aw.closingdate,u.nick 
+	FROM t_users u, t_test tt t_item aa WHERE u.id = tt.seller AND aw.auction = aa.id AND u.nick =‘test’; where条件中尽量减少使用常量比较，改用绑定变量 尽量减少order by和group by排序操作 ,有些排序操作可以由应用程序完成 如必须使用排序操作，请遵循如下规则 : 1.排序列上有索引 2.如结果集不需唯一，使用union all代替 union 尽量避免对索引列进行计算，或者对列进行函数操作然后查询 例如: SELECT t.id FROM test t WHERE upper(t.nick) = :1 正确的是: SELECT t.id FROM test t WHERE t.nick = upper(:1) 注意绑定变量与索引列数据类型的一致性 表test字段id的类型为number 错误的是： SELECT t.subject from test WHERE t.id=‘5’; 此写法将不会走id字段上的索引,执行计划为全表扫描 正确的是： SELECT t.subject FROM test 
+	WHERE t.id=5; 分页sql写法 select * from (select t.*,rownum as rn from (select id,name,sex from test order by id desc) t where rownum < 21) where rn >19; 适当使用提示优化 select /* + index(a idx_test)*/ count(*) from test a; 提示符很多，有时间整理下和大家讨论讨论 -->
