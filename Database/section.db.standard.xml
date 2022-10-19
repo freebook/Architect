@@ -106,6 +106,16 @@ CREATE TABLE `test`.`table_utf8mb4` (
 		<section>
 			<title>join 规范</title>
 		</section>
+		<section>
+			<title>禁止 CONCAT</title>
+			<programlisting>
+			<![CDATA[
+SELECT count(DISTINCT user_id)
+FROM user_cooperate coo
+WHERE coo.state = 1	AND coo.create_time <= CONCAT('2022-09-11', ' 23:59:59')			
+			]]>
+			</programlisting>
+		</section>
 	</section>
 
 </section>

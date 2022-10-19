@@ -33,7 +33,10 @@
 			<title>分析接口请求时间</title>
 			<screen>
 			<![CDATA[
-(request_uri = '/v2/api')| select  ROUND(request_time) request_time,  count(ROUND(request_time)) count group by  request_time order by  request_time desc limit  1000000 			
+(request_uri = '/v2/api')| select  ROUND(request_time) request_time,  count(ROUND(request_time)) count group by  request_time order by  request_time desc limit  1000000
+
+(request_uri = '/v1/api')| select  ROUND(request_time,2) request_time,  count(ROUND(request_time,2)) count group by  request_time order by  request_time desc limit  100000
+
 			]]>
 			</screen>
 		</section>
