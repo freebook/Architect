@@ -351,7 +351,7 @@ production
 			<para>再次测试 返回 grey</para>
 			<screen>
 			<![CDATA[
-[root@netkiller nginx]# curl http://www.netkiller.cn/grey/debug?city=111
+[root@netkiller nginx]# curl 'http://www.netkiller.cn/grey/debug?city=111'
 grey			
 			]]>
 			</screen>
