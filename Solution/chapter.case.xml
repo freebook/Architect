@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="ecshop">
-	<title>技术架构</title>
+<section id="业务日志">
+	<title>业务日志</title>
 	<para>CMS + ECSHOP(ECSHIT)</para>
 
 	<para>应用程序基于pylons框架.</para>
@@ -98,8 +98,7 @@ pxy: apache -> rewrite + mod_proxy_cascade
 	<para>
 
 	</para>
-	
-	<screenshot>
-		<graphic fileref="../images/solution/postfix_cluster.png" />
-	</screenshot>
+	<para>
+	</para>
+
 </section>

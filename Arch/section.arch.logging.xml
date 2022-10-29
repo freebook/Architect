@@ -751,4 +751,127 @@ $ collection -p 1213
 			</section>
 		</section>
 	</section>
+	<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="日志中心规划">
+		<title>日志中心规划</title>
+
+		<section xml:id="目前的方案">
+			<title>目前的方案</title>
+			<para>
+				目前方案可能满足基本的日志需求
+			</para>
+			<para>
+				spring 容器 –&gt; /mnt/logs/project 产生日志文件 –&gt;
+				filebeat 将 /mnt/logs/project 挂载到 /logs 作为 input 输出
+				–&gt; logstash -&gt; elasticsearch –&gt; kibana
+			</para>
+		</section>
+		<section xml:id="优化后方案">
+			<title>优化后方案</title>
+			<para>
+				logback 自带 logstash 发送功能，不需要再经过 filebeat 一层转发。
+			</para>
+			<screenshot>
+				<graphic fileref="/architect/images/logging/logs.png" />
+			</screenshot>
+	
+			<section xml:id="日志分级">
+				<title>日志分级</title>
+				<para>
+					目前所有日志输出在一个文件中，不区分类别，混在一起。
+				</para>
+				<para>
+					日志分级之后主要有三类：
+				</para>
+				<orderedlist numeration="arabic" spacing="compact">
+					<listitem>
+						<para>
+							系统类日志：操作系统产生的/var/log
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							应用服务器类日志：nginx、spring
+							包括开发过程中用户调试产生的日志……
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							业务日志：用户产生的日志，例如下单、充值……
+						</para>
+					</listitem>
+				</orderedlist>
+				<para>
+					业务日志应用案例举例：用户充值 100 元，会产生业务日志
+				</para>
+				<informaltable>
+					<tgroup cols="1">
+						<colspec align="left" />
+						<tbody>
+							<row>
+								<entry>
+									2022-07-30 11:23:00 用户 AAAA 充值 100，账户余额 50
+									元，充值后 150元
+								</entry>
+							</row>
+							<row>
+								<entry>
+									2022-07-30 11:23:00 用户 AAAA 充值 30，账户余额 150
+									元，充值后 180元
+								</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</informaltable>
+				<para>
+					当系统收到黑客攻击，用户余额被恶意更改，此时就可能通过日志核查用户充值情况。业务日志输出要每笔清晰干净，不能与开发调试信息混在一起。
+				</para>
+			</section>
+			<section xml:id="日志查询">
+				<title>日志查询</title>
+				<para>
+					日志提供两种日志查询方案：
+				</para>
+				<orderedlist numeration="arabic" spacing="compact">
+					<listitem>
+						<para>
+							文件方案
+						</para>
+					</listitem>
+					<listitem>
+						<para>
+							kibana 方案
+						</para>
+					</listitem>
+				</orderedlist>
+				<para>
+					工作中观察到并不是所有人都习惯或喜欢使用
+					kibana，更多的人更习惯使用 tail -f , grep 等 linux
+					观察日志，所以我们会提供两种查询方式。
+				</para>
+				<para>
+					所有的日志都会同步到指定的日志中心服务器上。
+				</para>
+			</section>
+			<section xml:id="日志归档">
+				<title>日志归档</title>
+				<para>
+					有关部门会要求公司日志必须保留一定时间，我们自己也需要。
+				</para>
+				<para>
+					生产环境日志保留一个月，对于冷日志，失去时效的日志，几乎不会在看的日志，每天同步到办公室的备份服务器上，压缩打包存放到
+					NAS 中。
+				</para>
+				<para>
+					当需时，重新解压展开。
+				</para>
+			</section>
+			<section xml:id="日志监控">
+				<title>日志监控</title>
+				<para>
+					与监控系统联动，在日志中埋点，分析日志埋点，通过仪表板，反应监控状态。
+				</para>
+			</section>
+		</section>
+	</section>
+
 </section>
