@@ -5,4 +5,6 @@
 	&section.aliyun.ecs.xml;
 	&section.aliyun.rds.xml;
 	&section.aliyun.sls.xml;
+	&section.aliyun.bottleneck.xml;
+	&section.aliyun.bastionhost.xml;
 </chapter>

@@ -1,13 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section id="瓶颈分析"><!-- <?dbhtml dir="system" ?> -->
-	<title>瓶颈分析</title>
+	<title>压力测试与瓶颈分析方案</title>
+
+	<section xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xml:id="压力测试与瓶颈分析方案">
+		<title>压力测试方案</title>
+		<section xml:id="背景">
+			<title>背景</title>
+			<para>之前做了一次压力测试，效果不理想，无论怎样增加扩展pod都无法达到压力测试极限。</para>
+		</section>
+		<section xml:id="制定测试方案">
+			<title>制定新测试方案</title>
+			<para>
+				常规测试是从入口发出请求，在网络畅通，较难分析出瓶颈。
+			</para>
+			<para>
+				本次制定的新方案是逆向测试，用渗透的方式，测试从末端开始请求，对用户链路所经历的节点不断渗透，向用户端进发。这种方案可用于分析，外部和内部因素产生的性能瓶颈。
+			</para>
+			<para>
+				<graphic format="png" fileref="/architect/images/aliyun/test/test.png" srccredit="neo" />
+			</para>
+		</section>
+		<section xml:id="压力测试终端机">
+			<title>压力测试终端机</title>
+			<orderedlist>
+				<title>目的:</title>
+				<listitem>内网 ECS Windows：在阿里云上购买一个 windows 测试机，直接内网访问阿里云资源，可以用来排查 EIP/SLB/WAF等造成的瓶颈</listitem>
+				<listitem>外网 三台 Windows 压测机：主要用来压测 WAF/SLB 过去的流量</listitem>
+				<listitem>Pod 测试节点：直接 Pod 对 Pod 压测，Pod 对 Service 压测。注意：最好将两个pod放在一个节点上。</listitem>
+			</orderedlist>
+		</section>
+		<section xml:id="服务器和服务优化">
+			<title>服务器和服务优化</title>
+			<para>保障流量畅通达到数据库，再返回至用户。</para>
+			<orderedlist>
+				<title>以下列出优化的关键点：</title>
+				<listitem>sysctl / ulimit 优化</listitem>
+				<listitem>网关连接数 Openresty</listitem>
+				<listitem>Nginx 链接数</listitem>
+				<listitem>Tomcat 链接数</listitem>
+				<listitem>Springboot 链接数</listitem>
+				<listitem>MySQL JDBC、Redis Jedis、Elasticsearch 服务连接数</listitem>
+			</orderedlist>
+
+			<section xml:id="阿里云优化">
+				<title>阿里云优化</title>
+				<para>需要确认下面阿里云服务的链接数设置</para>
+				<para>RDS 链接数 . Redis 链接数 . Elasticsearch 链接数 . MongoDB 链接数</para>
+			</section>
+			<section xml:id="微服务链接池优化">
+				<title>微服务链接池优化</title>
+				<para>php-fpm 链接数 . jdbc 链接池 . redis 链接池 . elasticsearch 链接池 . mongodb 链接池	</para>
+			</section>
+			<section xml:id="数据库慢sql和索引优化">
+				<title>数据库慢SQL和索引优化</title>
+				<para>根据上次压测结果，先将发现的慢SQL，优化掉</para>
+			</section>
+		</section>
+		<section xml:id="接口压测策略">
+			<title>接口压测策略</title>
+			<para>注意：接口选择，不能选择有对接第三方的接口，第三方接口会影响到我们的 QPS</para>
+			<para>
+				除此之外，还是注意服务器进程跟线程的启动原理，例如设置最大线程数8000，并不是服务器启动之后就会有8000个线程，而是最小可以只期待100个左右，随着链接数上升，系统不断开启新线程。启动线程的过程是很消耗资源的，会影响到测试结果。
+			</para>
+			<para>
+				所以一般，我们会去第二次压测数据为准。首次压测的目的是让服务器将该启动的线程和分配的资源，初始化好。
+			</para>
+			<section xml:id="首先选择接口">
+				<title>首先：选择接口</title>
+				<orderedlist>
+					<title>我们要准备几种接口：</title>
+					<listitem>没有业务逻辑的空接口，仅仅返回一个字符串之类的，可以使用 health 替代</listitem>
+					<listitem>有业务逻辑的，没有数据库访问的</listitem>
+					<listitem>有业务逻辑，有缓存访问</listitem>
+					<listitem>有业务逻辑，有缓存访问，有数据库访问</listitem>
+					<listitem>有业务逻辑，有缓存访问，有数据库访问，有 ES</listitem>
+					<listitem>有业务逻辑，有缓存访问，有数据库访问，有 ES，有 mongodb</listitem>
+				</orderedlist>
+
+			</section>
+			<section xml:id="然后我们对服务器做一个摸底操作">
+				<title>然后：我们对服务器做一个摸底操作</title>
+				<para>
+					第一轮：压 health
+				</para>
+				<para>
+					为什么压健康检查接口？因为它不会操作数据库和缓存也没有业务逻辑。压测该还接口对服务器资源消耗最小，同时能验证出服务器最大连接数设置是否又问题。
+				</para>
+				<para>
+					第二轮：压单服务接口，即该服务有业务逻辑也会访问数据库等资源，但是他不会链接其他接口。
+				</para>
+				<para>
+					对比两次压测结果，就知道带有业务逻辑之后，系统会下降多少性能
+				</para>
+			</section>
+			<section xml:id="最后混合压测增加复杂度">
+				<title>最后：混合压测，增加复杂度</title>
+				<para>
+					第三轮：压综合服务接口，即该服务有业务逻辑也会访问数据库等资源，同时会链接其他接口完成一组业务逻辑。
+				</para>
+			</section>
+			<section xml:id="逆向接口性能分析">
+				<title>逆向接口性能分析</title>
+				<para>
+					首先通过 ARSM 找出慢接口，然后查看该接口都调用了哪些其他接口，最后分别对这些接口做压力测试，找出瓶颈原因。
+				</para>
+			</section>
+		</section>
+		<section xml:id="接口压测实施流程">
+			<title>接口压测实施流程</title>
+			<para>首先，使用内网 ECS windows 压测 K8S ingress IP 地址，然后再压测 K8S SLB 地址 . 然后，压测外网 使用外部三台 ECS windows 压测外网</para>
+			<para>最后，上面两组测试都为找到问题，我们启动一个 Pod 测试机，进行 pod 对 pod, pod 对 service 压测</para>
+		</section>
+	</section>
 	<section>
-		<title>Nginx</title>
-		<para></para>
-		<para>链接复用</para>
+		<title>瓶颈分析与优化方案</title>
+
 		<section>
-			<title>http 头</title>
-			<screen>
+			<title>Nginx</title>
+			<para></para>
+			<para>链接复用</para>
+			<section>
+				<title>http 头</title>
+				<screen>
 			<![CDATA[
 location /api/ {
         proxy_http_version 1.1;
@@ -19,22 +133,22 @@ location /api/ {
     }
 			
 			]]>
-			</screen>
-		</section>
-		<section>
-			<title>timeout</title>
-			<screen>
+				</screen>
+			</section>
+			<section>
+				<title>timeout</title>
+				<screen>
 			<![CDATA[
         proxy_connect_timeout 120;
         proxy_send_timeout 120;
         proxy_read_timeout 120;
 			]]>
-			</screen>
-		</section>
-		<section>
-			<title>keepalive 优化</title>
-			<para>proxy_set_header Connection "";</para>
-			<screen>
+				</screen>
+			</section>
+			<section>
+				<title>keepalive 优化</title>
+				<para>proxy_set_header Connection "";</para>
+				<screen>
 			<![CDATA[
 upstream http_backend {
     server 127.0.0.1:8080;
@@ -53,31 +167,31 @@ server {
     }
 }			
 			]]>
-			</screen>
+				</screen>
+			</section>
 		</section>
-	</section>
-	<section id="Springboot内置Tomcat">
-		<title>Springboot</title>
-		<screen>
+		<section id="Springboot内置Tomcat">
+			<title>Springboot</title>
+			<screen>
 		<![CDATA[
 / # cat /proc/1/status | grep Threads
 Threads:        61		
 		]]>
-		</screen>
-		<para>另一中方式，记得数值要 -1 因为ls -l 第一行是 total 0 统计文件数量。</para>
-		<screen>
+			</screen>
+			<para>另一中方式，记得数值要 -1 因为ls -l 第一行是 total 0 统计文件数量。</para>
+			<screen>
 		<![CDATA[
 / # ls -l /proc/1/task/ | wc -l
 61		
 		]]>
-		</screen>
+			</screen>
 
-	</section>
-	<section id="Redis连接池分析">
-		<title>Redis 连接池不生效</title>
-		<para>压力测试中，系统出现瓶颈，流量始终无法达到数据库。</para>
-		<para>开发小伙伴这样配置 Redis 由于太久脱离一线，我也不清楚配置是否正确，只能验证一下。</para>
-		<screen>
+		</section>
+		<section id="Redis连接池分析">
+			<title>Redis 连接池不生效</title>
+			<para>压力测试中，系统出现瓶颈，流量始终无法达到数据库。</para>
+			<para>开发小伙伴这样配置 Redis 由于太久脱离一线，我也不清楚配置是否正确，只能验证一下。</para>
+			<screen>
 		<![CDATA[
 spring.redis.host=172.18.200.5
 spring.redis.port=6379
@@ -90,9 +204,9 @@ spring.redis.pool.max-wait=-1
 spring.redis.pool.min-idle=5
 spring.redis.pool.timeout=1000		
 		]]>
-		</screen>
-		<para>查看客户端连接数是 2</para>
-		<screen>
+			</screen>
+			<para>查看客户端连接数是 2</para>
+			<screen>
 		<![CDATA[
 127.0.0.1:6379> info Clients
 # Clients
@@ -105,9 +219,9 @@ blocked_clients:0
 tracking_clients:0
 clients_in_timeout_table:0		
 		]]>
-		</screen>
-		<para>创建一个空的 Springboot 项目，写一个最简单的接口，接口中做 set/get 操作。</para>
-		<screen>
+			</screen>
+			<para>创建一个空的 Springboot 项目，写一个最简单的接口，接口中做 set/get 操作。</para>
+			<screen>
 		<![CDATA[
 	@Autowired
 	private RedisTemplate<String, String> redisTemplate;
@@ -119,15 +233,15 @@ clients_in_timeout_table:0
 		return name;
 	}		
 		]]>
-		</screen>
-		<para>使用 ab 命令压测一下</para>
-		<screen>
+			</screen>
+			<para>使用 ab 命令压测一下</para>
+			<screen>
 		<![CDATA[
 ab -c 100 -n 10000 http://localhost:8080/redis
 		]]>
-		</screen>
-		<para>观看连接池的状态</para>
-		<screen>
+			</screen>
+			<para>观看连接池的状态</para>
+			<screen>
 		<![CDATA[
 127.0.0.1:6379> info Clients
 # Clients
@@ -140,10 +254,10 @@ blocked_clients:0
 tracking_clients:0
 clients_in_timeout_table:0			
 		]]>
-		</screen>
-		<para>connected_clients:2 数值没有变化，我的猜测果然是对的，这种配置我记得是 Spring 1.5 之前的。</para>
-		<para>网上说 Springboot 默认使用 lettuce</para>
-		<screen>
+			</screen>
+			<para>connected_clients:2 数值没有变化，我的猜测果然是对的，这种配置我记得是 Spring 1.5 之前的。</para>
+			<para>网上说 Springboot 默认使用 lettuce</para>
+			<screen>
 		<![CDATA[
 spring.redis.host=172.18.200.5
 spring.redis.port=6379
@@ -158,9 +272,9 @@ spring.redis.lettuce.pool.max-wait=-1ms
 spring.redis.lettuce.shutdown-timeout=100ms
 spring.cache.redis.cache-null-values=false	
 		]]>
-		</screen>
-		<para>配置后使用 ab 压测，connected_clients:2 没有任何变化。</para>
-		<screen>
+			</screen>
+			<para>配置后使用 ab 压测，connected_clients:2 没有任何变化。</para>
+			<screen>
 		<![CDATA[
 127.0.0.1:6379> info Clients
 # Clients
@@ -173,33 +287,33 @@ blocked_clients:0
 tracking_clients:0
 clients_in_timeout_table:0			
 		]]>
-		</screen>
-		<para>开启 Springboot 调试模式 debug=true，启动需要引入 commons-pool2</para>
-		<screen>
+			</screen>
+			<para>开启 Springboot 调试模式 debug=true，启动需要引入 commons-pool2</para>
+			<screen>
 		<![CDATA[
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>	
 		]]>
-		</screen>
-		<para>启动提示</para>
-		<screen>
+			</screen>
+			<para>启动提示</para>
+			<screen>
 		<![CDATA[
 Caused by: java.lang.NoClassDefFoundError: org/apache/commons/pool2/impl/GenericObjectPoolConfig		
 		]]>
-		</screen>
-		<para>引入 commons-pool2 后启动成功</para>
-		<screen>
+			</screen>
+			<para>引入 commons-pool2 后启动成功</para>
+			<screen>
 		<![CDATA[
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-pool2</artifactId>
 		</dependency>			
 		]]>
-		</screen>
-		<para>虽然启动成功，但是 ab 压测仍然 connected_clients:2 </para>
-		<screen>
+			</screen>
+			<para>虽然启动成功，但是 ab 压测仍然 connected_clients:2 </para>
+			<screen>
 		<![CDATA[
 127.0.0.1:6379> info Clients
 # Clients
@@ -212,17 +326,17 @@ blocked_clients:0
 tracking_clients:0
 clients_in_timeout_table:0		
 		]]>
-		</screen>
-		<para>只能在debug信息中找线索，发现 JedisConnectionConfiguration</para>
-		<screen>
+			</screen>
+			<para>只能在debug信息中找线索，发现 JedisConnectionConfiguration</para>
+			<screen>
 		<![CDATA[
    JedisConnectionConfiguration:
       Did not match:
          - @ConditionalOnClass did not find required classes 'org.apache.commons.pool2.impl.GenericObjectPool', 'redis.clients.jedis.Jedis' (OnClassCondition)
 		]]>
-		</screen>
-		<para>改为 jedis 试试，pom.xml</para>
-		<screen>
+			</screen>
+			<para>改为 jedis 试试，pom.xml</para>
+			<screen>
 		<![CDATA[
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -239,18 +353,18 @@ clients_in_timeout_table:0
 			<artifactId>jedis</artifactId>
 		</dependency>	
 		]]>
-		</screen>
-		<para>配置文件做响应调整</para>
-		<screen>
+			</screen>
+			<para>配置文件做响应调整</para>
+			<screen>
 		<![CDATA[
 spring.redis.jedis.pool.max-active=1000
 spring.redis.jedis.pool.max-idle=80
 spring.redis.jedis.pool.min-idle=20
 spring.redis.jedis.pool.max-wait=-1
 		]]>
-		</screen>
-		<para>使用 ab 压测一轮，终于 connected_clients:190 上去了。</para>
-		<screen>
+			</screen>
+			<para>使用 ab 压测一轮，终于 connected_clients:190 上去了。</para>
+			<screen>
 		<![CDATA[
 127.0.0.1:6379> info Clients
 # Clients
@@ -263,14 +377,14 @@ blocked_clients:0
 tracking_clients:0
 clients_in_timeout_table:0	
 		]]>
-		</screen>
-		<para>lettuce 连接池，始终还没有解决，目前先用 jedis，其实连接池是同质化产品，虽有性能差异，但差距非常小，对于项目整体而言可以说微乎其微。就如同 Tomcat 跟 Undertow 差距，有时我们需要整理考虑架构方案，并不是所有好工具组合后就一定是好产品。</para>
+			</screen>
+			<para>lettuce 连接池，始终还没有解决，目前先用 jedis，其实连接池是同质化产品，虽有性能差异，但差距非常小，对于项目整体而言可以说微乎其微。就如同 Tomcat 跟 Undertow 差距，有时我们需要整理考虑架构方案，并不是所有好工具组合后就一定是好产品。</para>
 
-	</section>
-	<section id="Springboot数据库连接池">
-		<title>数据库链接池</title>
-		<para>很多时候人们从网上找到 springboot 文章，文章中说这样配置连接池，于是就复制站台到自己的配置文件中，也没有去深究，最终流到生产环境。</para>
-		<screen>
+		</section>
+		<section id="Springboot数据库连接池">
+			<title>数据库链接池</title>
+			<para>很多时候人们从网上找到 springboot 文章，文章中说这样配置连接池，于是就复制站台到自己的配置文件中，也没有去深究，最终流到生产环境。</para>
+			<screen>
 		<![CDATA[
 spring.datasource.max-idle=10
 spring.datasource.max-wait=10000
@@ -282,9 +396,9 @@ spring.datasource.test-while-idle=true
 spring.datasource.time-between-eviction-runs-millis=18800
 spring.datasource.jdbc-interceptors=ConnectionState;SlowQueryReport(threshold=0)		
 		]]>
-		</screen>
-		<para>上面的配置已经作废，目前 Springboot 默认使用 hikari 链接池，他的正确配置如下</para>
-		<screen>
+			</screen>
+			<para>上面的配置已经作废，目前 Springboot 默认使用 hikari 链接池，他的正确配置如下</para>
+			<screen>
 		<![CDATA[
 spring.datasource.type=com.zaxxer.hikari.HikariDataSource
 spring.datasource.hikari.minimum-idle=5
@@ -296,9 +410,9 @@ spring.datasource.hikari.max-lifetime=55000
 spring.datasource.hikari.connection-timeout=30000
 spring.datasource.hikari.connection-test-query=SELECT 1
 		]]>
-		</screen>
-		<para>测试方法，写一个测试接口，里面运行一条 SQL 即可</para>
-		<screen>
+			</screen>
+			<para>测试方法，写一个测试接口，里面运行一条 SQL 即可</para>
+			<screen>
 		<![CDATA[
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
@@ -312,9 +426,9 @@ spring.datasource.hikari.connection-test-query=SELECT 1
 		});
 	}		
 		]]>
-		</screen>
-		<para>然后压测这个接口，观察 show full processlist; 正常会不停的变化，如果没有任何变化，例如只启动了 8 个链接，就说明链接池配置没有生效。</para>
-		<screen>
+			</screen>
+			<para>然后压测这个接口，观察 show full processlist; 正常会不停的变化，如果没有任何变化，例如只启动了 8 个链接，就说明链接池配置没有生效。</para>
+			<screen>
 		<![CDATA[
 mysql> show status like 'Threads%';
 +-------------------+-------+
@@ -369,33 +483,33 @@ mysql> show full processlist;
 +--------+------+-------------------+------+---------+------+----------+-----------------------+
 35 rows in set (0.00 sec)
 		]]>
-		</screen>
+			</screen>
 
-	</section>
-	<section id="Openfeign瓶颈分析">
-		<title>Openfeign 瓶颈分析</title>
-		<para>在公司代码库中找到这样的配置，总觉得不对，我最后一次写代码是 2017 年，最开始叫 Feign 后来改为 Openfeign，为了分析出整个系统的瓶颈，有必要深挖一下 Feign/Openfeign。</para>
-		<screen>
+		</section>
+		<section id="Openfeign瓶颈分析">
+			<title>Openfeign 瓶颈分析</title>
+			<para>在公司代码库中找到这样的配置，总觉得不对，我最后一次写代码是 2017 年，最开始叫 Feign 后来改为 Openfeign，为了分析出整个系统的瓶颈，有必要深挖一下 Feign/Openfeign。</para>
+			<screen>
 		<![CDATA[
 spring:
   feign:
     httpclient:
       enabled: true		
 		]]>
-		</screen>
-		<para>大多数人的学习路径是看书或去网上找别人的文章，复制里面的代码和配置。这种学习方式有两个弊端，书上的内容知识更新太慢，版本比较旧。网上找文章也是如此，别人的例子就是编译不通过，配置也很多是过时或错误的，一股脑，不做验证的饮引用别人的代码和配置。我更习惯看官网文档和翻看官方源码。</para>
-		<para>上面的配置就很可能某小伙伴，在网上看到别人那样配置，然后复制过来，就上生产了，并且这段配置在公司已经存在很多年，所有人都没有质疑过，直到我来公司，解决系统瓶颈问题才发现。</para>
-		<para>下面再说 okhttp 的问题，okhttp 在 openfeign 项目中并不成熟，属于实验产品。配置项只有 feign.okhttp.enabled，没有 max-connections 配置。</para>
-		<screen>
+			</screen>
+			<para>大多数人的学习路径是看书或去网上找别人的文章，复制里面的代码和配置。这种学习方式有两个弊端，书上的内容知识更新太慢，版本比较旧。网上找文章也是如此，别人的例子就是编译不通过，配置也很多是过时或错误的，一股脑，不做验证的饮引用别人的代码和配置。我更习惯看官网文档和翻看官方源码。</para>
+			<para>上面的配置就很可能某小伙伴，在网上看到别人那样配置，然后复制过来，就上生产了，并且这段配置在公司已经存在很多年，所有人都没有质疑过，直到我来公司，解决系统瓶颈问题才发现。</para>
+			<para>下面再说 okhttp 的问题，okhttp 在 openfeign 项目中并不成熟，属于实验产品。配置项只有 feign.okhttp.enabled，没有 max-connections 配置。</para>
+			<screen>
 		<![CDATA[
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>		
 		]]>
-		</screen>
-		<para>面临问题：如果使用 okhttp 怎么设置 max-connections，于是我便翻看 spring-cloud-starter-openfeign 源码，请看 openfeign 源码 https://github.com/spring-cloud/spring-cloud-openfeign/blob/main/spring-cloud-openfeign-core/src/main/java/org/springframework/cloud/openfeign/support/FeignHttpClientProperties.java，明显 openfeign 源码没有体现 feign.okhttp.max-connections。如果强行使用 okhttp 只能这样设置</para>
-		<screen>
+			</screen>
+			<para>面临问题：如果使用 okhttp 怎么设置 max-connections，于是我便翻看 spring-cloud-starter-openfeign 源码，请看 openfeign 源码 https://github.com/spring-cloud/spring-cloud-openfeign/blob/main/spring-cloud-openfeign-core/src/main/java/org/springframework/cloud/openfeign/support/FeignHttpClientProperties.java，明显 openfeign 源码没有体现 feign.okhttp.max-connections。如果强行使用 okhttp 只能这样设置</para>
+			<screen>
 		<![CDATA[
 # 禁用 httpclient
 feign.httpclient.enabled=false
@@ -405,9 +519,9 @@ feign.okhttp.enabled=true
 feign.httpclient.max-connections=1000
 feign.httpclient.max-connections-per-route=50
 		]]>
-		</screen>
-		<para>另有新发现，重点看这里 @ConfigurationProperties(prefix = "spring.cloud.openfeign.httpclient") 如果是这样 spring.cloud.openfeign.httpclient</para>
-		<screen>
+			</screen>
+			<para>另有新发现，重点看这里 @ConfigurationProperties(prefix = "spring.cloud.openfeign.httpclient") 如果是这样 spring.cloud.openfeign.httpclient</para>
+			<screen>
 		<![CDATA[
 那我的配置应该必须是 
 spring.cloud.openfeign.httpclient.max-connections=200 
@@ -415,27 +529,28 @@ spring.cloud.openfeign.httpclient.max-connections=200
 可是官网手册上写：
 feign.httpclient.max-connections=200 		
 		]]>
-		</screen>
-		<para>所以，官网手册也有滞后，我看的源码是 Openfeign 3.x 版本的，也就是说下一个版本 Openfeign 的配置文件将改为 spring.cloud.openfeign 前缀，同时 Openfeign 3.x 也没有解决 okhttp 的 max-connections 配置问题，还是这样使用 spring.cloud.openfeign.httpclient.max-connections=1000</para>
-		<screen>
+			</screen>
+			<para>所以，官网手册也有滞后，我看的源码是 Openfeign 3.x 版本的，也就是说下一个版本 Openfeign 的配置文件将改为 spring.cloud.openfeign 前缀，同时 Openfeign 3.x 也没有解决 okhttp 的 max-connections 配置问题，还是这样使用 spring.cloud.openfeign.httpclient.max-connections=1000</para>
+			<screen>
 		<![CDATA[
 spring.cloud.openfeign.httpclient.enabled=false
 spring.cloud.openfeign.okhttp.enabled=true
 spring.cloud.openfeign.httpclient.max-connections=1000
 spring.cloud.openfeign.httpclient.max-connections-per-route=50		
 		]]>
-		</screen>
-		<para>如果我年轻10年，以我的性格会吧这个缺陷修复了，然后 merge request 到官网，现在让给年轻人做吧。</para>
-		<screen>
+			</screen>
+			<para>如果我年轻10年，以我的性格会吧这个缺陷修复了，然后 merge request 到官网，现在让给年轻人做吧。</para>
+			<screen>
 		<![CDATA[
 
 		]]>
-		</screen>
-		<screen>
+			</screen>
+			<screen>
 		<![CDATA[
 		
 		]]>
-		</screen>
+			</screen>
+		</section>
 	</section>
 	<section id="commands">
 		<title>常用瓶颈分析和系统指标监控命令</title>

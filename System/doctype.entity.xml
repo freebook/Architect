@@ -8,7 +8,6 @@
 <!ENTITY section.server.php.xml			SYSTEM "section.server.php.xml">
 <!ENTITY section.server.oscm.xml		SYSTEM "section.server.oscm.xml">
 <!ENTITY section.server.spring.xml		SYSTEM "section.server.spring.xml">
-<!ENTITY section.server.bottleneck.xml	SYSTEM "section.server.bottleneck.xml">
 
 <!ENTITY chapter.idc.xml		 		SYSTEM "chapter.idc.xml">
 <!ENTITY section.idc.version.xml 		SYSTEM "section.idc.version.xml">

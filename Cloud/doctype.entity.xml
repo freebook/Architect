@@ -4,3 +4,5 @@
 <!ENTITY section.aliyun.sls.xml		SYSTEM "section.aliyun.sls.xml">
 <!ENTITY section.aliyun.ecs.xml		SYSTEM "section.aliyun.ecs.xml">
 <!ENTITY section.aliyun.rds.xml		SYSTEM "section.aliyun.rds.xml">
+<!ENTITY section.aliyun.bottleneck.xml	SYSTEM "section.aliyun.bottleneck.xml">
+<!ENTITY section.aliyun.bastionhost.xml	SYSTEM "section.aliyun.bastionhost.xml">
