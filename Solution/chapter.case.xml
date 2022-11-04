@@ -2,11 +2,7 @@
 <section id="业务日志">
 	<title>业务日志</title>
 	<para>CMS + ECSHOP(ECSHIT)</para>
-
-	<para>应用程序基于pylons框架.</para>
-	<para>用户认证OpenLDAP.</para>
-	<para>下载数据需要中转</para>
-
+	
 </section>
 
 <section id="solution.catalyst">
