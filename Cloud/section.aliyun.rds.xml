@@ -105,4 +105,39 @@ CREATE TABLE old_table_name SELECT * FROM new_table_name WHERE ...;
 		]]>
 		</screen>
 	</section>
+	<section>
+		<title>导出 CSV 文件</title>
+		<para>RDS 目前没有找到导出 csv 的方案，客服让使用 DMS 中的数据导出功能</para>
+		<screen>
+		<![CDATA[
+mysql> show grants for 'root'@'%';
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Grants for root@%                                                                                                                                                                                                                                                                                                                                                                 |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, RELOAD, PROCESS, REFERENCES, INDEX, ALTER, CREATE TEMPORARY TABLES, LOCK TABLES, EXECUTE, REPLICATION SLAVE, REPLICATION CLIENT, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, CREATE USER, EVENT, TRIGGER ON *.* TO 'root'@'%' IDENTIFIED BY PASSWORD '*F5200743F6F42815CB2DC833C98D6E7730F8E2E2' WITH GRANT OPTION |
++------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)		
+		]]>
+		</screen>
+		<para>查询未找到 FILE 权限，官网权限列表中也没有 https://help.aliyun.com/document_detail/146395.html</para>
+		<screen>
+		<![CDATA[
+mysql> GRANT FILE ON *.* to neo@'%' identified by 'chen';
+Query OK, 0 rows affected (0.026 sec)
+		
+		]]>
+		</screen>
+		<para>secure_file_priv 只要不是 null 即可，阿里云配置是 secure_file_priv = ''。</para>
+		<screen>
+		<![CDATA[
+mysql> SHOW VARIABLES LIKE "secure_file_priv";
++------------------+-------+
+| Variable_name    | Value |
++------------------+-------+
+| secure_file_priv |       |
++------------------+-------+
+1 row in set (0.01 sec)		
+		]]>
+		</screen>
+	</section>
 </section>

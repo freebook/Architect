@@ -7,7 +7,7 @@
 		<title>数据字典</title>
 		<para>我不建议使用传统的《数据字典》，我的做法是E-R图加数据库注释</para>
 		<para>注释伴随表，视图，触发器，过程等等，便于维护</para>
-	</section>	
+	</section>
 	<section id="user">
 		<title>用户帐号表</title>
 		<para>用户帐号或通行证系统设计，下面以我的数库为例讲解。</para>
@@ -83,7 +83,7 @@ ENGINE=InnoDB;
  +-----------+
 			]]>
 			</screen>
-		<programlisting role="sql">
+			<programlisting role="sql">
 		<![CDATA[
 CREATE TABLE `category` (
 	`id` SMALLINT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -98,12 +98,12 @@ COMMENT='goods category'
 ENGINE=InnoDB
 ROW_FORMAT=DEFAULT
 		]]>
-		</programlisting>
+			</programlisting>
 		</section>
 		<section>
 			<title>多对多分类</title>
-		<para>多对多分类,主要用于满足，一个产品/文章属于多个分类的需求。</para>
-		<programlisting>
+			<para>多对多分类,主要用于满足，一个产品/文章属于多个分类的需求。</para>
+			<programlisting>
 		<![CDATA[
       +------------+
       | category   |
@@ -125,7 +125,7 @@ ROW_FORMAT=DEFAULT
       |status      |
       +------------+
 		]]>
-		</programlisting>
+			</programlisting>
 		</section>
 		<section>
 			<title>快速检索子分类设计</title>
@@ -250,7 +250,7 @@ select (select t2.name from test t2 where t2.id=t1.pid) as name, count(pid) as s
 			</screen>
 			<para>统计所有节点包括数量为零的</para>
 			<screen>
-select t1.name, (select count(t2.name) from test t2 where t2.pid=t1.id) as sum from test t1
+				select t1.name, (select count(t2.name) from test t2 where t2.pid=t1.id) as sum from test t1
 			</screen>
 		</section>
 		<section>
@@ -258,34 +258,34 @@ select t1.name, (select count(t2.name) from test t2 where t2.pid=t1.id) as sum f
 			<example>
 				<title>identity_card 身份证归属地表</title>
 				<programlisting>
-CREATE TABLE `identity_card` (
-	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '唯一主键',
-	`pid` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '父ID',
-	`path` VARCHAR(50) NOT NULL COMMENT '路径',
-	`number` VARCHAR(18) NOT NULL COMMENT '身份证号码段',
-	`zone` VARCHAR(50) NOT NULL COMMENT '行政区域',
-	`status` ENUM('Y','N') NOT NULL DEFAULT 'N' COMMENT '状态',
-	`modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建与修改时间',
-	PRIMARY KEY (`id`),
-	INDEX `FK_identity_card_identity_card` (`pid`),
-	INDEX `path` (`path`),
-	INDEX `number` (`number`),
-	CONSTRAINT `FK_identity_card_identity_card` FOREIGN KEY (`pid`) REFERENCES `identity_card` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
-)
-COMMENT='identity card number'
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB;
+					CREATE TABLE `identity_card` (
+					`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '唯一主键',
+					`pid` INT(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '父ID',
+					`path` VARCHAR(50) NOT NULL COMMENT '路径',
+					`number` VARCHAR(18) NOT NULL COMMENT '身份证号码段',
+					`zone` VARCHAR(50) NOT NULL COMMENT '行政区域',
+					`status` ENUM('Y','N') NOT NULL DEFAULT 'N' COMMENT '状态',
+					`modified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建与修改时间',
+					PRIMARY KEY (`id`),
+					INDEX `FK_identity_card_identity_card` (`pid`),
+					INDEX `path` (`path`),
+					INDEX `number` (`number`),
+					CONSTRAINT `FK_identity_card_identity_card` FOREIGN KEY (`pid`) REFERENCES `identity_card` (`id`) ON UPDATE CASCADE ON DELETE CASCADE
+					)
+					COMMENT='identity card number'
+					COLLATE='utf8_general_ci'
+					ENGINE=InnoDB;
 				</programlisting>
 				<screen>
-"id"	"pid"	"path"	"number"	"zone"	"status"	"modified"
-"1012"	"1"	"1.1012"	"330000"	"浙江省"	"Y"	"2012-05-16 17:18:14"
-"1041"	"1012"	"1.1012.1041"	"330300"	"温州市"	"Y"	"2012-05-16 17:44:18"
-"1052"	"1041"	"1.1012.1041.1052"	"330381"	"瑞安市"	"Y"	"2012-05-16 17:44:25"
-"1367"	"1"	"1.1367"	"360000"	"江西省"	"Y"	"2012-05-16 16:57:23"
-"1451"	"1367"	"1.1367.1451"	"360900"	"宜春市"	"Y"	"2012-05-16 17:44:58"
-"1990"	"1"	"1.1990"	"430000"	"湖南省"	"Y"	"2012-05-16 16:50:50"
-"1991"	"1990"	"1.1990.1991"	"430100"	"长沙市"	"Y"	"2012-05-16 16:50:54"
-"2124"	"1990"	"1.1990.2124"	"431300"	"娄底市"	"Y"	"2012-05-16 16:54:45"
+					"id" "pid" "path" "number" "zone" "status" "modified"
+					"1012" "1" "1.1012" "330000" "浙江省" "Y" "2012-05-16 17:18:14"
+					"1041" "1012" "1.1012.1041" "330300" "温州市" "Y" "2012-05-16 17:44:18"
+					"1052" "1041" "1.1012.1041.1052" "330381" "瑞安市" "Y" "2012-05-16 17:44:25"
+					"1367" "1" "1.1367" "360000" "江西省" "Y" "2012-05-16 16:57:23"
+					"1451" "1367" "1.1367.1451" "360900" "宜春市" "Y" "2012-05-16 17:44:58"
+					"1990" "1" "1.1990" "430000" "湖南省" "Y" "2012-05-16 16:50:50"
+					"1991" "1990" "1.1990.1991" "430100" "长沙市" "Y" "2012-05-16 16:50:54"
+					"2124" "1990" "1.1990.2124" "431300" "娄底市" "Y" "2012-05-16 16:54:45"
 				</screen>
 			</example>
 		</section>
@@ -333,7 +333,7 @@ ENGINE=InnoDB;
 		<section>
 			<title>分区表设计</title>
 			<para>分区表可以通过表空间，等等技术实现，优点是解决了Union查询问题，保证了数据的一致性。</para>
-		<programlisting role="sql">
+			<programlisting role="sql">
 		<![CDATA[
       +-----------+
       | category  |
@@ -371,7 +371,7 @@ ENGINE=InnoDB;
       |status    |
       +----------+
 		]]>
-		</programlisting>
+			</programlisting>
 		</section>
 		<section>
 			<title>Title性能优化</title>
@@ -428,7 +428,7 @@ ENGINE=InnoDB;
 		<title>产品属性表</title>
 		<section>
 			<title>简单实现</title>
-		<programlisting>
+			<programlisting>
 		<![CDATA[
 +------------+           +--------------------------+           +-----------------------+
 | product    |           | product_attribute        |           |product_attribute_key  |
@@ -443,12 +443,12 @@ ENGINE=InnoDB;
                                                                 |name                   |
                                                                 +-----------------------+
 		]]>
-		</programlisting>
+			</programlisting>
 		</section>
 		<section>
 			<title>实现属性组管理</title>
-		<para>product attribute group</para>
-		<programlisting>
+			<para>product attribute group</para>
+			<programlisting>
 		<![CDATA[
 +------------+           +--------------------------+           +--------------------------+           +-----------------------+
 | category   |           | product_attribute_group  |           | product_attribute        |           |product_attribute_key  |
@@ -463,12 +463,12 @@ ENGINE=InnoDB;
                                                                                                        |name                   |
                                                                                                        +-----------------------+
 		]]>
-		</programlisting>
+			</programlisting>
 		</section>
 		<section>
 			<title>可编辑属表</title>
-		    <para>product attribute group</para>
-		    <programlisting>
+			<para>product attribute group</para>
+			<programlisting>
 		    <![CDATA[
     +------------+           +------------------+           +--------------------------+           +---------------------------------+
     | category   |           | attribute_group  |           | group_has_attribute      |           |attribute_key                    |
@@ -492,16 +492,16 @@ ENGINE=InnoDB;
     |attr_group_id| <--1:n--o
     +-------------+
 		    ]]>
-		    </programlisting>
-		    <screen>
-+--------------------------------------------------+
-| product_attribute_key                            |
-+--------------------------------------------------+
-| 1 | color | list | red,green,blue                |
-| 2 | sex   | bool | Female,Male                   |
-| 3 | qty   | input| ''                            |
-+--------------------------------------------------+
-		    </screen>
+			</programlisting>
+			<screen>
+				+--------------------------------------------------+
+				| product_attribute_key |
+				+--------------------------------------------------+
+				| 1 | color | list | red,green,blue |
+				| 2 | sex | bool | Female,Male |
+				| 3 | qty | input| '' |
+				+--------------------------------------------------+
+			</screen>
 		</section>
 	</section>
 	<section id="product.store">
@@ -521,15 +521,15 @@ ENGINE=InnoDB;
 		</screen>
 		<para>product 是产品表总表，product_store每个产品一条记录，同时将sn编号对应到物理产品，这时记录库存需要</para>
 		<programlisting>
-select count(id) from product_store where product_id='xxxxx' and status = 'sell'
+			select count(id) from product_store where product_id='xxxxx' and status = 'sell'
 		</programlisting>
 		<para>商品销售</para>
 		<programlisting>
-begin;
-select id from product_store where status = 'sale' and product_id='xxxxx' for update;
-insert into user_order(user_id,product_store_id) values('xxxxxx','xxxxx');
-update product_store set status = 'sold' where status = 'sale' and product_id='xxxxx';
-commit;
+			begin;
+			select id from product_store where status = 'sale' and product_id='xxxxx' for update;
+			insert into user_order(user_id,product_store_id) values('xxxxxx','xxxxx');
+			update product_store set status = 'sold' where status = 'sale' and product_id='xxxxx';
+			commit;
 		</programlisting>
 		<para>售出的商品与用户的订单项一一对应的。</para>
 		<para>注意上面，这里使用了排它锁与事务处理，防止一个商品卖给两个人。</para>
@@ -591,65 +591,65 @@ commit;
 		<title>内容版本控制</title>
 		<para>主表</para>
 		<programlisting role="sql">
-CREATE TABLE `article` (
-	`article_id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`cat_id` SMALLINT(5) NOT NULL DEFAULT '0',
-	`title` VARCHAR(150) NOT NULL DEFAULT '',
-	`content` LONGTEXT NOT NULL,
-	`author` VARCHAR(30) NOT NULL DEFAULT '',
-	`keywords` VARCHAR(255) NOT NULL DEFAULT '',
-	PRIMARY KEY (`article_id`),
-	INDEX `cat_id` (`cat_id`)
-)
-ENGINE=MyISAM
-ROW_FORMAT=DEFAULT
-AUTO_INCREMENT=1
+			CREATE TABLE `article` (
+			`article_id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+			`cat_id` SMALLINT(5) NOT NULL DEFAULT '0',
+			`title` VARCHAR(150) NOT NULL DEFAULT '',
+			`content` LONGTEXT NOT NULL,
+			`author` VARCHAR(30) NOT NULL DEFAULT '',
+			`keywords` VARCHAR(255) NOT NULL DEFAULT '',
+			PRIMARY KEY (`article_id`),
+			INDEX `cat_id` (`cat_id`)
+			)
+			ENGINE=MyISAM
+			ROW_FORMAT=DEFAULT
+			AUTO_INCREMENT=1
 		</programlisting>
 		<para>本版控制表，用于记录每次变动</para>
 		<programlisting>
-CREATE TABLE `article_history` (
-	`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`article_id` MEDIUMINT(8) UNSIGNED NOT NULL,
-	`cat_id` SMALLINT(5) NOT NULL DEFAULT '0',
-	`title` VARCHAR(150) NOT NULL DEFAULT '',
-	`content` LONGTEXT NOT NULL,
-	`author` VARCHAR(30) NOT NULL DEFAULT '',
-	`keywords` VARCHAR(255) NOT NULL DEFAULT '',
-	PRIMARY KEY (`id`),
-	INDEX `article_id` (`article_id`)
-)
-ENGINE=MyISAM
-ROW_FORMAT=DEFAULT
-AUTO_INCREMENT=1
+			CREATE TABLE `article_history` (
+			`id` MEDIUMINT(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+			`article_id` MEDIUMINT(8) UNSIGNED NOT NULL,
+			`cat_id` SMALLINT(5) NOT NULL DEFAULT '0',
+			`title` VARCHAR(150) NOT NULL DEFAULT '',
+			`content` LONGTEXT NOT NULL,
+			`author` VARCHAR(30) NOT NULL DEFAULT '',
+			`keywords` VARCHAR(255) NOT NULL DEFAULT '',
+			PRIMARY KEY (`id`),
+			INDEX `article_id` (`article_id`)
+			)
+			ENGINE=MyISAM
+			ROW_FORMAT=DEFAULT
+			AUTO_INCREMENT=1
 		</programlisting>
 		<para>版本控制触发器</para>
 		<programlisting>
-DROP TRIGGER article_history;
+			DROP TRIGGER article_history;
 
-DELIMITER //
-CREATE TRIGGER article_history BEFORE update ON article FOR EACH ROW
-BEGIN
-	INSERT INTO article_history SELECT * FROM article WHERE article_id = OLD.article_id;
-END; //
-DELIMITER;
+			DELIMITER //
+			CREATE TRIGGER article_history BEFORE update ON article FOR EACH ROW
+			BEGIN
+			INSERT INTO article_history SELECT * FROM article WHERE article_id = OLD.article_id;
+			END; //
+			DELIMITER;
 		</programlisting>
 	</section>
 	<section id="logging">
 		<title>logging 日志表的设计</title>
 		<screen>
-CREATE TABLE `logging` (
-	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`tag` ENUM('unknow','www','user','admin') NOT NULL DEFAULT 'unknow' COMMENT '日志标签',
-	`time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '产生时间',
-	`facility` ENUM('bank','unionpay','sms','email') NOT NULL COMMENT '类别',
-	`priority` ENUM('info','warning','error','critical','exception','debug') NOT NULL COMMENT '级别',
-	`message` VARCHAR(512) NOT NULL COMMENT '内容',
-	PRIMARY KEY (`id`)
-)
-COMMENT='日志表'
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB
-AUTO_INCREMENT=2;
+			CREATE TABLE `logging` (
+			`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+			`tag` ENUM('unknow','www','user','admin') NOT NULL DEFAULT 'unknow' COMMENT '日志标签',
+			`time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '产生时间',
+			`facility` ENUM('bank','unionpay','sms','email') NOT NULL COMMENT '类别',
+			`priority` ENUM('info','warning','error','critical','exception','debug') NOT NULL COMMENT '级别',
+			`message` VARCHAR(512) NOT NULL COMMENT '内容',
+			PRIMARY KEY (`id`)
+			)
+			COMMENT='日志表'
+			COLLATE='utf8_general_ci'
+			ENGINE=InnoDB
+			AUTO_INCREMENT=2;
 		</screen>
 		<para>分区日志表</para>
 		<programlisting>
@@ -673,57 +673,57 @@ SUBPARTITION BY HASH (MONTH(asctime))
 		</programlisting>
 		<para>分表+分区，每年分表一次，每个分区中保存一个月的数据</para>
 		<programlisting>
-delimiter $$
+			delimiter $$
 
-CREATE TABLE `logging_2013` (
-  `tag` enum('unknow','login','info','admin','cron','manual') NOT NULL DEFAULT 'unknow' COMMENT '日志标签',
-  `asctime` datetime NOT NULL COMMENT '产生时间',
-  `facility` enum('account','bank','unionpay','sms','email','unknow') NOT NULL DEFAULT 'unknow' COMMENT '类别',
-  `priority` enum('info','warning','error','critical','exception','debug') NOT NULL DEFAULT 'debug' COMMENT '级别',
-  `message` varchar(512) NOT NULL COMMENT '内容',
-  `operator` varchar(50) NOT NULL DEFAULT 'computer' COMMENT '操作者'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
-/*!50100 PARTITION BY LIST (MONTH(asctime))
-SUBPARTITION BY KEY (facility)
-(PARTITION part0 VALUES IN (1) ENGINE = InnoDB,
- PARTITION part1 VALUES IN (2) ENGINE = InnoDB,
- PARTITION part2 VALUES IN (3) ENGINE = InnoDB,
- PARTITION part3 VALUES IN (4) ENGINE = InnoDB,
- PARTITION part4 VALUES IN (5) ENGINE = InnoDB,
- PARTITION part5 VALUES IN (6) ENGINE = InnoDB,
- PARTITION part6 VALUES IN (7) ENGINE = InnoDB,
- PARTITION part7 VALUES IN (8) ENGINE = InnoDB,
- PARTITION part8 VALUES IN (9) ENGINE = InnoDB,
- PARTITION part9 VALUES IN (10) ENGINE = InnoDB,
- PARTITION part10 VALUES IN (11) ENGINE = InnoDB,
- PARTITION part11 VALUES IN (12) ENGINE = InnoDB) */$$
+			CREATE TABLE `logging_2013` (
+			`tag` enum('unknow','login','info','admin','cron','manual') NOT NULL DEFAULT 'unknow' COMMENT '日志标签',
+			`asctime` datetime NOT NULL COMMENT '产生时间',
+			`facility` enum('account','bank','unionpay','sms','email','unknow') NOT NULL DEFAULT 'unknow' COMMENT '类别',
+			`priority` enum('info','warning','error','critical','exception','debug') NOT NULL DEFAULT 'debug' COMMENT '级别',
+			`message` varchar(512) NOT NULL COMMENT '内容',
+			`operator` varchar(50) NOT NULL DEFAULT 'computer' COMMENT '操作者'
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8
+			/*!50100 PARTITION BY LIST (MONTH(asctime))
+			SUBPARTITION BY KEY (facility)
+			(PARTITION part0 VALUES IN (1) ENGINE = InnoDB,
+			PARTITION part1 VALUES IN (2) ENGINE = InnoDB,
+			PARTITION part2 VALUES IN (3) ENGINE = InnoDB,
+			PARTITION part3 VALUES IN (4) ENGINE = InnoDB,
+			PARTITION part4 VALUES IN (5) ENGINE = InnoDB,
+			PARTITION part5 VALUES IN (6) ENGINE = InnoDB,
+			PARTITION part6 VALUES IN (7) ENGINE = InnoDB,
+			PARTITION part7 VALUES IN (8) ENGINE = InnoDB,
+			PARTITION part8 VALUES IN (9) ENGINE = InnoDB,
+			PARTITION part9 VALUES IN (10) ENGINE = InnoDB,
+			PARTITION part10 VALUES IN (11) ENGINE = InnoDB,
+			PARTITION part11 VALUES IN (12) ENGINE = InnoDB) */$$
 		</programlisting>
 		<para>命名分区</para>
 		<programlisting>
-delimiter $$
+			delimiter $$
 
-CREATE TABLE `logging_2012` (
-  `tag` enum('unknow','login','info','admin','cron','manual') NOT NULL DEFAULT 'unknow' COMMENT '日志标签',
-  `asctime` datetime NOT NULL COMMENT '产生时间',
-  `facility` enum('account','bank','unionpay','sms','email','unknow') NOT NULL DEFAULT 'unknow' COMMENT '类别',
-  `priority` enum('info','warning','error','critical','exception','debug') NOT NULL DEFAULT 'debug' COMMENT '级别',
-  `message` varchar(512) NOT NULL COMMENT '内容',
-  `operator` varchar(50) NOT NULL DEFAULT 'computer' COMMENT '操作者'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8
-/*!50100 PARTITION BY LIST (MONTH(asctime))
-SUBPARTITION BY KEY (facility)
-(PARTITION January VALUES IN (1) ENGINE = InnoDB,
- PARTITION February VALUES IN (2) ENGINE = InnoDB,
- PARTITION March VALUES IN (3) ENGINE = InnoDB,
- PARTITION April VALUES IN (4) ENGINE = InnoDB,
- PARTITION May VALUES IN (5) ENGINE = InnoDB,
- PARTITION June VALUES IN (6) ENGINE = InnoDB,
- PARTITION July VALUES IN (7) ENGINE = InnoDB,
- PARTITION August VALUES IN (8) ENGINE = InnoDB,
- PARTITION September VALUES IN (9) ENGINE = InnoDB,
- PARTITION October VALUES IN (10) ENGINE = InnoDB,
- PARTITION November VALUES IN (11) ENGINE = InnoDB,
- PARTITION December VALUES IN (12) ENGINE = InnoDB) */$$
+			CREATE TABLE `logging_2012` (
+			`tag` enum('unknow','login','info','admin','cron','manual') NOT NULL DEFAULT 'unknow' COMMENT '日志标签',
+			`asctime` datetime NOT NULL COMMENT '产生时间',
+			`facility` enum('account','bank','unionpay','sms','email','unknow') NOT NULL DEFAULT 'unknow' COMMENT '类别',
+			`priority` enum('info','warning','error','critical','exception','debug') NOT NULL DEFAULT 'debug' COMMENT '级别',
+			`message` varchar(512) NOT NULL COMMENT '内容',
+			`operator` varchar(50) NOT NULL DEFAULT 'computer' COMMENT '操作者'
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8
+			/*!50100 PARTITION BY LIST (MONTH(asctime))
+			SUBPARTITION BY KEY (facility)
+			(PARTITION January VALUES IN (1) ENGINE = InnoDB,
+			PARTITION February VALUES IN (2) ENGINE = InnoDB,
+			PARTITION March VALUES IN (3) ENGINE = InnoDB,
+			PARTITION April VALUES IN (4) ENGINE = InnoDB,
+			PARTITION May VALUES IN (5) ENGINE = InnoDB,
+			PARTITION June VALUES IN (6) ENGINE = InnoDB,
+			PARTITION July VALUES IN (7) ENGINE = InnoDB,
+			PARTITION August VALUES IN (8) ENGINE = InnoDB,
+			PARTITION September VALUES IN (9) ENGINE = InnoDB,
+			PARTITION October VALUES IN (10) ENGINE = InnoDB,
+			PARTITION November VALUES IN (11) ENGINE = InnoDB,
+			PARTITION December VALUES IN (12) ENGINE = InnoDB) */$$
 		</programlisting>
 	</section>
 	<section id="uuid">
@@ -795,52 +795,52 @@ INSERT INTO `config` (`key`, `value`, `operator`, `mtime`) VALUES
 		</screen>
 		<para>配置项key的写法很讲究</para>
 		<screen>
-单个配置
-database.host=localhost
-database.user=user
-database.pass=pass
+			单个配置
+			database.host=localhost
+			database.user=user
+			database.pass=pass
 
-多个配置
-database.1.host=localhost
-database.1.user=user
-database.1.pass=pass
-database.1.status=1
+			多个配置
+			database.1.host=localhost
+			database.1.user=user
+			database.1.pass=pass
+			database.1.status=1
 
-database.2.host=localhost
-database.2.user=user
-database.2.pass=pass
-database.2.status=1
+			database.2.host=localhost
+			database.2.user=user
+			database.2.pass=pass
+			database.2.status=1
 
-优化配置项，例如：payment.alipay.status 可以这样优化
-payment.status.alipay
-payment.status.yeepay
+			优化配置项，例如：payment.alipay.status 可以这样优化
+			payment.status.alipay
+			payment.status.yeepay
 		</screen>
 		<para>这样做的目的是为了更好的使用like进行查询</para>
 		<screen>
-select `key`,`value` from config where `key` like 'payment.status.%';
-select `key`,`value` from config where `key` like 'database.?.status';
+			select `key`,`value` from config where `key` like 'payment.status.%';
+			select `key`,`value` from config where `key` like 'database.?.status';
 		</screen>
 		<section>
 			<title>配置表历史记录</title>
 			<para>我有一个表，里面只有固定行数的行记录，这些数据就是配置参数，我们将配置文件保存在数据库中，因为需要做负载均衡而不能使用文件配置文件。</para>
 			<para>有这样一个需求，这个记录每次修改都要保存历史记录，用于审计等等。我是这样设计该表的</para>
 			<programlisting>
-CREATE TABLE `config_fee` (
-	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`level` INT(11) NULL DEFAULT NULL COMMENT '层级',
-	`type` ENUM('Deposit','Withdrawing') NOT NULL DEFAULT 'Withdrawing' COMMENT '类型，存款，取款',
-	`min_fee` FLOAT(10,2) NOT NULL COMMENT '最低手续费',
-	`max_fee` FLOAT(10,2) NOT NULL COMMENT '最高手续费',
-	`ratio` FLOAT(10,2) NOT NULL COMMENT '手续费比例',
-	`operator` VARCHAR(10) NOT NULL COMMENT '操作者',
-	`status` ENUM('Current','Trash') NOT NULL DEFAULT 'Current',
-	`ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`mtime` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-	PRIMARY KEY (`id`)
-)
-COMMENT='手续费管理'
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB;
+				CREATE TABLE `config_fee` (
+				`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+				`level` INT(11) NULL DEFAULT NULL COMMENT '层级',
+				`type` ENUM('Deposit','Withdrawing') NOT NULL DEFAULT 'Withdrawing' COMMENT '类型，存款，取款',
+				`min_fee` FLOAT(10,2) NOT NULL COMMENT '最低手续费',
+				`max_fee` FLOAT(10,2) NOT NULL COMMENT '最高手续费',
+				`ratio` FLOAT(10,2) NOT NULL COMMENT '手续费比例',
+				`operator` VARCHAR(10) NOT NULL COMMENT '操作者',
+				`status` ENUM('Current','Trash') NOT NULL DEFAULT 'Current',
+				`ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				`mtime` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+				PRIMARY KEY (`id`)
+				)
+				COMMENT='手续费管理'
+				COLLATE='utf8_general_ci'
+				ENGINE=InnoDB;
 			</programlisting>
 			<para>数据记录的形态</para>
 			<screen>
@@ -856,7 +856,7 @@ mysql> select type,operator,status,ctime,mtime from config_mtf_fee;
 | Deposit | 324      | Current | 2014-08-28 11:10:54 | 2014-08-28 11:10:59 |
 +---------+----------+---------+---------------------+---------------------+
 2 rows in set (0.00 sec)
-			]]>			
+			]]>
 			</screen>
 			<para>如上图所示，状态 Current 是当前记录，而Trash是废弃的历史记录。</para>
 			<para>每次修改数据，首先将Current改为Trash，然后插入一条新数据状态为Current，我们只会使用最后一条状态为current的数据。</para>
@@ -867,19 +867,19 @@ mysql> select type,operator,status,ctime,mtime from config_mtf_fee;
 		<para>用户注册，登陆等等需要验证码，下面的方案是，请求验证码生成一个随机验证码，存在code中，identity可以存储来源IP/手机号码/Cookie等等用户校验， 5分钟内如果没有被使用就会删除，如果5分钟内被使用也会删除。type 可以存放www,user,bbs,admin.....等等，将所有验证码放在captcha表中统一管理。</para>
 		<para>这个方案主要是考虑没有memcache/redis/apc/xcache等等缓存环境下的解决方案，你也可以将下表改造一下，增加ttl字段用于存放生存时间，而不是采用5分钟一刀切的方案。</para>
 		<programlisting>
-CREATE TABLE `captcha` (
-	`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`type` ENUM('user','admin') NOT NULL DEFAULT 'admin' COMMENT '验证码类型',
-	`identity` VARCHAR(32) NOT NULL COMMENT '唯一身份识别md5摘要',
-	`code` VARCHAR(6) NOT NULL COMMENT '验证码',
-	`ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
-	PRIMARY KEY (`id`),
-	UNIQUE INDEX `code` (`code`),
-	UNIQUE INDEX `identity` (`identity`)
-)
-COMMENT='验证码'
-COLLATE='utf8_general_ci'
-ENGINE=InnoDB;
+			CREATE TABLE `captcha` (
+			`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+			`type` ENUM('user','admin') NOT NULL DEFAULT 'admin' COMMENT '验证码类型',
+			`identity` VARCHAR(32) NOT NULL COMMENT '唯一身份识别md5摘要',
+			`code` VARCHAR(6) NOT NULL COMMENT '验证码',
+			`ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+			PRIMARY KEY (`id`),
+			UNIQUE INDEX `code` (`code`),
+			UNIQUE INDEX `identity` (`identity`)
+			)
+			COMMENT='验证码'
+			COLLATE='utf8_general_ci'
+			ENGINE=InnoDB;
 		</programlisting>
 		<programlisting>
 		<![CDATA[
@@ -898,46 +898,46 @@ END
 		<title>手机归属地数据库表</title>
 		<para>members_location 表与 members 表是一对一关系，该表只负责存储归属地信息</para>
 		<programlisting language="sql">
-DROP TABLE IF EXISTS `members_location`;
-CREATE TABLE IF NOT EXISTS `members_location` (
-  `id` int(10) unsigned NOT NULL,
-  `province` varchar(50) NOT NULL,
-  `city` varchar(50) NOT NULL,
-  `ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `province` (`province`),
-  KEY `city` (`city`),
-  CONSTRAINT `FK_members_location_members` FOREIGN KEY (`id`) REFERENCES `members` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+			DROP TABLE IF EXISTS `members_location`;
+			CREATE TABLE IF NOT EXISTS `members_location` (
+			`id` int(10) unsigned NOT NULL,
+			`province` varchar(50) NOT NULL,
+			`city` varchar(50) NOT NULL,
+			`ctime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`),
+			KEY `province` (`province`),
+			KEY `city` (`city`),
+			CONSTRAINT `FK_members_location_members` FOREIGN KEY (`id`) REFERENCES `members` (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		</programlisting>
 		<para>当某些用户符合条件需要查询归属地是，只要将其插入到 members_mobile 表即可。该表使用黑洞引擎并不会存储手机号码，所以明文手机号码安全得到了保障。</para>
 		<programlisting language="sql">
-DROP TABLE IF EXISTS `members_mobile`;
-CREATE TABLE IF NOT EXISTS `members_mobile` (
-  `id` int(10) NOT NULL,
-  `number` varchar(11) NOT NULL
-) ENGINE=BLACKHOLE DEFAULT CHARSET=utf8;
+			DROP TABLE IF EXISTS `members_mobile`;
+			CREATE TABLE IF NOT EXISTS `members_mobile` (
+			`id` int(10) NOT NULL,
+			`number` varchar(11) NOT NULL
+			) ENGINE=BLACKHOLE DEFAULT CHARSET=utf8;
 		</programlisting>
 		<para>当有数据进入到 members_mobile 时出发器 members_mobile_insert 会工作，去 mobile_location 表中查询归属地后保存在 members_location 表中 </para>
 		<programlisting language="sql">
-DROP TRIGGER IF EXISTS `members_mobile_insert`;
-SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='';
-DELIMITER //
-CREATE TRIGGER `members_mobile_insert` BEFORE INSERT ON `members_mobile` FOR EACH ROW BEGIN
-	insert into members_location(id,province,city) select NEW.id,mobile_location.province,mobile_location.city from  mobile_location where mobile_location.id = md5(LEFT(NEW.number, 7));
-END//
-DELIMITER ;
-SET SQL_MODE=@OLDTMP_SQL_MODE;
+			DROP TRIGGER IF EXISTS `members_mobile_insert`;
+			SET @OLDTMP_SQL_MODE=@@SQL_MODE, SQL_MODE='';
+			DELIMITER //
+			CREATE TRIGGER `members_mobile_insert` BEFORE INSERT ON `members_mobile` FOR EACH ROW BEGIN
+			insert into members_location(id,province,city) select NEW.id,mobile_location.province,mobile_location.city from mobile_location where mobile_location.id = md5(LEFT(NEW.number, 7));
+			END//
+			DELIMITER ;
+			SET SQL_MODE=@OLDTMP_SQL_MODE;
 		</programlisting>
 		<para>mobile_location 是存储手机号段与归属地信息的数据库</para>
 		<programlisting language="sql">
-DROP TABLE IF EXISTS `mobile_location`;
-CREATE TABLE IF NOT EXISTS `mobile_location` (
-  `id` varchar(50) NOT NULL,
-  `province` varchar(50) DEFAULT NULL,
-  `city` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+			DROP TABLE IF EXISTS `mobile_location`;
+			CREATE TABLE IF NOT EXISTS `mobile_location` (
+			`id` varchar(50) NOT NULL,
+			`province` varchar(50) DEFAULT NULL,
+			`city` varchar(50) DEFAULT NULL,
+			PRIMARY KEY (`id`)
+			) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 		</programlisting>
 	</section>
 	<section id="data.check">
@@ -1046,21 +1046,21 @@ mysql> select check_id_number('330702198003090914');
 		<title>创建与修改时间</title>
 		<para>ctime 为创建时间, mtime 是修改时间默认CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP</para>
 		<programlisting>
-CREATE TABLE `trades_platform` (
-	`id` INT(10) UNSIGNED NULL DEFAULT NULL,
-	`type` ENUM('A','B','C') NOT NULL,
-	`login` VARCHAR(10) NOT NULL,
-	`password` VARCHAR(10) NOT NULL,
-	`ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`mtime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-)
-COMMENT='平台'
-ENGINE=InnoDB;
+			CREATE TABLE `trades_platform` (
+			`id` INT(10) UNSIGNED NULL DEFAULT NULL,
+			`type` ENUM('A','B','C') NOT NULL,
+			`login` VARCHAR(10) NOT NULL,
+			`password` VARCHAR(10) NOT NULL,
+			`ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`mtime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+			)
+			COMMENT='平台'
+			ENGINE=InnoDB;
 		</programlisting>
 		<para>我们还可以让mtime默认为NULL,这样更节省存储空间。</para>
 		<screen>
-	`ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	`mtime` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,		
+			`ctime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+			`mtime` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
 		</screen>
 	</section>
 	<section id="employees_online">
@@ -1105,12 +1105,12 @@ CREATE TRIGGER `employees_online_before_update` BEFORE UPDATE ON `employees_onli
 END//
 DELIMITER ;
 SET SQL_MODE=@OLDTMP_SQL_MODE;	
-		]]>	
+		]]>
 		</programlisting>
 		<para>登陆日志将永久保存，防止数据被删除由触发器employees_online_before_delete负责</para>
 		<para>防止有人撰改登陆信息，由触发器employees_online_before_update负责，主要是防止撰改登陆名与IP地址，这样讲不能从其他电脑登陆，必须用户Logout才能在其他电脑登陆。</para>
 	</section>
-	
+
 	<section id="html2text">
 		<title>HTML TO Text</title>
 		<para>实现 PHP strip_tags 函数的功能。</para>
@@ -1300,7 +1300,7 @@ INSERT INTO `sns`.`network` (`people_id`, `following_id`, `friend_id`, `degrees`
 INSERT INTO `sns`.`network` (`people_id`, `following_id`, `friend_id`, `degrees`) VALUES ('1', '4', '2', '1.2.4');
 			]]>
 			</programlisting>
-			
+
 			<para>查询不同维度下的所有好友，查询出的用户ID需要处理。</para>
 			<programlisting>
 			<![CDATA[
@@ -1312,6 +1312,27 @@ select * from network where people_id=1 and degrees like "1.2.%";
 			<para>至此社区管理网就建立起来了</para>
 			<para>上面的例子演示了 people_id=1 即 Neo 的关系网</para>
 		</section>
+	</section>
+	<section id="mysql.enum">
+		<title>TINYINT(1) 还是 ENUM( 'true' , 'false')</title>
+		<para>使用枚举:</para>
+		<orderedlist>
+			<title>为什么使用枚举:</title>
+			<listitem>枚举在插入时会做数据检查，不允许枚举之外的定义写入字段，故不会出现脏数据</listitem>
+			<listitem>枚举可读性更高 TINYINT(1) 需要维护数据字典，查询需要连表才能读到它的定义</listitem>
+			<listitem>数据更紧凑，节省存储空间</listitem>
+			<listitem>缺点是修改枚举定义，每次都需要变更数据库结构</listitem>
+		</orderedlist>
+		<orderedlist>
+			<title>什么时候使用TINYINT(1):</title>
+			<listitem>数据超过 10 条</listitem>
+			<listitem>缺点 TINYINT(1) 使用外键才能实现约束</listitem>
+		</orderedlist>
+		<programlisting>
+		<![CDATA[
+		
+		]]>
+		</programlisting>
 	</section>
 	&section.db.pgsql.xml;
 	&section.db.sharding.xml;
