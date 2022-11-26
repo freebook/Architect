@@ -163,4 +163,23 @@
 			<para>计划任务可以分布式运行了，但并不能保证万无一失，配套其他服务器也要做调整。例如数据库，缓存等等。</para>
 		</section>
 	</section>
+	<section>
+		<title>每隔0.5秒执行一次</title>
+		<screen>
+		<![CDATA[
+* * * * * for i in `seq 120`; do awesome_scripts& sleep 0.5; done		
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+#!/bin/bash
+for i in {1..120}
+do
+  usleep 500
+  RUN_YOUR_TASK
+done		
+		]]>
+		</screen>
+	</section>
+	
 </section>
