@@ -47,15 +47,6 @@ curl -s https://raw.githubusercontent.com/oscm/shell/master/database/mysql/8.0/c
 				</screen>
 			</section>
 			<section>
-				<title>PostgreSQL</title>
-				<para>PostgreSQL 9.4</para>
-				<screen>
-			<![CDATA[
-curl -s https://raw.githubusercontent.com/oscm/shell/master/database/postgresql/postgresql94-centos7.sh | bash			
-			]]>
-				</screen>
-			</section>
-			<section>
 				<title>Redis</title>
 				<screen>
 			<![CDATA[
@@ -1032,7 +1023,22 @@ server.tomcat.connection-timeout=20000
 			</screen>
 			<para>链接超时时间建议设置 60～20秒之间。</para>
 		</section>
-
+		<section>
+			<title>超时时间</title>
+			<para>配置Openfeign超时时间</para>
+			<screen>
+			<![CDATA[
+feign:
+  httpclient:
+    enabled: true
+    connection-timeout: 120000  
+  compression:
+    request:
+      enabled: true
+      min-request-size: 1024   
+			]]>
+			</screen>
+		</section>
 		<section>
 			<title>编码配置</title>
 			<para>有些版本的 Spring boot 默认并非 UTF-8 建议强制配置编码</para>
@@ -1066,6 +1072,19 @@ server.session.cookie.path=/
 server.compression.enabled=true
 server.compression.mime-types=application/json,application/xml,text/html,text/xml,text/plain,text/css,application/javascript
 server.compression.min-response-size=1024	
+			]]>
+			</screen>
+			<para>feign 压缩传输</para>
+			<screen>
+			<![CDATA[ 
+feign:
+  httpclient:
+    enabled: true
+    connection-timeout: 120000  
+  compression:
+    request:
+      enabled: true
+      min-request-size: 1024   			
 			]]>
 			</screen>
 		</section>
