@@ -582,4 +582,127 @@ Aug 25 10:20:27 production cron[29414]: (CRON) INFO (Skipping @reboot jobs -- no
 		]]>
 		</screen>
 	</section>
+	<section>
+		<title>/etc/fstab 优化</title>
+		<para>背景如下：</para>
+		<para>我们的服务器通常有一个系统盘，用来安装操作系统，再挂在一个数据盘用来存储数据，这个数据盘有时是机械硬盘，为了提高IO性能，我们通常会禁止atime，为了提高安全性，我们还会禁止创建可执行文件。</para>
+		<screen>
+		<![CDATA[ 
+root@logging ~# fdisk -l
+Disk /dev/vda: 40 GiB, 42949672960 bytes, 83886080 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: AF8C9BE0-E33F-422F-81C0-13649A56047E
+
+Device      Start      End  Sectors  Size Type
+/dev/vda1    2048     4095     2048    1M BIOS boot
+/dev/vda2    4096   208895   204800  100M EFI System
+/dev/vda3  208896 83886046 83677151 39.9G Linux filesystem
+
+
+Disk /dev/vdb: 500 GiB, 536870912000 bytes, 1048576000 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x39dbd6b6
+
+Device     Boot Start        End    Sectors  Size Id Type
+/dev/vdb1        2048 1048575999 1048573952  500G 83 Linux	
+		]]>
+		</screen>
+		<para>查看 UUID</para>
+		<screen>
+		<![CDATA[ 
+root@logging ~# blkid /dev/vdb1
+/dev/vdb1: UUID="ec48f3c2-80c8-4ed1-be56-049a95c2b60e" TYPE="xfs" PARTUUID="39dbd6b6-01"			
+		]]>
+		</screen>
+		<para>noatime 禁止更新访问时间, nodiratime 禁止更新目录访问时间, noexec 禁止创建可执行文件</para>
+		<screen>
+		<![CDATA[ 
+root@logging ~# touch netkiller.txt
+root@logging ~# stat netkiller.txt
+	File: netkiller.txt
+	Size: 0         	Blocks: 0          IO Block: 4096   regular empty file
+Device: fd03h/64771d	Inode: 816         Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2023-01-13 15:27:48.282376191 +0800
+Modify: 2023-01-13 15:27:48.282376191 +0800
+Change: 2023-01-13 15:27:48.282376191 +0800
+	Birth: 2023-01-13 15:27:48.282376191 +0800
+root@logging ~# cat netkiller.txt
+root@logging ~# stat netkiller.txt
+	File: netkiller.txt
+	Size: 0         	Blocks: 0          IO Block: 4096   regular empty file
+Device: fd03h/64771d	Inode: 816         Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2023-01-13 15:28:00.979854433 +0800
+Modify: 2023-01-13 15:27:48.282376191 +0800
+Change: 2023-01-13 15:27:48.282376191 +0800
+	Birth: 2023-01-13 15:27:48.282376191 +0800		
+		]]>
+		</screen>
+		<para>加入 noatime,nodiratime,noexec </para>
+		<screen>
+		<![CDATA[ 
+root@logging ~# cat /etc/fstab
+
+#
+# /etc/fstab
+# Created by anaconda on Mon Nov 21 02:06:17 2022
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk/'.
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info.
+#
+# After editing this file, run 'systemctl daemon-reload' to update systemd
+# units generated from this file.
+#
+UUID=16ca8836-7ca9-454f-9a72-8efbae5edc51 /                       xfs     defaults        0 0
+UUID=D168-FFBD          /boot/efi               vfat    defaults,uid=0,gid=0,umask=077,shortname=winnt 0 2
+UUID=ec48f3c2-80c8-4ed1-be56-049a95c2b60e	/opt/log	xfs noatime,nodiratime,noexec 0 0		
+		]]>
+		</screen>
+		<para>验证 noexec</para>
+		<screen>
+		<![CDATA[ 
+root@logging ~# cd /opt/log/
+root@logging /o/log# echo ls > dir.sh
+root@logging /o/log# chmod +x dir.sh
+root@logging /o/log# ./dir.sh
+fish: The file “./dir.sh” is not executable by this user
+		]]>
+		</screen>
+		<para>验证 noatime,nodiratime</para>
+		<screen>
+		<![CDATA[ 
+root@logging /o/log# echo Helloworld > neo.txt
+
+root@logging /o/log# stat neo.txt
+	File: neo.txt
+	Size: 11        	Blocks: 8          IO Block: 4096   regular file
+Device: fd11h/64785d	Inode: 141         Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2023-01-13 15:37:47.375940824 +0800
+Modify: 2023-01-13 15:37:47.375940824 +0800
+Change: 2023-01-13 15:37:47.375940824 +0800
+Birth: 2023-01-13 15:37:47.375940824 +0800
+
+root@logging /o/log# cat neo.txt
+Helloworld
+
+root@logging /o/log# stat neo.txt
+	File: neo.txt
+	Size: 11        	Blocks: 8          IO Block: 4096   regular file
+Device: fd11h/64785d	Inode: 141         Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2023-01-13 15:37:47.375940824 +0800
+Modify: 2023-01-13 15:37:47.375940824 +0800
+Change: 2023-01-13 15:37:47.375940824 +0800
+Birth: 2023-01-13 15:37:47.375940824 +0800		
+		]]>
+		</screen>
+	</section>
 </section>
