@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="业务日志">
-	<title>业务日志</title>
-	<para>CMS + ECSHOP(ECSHIT)</para>
-	
-</section>
+
 
 <section id="solution.catalyst">
 	<title>Perl 解决方案</title>
@@ -34,67 +30,8 @@ pxy: apache -> rewrite + mod_proxy_cascade
 		<screeninfo>perl</screeninfo>
 		<graphic format="png" fileref="../images/solution/perl_solution.png" srccredit="neo" />
 	</screenshot>
-	<orderedlist>
-		<listitem>
-			<para>Smart DNS 解决南北互通问题</para>
-		</listitem>
-		<listitem>
-			<para>LVS + HA 负载均衡</para>
-		</listitem>
-		<listitem>
-			<para>Squid 静态缓存</para>
-		</listitem>
-		<listitem>
-			<para>Apache + mod_perl / Lighttpd + fastcgi 任选</para>
-		</listitem>
-		<listitem>
-			<para>Catalyst Framework
-				开发框架,动态perl程序采用http协议头输出在squid节点上缓存，动态数据由memecached提供缓存
-			</para>
-		</listitem>
-		<listitem>
-			<para>Memcached 缓存工作在框架与数据库之间</para>
-		</listitem>
-		<listitem>
-			<para>MySQL Cluster 集群</para>
-		</listitem>
-		<listitem>
-			<para>
-				静态文件生成后通过csync与其他节点实时同步，静态化HTML有lighttpd提供并在squid节点上缓存,当用户访问文件时由负载均衡器分配到指定lighttpd节点上。
-			</para>
-		</listitem>
-		<listitem>
-			<para>图片等多媒体资料存储在分布式文件系统中。</para>
-		</listitem>
-	</orderedlist>
+	
 	<para>将上图中的Catalyst拿掉换成Django就是Python解决方案</para>
 	<graphic format="png" fileref="../images/solution/python_solution.png" srccredit="neo" />
 </section>
-<section id="solution.email">
-	<title>集群邮件系统</title>
-	<para>基于开源的邮件集群系统解决方案:</para>
-	<para></para>
-	<para></para>
-	<para></para>
-	<para>先写到这,有时间再说...886...</para>
-	<para></para>
-	<para></para>
-	<para></para>
-	<para></para>
-	<para>反病毒</para>
-	<para>反拉圾邮件</para>
-	<para>Webmail</para>
-	<para>自动备份</para>
-	<para>POP/SMTP收发邮件与SMTP认证</para>
-	<para>邮件列表</para>
-	<para>
-		. . . .
-		.
-	</para>
-	<para>
 
-	</para>
-	<para>
-	</para>
-
-</section>

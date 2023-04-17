@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="difference">
+	<title>环境差异带来的困扰</title>
+	<para>工作中你是否因环境的差异带来困扰，下面我总结了一些因为环境差异给开发者造成的困扰。</para>
+	<orderedlist>
+		<title>环境差异带来的困扰：</title>
+		<listitem>在网上找到的例子，在自己的电脑上始终运行不起来</listitem>
+		<listitem>本地电脑运行一切正常，发不到测试环境就出问题</listitem>
+		<listitem>测试环境通过，发布到生产环境就出问题</listitem>
+	</orderedlist>
+	<orderedlist>
+		<title>问题根源出在哪里？</title>
+		<listitem>版本不一致</listitem>
+		<listitem>环境差异造成的</listitem>
+		<listitem>性能问题造成的</listitem>
+		<listitem>架构问题造成的</listitem>
+	</orderedlist>
+	<section id="版本的差异">
+		<title>版本的差异</title>
+		<para>搜索引擎、Ctrl+C、Ctrl+V 是程序员三件法宝，几乎占用了程序员的80%的工作。</para>
+		<para>但是我们常常会遇到一个问题，就是在网上找到的例子，复制到自己的开发环境，无法运行，通常有一下几个因素。</para>
+		<orderedlist>
+			<listitem>编译器的版本不匹配</listitem>
+			<listitem>依赖库不匹配</listitem>
+			<listitem>配置文件不匹配</listitem>
+		</orderedlist>
+		<para>工作中我就遇到过这样的问题，我接手了一个项目，生产环境每日救火，性能十分差，经过分析是配置没有生效。开发同事到网上找到一篇配置文章，直接照搬网上配置，也没有去做验证，那个配置是 springboot 1.x, 在 2.x 已经废弃，所以配置是不生效的。 </para>
+		<para>上面的案例在很多团队中都会发生。</para>
+	</section>
+	<section id="环境的差异">
+		<title>环境的差异</title>
+		<section>
+			<title>办公电脑</title>
+			<para>办公电脑跟服务器的差异是什么？</para>
+			<para>所谓服务器，并不是服务器性能比台式机高，很多服务器配置非常低，例如物联网用的。服务器更多是指她能7*24小时稳定运行，出现死机频率比较台式电脑低，为了能让服务器7*24小时工作，在硬件设计方面更考究，使用材料，设计方案，都是为了满足长时间可靠运行，所以服务器的成本会增加。</para>
+			<para>而台式机（办公电脑）通常每天工作时常不会超过16小时，也就是会关机一次，第二天在开机，任何问题重启都能解决（万能重启），重启可以掩盖很多问题。</para>
+			<para>我们现在使用的办公电脑配置都很高，轮核心数量，内存容量，并不比服务器差，性能更是秒杀云主机。台式机还有一个优势，基本都会配置显卡。</para>
+			<para>为什么在本地电脑开发完成的功能，上到测试环境就运行不了？</para>
+			<orderedlist>
+				<title>本地电脑 VS 测试环境</title>
+				<listitem>很多时候测试环境需要模拟生产环境，需要很多节点，服务器资源有限，只能压缩测试节点数量，对测试节点的硬件资源限额，也就是说测试环境的节点配置，没有你本地电脑配置高。</listitem>
+				<listitem>自在独享本地资源做开发，不会有其他服务跟你争夺硬件资源。而测试环境是共享的，上面部署不止一套系统，它们之间相互争夺硬件资源。</listitem>
+				<listitem></listitem>
+			</orderedlist>
+			<para>假如开发了一个下载 excle 数据的功能，在本地电脑上测试，从查询数据库，数据组装，生成xls文件，然后下载，几乎是鼠标一点就完成。此时发布到测试环境，你发现这个功能根本不能用，需要优化。 </para>
+			<para>因为你一个人在用一台 8核心 16G 256SSD硬盘的电脑，启动了一个服务；而测试环境上运行几十个服务，分配的资源是4核心，8G，硬盘还是机械的。</para>
+
+		</section>
+		<section>
+			<title>虚拟机</title>
+		</section>
+		<section>
+			<title>云主机与容器</title>
+			<para>因为你本地开发/测试环境使用了容器技术，所以你也想在云主机上使用容器技术。</para>
+			<para>云主机</para>
+		</section>
+
+
+		<para></para>
+		<para></para>
+		<para></para>
+		<para></para>
+
+
+		<para></para>
+		<para>:</para>
+		<para></para>
+		<para></para>
+		<para></para>
+
+		<para></para>
+		<para></para>
+		<para></para>
+		<para></para>
+		<para></para>
+		<para></para>
+		<para></para>
+		<para></para>
+		<para></para>
+		<para></para>
+		<para>
+		</para>
+		<para>
+
+		</para>
+		<para>
+		</para>
+	</section>
+</section>
