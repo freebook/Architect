@@ -43,19 +43,23 @@
 				<listitem></listitem>
 			</orderedlist>
 			<para>假如开发了一个下载 excle 数据的功能，在本地电脑上测试，从查询数据库，数据组装，生成xls文件，然后下载，几乎是鼠标一点就完成。此时发布到测试环境，你发现这个功能根本不能用，需要优化。 </para>
-			<para>因为你一个人在用一台 8核心 16G 256SSD硬盘的电脑，启动了一个服务；而测试环境上运行几十个服务，分配的资源是4核心，8G，硬盘还是机械的。</para>
+			<para>因为你一个人在用一台 8核心 16G 256SSD硬盘的电脑，并且只启动了一个服务；而测试环境上运行几十个服务，同时做了资源配额，分配的资源仅有4核心，4G，硬盘还是机械的。</para>
 
 		</section>
 		<section>
-			<title>虚拟机</title>
+			<title>物理机与虚拟机</title>
+			<para>服务器资源有限，为了更合理利用服务器，通常我们会使用虚拟化技术。</para>
+			<para></para>
+			<para></para>
 		</section>
 		<section>
 			<title>云主机与容器</title>
 			<para>因为你本地开发/测试环境使用了容器技术，所以你也想在云主机上使用容器技术。</para>
 			<para>云主机</para>
 		</section>
-
-
+	</section>
+	<section>
+		<title>常见问题</title>
 		<para></para>
 		<para></para>
 		<para></para>
@@ -78,12 +82,5 @@
 		<para></para>
 		<para></para>
 		<para></para>
-		<para>
-		</para>
-		<para>
-
-		</para>
-		<para>
-		</para>
 	</section>
 </section>
