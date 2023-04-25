@@ -44,7 +44,6 @@
 			</orderedlist>
 			<para>假如开发了一个下载 excle 数据的功能，在本地电脑上测试，从查询数据库，数据组装，生成xls文件，然后下载，几乎是鼠标一点就完成。此时发布到测试环境，你发现这个功能根本不能用，需要优化。 </para>
 			<para>因为你一个人在用一台 8核心 16G 256SSD硬盘的电脑，并且只启动了一个服务；而测试环境上运行几十个服务，同时做了资源配额，分配的资源仅有4核心，4G，硬盘还是机械的。</para>
-
 		</section>
 		<section>
 			<title>物理机与虚拟机</title>
@@ -60,24 +59,51 @@
 	</section>
 	<section>
 		<title>常见问题</title>
-		<para></para>
-		<para></para>
-		<para></para>
-		<para></para>
+		<section>
+			<title>超时时间</title>
+			<para>本地开发环境只需在应用上配置超时时间即可，我们是直接访问应用的。</para>
+			<para>测试环境就可能涉及的网关，负载均衡等等多处设置。那么在集群环境中都会涉及那些超时时间的配置呢？</para>
+			<itemizedlist>
+				<title>经常涉及的超时配置：</title>
+				<listitem>负载均衡</listitem>
+				<listitem>Web 服务器/反向代理</listitem>
+				<listitem>微服务网关</listitem>
+				<listitem>微服务应用连接超时阀值，包括（tomcat、openfeign、ribbon、RestTemplate、hikari、redis、rocketmq、httpclient/okhttp 等等）</listitem>
+				<listitem>Redis 超时时间</listitem>
+				<listitem>MySQL 连接超时时间，执行超时时间</listitem>
+			</itemizedlist>
+			<para>生产环境只会更复杂。</para>
+		</section>
+		<section>
+			<title>连接数</title>
+			<para>你从公司行政领了一台电脑，搬到工位上装好开机，然后一顿操作猛如虎就把开发环境搭建起来。</para>
+			<para>然后就开始写代码了，开发、联调、测试一切顺利，冒烟通过之后，准备发到测试环境做集成测试/压力测试/性能测试……</para>
+			<para></para>
+		</section>
+		<section>
+			<title>上传限制</title>
+			<para></para>
+			<para></para>
+		</section>
+		<section>
+			<title>下载带宽</title>
+			<para>办公室网络通常是使用的是 1G 局域网，我们在局域网之内的各种请求几乎是瞬间响应</para>
+			<para></para>
+		</section>
+		<section>
+			<title>雪花算法出现重复</title>
+			<para>在容器加微服务的解决方案中使用雪花算法，很容易出现数据重复。</para>
+			<para></para>
+			<para></para>
+			<para></para>
+		</section>
+		<section>
+			<title>注册中心</title>
+			<para>从办公电脑注册到注册中心，容器无法方法。解决方法添加路由</para>
+			<para></para>
+		</section>
 
 
-		<para></para>
-		<para>:</para>
-		<para></para>
-		<para></para>
-		<para></para>
-
-		<para></para>
-		<para></para>
-		<para></para>
-		<para></para>
-		<para></para>
-		<para></para>
 		<para></para>
 		<para></para>
 		<para></para>
