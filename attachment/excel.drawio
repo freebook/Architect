@@ -1,0 +1,281 @@
+<mxfile host="65bd71144e">
+    <diagram id="1fG80GXAm4OQzgW508-l" name="第 1 页">
+        <mxGraphModel dx="922" dy="730" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="20" style="edgeStyle=none;html=1;" parent="1" source="2" target="19" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="财务1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="540" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" style="edgeStyle=none;html=1;" parent="1" source="3" target="19" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="3" value="财务2" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+                    <mxGeometry x="50" y="700" width="30" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="6" value="" style="edgeStyle=none;html=1;" parent="1" source="4" target="5" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="SLB &lt;br&gt;504 Gateway timeout" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="120" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" style="edgeStyle=none;html=1;" parent="1" source="5" target="7" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Openresty&lt;br&gt;504 Gateway timeout" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="280" y="120" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="Kubernetes" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="460" y="80" width="340" height="300" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="" style="edgeStyle=none;html=1;" parent="9" source="7" target="10" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" style="edgeStyle=none;html=1;" parent="9" source="7" target="12" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Ingress&lt;br&gt;504 Gateway timeout" style="rounded=0;whiteSpace=wrap;html=1;" parent="9" vertex="1">
+                    <mxGeometry x="90" y="40" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" style="edgeStyle=none;html=1;" parent="9" source="10" target="12" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="ejy-finance-admin" style="rounded=0;whiteSpace=wrap;html=1;" parent="9" vertex="1">
+                    <mxGeometry x="20" y="140" width="120" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="17" style="edgeStyle=none;html=1;" parent="9" source="12" target="16" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="ensd-order-settle-portal&lt;br&gt;tomcat timeout&lt;br&gt;feign timeout&lt;br&gt;ribbon timeout" style="rounded=0;whiteSpace=wrap;html=1;" parent="9" vertex="1">
+                    <mxGeometry x="160" y="120" width="160" height="80" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="ensd-fscs&lt;br&gt;tomcat timeout" style="rounded=0;whiteSpace=wrap;html=1;" parent="9" vertex="1">
+                    <mxGeometry x="160" y="240" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="18" value="&lt;h1&gt;目前下载问题分析&lt;/h1&gt;&lt;p&gt;1. 调用接口是 restfu，依赖 tomcat timeout 影响时间&lt;/p&gt;&lt;p&gt;2. 接口没有做锁处理，点击多次，系统会跑多个平行任务&lt;/p&gt;&lt;p&gt;3. 当接口请求之后，及时timeout 任务还是会继续执行完毕，但是此时前端已经拿不到下载数据&lt;/p&gt;&lt;p&gt;4. 不合理的 SQL，导致慢查询，需要优化&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="120" y="200" width="310" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" value="" style="edgeStyle=none;html=1;" parent="1" source="19" target="22" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="下载账单" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="130" y="640" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="25" style="edgeStyle=none;html=1;" parent="1" source="22" target="24" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="28" style="edgeStyle=none;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="22" target="27" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" value="分布式锁" style="rhombus;whiteSpace=wrap;html=1;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="640" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="26" value="生成中" style="edgeStyle=none;html=1;" parent="1" source="24" target="2" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="24" value="已上锁" style="whiteSpace=wrap;html=1;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="250" y="550" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="29" value="下载中" style="edgeStyle=none;html=1;" parent="1" source="27" target="3" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="410" y="730"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="32" style="edgeStyle=none;html=1;" parent="1" source="27" target="69" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="27" value="上锁" style="whiteSpace=wrap;html=1;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="370" y="640" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="77" style="edgeStyle=none;html=1;" parent="1" source="30" target="47" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="103" style="edgeStyle=none;html=1;" edge="1" parent="1" source="30" target="99">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="30" value="CPU 密集型应用" style="swimlane;whiteSpace=wrap;html=1;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" parent="1" vertex="1">
+                    <mxGeometry x="490" y="480" width="360" height="540" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" value="任务线程" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="30" vertex="1">
+                    <mxGeometry x="20" y="40" width="150" height="360" as="geometry"/>
+                </mxCell>
+                <mxCell id="31" value="入参" style="whiteSpace=wrap;html=1;rounded=0;" parent="69" vertex="1">
+                    <mxGeometry x="50" y="10" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="33" value="查询数据" style="whiteSpace=wrap;html=1;rounded=0;" parent="69" vertex="1">
+                    <mxGeometry x="50" y="80" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="34" value="" style="edgeStyle=none;html=1;" parent="69" source="31" target="33" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="35" value="过滤组装" style="whiteSpace=wrap;html=1;rounded=0;" parent="69" vertex="1">
+                    <mxGeometry x="50" y="150" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="36" value="" style="edgeStyle=none;html=1;" parent="69" source="33" target="35" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="73" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="69" source="37" target="72" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="37" value="子任务派发" style="whiteSpace=wrap;html=1;rounded=0;" parent="69" vertex="1">
+                    <mxGeometry x="50" y="220" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="38" value="" style="edgeStyle=none;html=1;" parent="69" source="35" target="37" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="72" value="数据输出" style="whiteSpace=wrap;html=1;rounded=0;" parent="69" vertex="1">
+                    <mxGeometry x="50" y="290" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="71" value="工作线程池" style="swimlane;horizontal=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="30" vertex="1">
+                    <mxGeometry x="190" y="240" width="150" height="160" as="geometry"/>
+                </mxCell>
+                <mxCell id="51" style="edgeStyle=none;html=1;" parent="30" source="37" target="71" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="74" value="线程管理" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="30" vertex="1">
+                    <mxGeometry x="190" y="40" width="120" height="170" as="geometry"/>
+                </mxCell>
+                <mxCell id="75" value="监控" style="whiteSpace=wrap;html=1;rounded=0;" parent="74" vertex="1">
+                    <mxGeometry x="20" y="40" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="76" value="终止" style="whiteSpace=wrap;html=1;rounded=0;" parent="74" vertex="1">
+                    <mxGeometry x="20" y="110" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="79" value="Prometheus 探针" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="30" vertex="1">
+                    <mxGeometry x="20" y="420" width="320" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="90" value="任务指标" style="whiteSpace=wrap;html=1;rounded=0;" parent="79" vertex="1">
+                    <mxGeometry x="20" y="40" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="91" value="工作量指标" style="whiteSpace=wrap;html=1;rounded=0;" parent="79" vertex="1">
+                    <mxGeometry x="120" y="40" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="92" value="性能指标" style="whiteSpace=wrap;html=1;rounded=0;" parent="79" vertex="1">
+                    <mxGeometry x="220" y="40" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="94" style="edgeStyle=none;html=1;" parent="1" source="39" target="78" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="104" style="edgeStyle=none;html=1;" edge="1" parent="1" source="39" target="99">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="39" value="IO 密集型应用" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" parent="1" vertex="1">
+                    <mxGeometry x="1060" y="640" width="260" height="360" as="geometry"/>
+                </mxCell>
+                <mxCell id="40" value="" style="edgeStyle=none;html=1;" parent="39" source="41" target="43" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="41" value="消费输入" style="whiteSpace=wrap;html=1;rounded=0;" parent="39" vertex="1">
+                    <mxGeometry x="40" y="80" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" style="edgeStyle=none;html=1;" parent="39" source="43" target="59" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="43" value="写入文件" style="whiteSpace=wrap;html=1;rounded=0;" parent="39" vertex="1">
+                    <mxGeometry x="40" y="160" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="异常" style="rhombus;whiteSpace=wrap;html=1;rounded=0;" parent="39" vertex="1">
+                    <mxGeometry x="40" y="240" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="66" value="从队列获取数据，写入文件，出错之后通过office&amp;nbsp;&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;重新消费内容&lt;/span&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="39" vertex="1">
+                    <mxGeometry y="310" width="260" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" style="edgeStyle=none;html=1;" parent="1" source="47" target="41" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="47" value="消息队列" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#1ba1e2;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;fontColor=#ffffff;strokeColor=#006EAF;" parent="1" vertex="1">
+                    <mxGeometry x="880" y="640" width="140" height="256" as="geometry"/>
+                </mxCell>
+                <mxCell id="48" value="数据行1" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="47" vertex="1">
+                    <mxGeometry y="26" width="140" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="49" value="数据行2" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="47" vertex="1">
+                    <mxGeometry y="52" width="140" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="52" value="数据行3" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="47" vertex="1">
+                    <mxGeometry y="78" width="140" height="22" as="geometry"/>
+                </mxCell>
+                <mxCell id="55" value="数据行4" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="47" vertex="1">
+                    <mxGeometry y="100" width="140" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="56" value="数据行5" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="47" vertex="1">
+                    <mxGeometry y="126" width="140" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="数据行6" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="47" vertex="1">
+                    <mxGeometry y="152" width="140" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="54" value="数据行7" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="47" vertex="1">
+                    <mxGeometry y="178" width="140" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="53" value="数据行8" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="47" vertex="1">
+                    <mxGeometry y="204" width="140" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="50" value="数据行9" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="47" vertex="1">
+                    <mxGeometry y="230" width="140" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="45" value="通知状态" style="whiteSpace=wrap;html=1;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="1210" y="640" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="42" value="" style="edgeStyle=none;html=1;" parent="1" source="43" target="45" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" style="edgeStyle=none;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="59" target="57" edge="1">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="1110" y="770" as="sourcePoint"/>
+                        <mxPoint x="1030" y="709" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="1050" y="825"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="63" value="同一时刻，只有一个人能发出下载请求" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="130" y="750" width="240" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="主要实现读写分离，避免读数据的时候写文件，相互影响。&lt;br&gt;&lt;br&gt;计算是CPU密集型应用&lt;br&gt;写文件是 IO 密集应用" style="text;html=1;strokeColor=#C73500;fillColor=#fa6800;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#FFFFFF;" parent="1" vertex="1">
+                    <mxGeometry x="880" y="896" width="140" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="并行控制" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e3c800;fontColor=#000000;strokeColor=#B09500;" parent="1" vertex="1">
+                    <mxGeometry x="110" y="480" width="350" height="320" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="重新设计的思考" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontColor=#33001A;fontSize=24;" parent="1" vertex="1">
+                    <mxGeometry x="110" y="430" width="170" height="30" as="geometry"/>
+                </mxCell>
+                <mxCell id="78" value="Prometheus 监控" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+                    <mxGeometry x="490" y="1040" width="830" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="95" value="任务图标" style="whiteSpace=wrap;html=1;rounded=0;" parent="78" vertex="1">
+                    <mxGeometry x="19" y="40" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="96" value="工作量燃尽图" style="whiteSpace=wrap;html=1;rounded=0;" parent="78" vertex="1">
+                    <mxGeometry x="119" y="40" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="97" value="性能图表" style="whiteSpace=wrap;html=1;rounded=0;" parent="78" vertex="1">
+                    <mxGeometry x="219" y="40" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="93" style="edgeStyle=none;html=1;" parent="1" source="79" target="78" edge="1">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="98" value="&lt;h1&gt;目标&lt;/h1&gt;&lt;p&gt;1. 解决：数据存储、查询、导出&lt;/p&gt;&lt;p&gt;2. 做到：可扩展，可监控，可管理、可报警&lt;/p&gt;&lt;p&gt;3.&amp;nbsp;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+                    <mxGeometry x="110" y="820" width="310" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="99" value="日志服务器" style="swimlane;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+                    <mxGeometry x="880" y="480" width="439" height="100" as="geometry"/>
+                </mxCell>
+                <mxCell id="100" value="业务日志" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="99">
+                    <mxGeometry x="20" y="40" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="101" value="系统日志" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="99">
+                    <mxGeometry x="120" y="40" width="80" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="102" value="日志报警" style="whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="99">
+                    <mxGeometry x="220" y="40" width="80" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
