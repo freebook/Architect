@@ -23,5 +23,6 @@
 	&section.arch.socket.xml;
 	&section.arch.testing.xml;
 	&section.arch.grey.xml;
+	&section.arch.async.xml;
 	
 </chapter>
