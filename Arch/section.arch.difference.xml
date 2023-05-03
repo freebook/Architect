@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="difference">
+<section id="环境差异带来的困扰">
 	<title>环境差异带来的困扰</title>
 	<para>工作中你是否因环境的差异带来困扰，下面我总结了一些因为环境差异给开发者造成的困扰。</para>
 	<orderedlist>
@@ -102,10 +102,12 @@
 			<para>从办公电脑注册到注册中心，容器无法方法。解决方法添加路由</para>
 			<para></para>
 		</section>
+		<section>
+			<title>负载均衡</title>
+			<para>负载均衡节点分配有多种算法，例如轮询、随机、源IP地址、HASH、Cookie、加权等等……</para>
+			<para>其中又些算法，例如轮询、随机，它是不保持与请求客户端之间的关系，当你下一次请求，节点就会发生变化。这样就你不知道那个节点执行了你的请求。</para>
+		</section>
 
-
-		<para></para>
-		<para></para>
 		<para></para>
 		<para></para>
 	</section>

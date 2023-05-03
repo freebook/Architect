@@ -24,5 +24,6 @@
 	&section.arch.testing.xml;
 	&section.arch.grey.xml;
 	&section.arch.async.xml;
+<!-- 	&section.arch.difference.xml; -->
 	
 </chapter>

@@ -20,6 +20,7 @@
 <!ENTITY section.arch.testing.xml		SYSTEM "section.arch.testing.xml">
 <!ENTITY section.arch.grey.xml			SYSTEM "section.arch.grey.xml">
 <!ENTITY section.arch.async.xml			SYSTEM "section.arch.async.xml">
+<!ENTITY section.arch.difference.xml	SYSTEM "section.arch.difference.xml">
 
 <!ENTITY section.web.xml 				SYSTEM "section.web.xml">
 <!ENTITY section.web.search.xml			SYSTEM "section.web.search.xml">
