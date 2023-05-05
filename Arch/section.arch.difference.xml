@@ -91,24 +91,46 @@
 			<para></para>
 		</section>
 		<section>
+			<title>CPU 资源限制</title>
+		</section>
+		<section>
+			<title>内存资源限制</title>
+			<para>容器 PodOOMKilling</para>
+		</section>
+		<section>
 			<title>雪花算法出现重复</title>
 			<para>在容器加微服务的解决方案中使用雪花算法，很容易出现数据重复。</para>
+			
+			<para></para>
 			<para></para>
 			<para></para>
 			<para></para>
 		</section>
 		<section>
 			<title>注册中心</title>
-			<para>从办公电脑注册到注册中心，容器无法方法。解决方法添加路由</para>
-			<para></para>
+			<para>注册中心都有那些问题困扰我们？</para>
+			<itemizedlist>
+				<title>开发中遇到的问题：</title>
+				<listitem>本地电脑注册到测试环境，我们常常不小心，把开发自己的的开发环境注册到注册中心，导致其他微服务连接到我们的开发环境上。</listitem>
+				<listitem>还有时我们注册导了测试环境，把测试环境的消息队列中的内容给消费了.</listitem>
+				<listitem>与容器联调，容器pod无法跟本地电脑打通。解决方法添加路由，对于开发人员操作是分复杂。</listitem>
+			</itemizedlist>
+			<itemizedlist>
+				<title>生产中遇到的问题：</title>
+				<listitem></listitem>
+				<listitem></listitem>
+			</itemizedlist>
+			<para>当微服务节点注册导注册中心后，通过心跳来维持节点的存活。</para>
 		</section>
 		<section>
 			<title>负载均衡</title>
 			<para>负载均衡节点分配有多种算法，例如轮询、随机、源IP地址、HASH、Cookie、加权等等……</para>
 			<para>其中又些算法，例如轮询、随机，它是不保持与请求客户端之间的关系，当你下一次请求，节点就会发生变化。这样就你不知道那个节点执行了你的请求。</para>
 		</section>
-
-		<para></para>
-		<para></para>
+		<section>
+			<title>健康检查</title>
+			<para>健康检查误判的问题</para>
+			<para></para>
+		</section>
 	</section>
 </section>
