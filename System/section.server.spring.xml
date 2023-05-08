@@ -818,8 +818,8 @@ java -jar demo.jar --spring.config.location=/opt/config/application.properties
 			<para>默认日志文件</para>
 			<screen>
 			<![CDATA[
-		logging.path=/tmp 		# 日志目录默认为 /tmp
-		logging.file=spring.log # 日志文件名称，默认为spring.log
+logging.path=/tmp 		# 日志目录默认为 /tmp
+logging.file=spring.log # 日志文件名称，默认为spring.log
 			]]>
 			</screen>
 			<para>需要需要根据每个服务器的情况来指定日志存储的目录</para>
@@ -998,6 +998,15 @@ iptables -t nat -L
 			</section>
 		</section>
 		<section>
+			<title>优雅重启</title>
+			<screen>
+			<![CDATA[
+server:
+  shutdown: graceful			
+			]]>
+			</screen>
+		</section>
+		<section>
 			<title>连接数配置</title>
 			<para>系统默认 2048，这里 max-threads 是 4096 表示服务器最大连接数是 4096</para>
 			<screen>
@@ -1022,6 +1031,17 @@ server.tomcat.connection-timeout=20000
 			]]>
 			</screen>
 			<para>链接超时时间建议设置 60～20秒之间。</para>
+			<screen>
+			<![CDATA[
+server:
+  tomcat:
+    connection-timeout: 300000
+    accept-count: 1000
+    max-threads: 4000
+    min-spare-threads: 100
+    max-connections: 10000
+			]]>
+			</screen>
 		</section>
 		<section>
 			<title>超时时间</title>
@@ -1135,7 +1155,7 @@ spring.datasource.driver-class-name=org.postgresql.Driver
 spring.datasource.platform=postgres
 spring.datasource.url=jdbc:postgresql://192.168.1.240:5432/saas_data?currentSchema=public&useUnicode=true&characterEncoding=UTF-8
 spring.datasource.username=ctsuser
-spring.datasource.password=saas				
+spring.datasource.password=saas
 				]]>
 				</screen>
 			</section>
@@ -1147,7 +1167,7 @@ spring.datasource.driver-class-name=com.mysql.jdbc.Driver
 spring.datasource.url=jdbc:mysql://主机地址:端口号/数据库
 spring.datasource.username=用户名
 spring.datasource.password=密码
-spring.jpa.database=MYSQL # 启用JPA支持			
+spring.jpa.database=MYSQL # 启用JPA支持
 				]]>
 				</screen>
 			</section>
@@ -1225,6 +1245,24 @@ feign.compression.request.min-request-size=2048
 			<screen>
 			<![CDATA[
 feign.metrics.enabled=true			
+			]]>
+			</screen>
+			<para>超时时间</para>
+			<screen>
+			<![CDATA[
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 300000
+        readTimeout: 300000
+  httpclient:
+    enabled: true
+    connection-timeout: 300000
+  compression:
+    request:
+      enabled: true
+      min-request-size: 1024			
 			]]>
 			</screen>
 		</section>
@@ -1603,9 +1641,356 @@ pipeline {
 	<section>
 		<title>监控</title>
 		<subtitle>Spring Boot Actuator 健康检查、审计、统计和监控</subtitle>
+		<para>常规接口</para>
+		<screen>
+		<![CDATA[
+neo@MacBook-Pro ~ % curl -s http://www.netkiller.cn:8080/actuator | jq
+{
+  "_links": {
+    "self": {
+      "href": "http://www.netkiller.cn:8080/actuator",
+      "templated": false
+    },
+    "health": {
+      "href": "http://www.netkiller.cn:8080/actuator/health",
+      "templated": false
+    },
+    "health-component": {
+      "href": "http://www.netkiller.cn:8080/actuator/health/{component}",
+      "templated": true
+    },
+    "health-component-instance": {
+      "href": "http://www.netkiller.cn:8080/actuator/health/{component}/{instance}",
+      "templated": true
+    },
+    "info": {
+      "href": "http://www.netkiller.cn:8080/actuator/info",
+      "templated": false
+    }
+  }
+}
+		
+		]]>
+		</screen>
+		<para>暴漏所有接口</para>
+		<screen>
+		<![CDATA[
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"		
+		]]>
+		</screen>
+		<para>再次访问 /actuator</para>
+		<screen>
+		<![CDATA[
+neo@MacBook-Pro-Neo ~/w/Architect (master)> curl -s https://www.netkiller.cn/actuator/ | jq
+{
+  "_links": {
+    "self": {
+      "href": "http://pre.ejiayou.com/ensd-channel-service/monitor",
+      "templated": false
+    },
+    "archaius": {
+      "href": "https://www.netkiller.cn/actuator/archaius",
+      "templated": false
+    },
+    "nacosconfig": {
+      "href": "https://www.netkiller.cn/actuator/nacosconfig",
+      "templated": false
+    },
+    "nacosdiscovery": {
+      "href": "https://www.netkiller.cn/actuator/nacosdiscovery",
+      "templated": false
+    },
+    "auditevents": {
+      "href": "https://www.netkiller.cn/actuator/auditevents",
+      "templated": false
+    },
+    "beans": {
+      "href": "https://www.netkiller.cn/actuator/beans",
+      "templated": false
+    },
+    "caches-cache": {
+      "href": "https://www.netkiller.cn/actuator/caches/{cache}",
+      "templated": true
+    },
+    "caches": {
+      "href": "https://www.netkiller.cn/actuator/caches",
+      "templated": false
+    },
+    "health-component": {
+      "href": "https://www.netkiller.cn/actuator/health/{component}",
+      "templated": true
+    },
+    "health": {
+      "href": "https://www.netkiller.cn/actuator/health",
+      "templated": false
+    },
+    "health-component-instance": {
+      "href": "https://www.netkiller.cn/actuator/health/{component}/{instance}",
+      "templated": true
+    },
+    "conditions": {
+      "href": "https://www.netkiller.cn/actuator/conditions",
+      "templated": false
+    },
+    "configprops": {
+      "href": "https://www.netkiller.cn/actuator/configprops",
+      "templated": false
+    },
+    "env-toMatch": {
+      "href": "https://www.netkiller.cn/actuator/env/{toMatch}",
+      "templated": true
+    },
+    "env": {
+      "href": "https://www.netkiller.cn/actuator/env",
+      "templated": false
+    },
+    "info": {
+      "href": "https://www.netkiller.cn/actuator/info",
+      "templated": false
+    },
+    "loggers-name": {
+      "href": "https://www.netkiller.cn/actuator/loggers/{name}",
+      "templated": true
+    },
+    "loggers": {
+      "href": "https://www.netkiller.cn/actuator/loggers",
+      "templated": false
+    },
+    "heapdump": {
+      "href": "https://www.netkiller.cn/actuator/heapdump",
+      "templated": false
+    },
+    "threaddump": {
+      "href": "https://www.netkiller.cn/actuator/threaddump",
+      "templated": false
+    },
+    "metrics": {
+      "href": "https://www.netkiller.cn/actuator/metrics",
+      "templated": false
+    },
+    "metrics-requiredMetricName": {
+      "href": "https://www.netkiller.cn/actuator/metrics/{requiredMetricName}",
+      "templated": true
+    },
+    "scheduledtasks": {
+      "href": "https://www.netkiller.cn/actuator/scheduledtasks",
+      "templated": false
+    },
+    "httptrace": {
+      "href": "https://www.netkiller.cn/actuator/httptrace",
+      "templated": false
+    },
+    "mappings": {
+      "href": "https://www.netkiller.cn/actuator/mappings",
+      "templated": false
+    },
+    "refresh": {
+      "href": "https://www.netkiller.cn/actuator/refresh",
+      "templated": false
+    },
+    "features": {
+      "href": "https://www.netkiller.cn/actuator/features",
+      "templated": false
+    },
+    "service-registry": {
+      "href": "https://www.netkiller.cn/actuator/service-registry",
+      "templated": false
+    }
+  }
+}		
+		]]>
+		</screen>
 
+		<section>
+			<title>健康状态</title>
+			<para>curl www.netkiller.cn:8080/actuator/health</para>
+			<screen>
+		<![CDATA[		
+neo@MacBook-Pro ~ % curl -s http://www.netkiller.cn:8080/actuator/health | jq
+{
+  "status": "UP"
+}
+		]]>
+			</screen>
+			<section>
+				<title>健康状态</title>
+				<para>详细的健康状态信息</para>
+				<screen>
+			<![CDATA[
+management.endpoint.health.show-details=always			
+			]]>
+				</screen>
+				<para></para>
+				<screen>
+			<![CDATA[
+neo@MacBook-Pro ~ % curl -s http://www.netkiller.cn:8080/actuator/health | jq
+{
+  "status": "UP",
+  "details": {
+    "diskSpace": {
+      "status": "UP",
+      "details": {
+        "total": 250790436864,
+        "free": 23556112384,
+        "threshold": 10485760
+      }
+    }
+  }
+}			
+			]]>
+				</screen>
+			</section>
+		</section>
 	</section>
 	<section>
-		<title>备份</title>
+		<title>容器部署</title>
+		<screen>
+		<![CDATA[
+metadata:
+  name: netkiller
+  labels:
+    app: netkiller
+    group: finance
+  namespace: neo
+  annotations:
+    description: 服务
+spec:
+  replicas: 1
+  progressDeadlineSeconds: 600
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: netkiller
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: netkiller
+    spec:
+      hostAliases:
+        - ip: 172.18.200.10
+          hostnames:
+            - log.netkiller.cn
+      containers:
+        - name: netkiller
+          image: registry.netkiller.cn/project/netkiller
+          ports:
+            - name: http
+              containerPort: 8080
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /netkiller-service/monitor/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /netkiller-service/monitor/health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          env:
+            - name: JAVA_OPTS
+              value: -Duser.timezone=Asia/Shanghai -Xmx2g -Xms1g -Dspring.application.name=netkiller-service
+                -Dspring.profiles.active=neo -Dserver.port=8080 -Dlog.level=info -Dspring.cloud.nacos.config.server-addr=nacos.default.svc.cluster.local:8848
+                -Dspring.cloud.nacos.discovery.server-addr=nacos.default.svc.cluster.local:8848
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp
+        - name: filebeat
+          image: docker.elastic.co/beats/filebeat:8.6.1
+          args:
+            - -c
+            - /usr/share/filebeat/filebeat.yml
+            - -e
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: environment
+              value: prod
+            - name: service
+              value: netkiller-service
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp
+            - mountPath: /usr/share/filebeat/data
+              name: data
+            - mountPath: /usr/share/filebeat/filebeat.yml
+              name: config
+              subPath: filebeat.yml
+      imagePullSecrets:
+        - name: registry
+      restartPolicy: Always
+      dnsPolicy: ClusterFirst
+      volumes:
+        - emptyDir: {}
+          name: data
+        - emptyDir: {}
+          name: tmp
+        - configMap:
+            defaultMode: 420
+            name: filebeat
+          name: config
+apiVersion: apps/v1
+kind: Deployment
+---
+metadata:
+  name: netkiller
+  namespace: neo
+spec:
+  ports:
+    - name: http-80
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+  selector:
+    app: netkiller
+apiVersion: v1
+kind: Service
+---
+metadata:
+  name: netkiller
+  namespace: neo
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: '300'
+    nginx.ingress.kubernetes.io/proxy-read-timeout: '300'
+    nginx.ingress.kubernetes.io/proxy-send-timeout: '300'
+spec:
+  rules:
+    - host: neo.netkiller.cn
+      http:
+        paths:
+          - path: /netkiller-service
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: netkiller
+                port:
+                  number: 80
+  tls:
+    - hosts:
+        - neo.netkiller.cn
+      secretName: tls
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+		]]>
+		</screen>
 	</section>
 </section>
