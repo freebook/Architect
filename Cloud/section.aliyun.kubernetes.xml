@@ -1,2 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<section id="阿里云Kubernetes">
+	<title>阿里云 Kubernetes</title>
+	<section>
+		<title>pod 反复异常重启怎么排查？</title>
+		<para>使用 kubernetes 我们常常会遇到 pod 不停重启的情况，有些是应用的问题，有些是 k8s 配置问题，那么怎么排查呢？</para>
+		<procedure>
+			<title>排查过程：</title>
+			<step>
+				<para>确认重启的原因</para>
+				<para>检查 k8s 限额配置，确认给足了资源，不是因为资源不足导致导应用无响应。</para>
+				<itemizedlist>
+					<title>K8S 检查项：</title>
+					<listitem>确认 CPU 资源</listitem>
+					<listitem>确认 内存 资源</listitem>
+					<listitem>确认 健康检查时间是否合理，很多情况是因为健康检查导致 k8s 强行重启 pod</listitem>
+				</itemizedlist>
+				<para></para>
+			</step>
 
+			<step>
+				<para></para>
+			</step>
+
+			<step>
+				<para></para>
+			</step>
+		</procedure>
+	</section>
+</section>
