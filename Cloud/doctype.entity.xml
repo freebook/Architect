@@ -6,3 +6,4 @@
 <!ENTITY section.aliyun.rds.xml		SYSTEM "section.aliyun.rds.xml">
 <!ENTITY section.aliyun.bottleneck.xml	SYSTEM "section.aliyun.bottleneck.xml">
 <!ENTITY section.aliyun.bastionhost.xml	SYSTEM "section.aliyun.bastionhost.xml">
+<!ENTITY section.aliyun.kubernetes.xml	SYSTEM "section.aliyun.kubernetes.xml">

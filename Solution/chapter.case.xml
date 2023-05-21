@@ -31,7 +31,6 @@ pxy: apache -> rewrite + mod_proxy_cascade
 		<graphic format="png" fileref="../images/solution/perl_solution.png" srccredit="neo" />
 	</screenshot>
 	
-	<para>将上图中的Catalyst拿掉换成Django就是Python解决方案</para>
+	
 	<graphic format="png" fileref="../images/solution/python_solution.png" srccredit="neo" />
 </section>
-
