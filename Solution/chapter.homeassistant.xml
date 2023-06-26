@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section id="homeassistant">
+  <title>homeassistant</title>
+
+  <screenshot>
+    <screeninfo>perl</screeninfo>
+    <graphic format="png" fileref="../images/solution/perl_solution.png" srccredit="neo" />
+  </screenshot>
+  <graphic format="png" fileref="../images/solution/python_solution.png" srccredit="neo" />
+  <section>
+    <title>Debian</title>
+    <para>安装依赖包</para>
+    <screen>
+  <![CDATA[ 
+apt update
+apt install udisks2
+  ]]>
+  </screen>
+    <screen>
+  <![CDATA[ 
+wget https://github.com/home-assistant/os-agent/releases/latest/download/os-agent_1.5.1_linux_x86_64.deb
+apt install ./os-agent_1.5.1_linux_x86_64.deb
+systemctl status haos-agent  
+  ]]>
+  </screen>
+    <para>安装 Docker</para>
+    <screen>
+  <![CDATA[ 
+apt install \
+  apt-transport-https \
+  ca-certificates \
+  curl \
+  gnupg2 \
+  lsb-release
+
+mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/debian/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+apt update
+apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+  ]]>
+  </screen>
+    <para></para>
+    <screen>
+  <![CDATA[ 
+wget https://github.com/home-assistant/supervised-installer/releases/download/1.4.3/homeassistant-supervised.deb
+dpkg -i homeassistant-supervised.deb
+
+wget https://github.com/home-assistant/supervised-installer/releases/latest/download/homeassistant-supervised.deb
+apt install ./homeassistant-supervised.deb
+  ]]>
+  </screen>
+    <screen>
+	<![CDATA[
+sudo docker run --restart always -d --name homeassistant \
+-v /PATH_TO_YOUR_CONFIG:/config \
+--device=/PATH_TO_YOUR_USB_STICK \
+-e TZ=Australia/Melbourne --net=host \
+ghcr.io/home-assistant/home-assistant:stable
+
+sudo dpkg -i https://github.com/home-assistant/supervised-installer/releases/download/1.4.3/homeassistant-supervised.deb
+
+sudo docker run --restart always -d --name homeassistant \
+--restart=unless-stopped \
+-v /srv/homeassistant:/config \
+-p 8123:8123 -p 4357:4357 \
+-e TZ=Asia/Shanghai --net=host \
+ghcr.io/home-assistant/home-assistant:stable
+	]]>
+	</screen>
+    <para>重启 debian </para>
+    <screen>
+  <![CDATA[ 
+reboot  
+  ]]>
+  </screen>
+    <para></para>
+    <screen>
+  <![CDATA[
+version: '3'
+  services:
+    homeassistant:
+      container_name: homeassistant
+      image: "ghcr.io/home-assistant/home-assistant:stable"
+      volumes:
+        - /PATH_TO_YOUR_CONFIG:/config
+        - /etc/localtime:/etc/localtime:ro
+      restart: unless-stopped
+      privileged: true
+      network_mode: host  
+  ]]>
+  </screen>
+  </section>
+  <section>
+    <title>Ubuntu</title>
+    <screen>
+    <![CDATA[ 
+
+wget https://github.com/home-assistant/os-agent/releases/latest/download/os-agent.deb
+apt install ./homeassistant-supervised.deb
+
+wget https://github.com/home-assistant/os-agent/releases/latest/download/os-agent_1.5.1_linux_x86_64.deb
+apt install ./os-agent_1.5.1_linux_x86_64.deb
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -  
+sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"  
+apt install docker-ce
+
+wget https://github.com/home-assistant/supervised-installer/releases/latest/download/homeassistant-supervised.deb
+apt install ./homeassistant-supervised.deb
+    ]]>
+    </screen>
+  </section>
+  <section>
+    <title>Home Assistant Community Store</title>
+    <para>https://github.com/hacs</para>
+    <screen>
+    <![CDATA[ 
+docker exec -it homeassistant bash
+
+wget -O - https://get.hacs.xyz | bash -
+    ]]>
+    </screen>
+  </section>
+  <section>
+    <title>MQTT</title>
+    <screen>
+    <![CDATA[ 
+pip3 install -i https://pypi.doubanio.com/simple paho-mqtt    
+pip3 install openai
+    ]]>
+    </screen>
+
+  </section>
+  <section>
+    <title>ChatGPT 接口</title>
+    <screen>
+    <![CDATA[ 
+
+docker build --tag netkiller/chatgpt .
+docker push netkiller/chatgpt
+
+docker run --name chatgpt -d -p 8080:8080 netkiller/chatgpt
+
+curl -XPOST -d "query=深圳在哪里" http://127.0.0.1:8080/query
+    ]]>
+    </screen>
+  </section>
+  <section>
+    <title>FAQ</title>
+    <para>科学上网</para>
+    <screen>
+    <![CDATA[ 
+ssh -f -N -D 172.0.0.1:1080 root@8.216.50.196
+
+HTTP_PROXY=socks5://127.0.0.1:1080/
+HTTPS_PROXY=socks5://127.0.0.1:1080/
+NO_PROXY=localhost,127.0.0.1,docker.io
+
+root@homeassistant:~# docker pull ghcr.io/home-assistant/aarch64-hassio-supervisor:latest
+    ]]>
+    </screen>
+    <para></para>
+    <screen>
+    <![CDATA[ 
+docker pull nginx:latest
+docker image inspect nginx:latest | grep -i version
+docker images --format "{{.Repository}}:{{.Tag}}" | grep ':latest' | xargs -L1 docker pull
+docker images | grep none | awk '{ print $3; }' | xargs docker rmi
+    ]]>
+    </screen>
+    <para>RK3318</para>
+    <screen>
+    <![CDATA[ 
+neo@MacBook-Pro-M2 ~/Downloads> sudo dd bs=1m if=multitool.img of=/dev/disk4 status=progress
+
+
+    ]]>
+    </screen>
+  </section>
+  <section>
+    <title>GPS 模块</title>
+    <screen>
+    <![CDATA[ 
+cat /dev/ttyACM0 | grep GPTXT    
+    ]]>
+    </screen>
+    <screen>
+    <![CDATA[ 
+例：$GPRMC,024813.640,A,3158.4608,N,11848.3737,E,10.05,324.27,150706,,,A*50
+字段0：$GPRMC，语句ID，表明该语句为Recommended Minimum Specific GPS/TRANSIT Data（RMC）推荐最小定位信息
+字段1：UTC时间，hhmmss.sss格式
+字段2：状态，A=定位，V=未定位
+字段3：纬度ddmm.mmmm，度分格式（前导位数不足则补0）
+字段4：纬度N（北纬）或S（南纬）
+字段5：经度dddmm.mmmm，度分格式（前导位数不足则补0）
+字段6：经度E（东经）或W（西经）
+字段7：速度，节，Knots
+字段8：方位角，度
+字段9：UTC日期，DDMMYY格式
+字段10：磁偏角，（000 - 180）度（前导位数不足则补0）
+字段11：磁偏角方向，E=东W=西
+字段12：模式，A=自动，D=差分，E=估测，N=数据无效（3.0协议内容）
+字段13：校验值（$与*之间的数异或后的值）    
+    ]]>
+    </screen>
+
+  </section>
+  <section>
+    <title>ha 命令</title>
+    <screen>
+    <![CDATA[ 
+root@homeassistant:~# ha network info
+docker:
+  address: 172.30.32.0/23
+  dns: 172.30.32.3
+  gateway: 172.30.32.1
+  interface: hassio
+host_internet: false
+interfaces:
+- connected: true
+  enabled: true
+  interface: eth0
+  ipv4:
+    address:
+    - 192.168.30.126/24
+    gateway: 192.168.30.1
+    method: auto
+    nameservers:
+    - 202.96.134.133
+    - 114.114.114.114
+    ready: true
+  ipv6:
+    address:
+    - fe80::aefb:5aa3:1dff:71af/64
+    gateway: null
+    method: disabled
+    nameservers: []
+    ready: true
+  primary: true
+  type: ethernet
+  vlan: null
+  wifi: null
+supervisor_internet: false    
+    ]]>
+    </screen>
+    <screen>
+    <![CDATA[ 
+root@homeassistant:~# ha network info | grep internet
+host_internet: false
+supervisor_internet: false    
+    ]]>
+    </screen>
+  </section>
+  <section>
+    <title>ChatGPT</title>
+    <screen>
+    <![CDATA[ 
+https://github.com/Yidadaa/ChatGPT-Next-Web    
+    ]]>
+    </screen>
+  </section>
+</section>
