@@ -260,6 +260,16 @@ supervisor_internet: false
 https://github.com/Yidadaa/ChatGPT-Next-Web    
     ]]>
     </screen>
+    <screen>
+    <![CDATA[ 
+docker pull yidadaa/chatgpt-next-web
+
+docker run -d --name chatgpt-next-web -p 3000:3000 \
+   -e OPENAI_API_KEY="sk-" \
+   -e CODE="netkiller" \
+   yidadaa/chatgpt-next-web
+    ]]>
+    </screen>
   </section>
   <section>
     <title>GPS</title>
