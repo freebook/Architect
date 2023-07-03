@@ -122,6 +122,22 @@ docker exec -it homeassistant bash
 wget -O - https://get.hacs.xyz | bash -
     ]]>
     </screen>
+    <para>如果无法下载，请添加 hosts 文件</para>
+    <screen>
+    <![CDATA[ 
+docker exec -i homeassistant bash -c "echo 199.232.96.133    raw.githubusercontent.com >> /etc/hosts"
+docker exec -i homeassistant bash -c "echo 140.82.114.4    github.com >> /etc/hosts"
+    ]]>
+    </screen>
+    <para>手工安装</para>
+    <screen>
+    <![CDATA[
+docker exec -it homeassistant bash
+mkdir custom_components/hacs    
+    ]]>
+    </screen>
+    <para>集成方法 <ulink url="https://hacs.xyz/docs/configuration/basic/" />
+    </para>
   </section>
   <section>
     <title>MQTT</title>
@@ -252,6 +268,14 @@ host_internet: false
 supervisor_internet: false    
     ]]>
     </screen>
+    <section>
+      <title>修改 DNS</title>
+      <screen>
+      <![CDATA[ 
+ha dns options --servers dns://8.8.8.8      
+      ]]>
+      </screen>
+    </section>
   </section>
   <section>
     <title>ChatGPT</title>
