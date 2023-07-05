@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<section id="homeassistant">
-	<title>homeassistant</title>
+<chapter id="homeassistant">
+	<title>Home Assistant</title>
 
 	<screenshot>
 		<screeninfo>perl</screeninfo>
@@ -8,23 +8,26 @@
 	</screenshot>
 	<graphic format="png" fileref="../images/solution/python_solution.png" srccredit="neo" />
 	<section>
-		<title>Debian</title>
-		<para>安装依赖包</para>
-		<screen>
+		<title>安装 Home Assistant</title>
+
+		<section>
+			<title>Debian</title>
+			<para>安装依赖包</para>
+			<screen>
   <![CDATA[ 
 apt update
 apt install udisks2
   ]]>
 		</screen>
-		<screen>
+			<screen>
   <![CDATA[ 
 wget https://github.com/home-assistant/os-agent/releases/latest/download/os-agent_1.5.1_linux_x86_64.deb
 apt install ./os-agent_1.5.1_linux_x86_64.deb
 systemctl status haos-agent  
   ]]>
 		</screen>
-		<para>安装 Docker</para>
-		<screen>
+			<para>安装 Docker</para>
+			<screen>
   <![CDATA[ 
 apt install \
   apt-transport-https \
@@ -41,8 +44,8 @@ apt update
 apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
   ]]>
 		</screen>
-		<para></para>
-		<screen>
+			<para></para>
+			<screen>
   <![CDATA[ 
 wget https://github.com/home-assistant/supervised-installer/releases/download/1.4.3/homeassistant-supervised.deb
 dpkg -i homeassistant-supervised.deb
@@ -51,7 +54,7 @@ wget https://github.com/home-assistant/supervised-installer/releases/latest/down
 apt install ./homeassistant-supervised.deb
   ]]>
 		</screen>
-		<screen>
+			<screen>
 	<![CDATA[
 sudo docker run --restart always -d --name homeassistant \
 -v /PATH_TO_YOUR_CONFIG:/config \
@@ -69,33 +72,33 @@ sudo docker run --restart always -d --name homeassistant \
 ghcr.io/home-assistant/home-assistant:stable
 	]]>
 		</screen>
-		<para>重启 debian </para>
-		<screen>
-  <![CDATA[ 
+			<para>重启 debian </para>
+			<screen>
+  			<![CDATA[ 
 reboot  
-  ]]>
-		</screen>
-		<para></para>
-		<screen>
-  <![CDATA[
+			]]>
+			</screen>
+			<para></para>
+			<screen>
+ 			<![CDATA[
 version: '3'
   services:
-    homeassistant:
-      container_name: homeassistant
-      image: "ghcr.io/home-assistant/home-assistant:stable"
-      volumes:
-        - /PATH_TO_YOUR_CONFIG:/config
-        - /etc/localtime:/etc/localtime:ro
-      restart: unless-stopped
-      privileged: true
-      network_mode: host  
-  ]]>
-		</screen>
-	</section>
-	<section>
-		<title>Ubuntu</title>
-		<screen>
-    <![CDATA[ 
+	homeassistant:
+	  container_name: homeassistant
+	  image: "ghcr.io/home-assistant/home-assistant:stable"
+	  volumes:
+		- /PATH_TO_YOUR_CONFIG:/config
+		- /etc/localtime:/etc/localtime:ro
+	  restart: unless-stopped
+	  privileged: true
+	  network_mode: host  
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>Ubuntu</title>
+			<screen>
+			<![CDATA[ 
 
 wget https://github.com/home-assistant/os-agent/releases/latest/download/os-agent.deb
 apt install ./homeassistant-supervised.deb
@@ -109,103 +112,184 @@ apt install docker-ce
 
 wget https://github.com/home-assistant/supervised-installer/releases/latest/download/homeassistant-supervised.deb
 apt install ./homeassistant-supervised.deb
-    ]]>
+			]]>
+			</screen>
+		</section>
+	</section>
+	<section>
+		<title>配置文件</title>
+		<screen>
+		<![CDATA[ 
+/usr/share/hassio/homeassistant		
+		]]>
 		</screen>
 	</section>
 	<section>
 		<title>Home Assistant Community Store</title>
 		<para>https://github.com/hacs</para>
-		<screen>
-    <![CDATA[ 
+		<section>
+			<title>正常安装</title>
+			<para>配置 DNS</para>
+			<screen>
+			<![CDATA[ 
+homeassistant:/config# cat /etc/resolv.conf 
+search local.hass.io
+nameserver 8.8.8.8			
+			]]>
+			</screen>
+			<para>进入容器安装 hacs</para>
+			<screen>
+			<![CDATA[ 
 docker exec -it homeassistant bash
-
 wget -O - https://get.hacs.xyz | bash -
-    ]]>
-		</screen>
-		<para>如果无法下载，请添加 hosts 文件</para>
-		<screen>
-    <![CDATA[ 
+			]]>
+			</screen>
+			<screen>
+			<![CDATA[ 
+homeassistant:/config# cat /etc/resolv.conf 
+search local.hass.io
+nameserver 8.8.8.8
+
+homeassistant:/config# wget -O - https://get.hacs.xyz | bash -
+Connecting to get.hacs.xyz ([2606:4700:3031::ac43:8f2c]:443)
+Connecting to raw.githubusercontent.com ([2606:50c0:8001::154]:443)
+writing to stdout
+INFO: Trying to find the correct directory...
+-                    100% |*************************|  3988  0:00:00 ETA
+written to stdout
+INFO: Found Home Assistant configuration directory at '/config'
+INFO: Changing to the custom_components directory...
+INFO: Downloading HACS
+Connecting to github.com (20.205.243.166:443)
+Connecting to github.com (20.205.243.166:443)
+Connecting to objects.githubusercontent.com (185.199.108.133:443)
+saving to 'hacs.zip'
+hacs.zip             100% |*************************| 3889k  0:00:00 ETA
+'hacs.zip' saved
+INFO: Creating HACS directory...
+INFO: Unpacking HACS...
+
+INFO: Verifying versions
+INFO: Current version is 2023.6.2, minimum version is 2022.11.0
+
+INFO: Removing HACS zip file...
+INFO: Installation complete.
+
+INFO: Remember to restart Home Assistant before you configure it			
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>遇到 Github 无法访问的情况怎么处理</title>
+			<para>如果无法下载，请添加 hosts 文件</para>
+			<screen>
+			<![CDATA[ 
 docker exec -i homeassistant bash -c "echo 199.232.96.133    raw.githubusercontent.com >> /etc/hosts"
 docker exec -i homeassistant bash -c "echo 140.82.114.4    github.com >> /etc/hosts"
-    ]]>
-		</screen>
-		<para>手工安装</para>
-		<screen>
-    <![CDATA[
-docker exec -it homeassistant bash
-mkdir custom_components/hacs    
-    ]]>
-		</screen>
-		<para>
-			集成方法
-			<ulink url="https://hacs.xyz/docs/configuration/basic/" />
-		</para>
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>手工安装</title>
+			<para>手工安装，下载 hacs.zip 文件，然后复制到 homeassistant 机器上</para>
+			<screen>
+			<![CDATA[
+unzip hacs.zip
+scp -r hacs root@homeassistant.local:/tmp/
+			]]>
+			</screen>
+			<para>将宿主主机的 hacs 目录复制到 homeassistant 容器中的 /config/custom_components/ 目录下</para>
+			<screen>
+			<![CDATA[
+root@homeassistant:~# docker cp /tmp/hacs homeassistant:/config/custom_components/
+                             Successfully copied 11.6MB to homeassistant:/config/custom_components/
+			]]>
+			</screen>
+			<screen>
+			<![CDATA[
+root@homeassistant:~# docker exec -it homeassistant bash
+homeassistant:/config# ls custom_components/
+hacs
+			]]>
+			</screen>
+			<para> 集成方法 <ulink url="https://hacs.xyz/docs/configuration/basic/" /></para>
+		</section>
+
+		<section>
+			<title>Xiaomi Miot Auto</title>
+			<para>手工安装</para>
+			<screen>
+			<![CDATA[
+			
+			]]>
+			</screen>
+		</section>
+
 	</section>
 	<section>
 		<title>MQTT</title>
 		<screen>
-    <![CDATA[ 
+	<![CDATA[ 
 pip3 install -i https://pypi.doubanio.com/simple paho-mqtt    
 pip3 install openai
-    ]]>
+	]]>
 		</screen>
 
 	</section>
 	<section>
 		<title>ChatGPT 接口</title>
-		<screen>
-    <![CDATA[ 
+		<section>
+			<title>ChatGPT Web 界面</title>
+			<para>https://github.com/Yidadaa/ChatGPT-Next-Web</para>
+			<screen>
+			<![CDATA[ 
+docker pull yidadaa/chatgpt-next-web
 
-docker build --tag netkiller/chatgpt .
+docker run -d --name chatgpt-next-web -p 3000:3000 \
+   -e OPENAI_API_KEY="sk-" \
+   -e CODE="netkiller" \
+   yidadaa/chatgpt-next-web
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>ChatGPT 接口</title>
+			<screen>
+			<![CDATA[ 
+docker login
+docker build --tag netkiller/chatgpt:1.0.1 .
 docker push netkiller/chatgpt
 
-docker run --name chatgpt -d -p 8080:8080 netkiller/chatgpt
-
+docker stop chatgpt
+docker rm chatgpt
+docker run --name chatgpt --restart=unless-stopped -d --network host \
+-e OPENAI_API_KEY=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 \
+netkiller/chatgpt:1.0.1
+docker logs -f chatgpt
+			]]>
+			</screen>
+			<screen>
+			<![CDATA[ 
 curl -XPOST -d "query=深圳在哪里" http://127.0.0.1:8080/query
-    ]]>
-		</screen>
+			]]>
+			</screen>
+		</section>
 	</section>
+
 	<section>
-		<title>FAQ</title>
-		<para>科学上网</para>
-		<screen>
-    <![CDATA[ 
-ssh -f -N -D 172.0.0.1:1080 root@8.216.50.196
-
-HTTP_PROXY=socks5://127.0.0.1:1080/
-HTTPS_PROXY=socks5://127.0.0.1:1080/
-NO_PROXY=localhost,127.0.0.1,docker.io
-
-root@homeassistant:~# docker pull ghcr.io/home-assistant/aarch64-hassio-supervisor:latest
-    ]]>
-		</screen>
-		<para></para>
-		<screen>
-    <![CDATA[ 
-docker pull nginx:latest
-docker image inspect nginx:latest | grep -i version
-docker images --format "{{.Repository}}:{{.Tag}}" | grep ':latest' | xargs -L1 docker pull
-docker images | grep none | awk '{ print $3; }' | xargs docker rmi
-    ]]>
-		</screen>
-		<para>RK3318</para>
-		<screen>
-    <![CDATA[ 
-neo@MacBook-Pro-M2 ~/Downloads> sudo dd bs=1m if=multitool.img of=/dev/disk4 status=progress
-
-
-    ]]>
-		</screen>
-	</section>
-	<section>
-		<title>GPS 模块</title>
-		<screen>
-    <![CDATA[ 
+		<title>GPS</title>
+		<section>
+			<title>GPS 模块</title>
+			<screen>
+			<![CDATA[ 
 cat /dev/ttyACM0 | grep GPTXT    
-    ]]>
-		</screen>
-		<screen>
-    <![CDATA[ 
+			]]>
+			</screen>
+		</section>
+		<section>
+			<title>GPS 协议</title>
+			<screen>
+			<![CDATA[ 
 例：$GPRMC,024813.640,A,3158.4608,N,11848.3737,E,10.05,324.27,150706,,,A*50
 字段0：$GPRMC，语句ID，表明该语句为Recommended Minimum Specific GPS/TRANSIT Data（RMC）推荐最小定位信息
 字段1：UTC时间，hhmmss.sss格式
@@ -221,98 +305,26 @@ cat /dev/ttyACM0 | grep GPTXT
 字段11：磁偏角方向，E=东W=西
 字段12：模式，A=自动，D=差分，E=估测，N=数据无效（3.0协议内容）
 字段13：校验值（$与*之间的数异或后的值）    
-    ]]>
-		</screen>
-
-	</section>
-	<section>
-		<title>ha 命令</title>
-		<screen>
-    <![CDATA[ 
-root@homeassistant:~# ha network info
-docker:
-  address: 172.30.32.0/23
-  dns: 172.30.32.3
-  gateway: 172.30.32.1
-  interface: hassio
-host_internet: false
-interfaces:
-- connected: true
-  enabled: true
-  interface: eth0
-  ipv4:
-    address:
-    - 192.168.30.126/24
-    gateway: 192.168.30.1
-    method: auto
-    nameservers:
-    - 202.96.134.133
-    - 114.114.114.114
-    ready: true
-  ipv6:
-    address:
-    - fe80::aefb:5aa3:1dff:71af/64
-    gateway: null
-    method: disabled
-    nameservers: []
-    ready: true
-  primary: true
-  type: ethernet
-  vlan: null
-  wifi: null
-supervisor_internet: false    
-    ]]>
-		</screen>
-		<screen>
-    <![CDATA[ 
-root@homeassistant:~# ha network info | grep internet
-host_internet: false
-supervisor_internet: false    
-    ]]>
-		</screen>
-		<section>
-			<title>修改 DNS</title>
-			<screen>
-      <![CDATA[ 
-ha dns options --servers dns://8.8.8.8      
-      ]]>
+			]]>
 			</screen>
 		</section>
-	</section>
-	<section>
-		<title>ChatGPT</title>
-		<screen>
-    <![CDATA[ 
-https://github.com/Yidadaa/ChatGPT-Next-Web    
-    ]]>
-		</screen>
-		<screen>
-    <![CDATA[ 
-docker pull yidadaa/chatgpt-next-web
+		<section>
+			<title>安装 gpsd</title>
 
-docker run -d --name chatgpt-next-web -p 3000:3000 \
-   -e OPENAI_API_KEY="sk-" \
-   -e CODE="netkiller" \
-   yidadaa/chatgpt-next-web
-    ]]>
-		</screen>
-	</section>
-	<section>
-		<title>GPS</title>
-		<screen>
-    <![CDATA[ 
+			<screen>
+	<![CDATA[ 
 apt install gpsd gpsd-clients gpsd-tools    
-    ]]>
+	]]>
 		</screen>
-		<screen>
-    <![CDATA[ 
+			<screen>
+	<![CDATA[ 
 root@homeassistant:~# stty speed 115200 -F /dev/ttyACM0
 9600    
-    ]]>
+	]]>
 		</screen>
-		<para>配置 GPS 设备，修改 /etc/default/gpsd 配置文件</para>
-		<screen>
-    <![CDATA[ 
+			<para>配置 GPS 设备，修改 /etc/default/gpsd 配置文件</para>
+			<screen>
+	<![CDATA[ 
 root@homeassistant:~# cat /etc/default/gpsd 
 # Devices gpsd should collect to at boot time.
 # They need to be read/writeable, either by user gpsd or the group dialout.
@@ -323,11 +335,11 @@ GPSD_OPTIONS=""
 
 # Automatically hot add/remove USB GPS devices via gpsdctl
 USBAUTO="true"
-    ]]>
+	]]>
 		</screen>
-		<para>默认 gpds 开启 ipv6，有些系统已经禁用了ipv6，就会出现下面的错误</para>
-		<screen>
-    <![CDATA[ 
+			<para>默认 gpds 开启 ipv6，有些系统已经禁用了ipv6，就会出现下面的错误</para>
+			<screen>
+	<![CDATA[ 
 Jun 26 17:11:11 homeassistant systemd[15955]: gpsd.socket: Failed to create listening socket ([::1]:2947): Cannot assign requested address
 Jun 26 17:11:11 homeassistant systemd[1]: gpsd.socket: Failed to receive listening socket ([::1]:2947): Input/output error
 Jun 26 17:11:11 homeassistant systemd[1]: gpsd.socket: Failed to listen on sockets: Input/output error
@@ -338,11 +350,11 @@ Jun 26 17:13:14 homeassistant systemd[1]: gpsd.socket: Failed to receive listeni
 Jun 26 17:13:14 homeassistant systemd[1]: gpsd.socket: Failed to listen on sockets: Input/output error
 Jun 26 17:13:14 homeassistant systemd[1]: gpsd.socket: Failed with result 'resources'.
 Jun 26 17:13:14 homeassistant systemd[1]: Failed to listen on GPS (Global Positioning System) Daemon Sockets.    
-    ]]>
+	]]>
 		</screen>
-		<para>屏蔽 #ListenStream=[::1]:2947 这行</para>
-		<screen>
-    <![CDATA[ 
+			<para>屏蔽 #ListenStream=[::1]:2947 这行</para>
+			<screen>
+	<![CDATA[ 
 root@homeassistant:~# vim /lib/systemd/system/gpsd.socket
 [Unit]
 Description=GPS (Global Positioning System) Daemon Sockets
@@ -360,43 +372,130 @@ BindIPv6Only=yes
 
 [Install]
 WantedBy=sockets.target
-    ]]>
+	]]>
 		</screen>
-		<para></para>
-		<screen>
-    <![CDATA[ 
+			<para></para>
+			<screen>
+	<![CDATA[ 
 root@homeassistant:~# systemctl daemon-reload
 root@homeassistant:~# systemctl restart gpsd.socket    
 
 root@homeassistant:~# systemctl status gpsd.socket
 ● gpsd.socket - GPS (Global Positioning System) Daemon Sockets
-     Loaded: loaded (/lib/systemd/system/gpsd.socket; enabled; vendor preset: enabled)
-     Active: active (listening) since Mon 2023-06-26 17:14:51 CST; 4min 0s ago
+	 Loaded: loaded (/lib/systemd/system/gpsd.socket; enabled; vendor preset: enabled)
+	 Active: active (listening) since Mon 2023-06-26 17:14:51 CST; 4min 0s ago
    Triggers: ● gpsd.service
-     Listen: /run/gpsd.sock (Stream)
-             127.0.0.1:2947 (Stream)
-      Tasks: 0 (limit: 2182)
-     Memory: 8.0K
-     CGroup: /system.slice/gpsd.socket
+	 Listen: /run/gpsd.sock (Stream)
+			 127.0.0.1:2947 (Stream)
+	  Tasks: 0 (limit: 2182)
+	 Memory: 8.0K
+	 CGroup: /system.slice/gpsd.socket
 
 Jun 26 17:14:51 homeassistant systemd[1]: Listening on GPS (Global Positioning System) Daemon Sockets.
 
 root@homeassistant:~# systemctl restart gpsd
 root@homeassistant:~# systemctl status gpsd
 ● gpsd.service - GPS (Global Positioning System) Daemon
-     Loaded: loaded (/lib/systemd/system/gpsd.service; disabled; vendor preset: enabled)
-     Active: active (running) since Mon 2023-06-26 17:22:12 CST; 5s ago
+	 Loaded: loaded (/lib/systemd/system/gpsd.service; disabled; vendor preset: enabled)
+	 Active: active (running) since Mon 2023-06-26 17:22:12 CST; 5s ago
 TriggeredBy: ● gpsd.socket
-    Process: 16904 ExecStart=/usr/sbin/gpsd $GPSD_OPTIONS $OPTIONS $DEVICES (code=exited, status=0/SUCCESS)
+	Process: 16904 ExecStart=/usr/sbin/gpsd $GPSD_OPTIONS $OPTIONS $DEVICES (code=exited, status=0/SUCCESS)
    Main PID: 16905 (gpsd)
-      Tasks: 1 (limit: 2182)
-     Memory: 508.0K
-     CGroup: /system.slice/gpsd.service
-             └─16905 /usr/sbin/gpsd /dev/ttyACM0
+	  Tasks: 1 (limit: 2182)
+	 Memory: 508.0K
+	 CGroup: /system.slice/gpsd.service
+			 └─16905 /usr/sbin/gpsd /dev/ttyACM0
 
 Jun 26 17:22:12 homeassistant systemd[1]: Starting GPS (Global Positioning System) Daemon...
 Jun 26 17:22:12 homeassistant systemd[1]: Started GPS (Global Positioning System) Daemon.
-    ]]>
+	]]>
+		</screen>
+		</section>
+	</section>
+	<section>
+		<title>ha 命令</title>
+		<screen>
+	<![CDATA[ 
+root@homeassistant:~# ha network info
+docker:
+  address: 172.30.32.0/23
+  dns: 172.30.32.3
+  gateway: 172.30.32.1
+  interface: hassio
+host_internet: false
+interfaces:
+- connected: true
+  enabled: true
+  interface: eth0
+  ipv4:
+	address:
+	- 192.168.30.126/24
+	gateway: 192.168.30.1
+	method: auto
+	nameservers:
+	- 202.96.134.133
+	- 114.114.114.114
+	ready: true
+  ipv6:
+	address:
+	- fe80::aefb:5aa3:1dff:71af/64
+	gateway: null
+	method: disabled
+	nameservers: []
+	ready: true
+  primary: true
+  type: ethernet
+  vlan: null
+  wifi: null
+supervisor_internet: false    
+	]]>
+		</screen>
+		<screen>
+	<![CDATA[ 
+root@homeassistant:~# ha network info | grep internet
+host_internet: false
+supervisor_internet: false    
+	]]>
+		</screen>
+		<section>
+			<title>修改 DNS</title>
+			<screen>
+	  <![CDATA[ 
+ha dns options --servers dns://8.8.8.8      
+	  ]]>
+			</screen>
+		</section>
+	</section>
+	<section>
+		<title>FAQ</title>
+		<para>科学上网</para>
+		<screen>
+	<![CDATA[ 
+ssh -f -N -D 172.0.0.1:1080 root@8.216.50.196
+
+HTTP_PROXY=socks5://127.0.0.1:1080/
+HTTPS_PROXY=socks5://127.0.0.1:1080/
+NO_PROXY=localhost,127.0.0.1,docker.io
+
+root@homeassistant:~# docker pull ghcr.io/home-assistant/aarch64-hassio-supervisor:latest
+	]]>
+		</screen>
+		<para></para>
+		<screen>
+		<![CDATA[ 
+docker pull nginx:latest
+docker image inspect nginx:latest | grep -i version
+docker images --format "{{.Repository}}:{{.Tag}}" | grep ':latest' | xargs -L1 docker pull
+docker images | grep none | awk '{ print $3; }' | xargs docker rmi
+		]]>
+		</screen>
+		<para>RK3318</para>
+		<screen>
+		<![CDATA[ 
+neo@MacBook-Pro-M2 ~/Downloads> sudo dd bs=1m if=multitool.img of=/dev/disk4 status=progress
+		]]>
 		</screen>
 	</section>
-</section>
+
+
+</chapter>

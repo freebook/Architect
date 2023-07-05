@@ -3,5 +3,4 @@
 <!ENTITY chapter.case.xml 				SYSTEM "chapter.case.xml">
 <!ENTITY chapter.payment.xml	 		SYSTEM "chapter.payment.xml">
 <!ENTITY chapter.wechat.xml		 		SYSTEM "chapter.wechat.xml">
-<!ENTITY chapter.sns.xml		 		SYSTEM "chapter.sns.xml">
-
+<!ENTITY chapter.homeassistant.xml 		SYSTEM "chapter.homeassistant.xml">
