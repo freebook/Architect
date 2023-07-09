@@ -234,7 +234,11 @@ pip3 install -i https://pypi.doubanio.com/simple paho-mqtt
 pip3 install openai
 	]]>
 		</screen>
-
+		<section>
+			<title>Retain</title>
+			<para>MQTT 发送数据被定义为 Retain 之后，会保留在队列之中，每次订阅消息都会发布一次。</para>
+			<para>删除一个Retain消息，可以向这个topic发布一个长度为0的 Retain 消息即可。</para>
+		</section>
 	</section>
 	<section>
 		<title>ChatGPT 接口</title>
@@ -263,7 +267,7 @@ docker push netkiller/chatgpt
 docker stop chatgpt
 docker rm chatgpt
 docker run --name chatgpt --restart=unless-stopped -d --network host \
--e OPENAI_API_KEY=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 \
+-e OPENAI_API_KEY=sk-1xLgiKe7G7rhCGLDYUkxtXZHHi5NiT3BlbkFJTRBjEsKNNj4 \
 netkiller/chatgpt:1.0.1
 docker logs -f chatgpt
 			]]>
