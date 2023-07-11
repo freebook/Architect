@@ -214,7 +214,15 @@ hacs
 			</screen>
 			<para> 集成方法 <ulink url="https://hacs.xyz/docs/configuration/basic/" /></para>
 		</section>
-
+		<section>
+			<title>Node-Red</title>
+			<para>/usr/share/hassio/homeassistant/custom_components</para>
+			<screen>
+			<![CDATA[ 
+scp -r hass-node-red-1.4.0 root@homeassistant.local:/usr/share/hassio/homeassistant/custom_components/
+			]]>
+			</screen>
+		</section>
 		<section>
 			<title>Xiaomi Miot Auto</title>
 			<para>手工安装</para>
