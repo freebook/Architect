@@ -2,5 +2,5 @@
 <!ENTITY part.solution.xml 				SYSTEM "part.solution.xml">
 <!ENTITY chapter.case.xml 				SYSTEM "chapter.case.xml">
 <!ENTITY chapter.payment.xml	 		SYSTEM "chapter.payment.xml">
-<!ENTITY chapter.wechat.xml		 		SYSTEM "chapter.wechat.xml">
 <!ENTITY chapter.homeassistant.xml 		SYSTEM "chapter.homeassistant.xml">
+<!ENTITY section.homeassistant.node-red.xml		 		SYSTEM "section.homeassistant.node-red.xml">

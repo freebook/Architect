@@ -2,11 +2,13 @@
 <chapter id="homeassistant">
 	<title>Home Assistant</title>
 
-	<screenshot>
+<!-- 	<screenshot>
 		<screeninfo>perl</screeninfo>
-		<graphic format="png" fileref="../images/solution/perl_solution.png" srccredit="neo" />
+		<graphic format="png"
+			fileref="../images/solution/perl_solution.png" srccredit="neo" />
 	</screenshot>
-	<graphic format="png" fileref="../images/solution/python_solution.png" srccredit="neo" />
+	<graphic format="png"
+		fileref="../images/solution/python_solution.png" srccredit="neo" /> -->
 	<section>
 		<title>安装 Home Assistant</title>
 
@@ -18,14 +20,14 @@
 apt update
 apt install udisks2
   ]]>
-		</screen>
+			</screen>
 			<screen>
   <![CDATA[ 
 wget https://github.com/home-assistant/os-agent/releases/latest/download/os-agent_1.5.1_linux_x86_64.deb
 apt install ./os-agent_1.5.1_linux_x86_64.deb
 systemctl status haos-agent  
   ]]>
-		</screen>
+			</screen>
 			<para>安装 Docker</para>
 			<screen>
   <![CDATA[ 
@@ -43,7 +45,7 @@ echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.
 apt update
 apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
   ]]>
-		</screen>
+			</screen>
 			<para></para>
 			<screen>
   <![CDATA[ 
@@ -53,7 +55,7 @@ dpkg -i homeassistant-supervised.deb
 wget https://github.com/home-assistant/supervised-installer/releases/latest/download/homeassistant-supervised.deb
 apt install ./homeassistant-supervised.deb
   ]]>
-		</screen>
+			</screen>
 			<screen>
 	<![CDATA[
 sudo docker run --restart always -d --name homeassistant \
@@ -71,7 +73,7 @@ sudo docker run --restart always -d --name homeassistant \
 -e TZ=Asia/Shanghai --net=host \
 ghcr.io/home-assistant/home-assistant:stable
 	]]>
-		</screen>
+			</screen>
 			<para>重启 debian </para>
 			<screen>
   			<![CDATA[ 
@@ -127,6 +129,7 @@ apt install ./homeassistant-supervised.deb
 	<section>
 		<title>Home Assistant Community Store</title>
 		<para>https://github.com/hacs</para>
+		<para><ulink url="https://github.com/hassio-addons/repository" /></para>
 		<section>
 			<title>正常安装</title>
 			<para>配置 DNS</para>
@@ -198,7 +201,8 @@ unzip hacs.zip
 scp -r hacs root@homeassistant.local:/tmp/
 			]]>
 			</screen>
-			<para>将宿主主机的 hacs 目录复制到 homeassistant 容器中的 /config/custom_components/ 目录下</para>
+			<para>将宿主主机的 hacs 目录复制到 homeassistant 容器中的 /config/custom_components/
+				目录下</para>
 			<screen>
 			<![CDATA[
 root@homeassistant:~# docker cp /tmp/hacs homeassistant:/config/custom_components/
@@ -212,7 +216,10 @@ homeassistant:/config# ls custom_components/
 hacs
 			]]>
 			</screen>
-			<para> 集成方法 <ulink url="https://hacs.xyz/docs/configuration/basic/" /></para>
+			<para>
+				集成方法
+				<ulink url="https://hacs.xyz/docs/configuration/basic/" />
+			</para>
 		</section>
 		<section>
 			<title>Node-Red</title>
@@ -336,13 +343,13 @@ cat /dev/ttyACM0 | grep GPTXT
 	<![CDATA[ 
 apt install gpsd gpsd-clients gpsd-tools    
 	]]>
-		</screen>
+			</screen>
 			<screen>
 	<![CDATA[ 
 root@homeassistant:~# stty speed 115200 -F /dev/ttyACM0
 9600    
 	]]>
-		</screen>
+			</screen>
 			<para>配置 GPS 设备，修改 /etc/default/gpsd 配置文件</para>
 			<screen>
 	<![CDATA[ 
@@ -357,7 +364,7 @@ GPSD_OPTIONS=""
 # Automatically hot add/remove USB GPS devices via gpsdctl
 USBAUTO="true"
 	]]>
-		</screen>
+			</screen>
 			<para>默认 gpds 开启 ipv6，有些系统已经禁用了ipv6，就会出现下面的错误</para>
 			<screen>
 	<![CDATA[ 
@@ -372,7 +379,7 @@ Jun 26 17:13:14 homeassistant systemd[1]: gpsd.socket: Failed to listen on socke
 Jun 26 17:13:14 homeassistant systemd[1]: gpsd.socket: Failed with result 'resources'.
 Jun 26 17:13:14 homeassistant systemd[1]: Failed to listen on GPS (Global Positioning System) Daemon Sockets.    
 	]]>
-		</screen>
+			</screen>
 			<para>屏蔽 #ListenStream=[::1]:2947 这行</para>
 			<screen>
 	<![CDATA[ 
@@ -394,7 +401,7 @@ BindIPv6Only=yes
 [Install]
 WantedBy=sockets.target
 	]]>
-		</screen>
+			</screen>
 			<para></para>
 			<screen>
 	<![CDATA[ 
@@ -430,10 +437,10 @@ TriggeredBy: ● gpsd.socket
 Jun 26 17:22:12 homeassistant systemd[1]: Starting GPS (Global Positioning System) Daemon...
 Jun 26 17:22:12 homeassistant systemd[1]: Started GPS (Global Positioning System) Daemon.
 	]]>
-		</screen>
+			</screen>
 		</section>
 	</section>
-	<section>
+	<section id="ha.cli">
 		<title>ha 命令</title>
 		<screen>
 	<![CDATA[ 
@@ -478,7 +485,7 @@ host_internet: false
 supervisor_internet: false    
 	]]>
 		</screen>
-		<section>
+		<section id="ha.dns">
 			<title>修改 DNS</title>
 			<screen>
 	  <![CDATA[ 
@@ -486,8 +493,56 @@ ha dns options --servers dns://8.8.8.8
 	  ]]>
 			</screen>
 		</section>
+		<section id="ha.supervisor">
+			<title>supervisor 管理</title>
+			<screen>
+			<![CDATA[
+root@homeassistant:~# ha supervisor available-updates
+available_updates:
+- panel_path: /update-available/core
+  update_type: core
+  version_latest: 2023.7.2
+- icon: /addons/a0d7b954_nodered/icon
+  name: Node-RED
+  panel_path: /update-available/a0d7b954_nodered
+  update_type: addon
+  version_latest: 14.4.0			
+			]]>
+			</screen>
+			
+		</section>
+		<section id="ha.core">
+			<title>core</title>
+			<screen>
+			<![CDATA[
+root@homeassistant:~# ha core update
+Error: 'HomeAssistantCore.update' blocked from execution, no host internet connection
+
+root@homeassistant:~# ha jobs info
+ignore_conditions: []
+
+root@homeassistant:~# ha jobs options --ignore-conditions internet_host
+Command completed successfully.
+
+root@homeassistant:~# ha jobs info
+ignore_conditions:
+- internet_host
+
+root@homeassistant:~# ha core update			
+			]]>
+			</screen>
+		</section>
+		<section id="ha.jobs">
+			<title>jobs</title>
+			<screen>
+			<![CDATA[
+ha jobs options --ignore-conditions internet_host			
+ha jobs options --ignore-conditions healthy
+			]]>
+			</screen>
+		</section>
 	</section>
-	<section>
+	<section id="ha.faq">
 		<title>FAQ</title>
 		<para>科学上网</para>
 		<screen>
@@ -518,5 +573,6 @@ neo@MacBook-Pro-M2 ~/Downloads> sudo dd bs=1m if=multitool.img of=/dev/disk4 sta
 		</screen>
 	</section>
 
+	&section.homeassistant.node-red.xml;
 
 </chapter>
