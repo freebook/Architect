@@ -1,4 +1,0 @@
-﻿<part id="index"><?dbhtml dir="homeassistant"?>
-	<title>Home Assistant</title>
- 	&chapter.homeassistant.xml;
-</part>

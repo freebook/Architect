@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!ENTITY part.solution.xml 				SYSTEM "part.solution.xml">
-<!ENTITY chapter.case.xml 				SYSTEM "chapter.case.xml">
-<!ENTITY chapter.homeassistant.xml 				SYSTEM "chapter.homeassistant.xml">
-<!ENTITY section.homeassistant.node-red.xml		SYSTEM "section.homeassistant.node-red.xml">
-<!ENTITY section.homeassistant.faq.xml	 		SYSTEM "section.homeassistant.faq.xml">

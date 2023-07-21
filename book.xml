@@ -33,9 +33,6 @@
 	<!ENTITY % database.doctype.entity.xml 		SYSTEM "Database/doctype.entity.xml">
 	%database.doctype.entity.xml;
 
-	<!ENTITY % solution.doctype.entity.xml 		SYSTEM "Solution/doctype.entity.xml">
-	%solution.doctype.entity.xml;
-
 	<!ENTITY % cloud.doctype.entity.xml 		SYSTEM "Cloud/doctype.entity.xml">
 	%cloud.doctype.entity.xml;
 	
@@ -75,7 +72,6 @@
 	&chapter.database.xml;
 	&part.devops.xml;
 	&part.software.xml;
-	&part.solution.xml;
 	
 	&book.appendix.xml;
 	&book.glossary.xml;
