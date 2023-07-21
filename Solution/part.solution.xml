@@ -1,4 +1,4 @@
-﻿<part id="index"><?dbhtml dir="solution"?>
-	<title>设计与解决方案</title>
+﻿<part id="index"><?dbhtml dir="homeassistant"?>
+	<title>Home Assistant</title>
  	&chapter.homeassistant.xml;
 </part>
