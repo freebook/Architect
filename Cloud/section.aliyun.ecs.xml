@@ -394,7 +394,7 @@ Aug 16 12:57:16 testing systemd[1]: Started /etc/rc.d/rc.local Compatibility.
 		</section>
 	</section>
 	<section>
-		<title>阿里云 AlmaLinux 9.0 镜像初始化</title>
+		<title>阿里云 AlmaLinux 9.2 镜像初始化</title>
 		<para>阿里云ECS购买之后建议对 AlmaLinux 做标准初始化配置</para>
 		<screen>
 		<![CDATA[
@@ -705,4 +705,120 @@ Birth: 2023-01-13 15:37:47.375940824 +0800
 		]]>
 		</screen>
 	</section>
+	<section>
+		<title>云盘扩容</title>
+		<para>背景，ECS 云主机硬盘 40G 不够，扩容到 100G</para>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# fdisk -l
+GPT PMBR size mismatch (83886079 != 209715199) will be corrected by write.
+The backup GPT table is not on the end of the device.
+Disk /dev/vda: 100 GiB, 107374182400 bytes, 209715200 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: AF770A8C-3E31-4EC0-AC6C-280F6D6475A4
+
+Device      Start      End  Sectors  Size Type
+/dev/vda1    2048     4095     2048    1M BIOS boot
+/dev/vda2    4096   208895   204800  100M EFI System
+/dev/vda3  208896 83886046 83677151 39.9G Linux filesystem		
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+GPT PMBR size mismatch (83886079 != 209715199) will be corrected by write.
+The backup GPT table is not on the end of the device.
+Disk /dev/vda: 100 GiB, 107374182400 bytes, 209715200 sectors		
+		]]>
+		</screen>
+		<para>扩容方法，首先扩容分区</para>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# growpart /dev/vda 3
+CHANGED: partition=3 start=208896 old: size=83677151 end=83886046 new: size=209506271 end=209715166
+		]]>
+		</screen>
+		<para>检查</para>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# fdisk -l
+Disk /dev/vda: 100 GiB, 107374182400 bytes, 209715200 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: AF770A8C-3E31-4EC0-AC6C-280F6D6475A4
+
+Device      Start       End   Sectors  Size Type
+/dev/vda1    2048      4095      2048    1M BIOS boot
+/dev/vda2    4096    208895    204800  100M EFI System
+/dev/vda3  208896 209715166 209506271 99.9G Linux filesystem		
+		]]>
+		</screen>
+		<para>现在，扩容文件系统</para>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# df
+Filesystem     1K-blocks     Used Available Use% Mounted on
+devtmpfs            4096        0      4096   0% /dev
+tmpfs            3936132        0   3936132   0% /dev/shm
+tmpfs            1574456     1284   1573172   1% /run
+/dev/vda3       41828332 41804260     24072 100% /
+/dev/vda2         102156     7146     95010   7% /boot/efi
+overlay         41828332 41804260     24072 100% /var/lib/docker/overlay2/35761ef4b0d363be69c5ae05af5490b44ceac9d4fcebd350662c162f077e7cc7/merged
+overlay         41828332 41804260     24072 100% /var/lib/docker/overlay2/73b0705dbbbb8777b674b54fdaf33a1ba539bbf0d8fc49b3673dcb95f8309b89/merged
+overlay         41828332 41804260     24072 100% /var/lib/docker/overlay2/46ada8e290fe600ed6f283ec9316a720eab956a10e8b4e0afc34545b3955e397/merged
+overlay         41828332 41804260     24072 100% /var/lib/docker/overlay2/3ec0d8b5caaa5b23c74af3fdd9dacf8bd6aa87584273d0c77dace7bb87f00493/merged
+overlay         41828332 41804260     24072 100% /var/lib/docker/overlay2/ed276590c5796510ea0655b415326a063557667bce6fd6b1ddf1db1ed95395d2/merged
+overlay         41828332 41804260     24072 100% /var/lib/docker/overlay2/8a75acc4d1cf3ff2eb118a60a3e9f3078d44a2b5f93eb135529a49ff75534054/merged
+overlay         41828332 41804260     24072 100% /var/lib/docker/overlay2/97ba83526a88b1f82ded76ab254fd5c3710c771b55bc4643f8d4a3ed65356f69/merged
+overlay         41828332 41804260     24072 100% /var/lib/docker/overlay2/2bc3fd7be7ef58ff57806dcc04b79af927c879ca5c2e68aeb2219ccde6ec1255/merged
+overlay         41828332 41804260     24072 100% /var/lib/docker/overlay2/7f9899273d12559268db47f3f21c0951bcff4bad38b4acda51b7d6aa226cb232/merged
+tmpfs             787224        0    787224   0% /run/user/0		
+		]]>
+		</screen>
+		<para>扩容 xfs 文件系统</para>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# xfs_growfs /
+meta-data=/dev/vda3              isize=512    agcount=9, agsize=1304128 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=1, rmapbt=0
+         =                       reflink=1    bigtime=0 inobtcount=0
+data     =                       bsize=4096   blocks=10459643, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0, ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+data blocks changed from 10459643 to 26188283		
+		]]>
+		</screen>
+		<para>显示 data blocks changed from 10459643 to 26188283 表示数据块已经从 10459643 扩展到 26188283</para>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# df
+Filesystem     1K-blocks     Used Available Use% Mounted on
+devtmpfs            4096        0      4096   0% /dev
+tmpfs            3936132        0   3936132   0% /dev/shm
+tmpfs            1574456     1284   1573172   1% /run
+/dev/vda3      104742892 42244716  62498176  41% /
+/dev/vda2         102156     7146     95010   7% /boot/efi
+overlay        104742892 42244716  62498176  41% /var/lib/docker/overlay2/35761ef4b0d363be69c5ae05af5490b44ceac9d4fcebd350662c162f077e7cc7/merged
+overlay        104742892 42244716  62498176  41% /var/lib/docker/overlay2/73b0705dbbbb8777b674b54fdaf33a1ba539bbf0d8fc49b3673dcb95f8309b89/merged
+overlay        104742892 42244716  62498176  41% /var/lib/docker/overlay2/46ada8e290fe600ed6f283ec9316a720eab956a10e8b4e0afc34545b3955e397/merged
+overlay        104742892 42244716  62498176  41% /var/lib/docker/overlay2/3ec0d8b5caaa5b23c74af3fdd9dacf8bd6aa87584273d0c77dace7bb87f00493/merged
+overlay        104742892 42244716  62498176  41% /var/lib/docker/overlay2/ed276590c5796510ea0655b415326a063557667bce6fd6b1ddf1db1ed95395d2/merged
+overlay        104742892 42244716  62498176  41% /var/lib/docker/overlay2/8a75acc4d1cf3ff2eb118a60a3e9f3078d44a2b5f93eb135529a49ff75534054/merged
+overlay        104742892 42244716  62498176  41% /var/lib/docker/overlay2/97ba83526a88b1f82ded76ab254fd5c3710c771b55bc4643f8d4a3ed65356f69/merged
+overlay        104742892 42244716  62498176  41% /var/lib/docker/overlay2/2bc3fd7be7ef58ff57806dcc04b79af927c879ca5c2e68aeb2219ccde6ec1255/merged
+overlay        104742892 42244716  62498176  41% /var/lib/docker/overlay2/7f9899273d12559268db47f3f21c0951bcff4bad38b4acda51b7d6aa226cb232/merged
+tmpfs             787224        0    787224   0% /run/user/0		
+		]]>
+		</screen>
+		<para>现在可以看到 / 分区已经从 100% 扩后变成 41%</para>
+	</section>
+	
 </section>
