@@ -820,5 +820,99 @@ tmpfs             787224        0    787224   0% /run/user/0
 		</screen>
 		<para>现在可以看到 / 分区已经从 100% 扩后变成 41%</para>
 	</section>
-	
+	<section id="python3.dnf">
+		<title>dnf 安装 python3.11</title>
+		<para>安装 Python 3.11 适用鱼 Rocky Linux 9.2 和 AlmaLinux 9.2</para>
+		<screen>
+		<![CDATA[
+dnf install -y python3.11 python3.11-pip		
+		]]>
+		</screen>
+		<para>系统默认是 python3.9，将其切换到 python3.11</para>
+		<screen>
+		<![CDATA[
+
+update-alternatives --install /usr/bin/python python /usr/bin/python3.11 1
+update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 2
+		]]>
+		</screen>
+		<para>切换 pip 到 3.11</para>
+		<screen>
+		<![CDATA[
+[root@iZwz9cug5b7jbx1dc4nwniZ ~]# mv /usr/bin/pip{,.backup}
+[root@iZwz9cug5b7jbx1dc4nwniZ ~]# mv /usr/bin/pip3{,.backup}
+[root@iZwz9cug5b7jbx1dc4nwniZ ~]# alternatives --install /usr/bin/pip pip /usr/bin/pip3.11 1
+[root@iZwz9cug5b7jbx1dc4nwniZ ~]# alternatives --install /usr/bin/pip3 pip3 /usr/bin/pip3.11 2
+[root@iZwz9cug5b7jbx1dc4nwniZ ~]# pip -V
+pip 22.3.1 from /usr/lib/python3.11/site-packages/pip (python 3.11)
+		]]>
+		</screen>
+		<para>检查 python 是否工作正常</para>
+		<screen>
+		<![CDATA[
+[root@iZwz9cug5b7jbx1dc4nwniZ srv]# alternatives --list
+libnssckbi.so.x86_64  	auto  	/usr/lib64/pkcs11/p11-kit-trust.so
+soelim                	auto  	/usr/bin/soelim.groff
+cifs-idmap-plugin     	auto  	/usr/lib64/cifs-utils/cifs_idmap_sss.so
+iptables              	auto  	/usr/sbin/iptables-nft
+ebtables              	auto  	/usr/sbin/ebtables-nft
+arptables             	auto  	/usr/sbin/arptables-nft
+ld                    	auto  	/usr/bin/ld.bfd
+man                   	auto  	/usr/bin/man.man-db
+nc                    	auto  	/usr/bin/ncat
+man.7.gz              	auto  	/usr/share/man/man7/man.man-pages.7.gz
+libwbclient.so.0.15-64	auto  	/usr/lib64/samba/wbclient/libwbclient.so.0.15
+python                	auto  	/usr/bin/python3.11
+
+[root@iZwz9cug5b7jbx1dc4nwniZ srv]# alternatives --display python
+python - status is auto.
+ link currently points to /usr/bin/python3.11
+/usr/bin/python3.11 - priority 1
+Current `best' version is /usr/bin/python3.11.
+
+[root@iZwz9cug5b7jbx1dc4nwniZ srv]# python
+Python 3.11.2 (main, May 24 2023, 00:00:00) [GCC 11.3.1 20221121 (Red Hat 11.3.1-4)] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>>
+		]]>
+		</screen>
+		<para>如果有多个版本被安装，可以使用下面命令切换</para>
+		<screen>
+		<![CDATA[
+[root@iZwz9cug5b7jbx1dc4nwniZ ~]# alternatives --config python
+
+There is 1 program that provides 'python'.
+
+  Selection    Command
+-----------------------------------------------
+*+ 1           /usr/bin/python3.11
+
+Enter to keep the current selection[+], or type selection number:		
+		]]>
+		</screen>
+	</section>
+	<section>
+	<title>IPv6</title>
+	<section>
+		<title>检测服务器IPv6配置情况</title>
+		<screen>
+		<![CDATA[
+# 查询本机外网IPv4地址
+curl 4.ipw.cn
+
+# 查询本机外网IPv6地址
+curl 6.ipw.cn
+
+# 测试网络是IPv4还是IPv6访问优先(访问IPv4/IPv6双栈站点，如果返回IPv6地址，则IPv6访问优先)
+curl test.ipw.cn	
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+[root@netkiller ~]# curl test.ipw.cn
+2408:4005:397:ce00:47e5:c275:9be1:5644		
+		]]>
+		</screen>
+	</section>
+</section>
 </section>
