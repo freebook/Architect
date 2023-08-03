@@ -831,9 +831,13 @@ dnf install -y python3.11 python3.11-pip
 		<para>系统默认是 python3.9，将其切换到 python3.11</para>
 		<screen>
 		<![CDATA[
-
 update-alternatives --install /usr/bin/python python /usr/bin/python3.11 1
-update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 2
+		]]>
+		</screen>
+		<para>下面慎用，会影响 dnf 命令，如果没有特别需求，不要覆盖 python3 软连接</para>
+		<screen>
+		<![CDATA[
+update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 2		
 		]]>
 		</screen>
 		<para>切换 pip 到 3.11</para>
