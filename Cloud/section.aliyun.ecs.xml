@@ -705,7 +705,7 @@ Birth: 2023-01-13 15:37:47.375940824 +0800
 		]]>
 		</screen>
 	</section>
-	<section>
+	<section id="ecs.ssd">
 		<title>云盘扩容</title>
 		<para>背景，ECS 云主机硬盘 40G 不够，扩容到 100G</para>
 		<screen>
@@ -895,7 +895,7 @@ Enter to keep the current selection[+], or type selection number:
 		]]>
 		</screen>
 	</section>
-	<section>
+	<section id="ecs.ipv6">
 	<title>IPv6</title>
 	<section>
 		<title>检测服务器IPv6配置情况</title>
