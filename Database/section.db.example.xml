@@ -3,6 +3,55 @@
 <section id="db.exmaple">
 	<title>参考例子</title>
 	<section>
+		<title>去三条数据，分别是当前，前面一条，后面一条</title>
+		<para>为什么有这样的需求？</para>
+		<para>背景是这样的，我需要给手机App提供数据，之前每次只提供一条，然后翻页查询。由于手机随意不加载，需要数据加载，否则在异步模式下就会出现很多数据，没有准备好的情况。</para>
+		<para>这是我便想到了，每次提供三条数据，分别是数据的自身，以及前面一条和后面一条，手机下载的时候，将这三条数据全部异步加载。加载完毕以后用户做上下翻页的时候，数据已经提前下载到手机。</para>
+		<para>解决方案有很多种，这里提供了几种方式，供你选择：</para>
+		<para>联合查询</para>
+		<screen>
+		<![CDATA[
+(select id,image,audio,srt from picture where id < 110 order by id desc limit 1)
+union
+(select id,image,audio,srt from picture where id = 110 limit 1)
+union
+(select id,image,audio,srt from picture where id > 110 limit 1)		
+		]]>
+		</screen>
+		<para>IN 字查询</para>
+		<screen>
+		<![CDATA[
+SELECT id,image,audio,srt FROM picture WHERE id IN(
+	(SELECT id FROM picture WHERE id<110 ORDER BY id DESC LIMIT 1),
+    110,
+    (SELECT id FROM picture WHERE id>110 ORDER BY id LIMIT 1)
+) ORDER BY id		
+		]]>
+		</screen>
+		<para>子查询配合 LIMIT 3</para>
+		<screen>
+		<![CDATA[
+SELECT id,image,audio,srt FROM picture WHERE id >= (SELECT id FROM picture WHERE id<110 ORDER BY id DESC LIMIT 1) ORDER BY id LIMIT 3		
+		]]>
+		</screen>
+		<para>LAG/LEAD 函数配合 LIMIT 0,1 翻页</para>
+		<screen>
+		<![CDATA[
+SELECT 
+    id,
+    image,
+    audio,
+    LAG(id) OVER (ORDER BY id ASC) AS previous_id,
+    LEAD(id) OVER (ORDER BY id ASC) AS next_id
+FROM 
+    picture
+ORDER BY 
+    id DESC 
+LIMIT 0,1		
+		]]>
+		</screen>
+	</section>
+	<section>
 		<title>CMS 数据库设计</title>
 		<screen>
 		<![CDATA[
