@@ -1334,7 +1334,4 @@ select * from network where people_id=1 and degrees like "1.2.%";
 		]]>
 		</programlisting>
 	</section>
-	&section.db.pgsql.xml;
-	&section.db.sharding.xml;
-	&section.db.bigdata.xml;
 </section>

@@ -10,5 +10,8 @@
 	&section.db.security.xml;
 	&section.db.example.xml;
 	&section.nosql.xml;
+	&section.db.pgsql.xml;
+	&section.db.sharding.xml;
+	&section.db.bigdata.xml;
 	&section.spring.data.xml;
 </chapter>
