@@ -5,14 +5,14 @@
 	<property file="build.properties" />
 	<property name="tmp" value="${env.HOME}/tmp" />
 	<property name="stylesheet" value="docbook-xsl/docbook.mac.xsl" />
-	<property name="workspace" value="${env.HOME}/workspace" />
+	<property name="workspace" value="${env.HOME}/Github" />
 	<property name="docbook" value="${workspace}/${ant.project.name}" />
 	<property name="resources" value="${docbook}/images" />
-	<property name="public_html" value="${env.HOME}/git/netkiller.github.io/${ant.project.name}" />
+	<property name="public_html" value="${env.HOME}/tmp/netkiller.github.io/${ant.project.name}" />
 	<!--	<property name="public_html" value="${env.HOME}/tmp/${ant.project.name}" /> -->
 	<property name="htmlhelp" value="${env.HOME}/tmp/${ant.project.name}" />
 	<property name="epub" value="${tmp}/${ant.project.name}.tmp" />
-	<property name="download" value="${env.HOME}/git/netkiller.github.io/download" />
+	<property name="download" value="${env.HOME}/tmp/netkiller.github.io/download" />
 	<property name="epub.bookname" value="Netkiller-Architect" />
 	<property name="project.version" value="0.0.1" />
 	<property name="ant.log" value="/tmp/ant.log" />

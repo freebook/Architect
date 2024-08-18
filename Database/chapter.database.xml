@@ -8,10 +8,10 @@
 	&section.db.cache.xml;
 	&section.db.parallel.xml;
 	&section.db.security.xml;
-	&section.db.example.xml;
 	&section.nosql.xml;
 	&section.db.pgsql.xml;
 	&section.db.sharding.xml;
 	&section.db.bigdata.xml;
 	&section.spring.data.xml;
+	&section.db.example.xml;
 </chapter>
