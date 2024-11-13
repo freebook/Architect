@@ -2,7 +2,7 @@
 <chapter id="index"><?dbhtml dir="huawei" ?>
 	<title>Huawei Cloud Service</title>
 	<section id="flexus.server">
-		<title>Flexus云服务器</title>
+		<title>Flexus 云服务器</title>
 		<section>
 			<title>AlmaLinux 9 镜像初始化</title>
 			<section>
@@ -69,9 +69,298 @@ net-tools bind-utils
 				]]>
 				</screen>
 			</section>
+		</section>
+		<section>
+			<title>Flexus 服务器 BUG</title>
+			<para>故障描述，今日服务器，突然有个功能不能用了，经过艰辛排查发现是时间戳计算出错。服务器时间比本地时间快了6分钟</para>
+			<screen>
+			<![CDATA[
+neo@Mac-mini-M4 ~/netkiller (master)> date
+2024年11月13日 星期三 10时32分52秒 CST			
+			]]>
+			</screen>
+			<para>服务器时间快了6分钟</para>
+			<screen>
+			<![CDATA[
+[root@testing ~]# date
+Wed Nov 13 10:38:59 AM CST 2024			
+			]]>
+			</screen>
+			<para>检查时间同步进程 chronyd 正常</para>
+			<screen>
+			<![CDATA[
+[root@testing ~]# systemctl status chronyd
+● chronyd.service - NTP client/server
+     Loaded: loaded (/usr/lib/systemd/system/chronyd.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2024-10-02 08:34:26 CST; 1 month 11 days ago
+       Docs: man:chronyd(8)
+             man:chrony.conf(5)
+   Main PID: 690 (chronyd)
+      Tasks: 1 (limit: 100479)
+     Memory: 3.3M
+        CPU: 543ms
+     CGroup: /system.slice/chronyd.service
+             └─690 /usr/sbin/chronyd -F 2			
+			]]>
+			</screen>
+			<para>查看配置文件，发现少了 pool 配置</para>
+			<screen>
+			<![CDATA[
+[root@testing ~]# cat /etc/chrony.
+chrony.conf  chrony.keys
 
+[root@testing ~]# cat /etc/chrony.conf 
 
+server ntp.myhuaweicloud.com minpoll 4 maxpoll 10 iburst
 
+# Ignore stratum in source selection.
+stratumweight 0.05
+
+# Record the rate at which the system clock gains/losses time.
+driftfile /var/lib/chrony/drift
+
+# Enable kernel RTC synchronization.
+rtcsync
+
+# In first three updates step the system clock instead of slew
+# if the adjustment is larger than 10 seconds.
+makestep 10 3
+
+# Allow NTP client access from local network.
+#allow 192.168/16
+
+# Listen for commands only on localhost.
+bindcmdaddress 127.0.0.1
+bindcmdaddress ::1
+
+# Serve time even if not synchronized to any NTP server.
+#local stratum 10
+
+# Disable logging of client accesses.
+noclientlog
+
+# Send a message to syslog if a clock adjustment is larger than 0.5 seconds.
+logchange 0.5
+
+logdir /var/log/chrony
+#log measurements statistics tracking			
+			]]>
+			</screen>
+			<para>检查时间同步服务器源，返回空数据</para>
+			<screen>
+			<![CDATA[
+[root@testing ~]# chronyc sources
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================			
+
+[root@testing ~]# chronyc sources -v
+
+  .-- Source mode  '^' = server, '=' = peer, '#' = local clock.
+ / .- Source state '*' = current best, '+' = combined, '-' = not combined,
+| /             'x' = may be in error, '~' = too variable, '?' = unusable.
+||                                                 .- xxxx [ yyyy ] +/- zzzz
+||      Reachability register (octal) -.           |  xxxx = adjusted offset,
+||      Log2(Polling interval) --.      |          |  yyyy = measured offset,
+||                                \     |          |  zzzz = estimated error.
+||                                 |    |           \
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+			]]>
+			</screen>
+			<para>检查时间同步状态，返回空数据</para>
+			<screen>
+			<![CDATA[
+[root@testing ~]# chronyc sourcestats -v
+                             .- Number of sample points in measurement set.
+                            /    .- Number of residual runs with same sign.
+                           |    /    .- Length of measurement set (time).
+                           |   |    /      .- Est. clock freq error (ppm).
+                           |   |   |      /           .- Est. error in freq.
+                           |   |   |     |           /         .- Est. offset.
+                           |   |   |     |          |          |   On the -.
+                           |   |   |     |          |          |   samples. \
+                           |   |   |     |          |          |             |
+Name/IP Address            NP  NR  Span  Frequency  Freq Skew  Offset  Std Dev
+==============================================================================			
+			]]>
+			</screen>
+			<para>检查NTP设置，正常</para>
+			<screen>
+			<![CDATA[
+[root@testing ~]# timedatectl show
+Timezone=Asia/Shanghai
+LocalRTC=no
+CanNTP=yes
+NTP=yes
+NTPSynchronized=no
+TimeUSec=Wed 2024-11-13 10:43:38 CST
+RTCTimeUSec=Wed 2024-11-13 10:37:22 CST	
+
+[root@testing ~]# timedatectl status
+               Local time: Wed 2024-11-13 10:43:56 CST
+           Universal time: Wed 2024-11-13 02:43:56 UTC
+                 RTC time: Wed 2024-11-13 02:37:40
+                Time zone: Asia/Shanghai (CST, +0800)
+System clock synchronized: no
+              NTP service: active
+          RTC in local TZ: no
+			]]>
+			</screen>
+			<para>如果 NTP=no 使用下面命令开启 NTP</para>
+			<screen>
+			<![CDATA[
+timedatectl set-ntp yes
+			]]>
+			</screen>
+			<para>解决方案，添加 pool 配置到 </para>
+			<screen>
+			<![CDATA[
+[root@testing ~]# cat /etc/chrony.conf 
+
+server ntp.myhuaweicloud.com minpoll 4 maxpoll 10 iburst
+
+# Ignore stratum in source selection.
+stratumweight 0.05
+
+# Record the rate at which the system clock gains/losses time.
+driftfile /var/lib/chrony/drift
+
+# Enable kernel RTC synchronization.
+rtcsync
+
+# In first three updates step the system clock instead of slew
+# if the adjustment is larger than 10 seconds.
+makestep 10 3
+
+# Allow NTP client access from local network.
+#allow 192.168/16
+
+# Listen for commands only on localhost.
+bindcmdaddress 127.0.0.1
+bindcmdaddress ::1
+
+# Serve time even if not synchronized to any NTP server.
+#local stratum 10
+
+# Disable logging of client accesses.
+noclientlog
+
+# Send a message to syslog if a clock adjustment is larger than 0.5 seconds.
+logchange 0.5
+
+logdir /var/log/chrony
+#log measurements statistics tracking
+
+pool ntp1.aliyun.com iburst
+pool ntp.tencent.com iburst
+pool ntp1.bce.baidu.com iburst			
+			]]>
+			</screen>
+			<para>重启 chronyd 服务</para>
+			<screen>
+			<![CDATA[
+[root@testing ~]# systemctl restart  chronyd  			
+
+[root@testing ~]# systemctl status  chronyd
+● chronyd.service - NTP client/server
+     Loaded: loaded (/usr/lib/systemd/system/chronyd.service; enabled; preset: enabled)
+     Active: active (running) since Wed 2024-11-13 10:55:09 CST; 19s left
+       Docs: man:chronyd(8)
+             man:chrony.conf(5)
+    Process: 392965 ExecStart=/usr/sbin/chronyd $OPTIONS (code=exited, status=0/SUCCESS)
+   Main PID: 392968 (chronyd)
+      Tasks: 1 (limit: 100479)
+     Memory: 1.3M
+        CPU: 58ms
+     CGroup: /system.slice/chronyd.service
+             └─392968 /usr/sbin/chronyd -F 2
+
+Nov 13 10:55:09 testing chronyd[392968]: chronyd version 4.5 starting (+CMDMON +NTP +REFCLOCK +RTC +PRIVDROP +SCFILTER +SIGND +ASYNCDNS +NTS +SECHASH +IPV6 +DEBUG)
+Nov 13 10:55:09 testing chronyd[392968]: Frequency 0.000 +/- 1000000.000 ppm read from /var/lib/chrony/drift
+Nov 13 10:55:09 testing chronyd[392968]: Loaded seccomp filter (level 2)
+Nov 13 10:55:09 testing systemd[1]: Started NTP client/server.
+Nov 13 10:55:20 testing chronyd[392968]: Selected source 106.55.184.199 (ntp.tencent.com)
+Nov 13 10:55:20 testing chronyd[392968]: System clock wrong by -375.557443 seconds
+Nov 13 10:49:04 testing chronyd[392968]: System clock was stepped by -375.557443 seconds
+Nov 13 10:49:06 testing chronyd[392968]: Selected source 120.25.115.20 (ntp1.aliyun.com)
+Nov 13 10:51:18 testing chronyd[392968]: Selected source 106.55.184.199 (ntp.tencent.com)
+Nov 13 10:54:31 testing chronyd[392968]: Selected source 120.25.115.20 (ntp1.aliyun.com)
+			]]>
+			</screen>
+			<para>再次查看 pool 服务器</para>
+			<screen>
+			<![CDATA[
+[root@testing ~]# chronyc sources 
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^? 120.25.115.20                 0   6     0     -     +0ns[   +0ns] +/-    0ns
+^? 106.55.184.199                2   6     1     0  +375.6s[+375.6s] +/-   22ms
+
+[root@testing ~]# chronyc sources -v
+
+  .-- Source mode  '^' = server, '=' = peer, '#' = local clock.
+ / .- Source state '*' = current best, '+' = combined, '-' = not combined,
+| /             'x' = may be in error, '~' = too variable, '?' = unusable.
+||                                                 .- xxxx [ yyyy ] +/- zzzz
+||      Reachability register (octal) -.           |  xxxx = adjusted offset,
+||      Log2(Polling interval) --.      |          |  yyyy = measured offset,
+||                                \     |          |  zzzz = estimated error.
+||                                 |    |           \
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^* 120.25.115.20                 2   6   245    71   -326us[ -776us] +/- 5099us
+^- 106.55.184.199                2   6   173    10  +1630us[+1630us] +/-   29ms
+
+[root@testing ~]# chronyc sourcestats -v
+                             .- Number of sample points in measurement set.
+                            /    .- Number of residual runs with same sign.
+                           |    /    .- Length of measurement set (time).
+                           |   |    /      .- Est. clock freq error (ppm).
+                           |   |   |      /           .- Est. error in freq.
+                           |   |   |     |           /         .- Est. offset.
+                           |   |   |     |          |          |   On the -.
+                           |   |   |     |          |          |   samples. \
+                           |   |   |     |          |          |             |
+Name/IP Address            NP  NR  Span  Frequency  Freq Skew  Offset  Std Dev
+==============================================================================
+120.25.115.20               6   6   334     -0.085     13.288  -7613ns   401us
+106.55.184.199              9   4   396    +16.456     38.482  +2761us  2680us
+			]]>
+			</screen>
+			<para>有服务器返回，正常</para>
+			<screen>
+			<![CDATA[
+[root@testing ~]# chronyc tracking
+Reference ID    : 78197314 (120.25.115.20)
+Stratum         : 3
+Ref time (UTC)  : Wed Nov 13 02:54:34 2024
+System time     : 0.000003450 seconds fast of NTP time
+Last offset     : -0.000449605 seconds
+RMS offset      : 0.011590191 seconds
+Frequency       : 101.751 ppm fast
+Residual freq   : -0.085 ppm
+Skew            : 14.673 ppm
+Root delay      : 0.008122038 seconds
+Root dispersion : 0.003573609 seconds
+Update interval : 3.0 seconds
+Leap status     : Normal			
+			]]>
+			</screen>
+			<para>Leap status     : Normal 状态正常</para>
+			<screen>
+			<![CDATA[
+[root@testing ~]# timedatectl show
+Timezone=Asia/Shanghai
+LocalRTC=no
+CanNTP=yes
+NTP=yes
+NTPSynchronized=yes
+TimeUSec=Wed 2024-11-13 10:57:21 CST
+RTCTimeUSec=Wed 2024-11-13 10:57:21 CST			
+			]]>
+			</screen>
+			<para>NTPSynchronized=yes 表示同步成功</para>
+			<para>现在，查看时间，同步正常，问题彻底解决。</para>
 		</section>
 	</section>
 	<section id="flexus.rds">
