@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section id="ECS">
 	<title>ECS</title>
-	<section>
+	<section id="aliyun.RockyLinux">
 		<title>Rocky Linux 镜像</title>
 		<section>
 			<title>阿里云 Rocky Linux 镜像初始化</title>
@@ -393,7 +393,7 @@ Aug 16 12:57:16 testing systemd[1]: Started /etc/rc.d/rc.local Compatibility.
 			</screen>
 		</section>
 	</section>
-	<section>
+	<section id="aliyun.almalinux">
 		<title>阿里云 AlmaLinux 9.2 镜像初始化</title>
 		<para>阿里云ECS购买之后建议对 AlmaLinux 做标准初始化配置</para>
 		<screen>
@@ -451,7 +451,7 @@ sysctl -p
 			]]>
 		</screen>
 	</section>
-	<section>
+	<section id="aliyun.centos">
 		<title>CentOS 8.4 初始化</title>
 		<para>阿里云启动之后</para>
 		<screen>
