@@ -3,6 +3,7 @@
 	<title>多维度架构设计</title>
 	<subtitle>Multi-dimension Architecture</subtitle>
 	<!-- 企业架构师EA(Enterprise Architect) 基础结构架构师IA(Infrastructure Architect) 特定技术架构TSA(Technology-Specific Architect) 解决方案架构师SA (Solution Architect) -->
+	&chapter.strategy.xml;
 	&section.web.xml;
  	&section.arch.latency.xml;
 	&section.arch.timeout.xml;

@@ -63,8 +63,6 @@
 
 	&book.dedication.xml; 
 	&book.preface.xml;
-
-	&chapter.strategy.xml;
 	<!-- &part.architecture.xml; -->
 	&chapter.architecture.xml;
 	&part.cloud.xml;
