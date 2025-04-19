@@ -1,0 +1,76 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.9 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="26.0.9">
+  <diagram name="第 1 页" id="fpHD9T_Mq18FS3PONnbd">
+    <mxGraphModel dx="893" dy="593" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-1" value="车机端" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="40" y="440" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-2" value="车联网&lt;div&gt;SIM 卡&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="cqegT2ZHzq0yQM9nUgfl-1">
+          <mxGeometry x="40" y="50" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-17" value="流量产生在这里" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=#e51400;fontColor=#ffffff;strokeColor=#B20000;" vertex="1" parent="cqegT2ZHzq0yQM9nUgfl-1">
+          <mxGeometry x="40" y="120" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-3" value="云端" style="swimlane;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="40" y="40" width="720" height="250" as="geometry" />
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-4" value="接口集群服务" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="cqegT2ZHzq0yQM9nUgfl-3">
+          <mxGeometry x="40" y="160" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-5" value="隧道集群服务" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="cqegT2ZHzq0yQM9nUgfl-3">
+          <mxGeometry x="260" y="160" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-6" value="存储集群服务" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="cqegT2ZHzq0yQM9nUgfl-3">
+          <mxGeometry x="500" y="160" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-7" value="7 层 防火墙" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cce5ff;strokeColor=#36393d;" vertex="1" parent="cqegT2ZHzq0yQM9nUgfl-3">
+          <mxGeometry x="40" y="40" width="640" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-8" value="应用交付/负载均衡/主备系统" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#36393d;" vertex="1" parent="cqegT2ZHzq0yQM9nUgfl-3">
+          <mxGeometry x="40" y="100" width="640" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-9" value="手机端" style="swimlane;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;startSize=23;" vertex="1" parent="1">
+          <mxGeometry x="560" y="440" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-10" value="&lt;div&gt;SIM 卡&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="cqegT2ZHzq0yQM9nUgfl-9">
+          <mxGeometry x="40" y="50" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-11" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;fillColor=#60a917;strokeColor=#2D7600;" edge="1" parent="1" source="cqegT2ZHzq0yQM9nUgfl-1" target="cqegT2ZHzq0yQM9nUgfl-3">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="150" y="500" as="sourcePoint" />
+            <mxPoint x="250" y="400" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-14" value="流量（小）" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=16;" vertex="1" connectable="0" parent="cqegT2ZHzq0yQM9nUgfl-11">
+          <mxGeometry x="0.0868" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-12" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;fillColor=#60a917;strokeColor=#2D7600;" edge="1" parent="1" source="cqegT2ZHzq0yQM9nUgfl-9" target="cqegT2ZHzq0yQM9nUgfl-3">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="460" y="440" as="sourcePoint" />
+            <mxPoint x="560" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-15" value="流量（小）" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=16;" vertex="1" connectable="0" parent="cqegT2ZHzq0yQM9nUgfl-12">
+          <mxGeometry x="-0.0083" y="-3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-13" value="" style="shape=flexArrow;endArrow=classic;startArrow=classic;html=1;rounded=0;fillColor=#60a917;strokeColor=#2D7600;strokeWidth=3;" edge="1" parent="1" source="cqegT2ZHzq0yQM9nUgfl-1" target="cqegT2ZHzq0yQM9nUgfl-9">
+          <mxGeometry width="100" height="100" relative="1" as="geometry">
+            <mxPoint x="250" y="590" as="sourcePoint" />
+            <mxPoint x="350" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cqegT2ZHzq0yQM9nUgfl-16" value="推/拉流量（大）" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=19;" vertex="1" connectable="0" parent="cqegT2ZHzq0yQM9nUgfl-13">
+          <mxGeometry x="-0.01" y="4" relative="1" as="geometry">
+            <mxPoint x="1" y="4" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
