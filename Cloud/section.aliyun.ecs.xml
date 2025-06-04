@@ -159,6 +159,14 @@ dnf install -y python39
 			</screen>
 		</section>
 		<section>
+			<title>java 环境</title>
+			<screen>
+			<![CDATA[
+dnf install java-21-openjdk maven-openjdk21
+			]]>
+			</screen>
+		</section>
+		<section>
 			<title>阿里云平台 Rocky Linux 系统 BUG</title>
 			<para>系统更新链接不上</para>
 			<screen>
