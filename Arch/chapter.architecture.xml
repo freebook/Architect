@@ -25,6 +25,7 @@
 	&section.arch.testing.xml;
 	&section.arch.grey.xml;
 	&section.arch.async.xml;
-<!-- 	&section.arch.difference.xml; -->
+	&section.arch.difference.xml; 
+	&section.arch.microphone.xml;
 	
 </chapter>
