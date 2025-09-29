@@ -116,7 +116,8 @@
 		<para>在人工智能领域，也会用到蓝牙麦克风，这里的抗相当多。</para>
 
 		<para>首先是带宽问题，蓝牙麦克风不同于内置麦克风，内置麦克风或者有线麦克风直接链接声卡，可以直接无损采集16位PCM音频，采集过程不受其他因素影响。而蓝牙传输是
-			SBC（Subband Coding，子带编码） 编码，带宽是 320kbps，SBC到达设备之后，再进行PCM音频采集。</para>
+			SBC（Subband Coding，子带编码） 编码，带宽是 320kbps，SBC到达设备之后，再进行PCM音频采集。
+		</para>
 
 		<para>然后是延迟问题，蓝牙音频传输是有延迟的。</para>
 
@@ -146,4 +147,27 @@
 		</para>
 
 	</section>
+	<section>
+		麦克风检测
+		<title>麦克风检测</title>
+		<section>
+			<title>麦克风检测项目</title>
+			<para>灵敏度特性：测量自由场灵敏度级（-40dB±2dB@1kHz/94dB SPL）</para>
+			<para>频率响应范围：20Hz-20kHz范围内波动值≤±3dB</para>
+			<para>信噪比：A计权下≥65dB（参考IEC 60268-4）</para>
+			<para>总谐波失真：≤1% @1kHz/114dB SPL</para>
+			<para>指向性指数：全向特性验证（DI≤2dB@1m球面测量）</para>
+			<para>环境耐受性：-20℃~70℃温变循环试验（IEC 60068-2-14）</para>
+		</section>
+		<section>
+			<title>麦克风检测标准</title>
+			<para>声压灵敏度校准：依据ISO 3745在消声室内采用互易法测量</para>
+			<para>频率响应测试：按ASTM E2611-09标准进行扫频信号分析</para>
+			<para>失真度测量：采用IEC 60268-21规定的双音信号法</para>
+			<para>指向性验证：基于ANSI/ASA S1.20的球面多点采样法</para>
+			<para>环境试验：执行IEC 60068-2系列标准进行温湿度循环</para>
+		</section>
+	</section>
+
+
 </section>
