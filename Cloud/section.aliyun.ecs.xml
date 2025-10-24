@@ -26,7 +26,7 @@ dnf -y install epel-release
 			<![CDATA[
 dnf install -y bzip2 tree psmisc \
 telnet wget rsync vim-enhanced \
-net-tools bind-utils			
+net-tools bind-utils
 			]]>
 			</screen>
 			<para>设置终端字符集（这样对 macOS 更友好），还可以解决 Failed to set locale, defaulting
@@ -73,7 +73,7 @@ net.core.default_qdisc=fq
 net.ipv4.tcp_congestion_control=bbr
 EOF
 
-sysctl -p			
+sysctl -p
 			]]>
 			</screen>
 			<para>确认 ulimit 已经优化</para>
@@ -87,7 +87,7 @@ sysctl -p
 			<para>设置时区</para>
 			<screen>
 			<![CDATA[
-timedatectl set-timezone Asia/Shanghai			
+timedatectl set-timezone Asia/Shanghai
 			]]>
 			</screen>
 			<para>确认时间同步服务器 chronyd 工作正常</para>
