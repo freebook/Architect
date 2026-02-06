@@ -29,6 +29,14 @@ docker logs -f xiaozhi-esp32-server
 		]]>
 		</screen>
 		<section>
+			<para>Linux 环境</para>
+			<screen>
+			<![CDATA[
+# dnf install ffmpeg-free -y			
+			]]>
+			</screen>
+		</section>
+		<section>
 			<title>苹果开发环境</title>
 			<screen>
 			<![CDATA[
@@ -46,11 +54,41 @@ sudo ln -s /opt/homebrew/Cellar/opus/1.5.2/lib/libopus.0.8.0.dylib /usr/local/li
 pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple/
 			]]>
 			</screen>
+			<screen>
+			<![CDATA[
+# 启动 app.py 前执行
+export DYLD_LIBRARY_PATH="/opt/homebrew/lib:$DYLD_LIBRARY_PATH"
+			]]>
+			</screen>
 		</section>
 	</section>
 	<section>
-		<title>小智后台前端</title>
+		<title>小智管理后台</title>
+		<section>
+			<title>安装 MySQL 数据库</title>
+			<screen>
+		<![CDATA[
+#!/bin/sh
+dnf install -y https://dev.mysql.com/get/Downloads/MySQL-9.5/mysql-community-common-9.5.0-1.el10.x86_64.rpm
+d
+		]]>
+		</screen>
 		<screen>
+		<![CDATA[
+[root@beta my.cnf.d]# grep "A temporary password" /var/log/mysqld.log
+2025-11-27T03:23:06.977137Z 6 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: 48Ukp_j?Ntth
+
+[root@beta my.cnf.d]# mysqladmin -u root -p'48Ukp_j?Ntth' password
+mysqladmin: [Warning] Using a password on the command line interface can be insecure.
+New password: 
+Confirm new password: 
+Warning: Since password will be sent to server in plain text, use ssl connection to ensure password safety.		
+		]]>
+		</screen>
+		</section>
+		<section>
+			<title>小智后台前端</title>
+			<screen>
 		<![CDATA[
 # Download and install nvm:
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
@@ -68,8 +106,8 @@ nvm current # Should print "v22.16.0".
 # Verify npm version:
 npm -v # Should print "10.9.2".		
 		]]>
-		</screen>
-		<screen>
+			</screen>
+			<screen>
 		<![CDATA[
 [root@development ~]# curl -s -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
@@ -81,28 +119,52 @@ export NVM_DIR="$HOME/.nvm"
 [root@development ~]# \. "$HOME/.nvm/nvm.sh"
 [root@development ~]# nvm install 22
 		]]>
-		</screen>
+			</screen>
 
-		<screen>
+			<screen>
 		<![CDATA[
 [root@development ~]# cd xiaozhi-esp32-server/main/manager-web/
 
 		]]>
-		</screen>
-		<screen>
+			</screen>
+			<screen>
 		<![CDATA[
 
 		]]>
-		</screen>
-	</section>
-	<section>
-		<title>后台接口</title>
-		<screen>
+			</screen>
+		</section>
+		<section>
+			<title>后台接口</title>
+			<screen>
 		<![CDATA[
 [root@development ~]# dnf install java-21-openjdk maven-openjdk21
 [root@development manager-api]# mvn package
 		]]>
-		</screen>
+			</screen>
 
+		</section>
+	</section>
+	<section>
+		<title>Websoket 协议调试</title>
+		<screen>
+		<![CDATA[
+ws://localhost:8000/xiaozhi/v1/?authorization=Bearer+GU1PudYYWI9ThyfD1BYN5cvIDqHDUWqva7jPif-9oJg.1769315142&device-id=7F%3AC1%3A2B%3AE3%3ABE%3AEA&client-id=web_test_client
+		]]>
+		</screen>
+		<screen>
+		<![CDATA[
+
+		]]>
+		</screen>
+				<screen>
+		<![CDATA[
+
+		]]>
+		</screen>
+				<screen>
+		<![CDATA[
+
+		]]>
+		</screen>
 	</section>
 </chapter>
