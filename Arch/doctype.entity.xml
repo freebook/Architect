@@ -28,3 +28,4 @@
 <!ENTITY section.web.static.xml			SYSTEM "section.web.static.xml">
 <!ENTITY section.web.image.xml			SYSTEM "section.web.image.xml">
 <!ENTITY section.web.ssr.xml			SYSTEM "section.web.ssr.xml">
+<!ENTITY section.web.session.xml		SYSTEM "section.web.session.xml">
