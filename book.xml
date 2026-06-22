@@ -24,9 +24,6 @@
 	<!ENTITY % database.doctype.entity.xml 		SYSTEM "Database/doctype.entity.xml">
 	%database.doctype.entity.xml;
 
-	<!ENTITY % devops.doctype.entity.xml 		SYSTEM "System/doctype.entity.xml">
-	%devops.doctype.entity.xml;
-
 ] >
 <book xml:base="http://netkiller.github.com/architect/"
 	xmlns="http://docbook.org/ns/docbook" xml:lang="zh-cn">
@@ -55,7 +52,6 @@
 	<!-- &part.architecture.xml; -->
 	&chapter.architecture.xml;
 	&chapter.database.xml;
-	&part.devops.xml;
 
 	&book.appendix.xml;
 	&book.glossary.xml;
