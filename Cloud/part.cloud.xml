@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<part id="index"><?dbhtml dir="cloud" ?>
-	<title>云计算</title>
-	&chapter.aliyun.xml;
-	&chapter.huawei.xml;
-</part>

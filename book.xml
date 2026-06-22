@@ -13,28 +13,17 @@
 
 	<!ENTITY % common.doctype.entity.xml 		SYSTEM "common/doctype.entity.xml">
 	%common.doctype.entity.xml;
-	
+
 	<!ENTITY % doctype.entity.xml 				SYSTEM "doctype.entity.xml">
 	%doctype.entity.xml;
-	
-	<!ENTITY % frontend.doctype.entity.xml 		SYSTEM "Frontend/doctype.entity.xml">
-	%frontend.doctype.entity.xml;
-	<!ENTITY part.frontend.xml 					SYSTEM "part.frontend.xml">
-	
+
 	<!ENTITY % arch.doctype.entity.xml 			SYSTEM "Arch/doctype.entity.xml">
 	%arch.doctype.entity.xml;
 	<!ENTITY part.architecture.xml				SYSTEM "part.architecture.xml">
-	
-	<!ENTITY % software.doctype.entity.xml 		SYSTEM "Software/doctype.entity.xml">
-	%software.doctype.entity.xml;
-	<!ENTITY part.software.xml 					SYSTEM "part.software.xml">
 
 	<!ENTITY % database.doctype.entity.xml 		SYSTEM "Database/doctype.entity.xml">
 	%database.doctype.entity.xml;
 
-	<!ENTITY % cloud.doctype.entity.xml 		SYSTEM "Cloud/doctype.entity.xml">
-	%cloud.doctype.entity.xml;
-	
 	<!ENTITY % devops.doctype.entity.xml 		SYSTEM "System/doctype.entity.xml">
 	%devops.doctype.entity.xml;
 
@@ -61,15 +50,13 @@
 
 	</info>
 
-	&book.dedication.xml; 
+	&book.dedication.xml;
 	&book.preface.xml;
 	<!-- &part.architecture.xml; -->
 	&chapter.architecture.xml;
-	&part.cloud.xml;
 	&chapter.database.xml;
 	&part.devops.xml;
-	&part.software.xml;
-	
+
 	&book.appendix.xml;
 	&book.glossary.xml;
 	&book.history.xml;
