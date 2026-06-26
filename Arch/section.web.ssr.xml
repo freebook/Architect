@@ -1,231 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section xml:id="section.web.ssr" xmlns="http://docbook.org/ns/docbook"
     xmlns:xlink="http://www.w3.org/1999/xlink" version="5.0">
-    <title>重回服务器渲染：从业26年，我在AI时代逆向选择架构回归</title>
+    <title>重回服务器渲染：走过 26 年互联网技术路，我为何逆向选择</title>
 
-    <para>
-        2000年入行，我完整亲历了中国互联网Web技术从蛮荒到成熟、从单体到分布式、从服务端渲染到前后端分离的完整迭代周期。从最初手写C/Perl CGI、PHP模版开发，到经历JSP、JavaEE重型架构，再到深耕十年的前后端分离、微服务架构，在行业全员追逐前端工程化、微服务、客户端渲染的浪潮中，我在AI时代做出了一个看似"反常"的逆向决定：放弃极致的前后端分离、舍弃臃肿的微服务架构，重新回归<emphasis role="bold">服务器端渲染（SSR）+ 单体服务</emphasis>，甚至重拾PHP经典开发模式。
-    </para>
+    <para>2000 年入行，完整走完互联网渲染技术的全周期，从最早的 CGI 到如今遍地开花的前后端分离，最后在 AI 浪潮里反向折返，重新拥抱服务端渲染，这段经历藏着互联网技术的轮回与当下 AI 时代的新解法。</para>
 
-    <para>
-        技术从不会一成不变，没有永远先进的架构，只有适配时代的方案。走过二十余年技术轮回，我终于明白：所有架构迭代，都是为了适配当下的硬件、网络、业务与生产效率。
-    </para>
+    <para>2000入职场，我经历了什么？</para>
+    <orderedlist>
+        <listitem>
+            <para>最早 Apache HTTPD C语音 / Perl语音开发CGI</para>
+        </listitem>
+        <listitem>
+            <para>IIS + JSP + Access + SQL Server / Apache/Nginx fastcgi PHP + MySQL</para>
+        </listitem>
+        <listitem>
+            <para>Tomcat Java JSP + JavaBean + PostgreSQL</para>
+        </listitem>
+        <listitem>
+            <para>EJB Jboss, Oracle Weblogic , IBM websphere</para>
+        </listitem>
+        <listitem>
+            <para>前后端分离 Nginx + Jquery / Angular / React /Vue.js /Next.js + Java Springboot</para>
+        </listitem>
+    </orderedlist>
 
-    <section>
-        <title>完整复盘前端技术迭代：从原始拼接到前后端分离</title>
+    <para>前端发展过程：HTML拼接，HTML模版，前后框架+后端分离</para>
 
-        <para>
-            Web前端的发展，本质是页面渲染、数据交互、开发效率的迭代进化，整个历程清晰分为三个核心阶段，每个阶段的痛点，倒逼出了下一轮技术变革：
-        </para>
+    <para>事实上前后端分离这些问题才出现的：</para>
+    <orderedlist>
+        <listitem>
+            <para>页面刷新，每次访问页面都需要重新渲染和刷新</para>
+        </listitem>
+        <listitem>
+            <para>加载性能，页面全量加载网络传输慢</para>
+        </listitem>
+        <listitem>
+            <para>HTML拼接繁复</para>
+        </listitem>
+        <listitem>
+            <para>等等问题，请帮我补充。</para>
+        </listitem>
+    </orderedlist>
 
-        <section>
-            <title>原始HTML拼接时代</title>
+    <para>前后端分离并为解决所有问题，而为还带来新的问题：</para>
+    <orderedlist>
+        <listitem>
+            <para>前端越来越复杂，导致全栈能力要求越来越高，不得不前后端变成两个岗位。诞生了新的岗位，前端和后端开发开发工作需要贫富密切沟通，对齐接口。</para>
+        </listitem>
+        <listitem>
+            <para>数据安全，接口json数据安全带来全新挑战，以往数据在服务端处理，用户只能看到输出经过。现在不得不为前端提供很多明文接口。一旦权限疏忽，就存在泄漏数据风险。</para>
+        </listitem>
+    </orderedlist>
 
-            <para>
-                这是Web最原始的开发模式，没有任何模板工具、没有前端框架。所有页面结构、数据展示，全部依靠后端代码硬拼接HTML字符串。C、Perl、PHP、Java代码中充斥着大量HTML标签拼接逻辑，后端既要处理业务逻辑、数据库读写，还要手写页面布局、样式结构。
-            </para>
+    <para>随之AI时代的到来，加上 IPv6 + HTTP3 + Ajax + HTML模版 + 分级缓存等等技术。我决定重回服务器端渲染，甚至重拾PHP，我需要的是立即看到效果，不想每次启动服务。</para>
 
-            <para>
-                这种模式弊端极其明显：HTML与业务代码高度耦合，代码极度混乱、维护成本极高；页面修改需要改动后端代码，每一次微调都需要重新部署；重复代码极多，无法复用，开发效率低下到极致。
-            </para>
-        </section>
+    <para>我的做法是：</para>
+    <orderedlist>
+        <listitem>
+            <para>使用模版技术动态渲染HTML，同时给渲染结果做缓存。替代前端每次build dist 的过程。</para>
+        </listitem>
+        <listitem>
+            <para>Web 服务器做 etag, 修改时间，cache 头，缓存所有所有静态资源。</para>
+        </listitem>
+        <listitem>
+            <para>局部更新 ajax，json 也会做一层缓存（etag+修改时间+Cache-Control）</para>
+        </listitem>
+        <listitem>
+            <para>开启 HTTP3+Ipv6，实际每次加载都是走本地缓存。动态内容 ajax</para>
+        </listitem>
+    </orderedlist>
 
-        <section>
-            <title>HTML模板引擎时代</title>
+    <para>最后，用户体验超好，AI写程序也不即完成前端还要写API接口。</para>
 
-            <para>
-                为了解决原始拼接的痛点，JSP、Thymeleaf、Freemarker、Jinja2、PHP模版等技术应运而生。核心变革是<emphasis role="bold">实现了视图与业务代码的初步分离</emphasis>，后端专注处理数据、业务逻辑，模板文件专注负责页面结构渲染，通过模板语法动态绑定数据、循环渲染页面。
-            </para>
+    <para>目前我已经有多个项目用这种方式落地。</para>
+    <para>Springboot Webflux + Thymeleaf + Template</para>
+    <para>Python FastAPI + Jinja2 Template</para>
+    <para>下一个项目我打算回到 PHP 时代，因为 Springboot 和 FastAPI 每次都需要重启加载，真的太烦了。</para>
 
-            <para>
-                这是初代服务器渲染的黄金模式，彻底告别了混乱的字符串拼接，页面可复用、可独立维护，开发效率大幅提升。但依旧存在固有短板：页面整体刷新机制固化，每次访问、每次交互都需要整页重载；动态交互能力薄弱，复杂表单、实时刷新、局部交互几乎无法实现；随着页面复杂度提升，模板嵌套臃肿，页面加载全量传输资源，网络加载速度慢。
-            </para>
-        </section>
+    <para>架构这东西要复合时代，不同时代适合不同架构，现在是AI时代，给了打工人一次逆天改命的机会，需要考虑用AI加杠杆，放大自己的能力。</para>
 
-        <section>
-            <title>前端框架崛起 + 前后端分离时代</title>
-
-            <para>
-                随着互联网交互需求爆发、浏览器性能提升、带宽普及，jQuery、Angular、React、Vue等前端框架快速崛起，行业彻底迈入前后端分离时代。Nginx托管静态资源，前端独立工程化开发，后端SpringBoot等框架只负责输出JSON接口，前端通过AJAX请求数据，在客户端完成页面渲染、局部刷新。
-            </para>
-
-            <para>
-                这套架构统治行业十年，解决了传统SSR的诸多痛点：实现了前后端彻底解耦、前端交互体验大幅提升、单页应用流畅度碾压传统整页刷新、大型团队协作效率优化。但时至今日我才发现：<emphasis role="bold">前后端分离并没有解决所有问题，反而衍生了大量全新的、长期被忽视的行业痛点</emphasis>。
-            </para>
-        </section>
-    </section>
-
-    <section>
-        <title>撕开前后端分离的假象：旧问题未根除，新问题层出不穷</title>
-
-        <para>
-            当年行业抛弃传统服务端渲染、拥抱前后端分离，核心是为了解决模板臃肿、交互卡顿、耦合严重的问题。但经过十年落地，我们发现：传统SSR的部分旧问题依旧存在，同时分离架构带来的新痛点，早已成为研发效率、项目运维、数据安全的沉重负担。
-        </para>
-
-        <section>
-            <title>传统架构遗留问题并未彻底解决</title>
-
-            <para>
-                前后端分离看似优化了体验，但基础性能问题始终没有根治：
-            </para>
-
-            <itemizedlist>
-                <listitem>
-                    <para>
-                        <emphasis role="bold">重复渲染与刷新问题</emphasis>：客户端每次路由跳转、页面访问，都需要重新加载前端资源、请求接口、渲染页面，即便只是少量数据变更，也需要重复执行客户端渲染逻辑，冗余消耗严重；
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <emphasis role="bold">加载性能瓶颈</emphasis>：前端工程化后打包资源体积庞大，首次访问需要全量加载JS、CSS、静态资源，网络传输耗时久，白屏、加载卡顿成为常态，低配设备、弱网环境体验极差；
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <emphasis role="bold">开发冗余繁琐</emphasis>：虽然告别了后端HTML拼接，但前端需要重复编写页面结构、数据渲染、状态管理、异常处理逻辑，前后端两套逻辑重复开发，冗余工作量大幅增加。
-                    </para>
-                </listitem>
-            </itemizedlist>
-        </section>
-
-        <section>
-            <title>架构迭代衍生的全新核心痛点</title>
-
-            <para>
-                这是前后端分离时代最致命的问题，也是我决定回归SSR的核心原因：
-            </para>
-
-            <itemizedlist>
-                <listitem>
-                    <para>
-                        <emphasis role="bold">岗位拆分，协作成本指数级上涨</emphasis>：前后端彻底分离后，催生了独立的前端、后端岗位。原本一人可完成的全栈开发工作，变成两个团队、两类岗位的协同工作。日常开发需要频繁对齐接口字段、数据格式、状态码、异常逻辑，联调排错耗时远超开发本身。前端需要懂接口适配、后端需要兼容前端渲染，全栈能力要求变相提高，团队沟通成本、协作内耗极其严重。
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <emphasis role="bold">数据安全风险全面爆发</emphasis>：传统SSR架构中，所有数据处理、逻辑过滤、权限校验都在服务端完成，用户最终只能看到渲染后的HTML页面，原始数据、核心业务逻辑完全隔离。而前后端分离架构下，后端需要对外暴露大量明文JSON接口，前端直接获取原始数据。一旦接口权限控制疏忽、参数校验不严，就会出现数据泄露、越权查询、接口爬虫抓取等安全问题，数据防护难度呈几何倍数提升。
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <emphasis role="bold">工程化臃肿，启动与部署效率极低</emphasis>：现代前端项目依赖海量插件、构建工具，每次修改代码需要重新build、打包、编译，开发、测试、部署链路冗长。后端SpringBoot、FastAPI项目每次代码微调，都需要重启服务、重新加载环境，频繁等待编译启动，极大打断开发节奏，无法实现"修改即生效、即时看效果"。
-                    </para>
-                </listitem>
-                <listitem>
-                    <para>
-                        <emphasis role="bold">AI场景适配性极差，重复工作量爆炸</emphasis>：AI时代业务大多是动态内容生成、实时问答、知识库渲染，前后端分离模式下，不仅后端要写AI调用、数据处理接口，前端还要单独写一套渲染、流式展示、状态交互逻辑，一套业务两套代码，AI杠杆效应完全被无效内耗抵消。
-                    </para>
-                </listitem>
-            </itemizedlist>
-        </section>
-    </section>
-
-    <section>
-        <title>AI时代+新技术赋能，让SSR回归成为最优解</title>
-
-        <para>
-            很多人认为SSR是"落后技术"，但这是固有思维的误区。早年传统SSR的笨重、低效、体验差等问题，在今天早已被全新技术栈彻底解决。如今<emphasis role="bold">IPv6、HTTP3、AJAX局部刷新、现代HTML模板、分级缓存体系</emphasis>的成熟落地，叠加AI时代的业务特性，让服务端渲染重新具备了碾压客户端渲染的绝对优势。
-        </para>
-
-        <para>
-            我选择回归SSR，不是复古守旧，而是顺势而为，用成熟技术解决当下的研发痛点，最大化借助AI提升开发效率。同时，我彻底摒弃了臃肿的微服务架构，重新回归<emphasis role="bold">高效简洁的单体服务架构</emphasis>。架构从不是越复杂越好，适配AI时代"快速迭代、快速落地、轻量化开发"的需求，才是核心王道。
-        </para>
-    </section>
-
-    <section>
-        <title>我的落地实践：新一代轻量化SSR+单体架构方案</title>
-
-        <para>
-            经过多项目落地验证，我打磨出一套适配AI时代、兼顾开发效率与用户体验的全新架构方案，彻底解决前后端分离的所有痛点，同时规避传统老SSR的体验缺陷，实现高效开发、极速访问、安全可控。
-        </para>
-
-        <section>
-            <title>模板动态渲染 + 服务端缓存，替代前端打包工程</title>
-
-            <para>
-                全面复用现代HTML模板引擎（Thymeleaf、Jinja2、PHP原生模板），后端直接动态渲染完整HTML页面，无需前端独立工程、无需每次修改重新build dist打包。同时对服务端渲染的动态页面、静态片段做分级缓存，避免重复渲染、重复计算，大幅提升响应速度，省去前端繁琐的编译打包流程，修改代码即时生效。
-            </para>
-        </section>
-
-        <section>
-            <title>全维度静态资源缓存，极致优化加载速度</title>
-
-            <para>
-                在Web服务器层面统一配置缓存策略，通过ETag、文件修改时间、Cache-Control响应头，对所有JS、CSS、图片等静态资源做强制缓存与协商缓存。用户二次访问全程走本地缓存，几乎实现零加载等待，彻底解决传统页面全量加载慢的问题。
-            </para>
-        </section>
-
-        <section>
-            <title>AJAX局部刷新 + 接口缓存，兼顾体验与性能</title>
-
-            <para>
-                我并非退回纯整页刷新的老式SSR，而是采用<emphasis role="bold">SSR首屏渲染 + AJAX局部交互</emphasis>的混合模式：首屏由服务端一次性渲染完整内容，保障秒开与SEO；页面后续动态交互、数据更新，通过AJAX局部请求完成，避免整页刷新。同时对所有JSON接口数据，同样配置ETag、过期时间、缓存策略，减少重复AI调用、重复数据库查询，大幅降低服务器压力。
-            </para>
-        </section>
-
-        <section>
-            <title>开启HTTP3 + IPv6，依托新一代网络协议提速</title>
-
-            <para>
-                全站开启HTTP3协议与IPv6网络支持，依托多路复用、0-RTT握手、低延迟传输的特性，搭配本地缓存体系，实现静态资源永久缓存、动态内容轻量请求，网络传输效率远超传统HTTP1.1架构。
-            </para>
-        </section>
-
-        <section>
-            <title>放弃微服务，回归轻量化单体架构</title>
-
-            <para>
-                微服务架构适合超大型分布式集群项目，但90%的常规业务、AI轻量化项目，微服务的注册中心、网关、服务治理、分布式事务、跨服务调用都是纯粹的冗余负担。我彻底舍弃微服务，回归单体服务，架构简洁、部署简单、调试方便、无需复杂运维，开发效率翻倍，完美适配AI项目快速落地、快速迭代的需求。
-            </para>
-        </section>
-    </section>
-
-    <section>
-        <title>现有落地项目与技术栈选型思考</title>
-
-        <para>
-            目前这套逆向架构方案，我已经在多个商业项目中完整落地，效果远超传统前后端分离架构：
-        </para>
-
-        <itemizedlist>
-            <listitem>
-                <para>
-                    <emphasis role="bold">Springboot Webflux + Thymeleaf</emphasis>：适配高并发AI问答、内容生成项目，响应式架构保障高并发性能，模板渲染高效稳定；
-                </para>
-            </listitem>
-            <listitem>
-                <para>
-                    <emphasis role="bold">Python FastAPI + Jinja2</emphasis>：适配轻量化AI工具、知识库项目，开发简洁、迭代快速。
-                </para>
-            </listitem>
-        </itemizedlist>
-
-        <para>
-            而我的下一个项目，我决定彻底回归<emphasis role="bold">PHP</emphasis>技术栈。深耕Java、Python多年，我愈发厌烦SpringBoot、FastAPI的繁琐启动、重启加载、环境配置问题。PHP最核心的优势就是<emphasis role="bold">即用即走、修改即生效、无需重启服务</emphasis>，极简的开发模式，完美适配AI时代快速开发、快速验证、快速落地的需求，能让我把所有精力放在业务和AI能力落地，而非消耗在工程化冗余操作上。
-        </para>
-    </section>
-
-    <section>
-        <title>AI时代，架构取舍的核心感悟</title>
-
-        <para>
-            从业二十余年，见证了技术的起起落落：CGI、PHP风靡一时，随后被JavaEE取代；前后端分离、微服务称霸十年，如今在AI场景下弊端尽显。我深刻明白一个道理：<emphasis role="bold">技术没有新旧高低，只有适配与否；架构无需追逐潮流，只需贴合时代</emphasis>。
-        </para>
-
-        <para>
-            前后端分离、微服务是互联网高速扩张、大型团队协作、复杂交互场景下的最优解，但在AI时代，我们的核心需求已经改变：不再需要极致的客户端复杂交互，而是需要<emphasis role="bold">快速开发、快速落地、低运维成本、高安全、高首屏速度、可AI赋能</emphasis>的轻量化架构。
-        </para>
-
-        <para>
-            AI给了所有技术人一次逆天改命的机会，我们不再需要堆砌繁琐的工程化代码、对接无尽的接口、处理冗余的架构问题，而是要学会用技术架构加杠杆，借助AI放大自身开发能力。
-        </para>
-
-        <para>
-            放弃盲目跟风的前后端分离、舍弃臃肿冗余的微服务，重回服务器渲染、回归单体简洁架构、重拾高效极简的PHP模式，不是倒退，而是<emphasis role="bold">历经千帆后的精准取舍</emphasis>。在AI新时代，简单、高效、落地快，才是最好的架构。
-        </para>
-
-        <blockquote>
-            <para>（注：文档部分内容可能由 AI 生成）</para>
-        </blockquote>
-    </section>
+    <para>所以我不禁回到服务器端渲染，我还放弃了“微服务”返回到“单体服务”时代。</para>
 </section>
