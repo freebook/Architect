@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<chapter id="ai.time">
+	<title>AI 时代的逆向操作</title>
+
+	<section>
+		<title>重回服务器渲染：走过 26 年互联网技术路，我为何逆向选择</title>
+
+		<para>2000 年入行，完整走完互联网渲染技术的全周期，从最早的 CGI 到如今遍地开花的前后端分离，最后在 AI
+			浪潮里反向折返，重新拥抱服务端渲染，这段经历藏着互联网技术的轮回与当下 AI 时代的新解法。</para>
+
+		<para>2000入职场，我经历了什么？</para>
+		<orderedlist>
+			<listitem>
+				<para>最早 Apache HTTPD C语音 / Perl语音开发CGI</para>
+			</listitem>
+			<listitem>
+				<para>IIS + JSP + Access + SQL Server / Apache/Nginx fastcgi PHP +
+					MySQL</para>
+			</listitem>
+			<listitem>
+				<para>Tomcat Java JSP + JavaBean + PostgreSQL</para>
+			</listitem>
+			<listitem>
+				<para>EJB Jboss, Oracle Weblogic , IBM websphere</para>
+			</listitem>
+			<listitem>
+				<para>前后端分离 Nginx + Jquery / Angular / React /Vue.js /Next.js + Java
+					Springboot</para>
+			</listitem>
+		</orderedlist>
+
+		<para>前端发展过程：HTML拼接，HTML模版，前后框架+后端分离</para>
+
+		<para>事实上前后端分离这些问题才出现的：</para>
+		<orderedlist>
+			<listitem>
+				<para>页面刷新，每次访问页面都需要重新渲染和刷新</para>
+			</listitem>
+			<listitem>
+				<para>加载性能，页面全量加载网络传输慢</para>
+			</listitem>
+			<listitem>
+				<para>HTML拼接繁复</para>
+			</listitem>
+			<listitem>
+				<para>等等问题，请帮我补充。</para>
+			</listitem>
+		</orderedlist>
+
+		<para>前后端分离并为解决所有问题，而为还带来新的问题：</para>
+		<orderedlist>
+			<listitem>
+				<para>前端越来越复杂，导致全栈能力要求越来越高，不得不前后端变成两个岗位。诞生了新的岗位，前端和后端开发开发工作需要贫富密切沟通，对齐接口。
+				</para>
+			</listitem>
+			<listitem>
+				<para>数据安全，接口json数据安全带来全新挑战，以往数据在服务端处理，用户只能看到输出经过。现在不得不为前端提供很多明文接口。一旦权限疏忽，就存在泄漏数据风险。
+				</para>
+			</listitem>
+		</orderedlist>
+
+		<para>随之AI时代的到来，加上 IPv6 + HTTP3 + Ajax + HTML模版 +
+			分级缓存等等技术。我决定重回服务器端渲染，甚至重拾PHP，我需要的是立即看到效果，不想每次启动服务。</para>
+
+		<para>我的做法是：</para>
+		<orderedlist>
+			<listitem>
+				<para>使用模版技术动态渲染HTML，同时给渲染结果做缓存。替代前端每次build dist 的过程。</para>
+			</listitem>
+			<listitem>
+				<para>Web 服务器做 etag, 修改时间，cache 头，缓存所有所有静态资源。</para>
+			</listitem>
+			<listitem>
+				<para>局部更新 ajax，json 也会做一层缓存（etag+修改时间+Cache-Control）</para>
+			</listitem>
+			<listitem>
+				<para>开启 HTTP3+Ipv6，实际每次加载都是走本地缓存。动态内容 ajax</para>
+			</listitem>
+		</orderedlist>
+
+		<para>最后，用户体验超好，AI写程序也不即完成前端还要写API接口。</para>
+
+		<para>目前我已经有多个项目用这种方式落地。</para>
+		<para>Springboot Webflux + Thymeleaf + Template</para>
+		<para>Python FastAPI + Jinja2 Template</para>
+		<para>下一个项目我打算回到 PHP 时代，因为 Springboot 和 FastAPI 每次都需要重启加载，真的太烦了。
+		</para>
+
+		<para>架构这东西要复合时代，不同时代适合不同架构，现在是AI时代，给了打工人一次逆天改命的机会，需要考虑用AI加杠杆，放大自己的能力。
+		</para>
+
+		<para>所以我不禁回到服务器端渲染，我还放弃了“微服务”返回到“单体服务”时代。</para>
+	</section>
+
+	<section id="web.session">
+		<title>HTTP Auth + Session</title>
+		<para>从业26年，我经历了 Session，Redis token, JWT,
+			Oauth，OpenID……等各种认证与授权方案。早些年我也很喜欢追随大厂的技术路线：，Kubernets, gRPC……</para>
+		<para>如今人变得成熟了，不再一味追求新技术，每次架构选型，更多是考虑用户需要什么，产品如何快速落地，安全性，扩展性，鲁棒性……
+		</para>
+		<para>我们选择了 HTTP Basic/Digest 认证 + Session 方案</para>
+
+		<para>放弃了 Oauth 和 JWT，甚至没有 Login
+			页面，登录对话框是客户端浏览器的，也没有退出和注销按钮，用户必须关闭浏览器退出。</para>
+		<para>一切变得简单了</para>
+
+		<para>HTTP Auth 是 Web Server
+			级别的认证，不需要写额外代码，他还有一个其他方案不具备的优势。能把联通静态资源一起纳入认证范畴，哪怕是 css,js,image
+			都必须登录之后才能访问。机遇这个特点，HTTP Auth 天然防爬虫，爬虫什么资源都拿不到。</para>
+
+		<para>回到 Session 方案，用户状态信息在服务器端保存，而 JWT 就像泼出去的水，你对用户端失去了控制。经常关注 Spring
+			Session 的小伙伴会发现它还在持续更新，也就是 Session 并没有死，人们也没有放弃他。</para>
+
+		<para>当年我们选择放弃他，是因为大型网站的 Session 开销成本巨高，Session
+			是大型网站的瓶颈主要来源。而如今我们做的系统更多是小而美，企业级的产品，并不是海量互联网级别应用。在考虑系统架构的时候，我们没有必要把互联网产品思维套用在企业应用上。机遇这个思维，我决定回到
+			Session 方案。</para>
+
+		<para>目前我们已经在多个企业级产品中使用 HTTP Auth + Spring Session + Spring Security
+			解决安全问题。</para>
+	</section>
+	<section id="ai.hardcode">
+		<title>重回 hardcode 硬编码</title>
+		<para>什么是 hardcode（硬编码）？一句话 hardcode 就是把本该可配置、可变化的值直接写死在代码里。</para>
+
+		<para>在过去的数十年中，我们开发规范， 不允许 hardcode， 但是很多业务逻辑的使用频率不足 20%，
+			把这些功能全部用动态实现，即产生开发工作量，得不偿失。</para>
+
+		<para>对于低频率的修改，反而我们区代码中改一个字符串，成本更低。</para>
+
+		<para>在过去数十年的软件开发实践中，开发规范通常都强调避免 hardcode。但在真实业务中，很多业务逻辑的使用频率并不高，甚至不足
+			20%。如果为了这些低频功能全部设计成动态配置，不仅会增加开发复杂度，也会带来额外的维护成本，甚至各种配置动态加载和事件监控影响主程序的性能，往往得不偿失。
+		</para>
+
+		<para>对于低频变更场景，与其构建一套复杂的动态配置机制，不如直接在代码中修改一个字符串，成本反而更低。</para>
+
+		<para>我们都经历过微服务和配置中心，还有印象吗？</para>
+
+		<para>当年很多系统为了追求“灵活”和“解耦”，把原本简单的配置不断外置，把原本可以直接写清楚的逻辑拆成分布式配置项。结果系统看似更加灵活，实际却变得更难理解、更难排查，也更难维护。
+		</para>
+
+		<para>很多问题不再能通过阅读代码直接定位，而是需要同时查看数据库、配置中心、缓存、环境变量和多个服务之间的调用关系。所谓的“灵活性”，最后变成了认知成本和运维成本。对于高频变化、强运营驱动的场景，动态配置当然有价值；但对于低频变化、规则稳定、影响范围可控的业务逻辑，过度动态化反而是一种工程负担。
+		</para>
+
+		<para>一个配置中心里大几十个配置文件，每个配置文件的配置项超过一页A4纸，其中 80%
+			自它们创建以来就安静地躺在那里从未被修改过。每次升级光是核对配置文件就要花掉一些时间，由于配置产生的故障比比皆是，甚至可以说上线后的验收测试的核心之一就是检查这些配置是否正确。
+		</para>
+
+		<para>如今，我们开始主动“去微服务”、不在使用配置中心，清理大量无用配置项。对于低频变更、规则稳定的业务逻辑，更多采用常量配置，让系统回到清晰、可读、可控的状态。
+		</para>
+
+		<para>最终带来的结果是：升级链路更短，系统复杂度更低，发布更可控，真正实现了一键升级、秒级完成。</para>
+
+		<para>至于大量 hardcode 会不会增加维护成本？在过去答案是有可能。但在 AI
+			辅助开发时代，低频、明确、局部的规则修改，已经可以交给 AI 完成，几乎是零成本。</para>
+	</section>
+</chapter>

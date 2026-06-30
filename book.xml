@@ -17,9 +17,9 @@
 	<!ENTITY % doctype.entity.xml 				SYSTEM "doctype.entity.xml">
 	%doctype.entity.xml;
 
-	<!ENTITY % arch.doctype.entity.xml 			SYSTEM "Arch/doctype.entity.xml">
+	<!-- <!ENTITY % arch.doctype.entity.xml 			SYSTEM "Arch/doctype.entity.xml">
 	%arch.doctype.entity.xml;
-	<!ENTITY part.architecture.xml				SYSTEM "part.architecture.xml">
+	<!ENTITY part.architecture.xml				SYSTEM "part.architecture.xml"> -->
 
 	<!ENTITY % database.doctype.entity.xml 		SYSTEM "Database/doctype.entity.xml">
 	%database.doctype.entity.xml;
@@ -51,6 +51,7 @@
 	&book.preface.xml;
 	<!-- &part.architecture.xml; -->
 	&chapter.architecture.xml;
+	&chapter.ai.xml;
 	&chapter.database.xml;
 
 	&book.appendix.xml;

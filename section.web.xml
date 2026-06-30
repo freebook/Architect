@@ -600,6 +600,5 @@ e.g.2 user (big5.example.org) -> Squid (gb2312->big5) -> web server
 		]]>
 		</screen>
 	</section>
-	&section.web.ssr.xml;
-	&section.web.session.xml;
+
 </section>
