@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<chapter id="ai.time">
-	<title>AI 时代的逆向操作</title>
+<chapter id="AI 时代的逆向操作">
+	<title>AI 时代的逆向操作：走过 26 年互联网技术路，我为何逆向选择</title>
 
-	<section>
-		<title>重回服务器渲染：走过 26 年互联网技术路，我为何逆向选择</title>
+	<section id="重回服务器渲染">
+		<title>重回服务器渲染</title>
 
 		<para>2000 年入行，完整走完互联网渲染技术的全周期，从最早的 CGI 到如今遍地开花的前后端分离，最后在 AI
-			浪潮里反向折返，重新拥抱服务端渲染，这段经历藏着互联网技术的轮回与当下 AI 时代的新解法。</para>
+			浪潮里反向折返，重新拥抱服务端渲染，这段经历藏着互联网技术的轮回与当下 AI 时代的新解法。
+		</para>
 
 		<para>2000入职场，我经历了什么？</para>
 		<orderedlist>
@@ -15,7 +16,8 @@
 			</listitem>
 			<listitem>
 				<para>IIS + JSP + Access + SQL Server / Apache/Nginx fastcgi PHP +
-					MySQL</para>
+					MySQL
+				</para>
 			</listitem>
 			<listitem>
 				<para>Tomcat Java JSP + JavaBean + PostgreSQL</para>
@@ -25,7 +27,8 @@
 			</listitem>
 			<listitem>
 				<para>前后端分离 Nginx + Jquery / Angular / React /Vue.js /Next.js + Java
-					Springboot</para>
+					Springboot
+				</para>
 			</listitem>
 		</orderedlist>
 
@@ -60,7 +63,8 @@
 		</orderedlist>
 
 		<para>随之AI时代的到来，加上 IPv6 + HTTP3 + Ajax + HTML模版 +
-			分级缓存等等技术。我决定重回服务器端渲染，甚至重拾PHP，我需要的是立即看到效果，不想每次启动服务。</para>
+			分级缓存等等技术。我决定重回服务器端渲染，甚至重拾PHP，我需要的是立即看到效果，不想每次启动服务。
+		</para>
 
 		<para>我的做法是：</para>
 		<orderedlist>
@@ -92,38 +96,45 @@
 		<para>所以我不禁回到服务器端渲染，我还放弃了“微服务”返回到“单体服务”时代。</para>
 	</section>
 
-	<section id="web.session">
+	<section id="重回Session">
 		<title>重回 HTTP Auth + Session</title>
 		<para>从业26年，我经历了 Session，Redis token, JWT,
-			Oauth，OpenID……等各种认证与授权方案。早些年我也很喜欢追随大厂的技术路线：，Kubernets, gRPC……</para>
+			Oauth，OpenID……等各种认证与授权方案。早些年我也很喜欢追随大厂的技术路线：，Kubernets, gRPC……
+		</para>
 		<para>如今人变得成熟了，不再一味追求新技术，每次架构选型，更多是考虑用户需要什么，产品如何快速落地，安全性，扩展性，鲁棒性……
 		</para>
 		<para>我们选择了 HTTP Basic/Digest 认证 + Session 方案</para>
 
 		<para>放弃了 Oauth 和 JWT，甚至没有 Login
-			页面，登录对话框是客户端浏览器的，也没有退出和注销按钮，用户必须关闭浏览器退出。</para>
+			页面，登录对话框是客户端浏览器的，也没有退出和注销按钮，用户必须关闭浏览器退出。
+		</para>
 		<para>一切变得简单了</para>
 
 		<para>HTTP Auth 是 Web Server
 			级别的认证，不需要写额外代码，他还有一个其他方案不具备的优势。能把联通静态资源一起纳入认证范畴，哪怕是 css,js,image
-			都必须登录之后才能访问。机遇这个特点，HTTP Auth 天然防爬虫，爬虫什么资源都拿不到。</para>
+			都必须登录之后才能访问。机遇这个特点，HTTP Auth 天然防爬虫，爬虫什么资源都拿不到。
+		</para>
 
 		<para>回到 Session 方案，用户状态信息在服务器端保存，而 JWT 就像泼出去的水，你对用户端失去了控制。经常关注 Spring
-			Session 的小伙伴会发现它还在持续更新，也就是 Session 并没有死，人们也没有放弃他。</para>
+			Session 的小伙伴会发现它还在持续更新，也就是 Session 并没有死，人们也没有放弃他。
+		</para>
 
 		<para>当年我们选择放弃他，是因为大型网站的 Session 开销成本巨高，Session
 			是大型网站的瓶颈主要来源。而如今我们做的系统更多是小而美，企业级的产品，并不是海量互联网级别应用。在考虑系统架构的时候，我们没有必要把互联网产品思维套用在企业应用上。机遇这个思维，我决定回到
-			Session 方案。</para>
+			Session 方案。
+		</para>
 
 		<para>目前我们已经在多个企业级产品中使用 HTTP Auth + Spring Session + Spring Security
-			解决安全问题。</para>
+			解决安全问题。
+		</para>
 	</section>
-	<section id="ai.hardcode">
+	<section id="重回硬编码">
 		<title>重回 hardcode 硬编码</title>
 		<para>什么是 hardcode（硬编码）？一句话 hardcode 就是把本该可配置、可变化的值直接写死在代码里。</para>
 
 		<para>在过去的数十年中，我们开发规范， 不允许 hardcode， 但是很多业务逻辑的使用频率不足 20%，
-			把这些功能全部用动态实现，即产生开发工作量，得不偿失。</para>
+			把这些功能全部用动态实现，即产生开发工作量，得不偿失。
+		</para>
 
 		<para>对于低频率的修改，反而我们区代码中改一个字符串，成本更低。</para>
 
@@ -151,16 +162,18 @@
 		<para>最终带来的结果是：升级链路更短，系统复杂度更低，发布更可控，真正实现了一键升级、秒级完成。</para>
 
 		<para>至于大量 hardcode 会不会增加维护成本？在过去答案是有可能。但在 AI
-			辅助开发时代，低频、明确、局部的规则修改，已经可以交给 AI 完成，几乎是零成本。</para>
+			辅助开发时代，低频、明确、局部的规则修改，已经可以交给 AI 完成，几乎是零成本。
+		</para>
 	</section>
-	<section id="ai.operation">
+	<section id="AI驱动运营">
 		<title>AI 驱动运营</title>
 
 		<para>以往，我们通常会给运营团队提供一个管理后台，里面包含各类数据报表，运营人员可以从不同维度查看业务数据。不同公司的叫法各不相同，有的叫“报表系统”，有的叫“BI（商业智能）”，还有的包装成数据中台等等。
 		</para>
 
 		<para>这些概念听起来都很高大上，还常常堆砌大量互联网黑话：大数据、数据萃取、OLAP、ETL、数据建模、指标体系……但说到底，很多场景只是把数据筛选、汇总、排序、统计和导出做了一遍，而这些功能，Excel
-			本身就能胜任。</para>
+			本身就能胜任。
+		</para>
 
 		<para>如果你是打工者，这样做不仅可以增加工作量，同时还能提升 KPI
 			绩效，包装个人形象，甚至形成技术壁垒，把自己变成系统里“看似不可替代”的一环。但如果这是你的创业项目，或者你自己的产品，就不要再用这种方式自欺欺人了。
@@ -173,9 +186,12 @@
 
 		<para>但这一次，我的想法发生了变化。我认为在 AI
 			时代，我们已经不再需要为每个系统都单独开发一套报表后台了。很多报表类需求，本质上只是数据查询、筛选、汇总和展示。过去运营人员必须通过后台页面交互查询报表数据，而现在完全可以交给
-			AI 通过对话完成。</para>
+			AI 通过对话完成。
+		</para>
 
-		<para>接入 Hermes 与 OpenClaw 后，AI可以覆盖运营人员的绝大部分数据分析需求。运营人员不再需要进入后台，在一堆菜单、筛选项和报表页面中反复点击，他们只需要在对话框中输入：</para>
+		<para>接入 Hermes 与 OpenClaw
+			后，AI可以覆盖运营人员的绝大部分数据分析需求。运营人员不再需要进入后台，在一堆菜单、筛选项和报表页面中反复点击，他们只需要在对话框中输入：
+		</para>
 
 		<orderedlist>
 			<listitem>
@@ -193,6 +209,59 @@
 		</orderedlist>
 
 		<para>这是 AI 驱动运营，在 AI
-			时代，想象力才是真正的边界。AI 让能力边界无限延展，限制我们的不再是工具，而是想象力。</para>
+			时代，想象力才是真正的边界。AI 让能力边界无限延展，限制我们的不再是工具，而是想象力。
+		</para>
 	</section>
+	<section id="去前端框架">
+		<title>去前端框架（Next.js / Vue / React / Angular）</title>
+
+		<para>前面在《重回服务器渲染》中，我已经谈到过一个技术转变：从前后端分离，重新回到服务器端渲染。</para>
+
+		<para>两周后，我又做了一次断舍离，这一次是彻底去掉 JS Framework（JavaScript 框架）。</para>
+
+		<para>作出这个决定，是因为我发现自己已经对 JS
+			框架没有需求了。我的 HTML5 页面由服务端 SSR 渲染生成，前端剩下的工作主要是页面局部更新，也就是 AJAX 请求。如今浏览器的
+			JavaScript 引擎已经原生支持 fetch，而我真正需要的，也只是 POST、GET、DELETE、PUT
+			这些基础操作，再把返回结果局部填充到 HTML 页面中。
+		</para>
+
+		<para>对我来说，fetch 已经完全够用。</para>
+
+		<para>这样一来，页面加载时不再需要通过 script 引入 JS
+			框架代码，也省去了浏览器端二次渲染的过程。SSR 渲染后的 HTML 页面可以直接缓存在浏览器端和 CDN 端。
+		</para>
+
+		<para>同时，AJAX 返回的 JSON 数据和 HTML
+			片段也可以独立缓存，并根据业务场景控制缓存位置：可以缓存在浏览器端，也可以缓存在 CDN
+			端。也就是说，页面只需要渲染一次，就可以持续复用，直到服务端通过 HTTP 缓存头通知资源发生变化。
+		</para>
+
+		<para>常用的缓存控制头包括：</para>
+		<orderedlist>
+			<listitem>
+				<para>Last-Modified：资源最后修改时间</para>
+			</listitem>
+			<listitem>
+				<para>ETag：资源版本标识</para>
+			</listitem>
+			<listitem>
+				<para>Date：响应生成时间</para>
+			</listitem>
+			<listitem>
+				<para>Expires：过期时间</para>
+			</listitem>
+			<listitem>
+				<para>Cache-Control：缓存策略</para>
+			</listitem>
+		</orderedlist>
+
+		<para>最终更新策略由服务端统一控制，浏览器和 CDN
+			根据这些头信息决定是否继续使用缓存，还是重新请求最新内容。
+		</para>
+
+		<para>由于浏览器本地加载已经渲染好的 HTML 页面，不需要 Next.js、Vue.js
+			这些框架二次渲染呈现页面，同时配合各种 Cache 策略，让用户实现秒开，用户体验超棒。
+		</para>
+	</section>
+
 </chapter>
