@@ -81,11 +81,6 @@
 
 	</section>
 
-	<section id="routing">
-		<title>Routing</title>
-	</section>
-
-
 	<example>
 		<title>dhcp vlan rip</title>
 		<screen>
@@ -104,11 +99,7 @@
 		<screen>
 
 		</screen>
-		<screen>
-		<![CDATA[
-
-		]]>
-		</screen>
+		
 	</example>
 
  -->
